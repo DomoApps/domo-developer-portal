@@ -2,22 +2,29 @@
 # VectorDB API
 
 This document provides an overview of the API endpoints available for interacting with the Vector Database, which enables efficient storage, retrieval, and querying of vectorized data. The API supports various operations including vector insertion, querying, updating, and deletion.
+To use the API, you must [generate an access token in Domo](https://domo-support.domo.com/s/article/360042934494?language=en_US) and include it in each request via the `X-DOMO-Developer-Token` header.
 
 ### Base URL
 
 All API endpoints are accessible via the following base URL:
 
-https://{{host}}/api/recall/v1/indexes
+https://{{instance}}/api/recall/v1/indexes
 
 ### Create index
 
-Description: Add new indexes to the database.
+Description: A vector index is a data structure that organizes and optimizes the storage and retrieval of high-dimensional vectors (embeddings) for similarity searches. The following endpoint is used to add new indexes to the database.
 
 ```text
-Endpoint: {{host}}/api/recall/v1/indexes
+Endpoint: {{instance}}/api/recall/v1/indexes
 
 Method: POST
 ```
+
+#### Arguments
+| Property Name| Type | Required | Description |
+| --- | --- | --- | --- |
+|indexId	|Long	|Optional	|Index name|
+|embeddingModel	|String	|Optional	|Model to be used in the index, you can check the available models in the following endpoint: {{instance}}/api/ai/v1/settings/services/embedding/models|
 
 #### Code Example
 
@@ -57,10 +64,14 @@ HTTP/1.1 200 OK
 Description: Add nodes into an index.
 
 ```text
-Endpoint: {{host}}/api/recall/v1/indexes/{{indexId}}/upsert
+Endpoint: {{instance}}/api/recall/v1/indexes/{{indexId}}/upsert
 
 Method: POST
 ```
+#### Arguments
+| Property Name| Type | Required | Description |
+| --- | --- | --- | --- |
+|nodes	|Object	|Optional	|Document objects to be queried in similarity searches|
 
 #### Code Example
 
@@ -142,6 +153,9 @@ Request Body
 ```
 
 #### HTTP Response
+
+Returns IDs for the new nodes created in the request.
+
 ```json
 HTTP/1.1 200 OK
 {
@@ -161,8 +175,16 @@ HTTP/1.1 200 OK
 
 Description: Search for nodes in an index.
 
+#### Arguments
+| Property Name| Type | Required | Description |
+| --- | --- | --- | --- |
+|filter	|Object	|Optional	|The filter that narrows the scope of a request|
+| input | string | Optional | String to be used in the similarity search |
+| topK | integer | Optional | Limits the output to the top K results |
+| weight | number | Optional | Modifies the search behavior to give priority to specific components of a query |
+
 ```text
-Endpoint: {{host}}/api/recall/v1/indexes/{{indexId}}/query
+Endpoint: {{instance}}/api/recall/v1/indexes/{{indexId}}/query
 
 Method: POST
 ```
@@ -245,7 +267,7 @@ Request Body
 Description: Remove nodes from index
 
 ```text
-Endpoint: {{host}}/api/recall/v1/indexes/{{indexId}}/delete
+Endpoint: {{instance}}/api/recall/v1/indexes/{{indexId}}/delete
 
 Method: POST
 ```
@@ -292,7 +314,7 @@ Request Body
 Description: Delete the entire index
 
 ```text
-Endpoint: {{host}}/api/recall/v1/indexes/{{indexId}}
+Endpoint: {{instance}}/api/recall/v1/indexes/{{indexId}}
 
 Method: DELETE
 ```
