@@ -1,6 +1,6 @@
 # Code Engine Python Packages Reference
 
-Below is a comprehensive table of available Python packages available for use in Code Engine.
+Below is a comprehensive list of Python packages available for use in Code Engine. For generic help with Python, consult the [Python Standard Library Documentation](https://docs.python.org/3/library/).
 
 | **Package**  | **Description**                                                   |
 | ------------ | ----------------------------------------------------------------- |
@@ -73,7 +73,3 @@ Below is a comprehensive table of available Python packages available for use in
 | xml          | XML parsing and generation tools.                                 |
 | zipfile      | Reads and writes ZIP files.                                       |
 | zlib         | Compression and decompression using the zlib library.             |
-
----
-
-This table provides a quick reference for selecting the package you need. For more details, consult the [Python Standard Library Documentation](https://docs.python.org/3/library/).

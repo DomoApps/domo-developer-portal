@@ -1,8 +1,6 @@
 # Code Engine JavaScript Libraries Reference
 
-Below is a comprehensive table of available JavaScript libraries and functions for use in Code Engine.
-
-## Libraries
+Below is a comprehensive list of JavaScript libraries available for use in Code Engine.
 
 | **Library**         | **Description**                                                                |
 | ------------------- | ------------------------------------------------------------------------------ |
@@ -12,11 +10,50 @@ Below is a comprehensive table of available JavaScript libraries and functions f
 
 ## Functions in the `codeengine` library
 
-The following functions are available within the `codeengine` library. You can also use the `codeengine` import to use the above libraries.:
+| **Function**                  | **Description**                                                             |
+| ----------------------------- | --------------------------------------------------------------------------- |
+| `getPersonDetails`            | Retrieves detailed information about a person from your system.             |
+| `getAccount`                  | Fetches account-related data, including access tokens and account settings. |
+| `getExecutionDetails`         | Provides details about workflow execution.                                  |
+| [`sendRequest`](#sendrequest) | Sends HTTP requests for interacting with internal Domo APIs.                |
 
-| **Function**          | **Description**                                                             |
-| --------------------- | --------------------------------------------------------------------------- |
-| `getPersonDetails`    | Retrieves detailed information about a person from your system.             |
-| `getAccount`          | Fetches account-related data, including access tokens and account settings. |
-| `getExecutionDetails` | Provides details about workflow execution.                                  |
-| `sendRequest`         | Sends HTTP requests for interacting with internal Domo APIs.                |
+### sendRequest
+
+This function will send an authenticated API request to any of Domo's product APIs.
+
+#### Parameters
+
+| Property Name | Type   | Required | Description                                                |
+| ------------- | ------ | -------- | ---------------------------------------------------------- |
+| method        | String | Required | The HTTP method - can be 'GET', 'POST', 'PUT', or 'DELETE' |
+| url           | String | Required | The request url                                            |
+| body          | Object | Optional | The request body                                           |
+| headers       | Object | Optional | The request headers                                        |
+| contentType   | Object | Optional | The request contentType ('application/json' by default)    |
+
+#### Code Example
+
+```javascript
+const codeengine = require("codeengine");
+
+async function handleRequest(
+  method,
+  url,
+  body = null,
+  headers = null,
+  contentType = null
+) {
+  try {
+    return await codeengine.sendRequest(
+      method,
+      url,
+      body,
+      headers,
+      contentType
+    );
+  } catch (error) {
+    console.error(`Error with ${method} request to ${url}:`, error);
+    throw error;
+  }
+}
+```
