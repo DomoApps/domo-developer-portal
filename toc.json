@@ -181,7 +181,7 @@
           "uri": "docs/API-Reference/Product-APIs/Certified-Content.md"
         },
         {
-          "type":"item",
+          "type": "item",
           "title": "Code Engine API",
           "uri": "docs/API-Reference/Product-APIs/Code-Engine.md"
         },
@@ -651,22 +651,6 @@
       "title": "Code Engine",
       "items": [
         {
-          "type": "group",
-          "title": "Guides",
-          "items": [
-            {
-              "type": "item",
-              "title": "Instance Management",
-              "uri": "docs/Apps/Code-Engine/DOMO-Instance-Management.md"
-            },
-            {
-              "type": "item",
-              "title": "Cards to PDF",
-              "uri": "docs/Apps/Code-Engine/Cards-to-PDF.md"
-            }
-          ]
-        },
-        {
           "type": "item",
           "title": "Overview",
           "uri": "docs/Automate-Actions/Code-Engine/overview.md"
@@ -682,9 +666,20 @@
           "uri": "docs/Automate-Actions/Code-Engine/python-packages.md"
         },
         {
-          "type": "item",
-          "title": "Global Code Engine Packages",
-          "uri": ""
+          "type": "group",
+          "title": "Useful Packages",
+          "items": [
+            {
+              "type": "item",
+              "title": "Instance Management",
+              "uri": "docs/Automate-Actions/Code-Engine/Packages/Instance-Management.md"
+            },
+            {
+              "type": "item",
+              "title": "Cards to PDF",
+              "uri": "docs/Automate-Actions/Code-Engine/Packages/Cards-to-PDF.md"
+            }
+          ]
         }
       ]
     },
