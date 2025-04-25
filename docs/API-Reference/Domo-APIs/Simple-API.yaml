@@ -184,7 +184,40 @@ paths:
                    side: dark
       responses:
         '204':
-          description: Returns an empty response.
+          description: Success! Returns an empty response body.
+        '400':
+          description: Bad Request — Invalid input data or schema.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: >-
+                  Invalid data provided during upload. Invalid schema. Expected: {columns=[{type='STRING', name='name', metadata=null}, {type='STRING', name='role', metadata=null}, {type='STRING', name='quote', metadata=null}, {type='STRING', name='side', metadata=null}]}
+        '401':
+          description: Unauthorized — Expired access token, etc.
+          headers:
+            WWW-Authenticate:
+              description: >-
+                Error codes and descriptions.
+              schema:
+                type: string
+                example: >-
+                  Bearer error="invalid_token", error_description="An error occurred while attempting to decode the Jwt: Jwt expired at 2025-04-25T04:28:44Z", error_uri="https://tools.ietf.org/html/rfc6750#section-3.1"
+        '403':
+          description: Forbidden — Invalid or missing access token.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 403
+                  toe:
+                    type: string
+                    description: Thread of Execution — a way Domo Support can track down a problem
+                    example: 694M4LH50R-CFNR0-N0VD2
+
 components:
   schemas: {}
   securitySchemes:
