@@ -8,7 +8,7 @@ info:
 
     ---
 
-    The DataSet API allows you to create, replace, export, and manage DataSets, as well as manage data permissions for DataSets within Domo. Most of its calls return a DataSet object.
+    The DataSet API allows you to create, replace, append to, export, and manage DataSets, as well as manage data permissions for DataSets within Domo. Most of its calls return a DataSet object.
 
     <!-- theme: info -->
 
@@ -234,7 +234,7 @@ paths:
         <!-- theme: info -->
         > #### Appending _Data_
         >
-        > To import **additional rows** into an existing DataSet, use the [Simple API](https://developer.domo.com/portal/d984e2fec9b18-import-data-into-data-set) instead.
+        > To import **additional rows** into an existing DataSet, use the DataSet Import endpoint or the [Simple API](https://developer.domo.com/portal/d984e2fec9b18-import-data-into-data-set).
       requestBody:
         content:
           application/json:
@@ -911,24 +911,41 @@ paths:
                     fromcache: true
   '/v1/datasets/{dataset_id}/data':
     put:
-      summary: Replace data in DataSet
+      summary: Import data into DataSet
       description: |
-        Replace data into a DataSet in your Domo instance. This request will **replace all data** currently in the DataSet.
-
-        <!-- theme: info -->
-        > #### Appending _Data_
-        >
-        > To import **additional rows** into a DataSet, use the [Stream API](https://developer.domo.com/portal/lw7cqi3lqufah-stream-api) instead.
+        Import data into a DataSet in your Domo instance. You can replace everything or append new data.
       requestBody:
         content:
           text/csv:
+            schema:
+              type: string
+              description: CSV data according to RFC 4180 format.
             examples:
-              Example 1:
-                value: 'Friend,Attending Isaac Newton,Yes Pythagoras,No Carl Friedrich Gauss,Yes Ada Lovelace,Yes'
+              'Example 1':
+                value: |
+                  Friend,Attending
+                  Isaac Newton,Yes
+                  Pythagoras,No
+                  Carl Friedrich Gauss,Yes
+                  Ada Lovelace,Yes
+              'Example 2':
+                value: |
+                  name,role,quote,side
+                  Leia Organa,Rebel Leader,"Help me, Obi-Wan Kenobi. You're my only hope.",light
+                  Qui-Gon Jinn,,,
+                  Darth Vader,Sith Lord,I find your lack of faith disturbing.,dark
+              'Example 3':
+                value: |
+                  "name","age"
+                  "Smith, Jacob","78"
+                  "Corsa, Claire","56"
+                  "Thomas, Liz","33"
         description: |
-          > The only supported content type is currently CSV format.
+          The schema needs to match, even when replacing.
+          
+          The only supported content type for this endpoint is CSV. However, if you use [the Simple API](https://developer.domo.com/portal/d984e2fec9b18-import-data-into-data-set), it will automatically convert JSON to CSV.
 
-          > To upload data in CSV format, the Domo specification used for representing data grids in CSV format closely follows the RFC standard for CSV (RFC-4180). For more details on correct CSV formatting, click here.
+          > The Domo specification used for representing data grids in CSV format closely follows the RFC standard for CSV ([RFC-4180](https://datatracker.ietf.org/doc/html/rfc4180)).
 
           ```
           Content-Type: text/csv
@@ -938,7 +955,6 @@ paths:
           Pythagoras,No
           Carl Friedrich Gauss,Yes
           Ada Lovelace,Yes
-
           ```
       parameters:
         - name: dataset_id
@@ -946,24 +962,70 @@ paths:
           schema:
             type: string
           required: true
+        - name: updateMethod
+          in: query
+          description: |
+            Specifies how the data import should update the DataSet. 
+            
+            Defaults to `REPLACE` if not specified. 
+            
+            Case-sensitive; must be uppercase. Falls back to REPLACE if given an invalid value.
+          required: false
+          schema:
+            type: string
+            default: REPLACE
+            enum:
+              - REPLACE
+              - APPEND
       responses:
         '204':
-          description: Returns a response of success or error for the outcome of data being imported into DataSet.
+          description: Success! Returns an empty response body.
+        '400':
+          description: Bad Request — Invalid input data or schema.
           content:
             application/json:
-              examples:
-                Example 1:
-                  value: HTTP/1.1 204 No Content
+              schema:
+                type: object
+                example: {"status":400,"statusReason":"Bad Request","message":"Data import failed for dataset e6277565-39fc-42d7-835a-5cfe2905a840.","toe":"CA6JIHTO46-28C5D-UEQ7I"}
+        '401':
+          description: Unauthorized — Expired access token, etc.
+          headers:
+            WWW-Authenticate:
+              description: >-
+                Error codes and descriptions.
+              schema:
+                type: string
+                example: >-
+                  Bearer error="invalid_token", error_description="An error occurred while attempting to decode the Jwt: Jwt expired at 2025-04-25T04:28:44Z", error_uri="https://tools.ietf.org/html/rfc6750#section-3.1"
+
+        '403':
+          description: Forbidden — Invalid or missing access token.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 403
+                  toe:
+                    type: string
+                    description: Thread of Execution — a way Domo Support can track down a problem
+                    example: 694M4LH50R-CFNR0-N0VD2
+        
     get:
       summary: Export Data from DataSet
-      description: "Export\_data from\_a DataSet in your Domo instance.\n\n> Data types will be exported as they are currently stored in the dataset. In addition, the only supported export type is CSV.\n"
+      description: |
+        Export data from a DataSet in your Domo instance.
+        
+        > Data types will be exported as they are currently stored in the dataset. In addition, the only supported export type is CSV.
       parameters:
         - name: includeHeader
           in: query
           schema:
             type: boolean
-          example: true
-          description: Include table header
+            default: false
+          description: Include table header row
         - name: fileName
           in: query
           schema:
@@ -982,10 +1044,14 @@ paths:
             text/csv:
               schema:
                 type: string
-              examples: {}
+              examples: 
+                'Example 1':
+                  value: |
+                    name,role,quote,side
+                    Leia Organa,Rebel Leader,"Help me, Obi-Wan Kenobi. You're my only hope.",light
+                    Qui-Gon Jinn,,,
+                    Darth Vader,Sith Lord,I find your lack of faith disturbing.,dark
           headers: {}
-      requestBody:
-        content: {}
     parameters:
       - schema:
           type: string
