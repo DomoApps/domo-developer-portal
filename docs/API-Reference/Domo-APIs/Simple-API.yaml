@@ -4,7 +4,7 @@ x-stoplight:
 info:
   title: Simple API
   version: '1.0'
-  description: The Simple API allows you to create new DataSets and import data into the DataSets in your Domo instance.
+  description: The Simple API allows you to create new DataSets and import JSON data into them.
 servers:
   - url: 'https://api.domo.com'
     description: Domo API
@@ -26,7 +26,7 @@ paths:
             type: string
           in: query
           name: description
-          required: true
+          required: false
           description: Description of DataSet to create
       requestBody:
         content:
@@ -49,8 +49,8 @@ paths:
                   description: Mathematician Guest List
         description: ''
       responses:
-        '200':
-          description: ''
+        '201':
+          description: 'Created — Body contains the details of the created DataSet'
           content:
             application/json:
               schema:
@@ -58,10 +58,13 @@ paths:
                 properties:
                   id:
                     type: string
+                    description: The DataSet id
                   name:
                     type: string
+                    description: The DataSet name
                   description:
                     type: string
+                    description: The description of the DataSet
                   rows:
                     type: integer
                   columns:
@@ -77,6 +80,38 @@ paths:
                     type: string
                   updatedAt:
                     type: string
+                  pdpEnabled:
+                    type: boolean
+                    description: Personalized Data Permissions enabled
+                  policies:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        type:
+                          type: string
+                          example: open
+                        name:
+                          type: string
+                          example: All Rows
+                        filters:
+                          type: array
+                          items:
+                            type: object
+                        users:
+                          type: array
+                          items:
+                            type: object
+                        virtualUsers:
+                          type: array
+                          items:
+                            type: object
+                        groups:
+                          type: array
+                          items:
+                            type: object
                 x-examples:
                   Example 1:
                     id: 4405ff58-1957-45f0-82bd-914d989a3ea3
@@ -85,10 +120,12 @@ paths:
                     rows: 0
                     columns: 0
                     owner:
-                      id: 27
-                      name: DomoSupport
-                    createdAt: '2016-06-21T17:20:36Z'
-                    updatedAt: '2016-06-21T17:20:36Z'
+                      id: 540824232
+                      name: John Smith
+                    createdAt: '2025-04-21T17:20:36Z'
+                    updatedAt: '2025-04-21T17:20:36Z'
+                    pdpEnabled: false
+                    policies: [{"id":622387,"type":"open","name":"All Rows","filters":[],"users":[],"virtualUsers":[],"groups":[]}]
               examples:
                 Example 1:
                   value:
@@ -98,10 +135,12 @@ paths:
                     rows: 0
                     columns: 0
                     owner:
-                      id: 27
-                      name: DomoSupport
-                    createdAt: '2016-06-21T17:20:36Z'
-                    updatedAt: '2016-06-21T17:20:36Z'
+                      id: 540824232
+                      name: John Smith
+                    createdAt: '2025-04-21T17:20:36Z'
+                    updatedAt: '2025-04-21T17:20:36Z'
+                    pdpEnabled: false
+                    policies: [{"id":622387,"type":"open","name":"All Rows","filters":[],"users":[],"virtualUsers":[],"groups":[]}]
   '/v1/json/{DATASET_ID}/data':
     parameters:
       - schema:
@@ -109,7 +148,7 @@ paths:
         name: DATASET_ID
         in: path
         required: true
-        description: The ID of the DataSet to have data imported
+        description: The ID of the DataSet to import the data into
       - name: updateMethod
         in: query
         description: |
