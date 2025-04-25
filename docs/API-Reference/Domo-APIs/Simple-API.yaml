@@ -110,15 +110,41 @@ paths:
         in: path
         required: true
         description: The ID of the DataSet to have data imported
+      - name: updateMethod
+        in: query
+        description: |
+          Specifies how the data import should update the DataSet. 
+          
+          Defaults to "REPLACE" if not specified. 
+          
+          If set to "APPEND", the schema must match the existing schema
+        required: false
+        schema:
+          default: REPLACE
+          type: string
+          enum:
+            - REPLACE
+            - APPEND
     put:
       summary: Import data into DataSet
       operationId: ''
       description: Imports data into an already existing DataSet in your Domo instance.
       requestBody:
+        description: |
+          An array of JSON objects which will be converted to CSV and stored as data. 
+          
+          If you want to pass CSV directly, use [the DataSet API](https://developer.domo.com/portal/3b1e3a7d5f420-data-set-api). 
+          
+          If **appending**, the **schema** must **match** the existing schema. To omit a field, specify the key, but use an empty string or `null` for the value (see Example 2).
+          
+          If **replacing**, some objects **can be missing fields** that others have (see Example 3).
         content:
           application/json:
             schema:
-              type: object
+              type: array
+              items:
+                type: object
+                additionalProperties: true
             examples:
               Example 1:
                 value:
@@ -126,6 +152,32 @@ paths:
                     Attending: 'false'
                   - Friend: Jane
                     Attending: 'true'
+              Example 2:
+                value:
+                 - Name: Tomato
+                   Color: Red
+                   Favorite: false
+                   Eaten: 1
+                 - Name: Radish
+                   Color: ""
+                   Favorite: null
+                   Eaten: null
+                 - Name: Banana
+                   Color: Yellow
+                   Favorite: true
+                   Eaten: 4
+              Example 3:
+                value:
+                 - name: Leia Organa
+                   role: Rebel Leader
+                   quote: "Help me, Obi-Wan Kenobi. You're my only hope."
+                   side: light
+                 - name: Qui-Gon Jinn
+                 - name: Darth Vader
+                   role: Sith Lord
+                   quote: I find your lack of faith disturbing.
+                   side: dark
+                   
       responses:
         '200':
           description: Returns an empty response.
