@@ -115,13 +115,15 @@ paths:
         description: |
           Specifies how the data import should update the DataSet. 
           
-          Defaults to "REPLACE" if not specified. 
+          Defaults to `REPLACE` if not specified. 
           
-          If set to "APPEND", the schema must match the existing schema
+          If set to `APPEND`, the schema must match the existing schema.
+          
+          Case-sensitive; must be uppercase. Falls back to REPLACE if given an invalid value.
         required: false
         schema:
-          default: REPLACE
           type: string
+          default: REPLACE
           enum:
             - REPLACE
             - APPEND
@@ -135,15 +137,18 @@ paths:
           
           If you want to pass CSV directly, use [the DataSet API](https://developer.domo.com/portal/3b1e3a7d5f420-data-set-api). 
           
-          If **appending**, the **schema** must **match** the existing schema. To omit a field, specify the key, but use an empty string or `null` for the value (see Example 2).
+          If **appending**, the **schema** must **match** the existing schema. To omit a field, specify the key but use an empty string or `null` for the value (see Example 2).
           
-          If **replacing**, some objects **can be missing fields** that others have (see Example 3).
+          If **replacing**, some objects **can be missing properties** that others have, resulting in empty fields (see Example 3).
+          
+          If your objects contain array values, they will appear as "List" in the DataSet. Consider converting them to properties or, alternatively, you can leverage one of Domo's many [JSON connectors](https://www.domo.com/appstore/apps?q=json) to more flexibly deal with arrays.
         content:
           application/json:
             schema:
               type: array
               items:
                 type: object
+                minItems: 1
                 additionalProperties: true
             examples:
               Example 1:
@@ -177,9 +182,8 @@ paths:
                    role: Sith Lord
                    quote: I find your lack of faith disturbing.
                    side: dark
-                   
       responses:
-        '200':
+        '204':
           description: Returns an empty response.
 components:
   schemas: {}
