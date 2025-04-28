@@ -1,4 +1,4 @@
-Render KPI Card Chart/Table
+Render KPI Card Chart or Table
 ===========================
 
 ### Authentication
