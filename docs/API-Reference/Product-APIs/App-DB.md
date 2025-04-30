@@ -163,7 +163,31 @@ DELETE /api/datastores/v1/collections/{collectionId}/documents/{documentId}
 **Response**:
 
 ```http
-HTTP/1.1 200 OK
+HTTP/1.1 204 OK
+```
+
+### Bulk Delete Documents
+
+**Description**: Remove multiple documents from a collection in a single request.
+
+**HTTP Request**:
+
+```http
+DELETE /api/datastores/v1/collections/{collectionId}/documents/bulk?ids=[ids]
+```
+
+**Headers**:
+
+- `X-DOMO-Developer-Token`: Your developer token.
+- `Accept`: `application/json`
+- `Content-Type`: `application/json`
+
+**Response**:
+
+```json
+{
+  "Deleted": 1
+}
 ```
 
 ### Update Collection Schema
