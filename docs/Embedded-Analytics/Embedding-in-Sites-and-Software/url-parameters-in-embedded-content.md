@@ -10,6 +10,7 @@ Domo Everywhere supports three main types of URL parameters in embedded content:
 	<li>Transparent Backgrounds </li>
 	<li>Pfilters </li>
 	<li>AppData </li>
+	<li>ViewId (App Studio Specific) </li>
 </ul>
 
 ## Transparent Backgrounds
@@ -110,6 +111,17 @@ For example, the value of the parameter could then auto-populate a drop-down men
 ```html
 public.domo.com/embed/pages/abcde?appData=Salt+Lake+City
 ```
-The query parameters on the embed URL will then be automatically passed down into the apps (e.g. xyz.domoapps.prod4.domo.com) contained by the embedded cards or dashboards. 
+The query parameters on the embed URL will then be automatically passed down into the apps (e.g. xyz.domoapps.prod4.domo.com) contained by the embedded cards or dashboards.
+
+## ViewId
+---
+App Studio includes many navigatable page views, for control outside of the embeded App Studio app, a viewId can be provided in the URL to tell the app a specific page view to open to directly instead of the default landing page view. As well as this parameter can be used by programmatic filter calls to prevent reloading and ensure the page opens to the page that the filter was set. 
+ 
+To find these view ids, when opening an embedded page, looking at the network traffic, the views can be found in the following request `https://embed.domo.com/embed/app-studio/<EMBED TOKEN>/dataapp`. In the response, there is an array of `views`, listing the id and names.
+
+```html
+public.domo.com/embed/pages/abcde?viewId=835972594
+```
+
 
 
