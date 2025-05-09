@@ -1,9 +1,20 @@
 # Export Domo cards to PDF
 
-This package generates a PDF for each card on a page. If the content includes a table, you may get paginated results.
+The code below can be utilized in a Code Engine package which will generate a PDF for each card on a page. If the content includes a table, you may get paginated results.
 
-```javascript title="Cards to PDF Code Engine Package" lineNumbers
-const codeengine = require("codeengine");
+In order to use this code, you will need to have the following:
+
+- A Domo instance
+- A page with cards on it
+- Access to Code Engine and basic knowledge of how to create a package
+
+```js
+<!--
+title: "Cards to PDF Code Engine Package"
+lineNumbers: true
+-->
+
+const codeengine = require('codeengine');
 
 class Helpers {
   /**
@@ -36,9 +47,9 @@ async function getCardsOnPage(pageID) {
   try {
     var url = `/api/content/v1/pages/${pageID}/cards?parts=metadata`;
 
-    return await Helpers.handleRequest("get", url);
+    return await Helpers.handleRequest('get', url);
   } catch (error) {
-    throw new Error("getCardsOnPage: ", error);
+    throw new Error('getCardsOnPage: ', error);
   }
 }
 
@@ -73,12 +84,12 @@ async function getPDF(cardID, numTablePages) {
     };
 
     return await Helpers.handleRequest(
-      "put",
-      "/api/content/v1/cards/kpi/" + cardID + "/render?parts=imagePDF",
-      body
+      'put',
+      '/api/content/v1/cards/kpi/' + cardID + '/render?parts=imagePDF',
+      body,
     );
   } catch (error) {
-    throw new Error("getPDF: ", error);
+    throw new Error('getPDF: ', error);
   }
 }
 
@@ -93,18 +104,18 @@ async function page2PDF(pageID) {
     for (var i = 0; i < cardArray.length; i++) {
       var md = cardArray[i].metadata;
 
-      if (md.chartType != "badge_basic_table") {
+      if (md.chartType != 'badge_basic_table') {
         const c_pdf = await getPDF(cardArray[i].id);
 
-        console.log("c_pdf: ", c_pdf.image.data);
+        console.log('c_pdf: ', c_pdf.image.data);
       } else {
         const t_pdf = await getPDF(cardArray[i].id, 100);
 
-        console.log("t_pdf: ", t_pdf.image.message);
+        console.log('t_pdf: ', t_pdf.image.message);
       }
     }
   } catch (error) {
-    throw new Error("page2PDF: ", error);
+    throw new Error('page2PDF: ', error);
   }
 }
 ```
