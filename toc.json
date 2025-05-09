@@ -11,14 +11,15 @@
       "uri": "/docs/Getting-Started/overview.md"
     },
     {
-      "type": "item",
-      "title": "APIs",
-      "uri": "/docs/Getting-Started/api-authentication.md"
-    },
-    {
-      "type": "item",
-      "title": "SDKs",
-      "uri": "/docs/Getting-Started/sdks.md"
+      "type": "group",
+      "title": "Developer Tools",
+      "items": [
+        {
+          "type": "item",
+          "title": "SDKs",
+          "uri": "/docs/Getting-Started/sdks.md"
+        }
+      ]
     },
     {
       "type": "divider",

@@ -62,7 +62,7 @@ Please note that some of the App Framework APIs share (or have a similar) name a
 ---
 
 The Domo Platform APIs leverage the OAuth 2.0 authorization and authentication pattern. This means
-these APIs require creating and managing clients (which include a `client id`, `client secret`, and `scopes` to limit access). These clients can then be used to generate the `access token` passed in each subsequent API call. See the [OAuth API Authentication Quickstart](#quickstart) below for a walkthrough on how to generate clients.
+these APIs require creating and managing clients (which include a `client id`, `client secret`, and `scopes` to limit access). These clients can then be used to generate the `access token` passed in each subsequent API call. See the [OAuth API Authentication Quickstart](../API-Reference/Domo-APIs/API-Authentication.yaml) below for a walkthrough on how to generate clients.
 
 - [Account API](../API-Reference/Domo-APIs/Account-API.yaml)
 - [Activity Log API](../API-Reference/Domo-APIs/Activity-Log-API.yaml)
