@@ -9,11 +9,12 @@ In order to use this code, you will need to have the following:
 - A Domo instance
 - Access to Code Engine and basic knowledge of how to create a package
 
-```js
 <!--
 title: "Instance Management Code Engine Package"
 lineNumbers: true
 -->
+
+```js
 const codeengine = require('codeengine');
 
 class Helpers {

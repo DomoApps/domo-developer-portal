@@ -8,12 +8,12 @@ In order to use this code, you will need to have the following:
 - A page with cards on it
 - Access to Code Engine and basic knowledge of how to create a package
 
-```js
 <!--
 title: "Cards to PDF Code Engine Package"
 lineNumbers: true
 -->
 
+```js
 const codeengine = require('codeengine');
 
 class Helpers {
