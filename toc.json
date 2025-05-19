@@ -168,6 +168,11 @@
         },
         {
           "type": "item",
+          "title": "AppDb API",
+          "uri": "docs/API-Reference/Product-APIs/App-DB.md"
+        },
+        {
+          "type": "item",
           "title": "Beast Modes API",
           "uri": "docs/API-Reference/Product-APIs/Beast-Modes.md"
         },
