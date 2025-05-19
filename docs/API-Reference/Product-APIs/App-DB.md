@@ -219,19 +219,6 @@ PUT /api/datastores/v1/collections/{collectionId}/documents/{documentId}
 HTTP/1.1 200 OK
 ```
 
-````json
-{
-  "id": "12345678-7949-1234-82bb-bd3e533e4c7d",
-  "datastoreId": "12345678-2484-1234-af98-c60131367cf2",
-  "collectionId": "12345678-78a9-1234-b641-7afc39ba2e84",
-  "syncRequired": true,
-  "owner": "123456789",
-  "createdBy": "123456789",
-  "createdOn": "2024-05-08T19:39:00.708226378Z",
-  "updatedOn": "2024-05-08T19:39:00.708226378Z",
-  "updatedBy": "123456789",
-  "content": {}
-}
 ```json
 {
   "id": "12345678-7949-1234-82bb-bd3e533e4c7d",
@@ -245,7 +232,7 @@ HTTP/1.1 200 OK
   "updatedBy": "123456789",
   "content": {}
 }
-````
+```
 
 ### Delete Document
 
