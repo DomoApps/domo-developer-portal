@@ -547,6 +547,11 @@
               "type": "item",
               "title": "Clearing out Collections",
               "uri": "docs/Apps/App-Framework/Guides/clearing-out-collections.md"
+            },
+            {
+              "type": "item",
+              "title": "Copy Assets to a Different Instance",
+              "uri": "docs/Apps/App-Framework/Guides/copy-assets-to-other-instances.md"
             }
           ]
         },
