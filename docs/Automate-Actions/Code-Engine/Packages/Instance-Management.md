@@ -1,9 +1,21 @@
 # Domo Instance Management
 
-This package gives you more granular control over provisioning Domo instances for Publish and Managed Embed. The key differences between this function and the default behavior in Instance Management are the ability to specify the Region and add Additional Users.
+This package gives you more granular control over provisioning Domo instances for Publish and Managed Embed.
 
-```javascript title="Instance Management Code Engine Package" lineNumbers
-const codeengine = require("codeengine");
+The key differences between this function and the default behavior in Instance Management are the ability to specify the Region and add Additional Users.
+
+In order to use this code, you will need to have the following:
+
+- A Domo instance
+- Access to Code Engine and basic knowledge of how to create a package
+
+<!--
+title: "Instance Management Code Engine Package"
+lineNumbers: true
+-->
+
+```js
+const codeengine = require('codeengine');
 
 class Helpers {
   /**
@@ -59,10 +71,10 @@ async function provisionInstance(
   customerName,
   domainPrefix = null,
   configId = null,
-  templateId = "",
+  templateId = '',
   region = null,
   keyAttribute = null,
-  additionalUsers
+  additionalUsers,
 ) {
   try {
     const body = {
@@ -76,16 +88,16 @@ async function provisionInstance(
     };
 
     return await Helpers.handleRequest(
-      "post",
-      "/api/publish/v2/controlcenter/subscribers",
-      body
+      'post',
+      '/api/publish/v2/controlcenter/subscribers',
+      body,
     );
   } catch (error) {
-    throw new Error("Unable to provision instance.", error);
+    throw new Error('Unable to provision instance.', error);
   }
 }
 
 async function getInstanceTemplates() {
-  return await Helpers.handleRequest("get", "/api/publish/v2/org-templates");
+  return await Helpers.handleRequest('get', '/api/publish/v2/org-templates');
 }
 ```
