@@ -240,9 +240,9 @@ export async function imageToText(base64) {
     body: JSON.stringify(body),
   });
   if (!response.ok) {
-    throw new Error('File upload failed');
+    throw new Error('Image-to-text request failed');
   }
-  return (await response.json()) as AIResponse;
+  return await response.json();
 }
 ```
 
