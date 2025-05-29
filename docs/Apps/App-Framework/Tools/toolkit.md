@@ -33,4 +33,4 @@ These clients are provided in this library:
 - [IdentityClient](https://domoapps.github.io/toolkit/classes/clients_identity_client.IdentityClient.html): Utilities for obtaining information related to the current user
 - [SqlClient](https://domoapps.github.io/toolkit/classes/clients_sql_client.SqlClient.html): SDK for using [SQL queries](../../../Domo-App-APIs/Data-API.md)
 - [UserClient](https://domoapps.github.io/toolkit/classes/clients_user_client.UserClient.html): [User API](../../../Domo-App-APIs/User-API.md)
-- [AIClient](https://domoapps.github.io/toolkit/classes/clients_ai_client.AIClient.html): [AI Services API](../../../Domo-App-APIs/AI-Services-API.md)
+- [AIClient](https://domoapps.github.io/toolkit/classes/clients_ai_client.AIClient.html): [AI Services API](../../../Domo-App-APIs/AI-Service-Layer-API.md)
