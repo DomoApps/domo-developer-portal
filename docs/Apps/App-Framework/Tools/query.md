@@ -4,7 +4,7 @@ This is a simple library to create data query URLs for [getting Domo data](https
 
 ## Dependencies
 
-[Install](https://developer.domo.com/docs/dev-studio-tools/domo-js#Installation) `domo.js`. This is preinstalled on all [DDX Bricks](https://developer.domo.com/docs/ddx-bricks/ddx-bricks-overview).
+[Install domo.js](./domo.js.md). This is preinstalled on all [DDX Bricks](https://developer.domo.com/docs/ddx-bricks/ddx-bricks-overview).
 
 ## Installation
 
