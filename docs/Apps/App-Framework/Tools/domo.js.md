@@ -55,7 +55,7 @@ domo.get('/data/v1/sales').then(function (data) {
 
 > #### Best Practice
 >
-> The code above will fetch the entire DataSet. We highly recommend filtering and paginating the data to avoid app crashes, slow response, and other issues. See the [Getting Data Guide](../Guides/getting-data.md) to learn how to do this.
+> The code above will fetch the entire DataSet. We highly recommend filtering and paginating the data to avoid app crashes, slow response, and other issues. See the [Getting Data Guide](../../Guides/getting-data.md) to learn how to do this.
 
 Domo supports a few different data formats. To specify the one you want, pass an options argument to `domo.get`:
 

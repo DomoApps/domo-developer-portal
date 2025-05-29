@@ -13,7 +13,7 @@ The `domoinc/toolkit` library provides some convenient utilities for building c
 The Toolkit library is available on NPM. https://www.npmjs.com/package/@domoinc/toolkit
 
 ```
-npm install --save @domoinc/toolkit
+npm install @domoinc/toolkit
 ```
 
 ### Documentation
