@@ -12,7 +12,7 @@ The Domo Apps Command Line Interface (CLI) is your primary tool to:
 
 Custom App designs in your Domo instance.
 
-# Installation
+## Installation
 
 The Domo Apps CLI is available for installation via Homebrew, Chocolatey, or npm.
 
@@ -20,11 +20,11 @@ For long-term support (LTS), we recommend using Homebrew or Chocolatey. If you p
 
 For more details on installing the CLI, see the [Setup and Installation Guide](../Quickstart/Setup-and-Installation.md).
 
-# Commands
+## Commands
 
 For a **complete** list of available commands, use `domo --help`
 
-## Domo
+### Domo
 
 | Option                      | Description                                                                                      |
 | --------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -33,7 +33,7 @@ For a **complete** list of available commands, use `domo --help`
 | `-m, --manifest <filename>` | Specify a manifest file. Defaults to `manifest.json` in the current working directory. `domo -m` |
 | `-h, --help`                | Output usage information. `domo -h`/`domo [command] -h`                                          |
 
-## Dev
+### Dev
 
 Starts a local development server with the following features:
 
@@ -50,7 +50,7 @@ domo dev [options]
 | `-u, --userId`   | Utilizes a specific user. Helpful for testing app states where user ID is important. |
 | `-e, --external` | Exposes the dev server on a public IP address.                                       |
 
-## Init
+### Init
 
 Asks you questions to initialize a new Custom App design template. Once complete, be sure to follow the "Next Steps" provided.
 
@@ -64,13 +64,13 @@ domo init
 >
 > `domo init` will create the folder for you.
 
-### Prompts
+#### Prompts
 
 1. design name
 1. select a starter: see "STARTERS" section
 1. would you like to connect to any datasets? (Y/n): see "DATASET MAPPING PROMPTS"
 
-### Starters
+#### Starters
 
 - hello world: creates a basic project in a new directory with the following content
 
@@ -93,7 +93,7 @@ domo init
 
 [Domo Phoenix]: https://domoapps.github.io/domo-phoenix/
 
-### Dataset Mapping Prompts
+#### Dataset Mapping Prompts
 
 If you choose to connect to datasets, you'll be prompted for the following:
 
@@ -102,7 +102,7 @@ If you choose to connect to datasets, you'll be prompted for the following:
 
 **Note**: Be sure to complete the field mapping portion in the `manifest.json`. Refer to the [manifest](../Guides/manifest.md) reference documentation for more details on data mapping.
 
-## Login
+### Login
 
 Authenticate to your Domo instance from the CLI. This is required before running other commands like `publish`, or for fetching data during `domo dev`. If no options are provided, you'll be prompted to choose from a list of previous instances or a "new instance", at which point you'll be prompted for instance name, username, and password.
 
@@ -116,7 +116,7 @@ domo login [options]
 | `-u, --user-email`   | User email                                                                                    |
 | `--no-upgrade-check` | Prevent the CLI from checking for new versions and prompting for user input to upgrade or not |
 
-## Owner
+### Owner
 
 Manage the owners of the Custom App design.
 
@@ -130,7 +130,7 @@ domo owner [options] [add|rm|ls] example.user@companyname.com
 | ----------------- | -------------------------------------------------------------------------------------------------- |
 | `-i, --design_id` | Specify a design ID, or defaults to the ID from the manifest file in the current working directory |
 
-## Publish
+### Publish
 
 Uploads all the assets of your current working directory as a Custom App design.
 
@@ -146,7 +146,7 @@ domo publish [options]
 | ---------- | ------------------------------------------------------- |
 | `-g, --go` | Opens the design in the Asset Library after publishing. |
 
-## Release
+### Release
 
 Locks a design version for submitting to the Domo Appstore. Once a version is released, you can't make further changes to it. You can, however, work on a new version by bumping the version in the manifest file.
 
@@ -154,7 +154,7 @@ Locks a design version for submitting to the Domo Appstore. Once a version is re
 domo release
 ```
 
-# Advanced Data Proxy for Developing Locally
+## Advanced Data Proxy for Developing Locally
 
 To enable proxying for advanced requests (like the AppDB, Files, Code Engine, and Workflows APIs), you must provide the ID of an app in your instance that the CLI can proxy to (e.g., impersonate a particular Card). Add this app ID to your manifest under the property `proxyId`. If the ID is valid, proxying advanced requests with `domo dev` will work automatically.
 
