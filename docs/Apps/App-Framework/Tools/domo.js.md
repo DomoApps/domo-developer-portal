@@ -16,23 +16,34 @@ The `domo.js` library provides some convenient utilities for building custom Ap
 
 ---
 
-`domo.js` is deployed with every template created via `domo init`. But you can also install it to an existing project via npm:
+<!--
+type: tab
+title: npm
+-->
+
+`domo.js` is deployed with every template created via `domo init`. But you can also install it to existing projects via npm:
 
 ```
 npm install --save ryuu.js
 ```
 
-### domo.get()
+<!--
+type: tab
+title: HTML Script Tag
+-->
 
----
+You can include `domo.js` in your web app, Pro-Code app, or Domo Brick via HTML script tag using UnPkg:
 
-`domo.js` makes it easy to request data from Domo. Simply call the data endpoint with your DataSet's alias (`sales` in this example):
-
-```js
-domo.get("/data/v1/sales").then(function (data) {
-  console.log("data", data);
-});
 ```
+  <script src="https://unpkg.com/ryuu.js"></script>
+```
+
+````html
+### domo.get() --- `domo.js` makes it easy to request data from Domo. Simply
+call the data endpoint with your DataSet's alias (`sales` in this example):
+```js domo.get("/data/v1/sales").then(function (data) { console.log("data",
+data); });
+````
 
 <!-- theme: info -->
 
@@ -43,8 +54,8 @@ domo.get("/data/v1/sales").then(function (data) {
 Domo supports a few different data formats. To specify the one you want, pass an options argument to `domo.get`:
 
 ```js
-domo.get("/data/v1/sales", { format: "csv" }).then(function (data) {
-  console.log("data", data);
+domo.get('/data/v1/sales', { format: 'csv' }).then(function (data) {
+  console.log('data', data);
 });
 ```
 
@@ -60,11 +71,11 @@ The `domo` http client also supports `post`, `put`, and `delete` methods to sati
 #### Code Example
 
 ```js
-function uploadFile(name, description = "", isPublic = true, file) {
+function uploadFile(name, description = '', isPublic = true, file) {
   const formData = new FormData();
-  formData.append("file", file);
+  formData.append('file', file);
   const url = `/domo/data-files/v1?name=${name}&description=${description}&public=${isPublic}`;
-  const options = { contentType: "multipart" };
+  const options = { contentType: 'multipart' };
 
   return domo.post(url, formData, options);
 }
@@ -84,13 +95,13 @@ function uploadFile(name, description = "", isPublic = true, file) {
 Using this `domo.js` library your app can request a navigation change to a specific URL:
 
 ```js
-domo.navigate("/profile/3234");
+domo.navigate('/profile/3234');
 ```
 
 If you want the navigation to open a new tab or window rather than navigating away from the current Domo page, pass `true` as the second argument:
 
 ```js
-domo.navigate("/profile/3234", true);
+domo.navigate('/profile/3234', true);
 ```
 
 #### Mobile Web
@@ -187,10 +198,10 @@ If you want to add filters to the page that your domo app lives on, you can do s
 ```js
 domo.filterContainer([
   {
-    column: "category",
-    operator: "IN",
-    values: ["ALERT"],
-    dataType: "string",
+    column: 'category',
+    operator: 'IN',
+    values: ['ALERT'],
+    dataType: 'string',
   },
 ]);
 ```
