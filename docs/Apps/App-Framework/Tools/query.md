@@ -1,10 +1,10 @@
 # REST QUERY
 
-This is a simple library to create data query URLs for [getting Domo data](https://developer.domo.com/docs/dev-studio-references/data-api). Use in conjunction with [domo.js](https://developer.domo.com/docs/dev-studio/dev-studio-domo-js-reference).
+This is a simple library to create data query URLs for [Getting Domo data](../../Guides/getting-data.md). Use in conjunction with [domo.js](./domo.js.md)).
 
 ## Dependencies
 
-[Install domo.js](./domo.js.md). This is preinstalled on all [DDX Bricks](https://developer.domo.com/docs/ddx-bricks/ddx-bricks-overview).
+[Install domo.js](./domo.js.md). This is preinstalled on all [DDX Bricks](../../DDX-Bricks/Quickstart/overview.md).
 
 ## Installation
 
