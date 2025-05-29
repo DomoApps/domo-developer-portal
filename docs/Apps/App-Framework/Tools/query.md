@@ -4,11 +4,11 @@ This is a simple library to create data query URLs for [getting Domo data](https
 
 ## Dependencies
 
-[Install](https://developer.domo.com/docs/dev-studio-tools/domo-js#Installation) `domo.js`. This is preinstalled on all [DDX Bricks](https://developer.domo.com/docs/ddx-bricks/ddx-bricks-overview)
+[Install](https://developer.domo.com/docs/dev-studio-tools/domo-js#Installation) `domo.js`. This is preinstalled on all [DDX Bricks](https://developer.domo.com/docs/ddx-bricks/ddx-bricks-overview).
 
 ## Installation
 
-You can add this library to any project via npm:
+You can add this library to any project using npm:
 
 ```
 npm install @domoinc/query
@@ -42,7 +42,7 @@ title: Basic Query
 ```typescript
 const datasetAlias = 'sales';
 
-// build query and fetch data
+// Build query and fetch data
 
 const response = await new Query()
   .select(['col1', 'col2'])
@@ -63,7 +63,7 @@ title: Max Date
 
 ```typescript
 /**
- * Returns the max date
+ * Returns the maximum date
  */
 async function getMaxDate() {
   return new Query()
@@ -72,7 +72,7 @@ async function getMaxDate() {
     .limit(1)
     .fetch('datasetalias');
 
-// example using Typescript:
+// Example using TypeScript:
 //   .fetch<{date: string}>('datasetalias');
 }
 
@@ -90,7 +90,7 @@ title: With Domo.js
 /**
  * Example using domo.js
  *
- * Return the brands for a given Engagement Segment
+ * Returns the brands for a given Engagement Segment
  */
 function getEngagementSegmentBrands(engagementSegmentValue) {
   const esBrands = new Query()
