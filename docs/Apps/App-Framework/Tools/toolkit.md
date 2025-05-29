@@ -22,8 +22,10 @@ The documentation for this packages can be found here: https://domoapps.github.i
 
 These clients are provided in this library:
 
-- AppDBClient: [Collections](https://domoapps.github.io/toolkit/classes/clients_appDB_client_collections.CollectionsClient.html), [Documents](https://domoapps.github.io/toolkit/classes/clients_appDB_client_documents.DocumentsClient.html) [AppDB API](../../../Domo-App-APIs/AppDB-API.md)
-- [DomoClient](https://domoapps.github.io/toolkit/classes/clients_domo_client.DomoClient.html): Utilities for interacting with Domo. [Domo.js](https://developer.domo.com/docs/dev-studio-references/domo-js) alternative
+- AppDBClient: [AppDB API](../../../Domo-App-APIs/AppDB-API.md)
+  - [Collections](https://domoapps.github.io/toolkit/classes/clients_appDB_client_collections.CollectionsClient.html)
+  - [Documents](https://domoapps.github.io/toolkit/classes/clients_appDB_client_documents.DocumentsClient.html)
+- [DomoClient](https://domoapps.github.io/toolkit/classes/clients_domo_client.DomoClient.html): Utilities for interacting with Domo. [Domo.js](./domo.js.md) alternative
 - [CodeEngineClient](https://domoapps.github.io/toolkit/variables/clients_codeengine_client.CodeEngineClient.html): Utilities for interacting with Domo's Code Engine. [Code Engine docs](https://domo-support.domo.com/s/article/000005173)
 - [WorkflowClient](https://domoapps.github.io/toolkit/variables/clients_workflow_client.WorkflowClient.html): Utilities for interacting with Domo's Workflows. [Workflow docs](https://domo-support.domo.com/s/article/000005108)
 - [FileClient](https://domoapps.github.io/toolkit/classes/clients_file_client.FileClient.html): [Files API](../../../Domo-App-APIs/Files-API.md)
