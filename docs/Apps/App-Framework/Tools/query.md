@@ -11,9 +11,8 @@ This is a simple library to create data query URLs for [getting Domo data](https
 You can add this library to any project via npm:
 
 ```
-npm install --save @domoinc/query
+npm install @domoinc/query
 ```
-
 
 ## Quick Reference
 
@@ -35,6 +34,11 @@ npm install --save @domoinc/query
 
 ## Examples
 
+<!--
+type: tab
+title: Basic Query
+-->
+
 ```typescript
 const datasetAlias = 'sales';
 
@@ -51,6 +55,11 @@ const response = await new Query()
 // Do something with the response data
 ...
 ```
+
+<!--
+type: tab
+title: Max Date
+-->
 
 ```typescript
 /**
@@ -71,6 +80,11 @@ async function getMaxDate() {
 
 console.log(await getMaxDate());
 ```
+
+<!--
+type: tab
+title: With Domo.js
+-->
 
 ```typescript
 /**
@@ -93,6 +107,8 @@ getEngagementSegmentBrands('Loyals').then((data) => {
   console.log(data);
 });
 ```
+
+<!-- type: tab-end -->
 
 ## API
 
@@ -129,7 +145,7 @@ query
 //  .orderBy('col3', OrderByDirection.DESCENDING)
 ```
 
-#### Selecting Columns
+### Selecting Columns
 
 Use `select` to specify the column names for the columns you want returned.
 
@@ -139,7 +155,9 @@ Use `select` to specify the column names for the columns you want returned.
 query.select(['col1', 'col2', 'col3']);
 ```
 
-#### Data Filtering
+<!-- type: tab-end -->
+
+### Data Filtering
 
 Filter data by using the `where(columName)` function followed by the desired filter function.
 
@@ -152,7 +170,7 @@ query
   .contains('foobar');
 ```
 
-##### Filter Functions
+#### Filter Functions
 
 ```typescript
 // Less than
@@ -193,7 +211,7 @@ query
 .notIn(values)
 ```
 
-#### Date Filtering
+### Date Filtering
 
 The `lt`, `lte`, `gt`, `gte`, `between` filter functions will filter dates when used on a column that is a date. Other functions will treat the date as a string.
 
@@ -206,7 +224,7 @@ query
   .lessThan(new Date('2014-08-01'));
 ```
 
-#### Date Range Filtering
+### Date Range Filtering
 
 Columns that are dates can be filtered using specific ranges: `previousPeriod`, `rollingPeriod`, `periodToDate`.
 
@@ -230,7 +248,7 @@ A `DateGrain` enum and a `RollingDateGrain` enum are provided with the valid int
 'years';
 ```
 
-##### Previous Period
+#### Previous Period
 
 Data for last year, last month, etc can be requested by using the `previousPeriod` function. This is how you would get data from last year when the date column is named `salesdate`:
 
@@ -280,7 +298,7 @@ query.select(['salesdate']).periodToDate('sales date', DateGrain.YEAR);
 query.select(['salesdate']).periodToDate('sales date', 'year');
 ```
 
-#### Group By
+### Group By
 
 Data can be transformed to a group-by operation using the `groupBy` function.
 Aggregations for columns can be specified in an object where the key is the column name, and the value is an `Aggregation`.
@@ -336,7 +354,7 @@ Become aggregated like so:
 | green  | 3     | 27       |
 | blue   | 3     | 16       |
 
-#### Date Grain
+### Date Grain
 
 Data can be "grained" by date by using the `dateGrain` function.
 This is a special type of "group by".
@@ -370,7 +388,7 @@ query
   .dateGrain('salesdate', 'month', { sales: 'sum' });
 ```
 
-#### Aggregation
+### Aggregation
 
 Accepted aggregation values are `'count'`, `'sum'`, `'avg'`, `'min'`, `'max'`, or `'unique'`.
 
@@ -393,19 +411,16 @@ query
   .aggregate({ salesTotal: Aggregate.SUM, salesAmount: 'avg' });
 ```
 
-#### Order By
+### Order By
 
 Rows can be ordered by any column in `'ascending'` or `'descending'` order using the `orderBy` function.
 
 An enum (`OrderByDirection`) is provided to define the order by direction. Valid orderings:
 
 ```typescript
-'ascending';
-'descending';
-```
-
-```typescript
 // TypeScript
+import { OrderByDirection } from '@domoinc/query';
+
 query
   .select(['salesAmount', 'salesRepName'])
   .orderBy('salesAmount', OrderByDirection.ASCENDING)
@@ -418,7 +433,7 @@ query
   .orderBy('salesRepName', 'descending');
 ```
 
-#### Limit
+### Limit
 
 For improved performance and latency, you can paginate data using `limit` and `offset`.
 
@@ -429,7 +444,7 @@ query
   .limit(10)
 ```
 
-#### Offset
+### Offset
 
 To offset the data you get by a certain number, use `offset`.
 
@@ -438,7 +453,7 @@ To offset the data you get by a certain number, use `offset`.
 query.select(['salesAmount', 'salesRepName']).limit(10).offset(10);
 ```
 
-#### Fiscal Calendar
+### Fiscal Calendar
 
 You can specify to use the instances fiscal calendar for date-related operations such as `previousPeriod` or `dateGrain` with `useFiscalCalendar(true)`. The standard calendar is used by default.
 
@@ -446,7 +461,7 @@ You can specify to use the instances fiscal calendar for date-related operations
 query.select(['salesAmount', 'salesRepName']).useFiscalCalendar();
 ```
 
-#### Beast Modes
+### Beast Modes
 
 You can enable beast modes in the query by calling the `useBeastMode`.
 true
