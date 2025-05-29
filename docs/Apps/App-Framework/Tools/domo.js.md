@@ -38,6 +38,8 @@ You can include `domo.js` in your web app, Pro-Code app, or Domo Brick via HTML 
   <script src="https://unpkg.com/ryuu.js"></script>
 ```
 
+<!-- type: tab-end -->
+
 ````html
 ### domo.get() --- `domo.js` makes it easy to request data from Domo. Simply
 call the data endpoint with your DataSet's alias (`sales` in this example):
