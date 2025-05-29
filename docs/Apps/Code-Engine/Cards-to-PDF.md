@@ -1,6 +1,6 @@
 # Return All Content of a Page as PDFs
 
-Below is a rudimentary path to get all Cards on a Page, as well as to get content as PDFs (note that if the content is a table, you will get a paginated result).
+Below is a rudimentary path to get all Cards on a Page, and other Page content, as PDFs (note that if the content is a table, you will get a paginated result).
 
 ```
 const codeengine = require('codeengine');
