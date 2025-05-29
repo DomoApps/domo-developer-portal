@@ -16,23 +16,21 @@ The `domo.js` library provides some convenient utilities for building custom Ap
 
 ---
 
+There are several ways to install the `domo.js` library in your Custom App. The most common methods are via npm or by including it in your HTML via a script tag.
+
 <!--
 type: tab
 title: npm
 -->
 
-`domo.js` is deployed with every template created via `domo init`. But you can also install it to existing projects via npm:
-
 ```
-npm install --save ryuu.js
+  npm install ryuu.js
 ```
 
 <!--
 type: tab
-title: HTML Script Tag
+title: Script Tag
 -->
-
-You can include `domo.js` in your web app, Pro-Code app, or Domo Brick via HTML script tag using UnPkg:
 
 ```
   <script src="https://unpkg.com/ryuu.js"></script>
@@ -40,18 +38,24 @@ You can include `domo.js` in your web app, Pro-Code app, or Domo Brick via HTML 
 
 <!-- type: tab-end -->
 
-````html
-### domo.get() --- `domo.js` makes it easy to request data from Domo. Simply
+### domo.get()
+
+---
+
+`domo.js` makes it easy to request data from Domo. Simply
 call the data endpoint with your DataSet's alias (`sales` in this example):
-```js domo.get("/data/v1/sales").then(function (data) { console.log("data",
-data); });
-````
+
+```js
+domo.get('/data/v1/sales').then(function (data) {
+  console.log('data', data);
+});
+```
 
 <!-- theme: info -->
 
 > #### Best Practice
 >
-> The code above will fetch the entire DataSet. We highly recommend filtering and limiting the data. See the Getting Data Guide to learn how to do this.
+> The code above will fetch the entire DataSet. We highly recommend filtering and paginating the data to avoid app crashes, slow response, and other issues. See the [Getting Data Guide](../Guides/getting-data.md) to learn how to do this.
 
 Domo supports a few different data formats. To specify the one you want, pass an options argument to `domo.get`:
 
