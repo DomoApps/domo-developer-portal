@@ -1,6 +1,6 @@
 # REST QUERY
 
-This is a simple library to create data query URLs for [Getting Domo data](../../Guides/getting-data.md). Use in conjunction with [domo.js](./domo.js.md)).
+This is a simple library to create data query URLs for [Getting Domo data](../Guides/getting-data.md). Use in conjunction with [domo.js](./domo.js.md)).
 
 ## Dependencies
 
