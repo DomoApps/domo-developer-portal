@@ -1,4 +1,4 @@
-# Getting started with the Pro-Code Editor
+# Getting Started with the Pro-Code Editor
 
 ## Introduction
 
@@ -20,7 +20,7 @@ Select a template from the available options to get started with your app. These
 
 Give your app a descriptive name and set an initial version number. Establishing a version control strategy from the start will help keep track of updates and changes as your app evolves.
 
-\* *Be aware that when a version is released, that version is locked for viewing only. Each version’s code is distinct, so changes in one version won’t affect others. This allows you to maintain multiple iterations of your app without risk of unintended changes across versions.*
+\* *Be aware that when a version is released, that version is locked for viewing only. Each version’s code is distinct, so changes in one version won’t affect others. This allows you to maintain multiple iterations of your app without risking unintended changes across versions.*
 
 ![save-template.png](../../../../assets/images/save-template.png)
 
@@ -73,4 +73,4 @@ If your app requires specific display dimensions, toggle the **Custom Size** swi
 
 ### Conclusion
 
-The Pro-Code Editor in Domo provides a flexible and powerful environment for creating custom applications. By following these steps, you’ll be able to set up your app, customize your workspace, and preview your work efficiently.
+The Pro-Code Editor in Domo provides a flexible and powerful environment for creating custom applications. By following the steps outlined above, you’ll be able to set up your app, customize your workspace, and preview your work efficiently.
