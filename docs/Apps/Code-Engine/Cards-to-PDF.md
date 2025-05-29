@@ -1,6 +1,6 @@
-# Return all content of a Page as PDF's.
+# Return All Content of a Page as PDFs.
 
-This is a strawman of getting all the cards on a page and getting the content a PDF’s. If the content is a table, you will get a paginated result.
+Below is a rudimentary path to get all Cards on a Page, as well as to get content as PDFs (note that if the content is a table, you will get a paginated result).
 
 ```
 const codeengine = require('codeengine');
@@ -28,7 +28,7 @@ class Helpers {
 
 
   /**
-   * Get all the Cards on a Page
+   * Get All Cards on a Page
    *
    * @param {string} pageID - The ID of the page
    * @returns {Object} An array of Card ID's
@@ -46,19 +46,19 @@ class Helpers {
 
 
   /**
-   * Get a PDF of a Card.
-   * If the Card is a chart it will return a single image
-   * If the Card is a Table, you can specify the number of pages returned
+   * Get a PDF of a Card
+   * If the Card is a chart, it will return a single image.
+   * If the Card is a table, you can specify the number of Pages returned.
    *
-   * @param {string} cardID - The ID of the card
-   * @param {number} numTablePages - The number of pages you want returned
-   * One nuance on the “pages” property… let’s say you specify 30 pages, and its actually 22 pages… 
-   * you’ll get 22 pages. If you specifcy 30 pages and it’s actually 32 pages, you’ll get 30 pages. 
-   * So err on the high side.
+   * @param {string} cardID - The ID of the Card.
+   * @param {number} numTablePages - The number of Pages you want returned.
+   * One nuance on the “pages” property: Let’s say you specify 30 pages, but the actual number of pages is 22; in this case, 
+   * you will get 22 pages. If, on the other hand, you specifcy 30 pages, but the actual number of pages is 32, then you will get 30 pages.
+   * Due to this nuance of the "pages" property, it's best to err on the high side. 
    *
    * You can also get a PNG of the Card by changing the URL param: parts=image
-   * There is a 25MB limit. The default url param is parts=image, which will return PNG’s. Changing that 
-   * to parts=imagePDF will save tons of space and you should get back all your pages.
+   * There is a 25MB limit. The default URL param is parts=image, which will return PNGs. Changing that 
+   * to parts=imagePDF will save space, and you should get back all Pages.
    * 
    * @returns {Object} base64 encoded PDF
    * @throws {Error} If the request fails
@@ -82,8 +82,8 @@ class Helpers {
   }
 
   /**
-   * Return all content of a Page as PDF's.
-   * This is a strawman of getting all the cards on a page and getting the content a PDF’s. If the content
+   * Return All Content of a Page as PDFs.
+   * This is a strawman for getting all Cards on a Page as PDFs. If the content
    * is a table, you will get a paginated result.
   **/
   async function page2PDF(pageID) {
