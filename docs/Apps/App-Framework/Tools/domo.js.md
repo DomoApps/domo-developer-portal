@@ -12,7 +12,7 @@ stoplight-id: e947d87e17547
 
 The `domo.js` library provides convenient utilities for building Custom Apps. The documentation below provides instructions on how to use each of these major utilities when building a Custom App.
 
-### Installation
+## Installation
 
 ---
 
@@ -37,6 +37,12 @@ title: Script Tag
 ```
 
 <!-- type: tab-end -->
+
+## Usage
+
+---
+
+Once installed, you can use the `domo.js` library in your Custom App. The library is available as a global variable named `domo`.
 
 ### domo.get()
 
