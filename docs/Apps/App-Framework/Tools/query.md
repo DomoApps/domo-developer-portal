@@ -1,4 +1,4 @@
-# REST QUERY
+# Query
 
 This is a simple library to create data query URLs for [Getting Domo data](../Guides/getting-data.md). Use in conjunction with [domo.js](./domo.js.md)).
 
@@ -8,13 +8,13 @@ This is a simple library to create data query URLs for [Getting Domo data](../Gu
 
 ## Installation
 
-You can add this library to any project using npm:
+The Query library is available on npm: [@domoinc/query on npm](https://www.npmjs.com/package/@domoinc/query)
 
 ```
 npm install @domoinc/query
 ```
 
-## Quick Reference
+## Overview
 
 - [.select](#selecting-columns)
 - [.where](#data-filtering)
@@ -110,7 +110,7 @@ getEngagementSegmentBrands('Loyals').then((data) => {
 
 <!-- type: tab-end -->
 
-## API
+## Usage
 
 ### Building a Query
 

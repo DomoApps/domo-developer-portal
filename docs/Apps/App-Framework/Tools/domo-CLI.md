@@ -20,7 +20,7 @@ For long-term support (LTS), we recommend using Homebrew or Chocolatey. If you p
 
 For more details on installing the CLI, see the [Setup and Installation Guide](../Quickstart/Setup-and-Installation.md).
 
-## Commands
+## Usage
 
 For a **complete** list of available commands, use `domo --help`
 

@@ -10,15 +10,17 @@ This README provides a quick overview of how to use Phoenix. For more detailed i
 
 If you are looking to build a Domo Dev Studio app that can query data from Domo and visualize it with Phoenix, please refer to the official [Starter Kit](https://github.com/DomoApps/StarterKit).
 
-## Usage
+## Installation
 
-First, install the library:
+The Phoenix library is available on npm: [@domoinc/domo-phoenix on npm](https://www.npmjs.com/package/@domoinc/domo-phoenix).
 
 ```sh
 npm install @domoinc/domo-phoenix
 ```
 
-You can then import and use the library in your project:
+## Usage
+
+Import and use the library in your project:
 
 ```javascript
 import { Chart, CHART_TYPE, DATA_TYPE, MAPPING } from '@domoinc/domo-phoenix';
