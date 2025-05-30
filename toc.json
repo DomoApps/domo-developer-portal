@@ -678,6 +678,11 @@
         },
         {
           "type": "item",
+          "title": "Code Editor Overview",
+          "uri": "docs/Automate-Actions/Code-Engine/code-editor-overview.md"
+        },
+        {
+          "type": "item",
           "title": "JavaScript Libraries",
           "uri": "docs/Automate-Actions/Code-Engine/javascript-libraries.md"
         },
