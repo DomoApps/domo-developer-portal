@@ -13,7 +13,7 @@ There are a few things to check if your collection isn't syncing correctly to yo
 3. Check if there are documents that need syncing (syncRequired: true)
 4. Check documents in your collection to make sure they have the right types for exported fields - often, the issue is that at least one document in the collection has a property that isn't being cast correctly.
 
-Sometimes developers confuse Typescript types (like "Number") with the column types that are supported for Domo DataSets. Instead, use “DOUBLE”, “LONG”, or “DECIMAL” types. Please refer to the [AppDB API](../../../Domo-App-APIs/AppDB-API.md#defining-collections-in-the-manifest) documentation for the list of supported column types.
+Sometimes developers confuse Typescript types (like "Number") with the column types that are supported for Domo DataSets. Instead, use “DOUBLE”, “LONG”, or “DECIMAL” types. Please refer to the [AppDB API](../../../API-Reference/Domo-App-APIs/AppDB-API.md#defining-collections-in-the-manifest) documentation for the list of supported column types.
 
 #### My App won't load a file
 

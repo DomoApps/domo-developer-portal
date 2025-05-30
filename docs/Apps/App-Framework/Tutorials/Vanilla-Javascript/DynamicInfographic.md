@@ -7,6 +7,7 @@ stoplight-id: atp50e7pzs4yd
 This tutorial walks through the steps required to convert a static infographic into a dynamic one.
 
 The power of bringing our infographic into Domo is all about the functionality that Domo's data and apps layer gives us out of the box. With relatively little code and setup, our infographic can be:
+
 - Connected to live data
 - Combined with other compelling visualizations and filtering components for a dynamic experience
 - Distributable as an application you can share or embed anywhere
@@ -19,8 +20,8 @@ To do this only requires three steps:
 
 https://youtu.be/ETGmHX-N9dw
 
-
 ### Step 1: Create your Infographic Template
+
 ---
 
 For this example, lets say you're in real estate and want to regularly share key insights on the housing market in your area. You could create an infographic in a great tool like [Canva](https://www.canva.com/), duplicate it for each zip code, and manually update the data for each as it changes as shown below.
@@ -35,14 +36,13 @@ To prepare your infographic template, you'll want to delete all the pieces of th
 
 For example, we'll want to replicate the font and text alignment properties set in Canva for the title as well as the description components of our initial infographic. Let's note these down.
 
-
 ![Screenshot 2024-04-19 at 12.35.51 PM.png](<../../../../../assets/images/Screenshot 2024-04-19 at 12.35.51 PM.png>)
 ![Screenshot 2024-04-19 at 12.35.13 PM.png](<../../../../../assets/images/Screenshot 2024-04-19 at 12.35.13 PM.png>)
 
 ![Screenshot 2024-04-19 at 12.39.12 PM.png](<../../../../../assets/images/Screenshot 2024-04-19 at 12.39.12 PM.png>)
 ![Screenshot 2024-04-19 at 12.38.49 PM.png](<../../../../../assets/images/Screenshot 2024-04-19 at 12.38.49 PM.png>)
 
-- **Title**: 
+- **Title**:
   - Font: Moontime
   - Alignment: Center
   - Color: #000000
@@ -51,20 +51,17 @@ For example, we'll want to replicate the font and text alignment properties set 
   - Alignment: Center
   - Color: #000000
 
-
-
 Now I can delete the parts of the infographic that I want to make dynamic.
 
 ![Screenshot 2024-04-19 at 12.40.29 PM.png](<../../../../../assets/images/Screenshot 2024-04-19 at 12.40.29 PM.png>)
 
 Finally, export this template infographic as a `.png` file. If you'd like to follow along for the next steps, [you can download this infographic template here](https://github.com/DomoApps/canva-infographic-walkthrough/blob/step-03/make-dynamic-data/infographic.png).
 
-
 ### Step 2: Setup Data in Domo
+
 ---
 
-In this example, we will setup data in a Domo Webform that we can edit whenever we would like. However, Domo has a vast array of tools for integrating many different sources of data. A subsequent step in this project -- but not covered in this tutorial -- would be to setup an automatically refreshable data pipeline for the real estate data. 
-
+In this example, we will setup data in a Domo Webform that we can edit whenever we would like. However, Domo has a vast array of tools for integrating many different sources of data. A subsequent step in this project -- but not covered in this tutorial -- would be to setup an automatically refreshable data pipeline for the real estate data.
 
 To add data to a Domo Webform, just navigate to "Data" > "Connectors" > Search "Webform".
 
@@ -72,19 +69,18 @@ To add data to a Domo Webform, just navigate to "Data" > "Connectors" > Search "
 
 You can then paste the following data in your Webform. NOTE: to match the code below, you will want all your column names to be lower-case.
 
-city | zip | num_homes_listed | avg_dom | median_list_price | price_change_pct | market_type
----------|----------|---------|---------|----------|---------|---------|
-Bend |	97701	| 73 |	127	| 725000	| 48	| 36 |
-Bend | 97702 |	114 |	96| 	842000 |	45|	38
-Bend |	97703|	105 |	129|	1500000 |	46	|36
-Bend | 97707 |	42 |	109 |	914000 |	38 |	31
-La Pine	| 97739	| 68 |	130	| 492000	| 26 |	36
-Prineville |	97754 |	82|	127|	471000	|39	|30
-Powell Butte |	97753|	24|	91|	1525000	|33 |	27
-Redmond	| 97756	| 159 |	114 |	599000 |	39 |	35
-Sisters	| 97759	| 40	| 164 |	1225000 |	38 |	35
-Madras |	97741 |	41 |	128 |	470000 |	32	| 33
-
+| city         | zip   | num_homes_listed | avg_dom | median_list_price | price_change_pct | market_type |
+| ------------ | ----- | ---------------- | ------- | ----------------- | ---------------- | ----------- |
+| Bend         | 97701 | 73               | 127     | 725000            | 48               | 36          |
+| Bend         | 97702 | 114              | 96      | 842000            | 45               | 38          |
+| Bend         | 97703 | 105              | 129     | 1500000           | 46               | 36          |
+| Bend         | 97707 | 42               | 109     | 914000            | 38               | 31          |
+| La Pine      | 97739 | 68               | 130     | 492000            | 26               | 36          |
+| Prineville   | 97754 | 82               | 127     | 471000            | 39               | 30          |
+| Powell Butte | 97753 | 24               | 91      | 1525000           | 33               | 27          |
+| Redmond      | 97756 | 159              | 114     | 599000            | 39               | 35          |
+| Sisters      | 97759 | 40               | 164     | 1225000           | 38               | 35          |
+| Madras       | 97741 | 41               | 128     | 470000            | 32               | 33          |
 
 ![Screenshot 2024-04-19 at 1.08.12 PM.png](<../../../../../assets/images/Screenshot 2024-04-19 at 1.08.12 PM.png>)
 
@@ -92,7 +88,7 @@ Once, you've added this data to Domo, click "Save & Continue".
 
 Now we have the data we need to power our dynamic infographic App!
 
-### Step 3: Build Domo App 
+### Step 3: Build Domo App
 
 Complete [code for this walkthrough can be found on GitHub here](https://github.com/DomoApps/canva-infographic-walkthrough).
 
@@ -112,13 +108,11 @@ Please use the same configuration as the image below, replacing the `dataset id`
 
 ![Screenshot 2024-04-19 at 1.18.39 PM.png](<../../../../../assets/images/Screenshot 2024-04-19 at 1.18.39 PM.png>)
 
-
 ![image (1).png](<../../../../../assets/images/image (1)-3.png>)
 
 Once the files have been initialized in a new directory, you can navigate to that directory with the `cd` command and explore the basic file structure of your App. It should look like the following:
 
 ![files.png](../../../../../assets/images/files-2.png)
-
 
 If you open up the `manifest.json` file you can see that we have some default configuration set for our app.
 
@@ -138,7 +132,6 @@ If you open up the `manifest.json` file you can see that we have some default co
     }
   ]
 }
-
 ```
 
 In order to create an App Design in our Domo instance, the last thing we need is a `thumbnail.png` file to use for the App's icon image in Domo. You may use the [image found here](https://github.com/DomoApps/canva-infographic-walkthrough/blob/step-01/init-app/thumbnail.png) or any thumbnail image of your choice as long as you name the file `thumbnail.png`.
@@ -165,27 +158,23 @@ Make sure your `manifest.json` file now looks something like this:
   "fileName": "manifest.json",
   "id": "c86f6e58-2060-4273-9906-13a8ff2da14e"
 }
-
 ```
 
 You can find a link to your new App Design in the terminal output.
 
 ![publish.png](../../../../../assets/images/publish.png)
 
-
 Go ahead and click on that link and then create a new Card.
 
 ![design.png](../../../../../assets/images/design.png)
-
 
 When you create a new Card (also known as an "App Instance"), you should see the App Wiring Screen that looks like the below. Our app has a simple `h1` element and is successfully wired up to a DataSet with the alias `infographicData`, which we've set by default to the sample DataSet we setup in Step 1.
 
 ![card.png](../../../../../assets/images/card.png)
 
-
 Click 'Save and Finish' and we're ready to start writing the code to build our App.
 
-Let's have a look at some of the default files generated by our starter template. 
+Let's have a look at some of the default files generated by our starter template.
 
 The `index.html` file contains the basic structure of our page and loads our JavaScript and CSS assets.
 
@@ -201,29 +190,25 @@ The `index.html` file contains the basic structure of our page and loads our Jav
     <script src="app.js"></script>
   </body>
 </html>
-
 ```
 
 The [`domo.js` utility library](../../Tools/domo.js.md) provides a number of useful functions for interfacing with Domo, including the `domo.get` call that is included in our `app.js` file by default.
 
 ```js
-domo.get('/data/v2/infographicData?limit=100')
-    .then(function(infographicData){
-      console.log("infographicData", infographicData);
-    });
+domo.get('/data/v2/infographicData?limit=100').then(function (infographicData) {
+  console.log('infographicData', infographicData);
+});
 ```
-This starter code uses Domo's [Data API](../../../../Domo-App-APIs/Data-API.md) to get the first 100 records from our DataSet with the alias `infographicData`.
+
+This starter code uses Domo's [Data API](../../../../API-Reference/Domo-App-APIs/Data-API.md) to get the first 100 records from our DataSet with the alias `infographicData`.
 
 Let's confirm that this is working by running the `domo dev` command to launch a hot-reloading local server. You should see a window open in your browser at `localhost:3000`.
 
 ![running.png](../../../../../assets/images/running.png)
 
-
 Next, right-click in your browser and click "Inspect", the navigate to the console to see if the `domo.get` request is logging data from your DataSet.
 
 ![show-data.png](../../../../../assets/images/show-data-2.png)
-
-
 
 Great! We have a nice development environment ready to go and it's connected directy to data in Domo.
 
@@ -233,28 +218,40 @@ First of all, let's add to our project the infographic `.png` image that we crea
 
 ![add-png.png](../../../../../assets/images/add-png-2.png)
 
-
 The next step is to work on the infographic template by editing the HTML code in the `index.html` file; let's create a simple structure that we can use to display the infographic information.
 
 Note: we are loading in fonts from Google Fonts to match the look and feel of the original infographic template. You can get the fonts you need by searching the [Google Fonts library](https://fonts.google.com/) and copying the `link` tags it generates for you.
 
-
 ```html
 <html>
   <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Moon+Dance&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Moon+Dance&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="app.css" />
   </head>
   <body>
     <img class="background" src="infographic.png" alt="" />
 
     <span id="title" class="title">Bend 97701</span>
-    <span id="homes-listed" class="description">73 <br> homes</span>
-    <span id="avg-dom" class="description">Average DOM <br> 127</span>
-    <span id="median-list-price" class="description">Median list price <br> $725,000</span>
-    <span id="price-change" class="description">48% of sellers reduced price</span>
+    <span id="homes-listed" class="description"
+      >73 <br />
+      homes</span
+    >
+    <span id="avg-dom" class="description"
+      >Average DOM <br />
+      127</span
+    >
+    <span id="median-list-price" class="description"
+      >Median list price <br />
+      $725,000</span
+    >
+    <span id="price-change" class="description"
+      >48% of sellers reduced price</span
+    >
     <span id="market-type" class="description">36 (Seller's Market)</span>
 
     <!-- domo.js optional utils -->
@@ -263,6 +260,7 @@ Note: we are loading in fonts from Google Fonts to match the look and feel of th
   </body>
 </html>
 ```
+
 Make sure to include `id` properties like `title` or `homes-listed` and the classes like `description` that we added to the HTML tags above. These will help us replace the data dynamically and style the elements later.
 
 Please note that we set the `img` tag to use our infographic as the App's background by using the `src="infographic.png"` attribute.
@@ -271,9 +269,7 @@ Please note that we set the `img` tag to use our infographic as the App's backgr
 
 The next step is adding some CSS rules to help the elements position in our layout, and includes the infographic background correctly, for this, let's update the `app.css` file by adding the next snippet.
 
-
 ```css
-
 /* Set the body to display the infographic as a background */
 body {
   width: 100%;
@@ -288,7 +284,7 @@ body {
 }
 
 .title {
-  font-family: "Moon Dance", cursive;
+  font-family: 'Moon Dance', cursive;
   font-weight: 400;
   font-style: normal;
   font-size: 10vh; /* Sets the font size to 10vh */
@@ -341,7 +337,6 @@ After styling the application, Let's confirm that this is working by running the
 
 ![look&feel.png](../../../../../assets/images/look&feel.png)
 
-
 Great! Our application looks much better and reflects all the work we did on the HTML and CSS files.
 
 #### Make Our Infographic Dynamic
@@ -368,19 +363,33 @@ After defining our structure, we need to set these variables into our HTML code 
 ```html
 <html>
   <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Moon+Dance&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Moon+Dance&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="app.css" />
   </head>
   <body onload="init();">
     <img class="background" src="infographic.png" alt="" />
     <span id="title" class="title">{city} {zip}</span>
 
-    <span id="homes-listed" class="description">{num_homes_listed} listed <br> homes</span>
-    <span id="avg-dom" class="description">Average DOM <br> {avg_dom}</span>
-    <span id="median-list-price" class="description">Median list price <br> ${median_list_price}</span>
-    <span id="price-change" class="description">{price_change_pct}% of sellers reduced price</span>
+    <span id="homes-listed" class="description"
+      >{num_homes_listed} listed <br />
+      homes</span
+    >
+    <span id="avg-dom" class="description"
+      >Average DOM <br />
+      {avg_dom}</span
+    >
+    <span id="median-list-price" class="description"
+      >Median list price <br />
+      ${median_list_price}</span
+    >
+    <span id="price-change" class="description"
+      >{price_change_pct}% of sellers reduced price</span
+    >
     <span id="market-type" class="description">{market_type}</span>
 
     <!-- domo.js optional utils -->
@@ -426,7 +435,7 @@ const formatMarketType = (marketType) => {
   } else {
     return `${marketType} (Buyers's Market)`
   }
-} 
+}
 
 
 // function to interpolate the data into the HTML template
@@ -438,7 +447,7 @@ const interpolateData = (data) => {
   mapDomColumns.forEach(value => {
     let columnValue = "";
     const defaultValue = document.getElementById(value.id).innerHTML.toString();
-    
+
     if (value.price) {
       columnValue = formatPrice(row[value.column]);
     } else if (value.market_type) {
@@ -495,7 +504,7 @@ const formatMarketType = (marketType) => {
   } else {
     return `${marketType} (Buyers's Market)`
   }
-} 
+}
 
 // function to interpolate the data into the HTML template
 const interpolateData = (data) => {
@@ -506,7 +515,7 @@ const interpolateData = (data) => {
   mapDomColumns.forEach(value => {
     let columnValue = "";
     const defaultValue = document.getElementById(value.id).innerHTML.toString();
-    
+
     if (value.price) {
       columnValue = formatPrice(row[value.column]);
     } else if (value.market_type) {
@@ -527,10 +536,11 @@ const init = async () => {
 }
 
 ```
+
 To see these functions being called by your app, you will need to add the `init()` function call to the body onload event in your `app.html` file like so:
 
 ```html
-<body onload="init();">
+<body onload="init();"></body>
 ```
 
 Great! We have our Javascript code ready to fetch data from the dataset and add it to our infographic template dynamically.
@@ -541,19 +551,19 @@ Now, let's run our application again using the `domo dev` command to see if is w
 
 Congrats! The application is working well and adding the data from our infographic dataset dynamically.
 
-
 To complete your App, run the `domo publish` command to deploy the updated code to Domo.
 
-
 ### Step 4: Finalize App and Benefits of Building on Domo
+
 ---
+
 Now that we have our App deployed to Domo, we can display it in an App Studio canvas.
 
 This will make it so we can add:
+
 - easy filtering capabilities to switch between different locations
 - other visualizations that live alongside our infographic
 - a way to share our dynamic embed our infographic with others.
-
 
 #### Create App Studio Canvas
 
@@ -567,7 +577,6 @@ Once you are in the edit view of your new App Studio canvas, you can add our cus
 
 Click the "+" button on the left navigation menu and drag the "Card" icon to your canvas. Search for your dynamic infographic component. Select it and size the component to your liking.
 
-
 ![add component to app studio.gif](<../../../../../assets/images/add component to app studio.gif>)
 
 #### Pro-code and No-code Components
@@ -579,6 +588,7 @@ One of the great things about both Domo Dashboards and App Studio is that "pro-c
 The first out-of-the-box components we'll want to add to make our infographic truly dynamic is a filter card component. This will allow users of our App to toggle between locations to update what data is displayed on the infographic.
 
 To create a filter card, we'll:
+
 - drag a new card on to our App Studio canvas
 - choose to create a new visualization from existing data
 - select the filter card visual
@@ -588,17 +598,16 @@ To create a filter card, we'll:
 
 ![adding filter to app.gif](<../../../../../assets/images/adding filter to app.gif>)
 
-
 **Adding a bar chart**
 
 For my app I'd also like to provide additional context around the infographic so people can see what the overall distribution of home prices looks like. For that I'll add a bar chart component.
 
 You can follow a similar pattern to add the bar chart:
+
 - drag a new card on to our App Studio canvas
 - choose to create a new visualization from existing data
 - select the bar chart card visual
 - adjust the y and x axes as well as the sorting settings
-
 
 ![adding chart to app.gif](<../../../../../assets/images/adding chart to app.gif>)
 
@@ -607,6 +616,7 @@ You can see that both our bar chart and dynamic infographic inherit the filter o
 ![adjust filter exceptions.gif](<../../../../../assets/images/adjust filter exceptions.gif>)
 
 Great! Before sharing our app with the world, we can make some small quality of life improvements.
+
 - rename the App
 - rename the App page
 - adjust the styles of different components for consistency
@@ -614,7 +624,6 @@ Great! Before sharing our app with the world, we can make some small quality of 
 After those small tweaks, the final app looks like the following:
 
 ![Screenshot 2024-04-24 at 10.52.29 AM.png](<../../../../../assets/images/Screenshot 2024-04-24 at 10.52.29 AM.png>)
-
 
 #### Sharing our App
 
@@ -627,9 +636,4 @@ One of the major benefits of building our solution on Domo is that we can now ea
 
 ![public embedding app.gif](<../../../../../assets/images/public embedding app.gif>)
 
-
 If you'd like to see [the final solution live, you can do so here](https://public.domo.com/embed/pages/rRvmp)!
-
-
-
-

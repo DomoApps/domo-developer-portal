@@ -11,11 +11,11 @@ info:
     2. A environment from outside of Domo
     2. A script running in Domo's Jupyter Workspaces
 
-    If you are looking to hit a workflow from a Domo App, see the [App Framework API Reference for Workflows](../../Domo-App-APIs/Workflows-API.md) and the [guide on how to hit a workflow from a Domo App](../../Apps/App-Framework/Guides/hitting-a-workflow.md).
+    If you are looking to hit a workflow from a Domo App, see the [App Framework API Reference for Workflows](../../API-Reference/Domo-App-APIs/Workflows-API.md) and the [guide on how to hit a workflow from a Domo App](../../Apps/App-Framework/Guides/hitting-a-workflow.md).
 
     If you are unfamiliar with how to authenticate against Product APIs, [please see this overview page](../../Getting-Started/api-authentication.md).
 
-    For more background on Workflows, check out the [Knowledge Base for an overview](https://domo-support.domo.com/s/article/000005108?language=en_US). 
+    For more background on Workflows, check out the [Knowledge Base for an overview](https://domo-support.domo.com/s/article/000005108?language=en_US).
 servers:
   - url: 'https://YOUR_INSTANCE.domo.com/api/workflow/v1/'
     description: Workflows Product API

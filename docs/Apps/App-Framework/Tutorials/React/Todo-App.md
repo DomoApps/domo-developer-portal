@@ -1,6 +1,7 @@
 # To-do App Tutorial
 
 ### Intro
+
 ---
 
 This tutorial will walk you through building a task management app. You will learn how to create a web app from scratch using Domo's React app template.
@@ -12,6 +13,7 @@ You can check out [complete code examples of the To-do App on Github](https://gi
 We will go through how to create a basic React app, use Domo's AppDB to implement CRUD functionality, and deploy the application on the Domo platform.
 
 ### Step 1: Setup and Installation
+
 ---
 
 For this tutorial, we will use yarn as a node package manager, but you can follow the instructions from the <a href="https://create-react-app.dev/docs/getting-started#creating-an-app">create-react-app documentation</a> to install a new react app with the `@domoinc` template based on the package manager of your choice (`npx`, `yarn`, or `npm`). Before starting, make sure you've successfully [installed the Domo Apps CLI](Setup-and-Installation.md) and completed the `domo login` command to authenticate against your instance of Domo.
@@ -56,11 +58,7 @@ You can see more details on the dependencies and utility scripts setup in this t
     "extends": "react-app"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
@@ -68,13 +66,13 @@ You can see more details on the dependencies and utility scripts setup in this t
     ]
   }
 }
-
 ```
 
 ### Step 2: Create an AppDB collection to store tasks
+
 ---
 
-[AppDB](../../../../Domo-App-APIs/AppDB-API.md) is a nosql database for storing arbitrary JSON documents, we can use it to persist data in our app.
+[AppDB](../../../../API-Reference/Domo-App-APIs/AppDB-API.md) is a nosql database for storing arbitrary JSON documents, we can use it to persist data in our app.
 
 #### Define a collection
 
@@ -101,31 +99,32 @@ Your manifest.json will look like the following.
 
 ```json
 {
-    "name": "To-do app",
-    "version": "0.0.1",
-    "size": {
-        "width": 3,
-        "height": 3
-    },
-    "mapping": [],
-    "collections": [
-        {
-            "name": "TasksCollection",
-            "schema": {
-              "columns": [
-                { "name": "title", "type": "STRING" },
-                { "name": "description", "type": "STRING" },
-                { "name": "dueDate", "type": "STRING" },
-                { "name": "status", "type": "STRING" },
-                { "name": "priority", "type": "STRING" }
-              ]
-            }
-        }
-    ]
+  "name": "To-do app",
+  "version": "0.0.1",
+  "size": {
+    "width": 3,
+    "height": 3
+  },
+  "mapping": [],
+  "collections": [
+    {
+      "name": "TasksCollection",
+      "schema": {
+        "columns": [
+          { "name": "title", "type": "STRING" },
+          { "name": "description", "type": "STRING" },
+          { "name": "dueDate", "type": "STRING" },
+          { "name": "status", "type": "STRING" },
+          { "name": "priority", "type": "STRING" }
+        ]
+      }
+    }
+  ]
 }
 ```
 
 ### Step 3: Wire the local instance to Domo
+
 ---
 
 Now that we have our `manifest.json` ready, we can publish the initial design of our app, which will allow us to wire our app to resources in our Domo instance like AppDB.
@@ -179,33 +178,34 @@ Your manifest.json will now look similar to this:
 
 ```json
 {
-    "name": "To-do app",
-    "version": "0.0.1",
-    "size": {
-        "width": 3,
-        "height": 3
-    },
-    "mapping": [],
-    "collections": [
-        {
-            "name": "TasksCollection",
-            "schema": {
-              "columns": [
-                { "name": "title", "type": "STRING" },
-                { "name": "description", "type": "STRING" },
-                { "name": "dueDate", "type": "STRING" },
-                { "name": "status", "type": "STRING" },
-                { "name": "priority", "type": "STRING" }
-              ]
-            }
-        }
-    ],
-    "id": "23307940-6dfe-40c4-86f8-8a7b0f5d8b3a",
-    "proxyId": "95bd96f9-0385-465a-b485-c16935cf771a"
+  "name": "To-do app",
+  "version": "0.0.1",
+  "size": {
+    "width": 3,
+    "height": 3
+  },
+  "mapping": [],
+  "collections": [
+    {
+      "name": "TasksCollection",
+      "schema": {
+        "columns": [
+          { "name": "title", "type": "STRING" },
+          { "name": "description", "type": "STRING" },
+          { "name": "dueDate", "type": "STRING" },
+          { "name": "status", "type": "STRING" },
+          { "name": "priority", "type": "STRING" }
+        ]
+      }
+    }
+  ],
+  "id": "23307940-6dfe-40c4-86f8-8a7b0f5d8b3a",
+  "proxyId": "95bd96f9-0385-465a-b485-c16935cf771a"
 }
 ```
 
 ### Step 4: Create a tasks collection service
+
 ---
 
 With our App connected to the Domo card and the collection created, you are ready to start making requests to appDB, for this we will use the `AppDBClient` that can be found in `@domoinc/toolkit` package, add this package by running the following command. See more on the [Domo Toolkit library here](https://domoapps.github.io/toolkit/).
@@ -223,50 +223,47 @@ import { AppDBClient } from '@domoinc/toolkit';
 
 const TaskTableClient = new AppDBClient.DocumentsClient('TasksCollection');
 
-const fetchTasks = async (
-    status,
-) => {
-    const queryParams = {};
+const fetchTasks = async (status) => {
+  const queryParams = {};
 
-    if (status !== undefined) {
-        queryParams['content.status'] = { $eq: status };
-    }
-    const response = await TaskTableClient.get(queryParams);
-    const data = Array.isArray(response.data)
-        ? response.data.map((document) => ({
-            ...document.content,
-            id: document.id,
-        }))
-        : [{ ...data.content }];;
+  if (status !== undefined) {
+    queryParams['content.status'] = { $eq: status };
+  }
+  const response = await TaskTableClient.get(queryParams);
+  const data = Array.isArray(response.data)
+    ? response.data.map((document) => ({
+        ...document.content,
+        id: document.id,
+      }))
+    : [{ ...data.content }];
 
-    return data
+  return data;
 };
 
 const createTask = async (task) => {
-    const response = await TaskTableClient.create(task);
-    return {id: response.data.id, ...response.data.content};
+  const response = await TaskTableClient.create(task);
+  return { id: response.data.id, ...response.data.content };
 };
 
-const deleteTasks = async (tasksIds) =>
-    await TaskTableClient.delete(tasksIds);
+const deleteTasks = async (tasksIds) => await TaskTableClient.delete(tasksIds);
 
 const updateTask = async (id, content) => {
-    const response = await TaskTableClient.update({ id, content });
-    return response.data.content;
+  const response = await TaskTableClient.update({ id, content });
+  return response.data.content;
 };
 
 export const TaskService = {
-    fetchTasks,
-    createTask,
-    deleteTasks,
-    updateTask,
+  fetchTasks,
+  createTask,
+  deleteTasks,
+  updateTask,
 };
-
 ```
 
 The code above implements simple functions for interacting with our tasks in AppDB. These functions cover CREATE, READ (FETCH), UPDATE, and DELETE capabilities and should be relatively self-explanatory.
 
 ### Step 5: Create App UI
+
 ---
 
 Now that the app is able to interact with AppDB, let's add some React components to display and manage our tasks.
@@ -290,6 +287,7 @@ One of the best parts of working with the React framework is how it makes [Compo
 For each of our components, we'll create a separate file within `src/components/TasksContainer/`
 
 #### TasksContainer
+
 App content section, this is the wrapper where all the tasks will be listed.
 
 **Code**
@@ -300,127 +298,155 @@ For this parent component, we'll place the following Javascript code in `src/com
 import React, { useEffect, useState, useRef } from 'react';
 import { TaskService } from '../../taskService';
 import styles from './index.module.scss';
-import { TaskListITem } from './TaskListItem'
+import { TaskListITem } from './TaskListItem';
 import { TaskForm } from './TaskForm';
 
 const TasksEmptyState = () => (
-  <div className={styles.List__empty}>
-    You have no tasks
-  </div>
+  <div className={styles.List__empty}>You have no tasks</div>
 );
-const TaskList = ({ tasks = [], onCheck, onClick }) => (
+const TaskList = ({ tasks = [], onCheck, onClick }) =>
   tasks.map((task) => (
-    <TaskListITem key={task.id} task={task} onCheck={onCheck} onTaskClick={onClick} />
-  ))
-);
+    <TaskListITem
+      key={task.id}
+      task={task}
+      onCheck={onCheck}
+      onTaskClick={onClick}
+    />
+  ));
 
 const Content = () => {
-  const [tasks, setTasks] = useState([])
-  const [selectedTasks, setSelectedTasks] = useState([])
-  const [editingTask, setEditingTask] = useState({})
-  const [loading, setLoading] = useState(false)
+  const [tasks, setTasks] = useState([]);
+  const [selectedTasks, setSelectedTasks] = useState([]);
+  const [editingTask, setEditingTask] = useState({});
+  const [loading, setLoading] = useState(false);
   const dialogRef = useRef(null);
 
   useEffect(() => {
-    setLoading(true)
-    TaskService.fetchTasks('active').then(response => {
-      setTasks(response)
-      setLoading(false)
-    })
-  }, [])
+    setLoading(true);
+    TaskService.fetchTasks('active').then((response) => {
+      setTasks(response);
+      setLoading(false);
+    });
+  }, []);
 
   const handleSave = async (task) => {
     try {
       let request;
-      const newTasks = [...tasks]
+      const newTasks = [...tasks];
       if (task.id !== undefined) {
-        const updatedTask = newTasks.find(newTask => newTask.id === task.id);
+        const updatedTask = newTasks.find((newTask) => newTask.id === task.id);
         Object.assign(updatedTask, task);
         const { id, isSelected, ...content } = task;
-        request = TaskService.updateTask(id, content)
+        request = TaskService.updateTask(id, content);
       } else {
-        request = TaskService.createTask(task)
+        request = TaskService.createTask(task);
         newTasks.push(task);
       }
       const savedTask = await request;
       setTasks(newTasks);
       return savedTask;
     } catch (error) {
-      return null
+      return null;
     }
-  }
+  };
 
   const completeTasks = async () => {
     try {
-      const newTasks = [...tasks]
-      const requests = tasks.filter(task => selectedTasks.includes(task.id)).map(task => {
-        const newTask = { ...task, status: 'completed' }
-        const completedTask = newTasks.find(newTask => newTask.id === task.id);
-        Object.assign(completedTask, newTask);
-        const { id, isSelected, ...content } = newTask;
-        return TaskService.updateTask(id, content)
-      })
+      const newTasks = [...tasks];
+      const requests = tasks
+        .filter((task) => selectedTasks.includes(task.id))
+        .map((task) => {
+          const newTask = { ...task, status: 'completed' };
+          const completedTask = newTasks.find(
+            (newTask) => newTask.id === task.id,
+          );
+          Object.assign(completedTask, newTask);
+          const { id, isSelected, ...content } = newTask;
+          return TaskService.updateTask(id, content);
+        });
       await Promise.all[requests];
       setTasks(newTasks);
     } catch (error) {
-      return null
+      return null;
     }
-  }
+  };
 
   const deleteTasks = async () => {
     try {
-      const newTasks = tasks.filter(task => !selectedTasks.includes(task.id))
-      TaskService.deleteTasks(selectedTasks)
+      const newTasks = tasks.filter((task) => !selectedTasks.includes(task.id));
+      TaskService.deleteTasks(selectedTasks);
       setTasks(newTasks);
     } catch (error) {
-      return null
+      return null;
     }
-  }
+  };
 
   const onTaskCheck = (taskId) => {
     const isSelected = selectedTasks.includes(taskId);
     if (isSelected) {
-      const newSelected = selectedTasks.filter(task => task !== taskId);
+      const newSelected = selectedTasks.filter((task) => task !== taskId);
       setSelectedTasks(newSelected);
     } else {
-      setSelectedTasks([...selectedTasks, taskId])
+      setSelectedTasks([...selectedTasks, taskId]);
     }
-    const newTasks = tasks.map(task => task.id === taskId ? { ...task, isSelected: !isSelected } : task)
+    const newTasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, isSelected: !isSelected } : task,
+    );
     setTasks(newTasks);
   };
 
   const onTaskClick = (task) => {
     setEditingTask(task);
-    dialogRef.current.showModal()
-  }
+    dialogRef.current.showModal();
+  };
 
   const onClose = () => {
-    dialogRef.current.close()
-    setEditingTask({})
-  }
+    dialogRef.current.close();
+    setEditingTask({});
+  };
 
-  if (loading ?? false)
-    return <div>Loading...</div>;
+  if (loading ?? false) return <div>Loading...</div>;
 
   return (
     <>
       <div className={styles.List__container}>
-        {tasks.length === 0 ? <TasksEmptyState /> : <TaskList tasks={tasks} onCheck={onTaskCheck} onClick={onTaskClick} />}
+        {tasks.length === 0 ? (
+          <TasksEmptyState />
+        ) : (
+          <TaskList tasks={tasks} onCheck={onTaskCheck} onClick={onTaskClick} />
+        )}
       </div>
-      <button className={styles.List__addButton} onClick={() => dialogRef.current.showModal()}> Add Task</button>
-      {selectedTasks.length > 0 && <>
-        <button className={styles.List__addButton} onClick={completeTasks}> Complete Tasks</button>
-        <button className={styles.List__addButton} onClick={deleteTasks}> Delete Tasks</button>
-      </>}
-      <dialog ref={dialogRef}><TaskForm onClose={onClose} onSave={handleSave} task={editingTask} /> </dialog>
+      <button
+        className={styles.List__addButton}
+        onClick={() => dialogRef.current.showModal()}
+      >
+        {' '}
+        Add Task
+      </button>
+      {selectedTasks.length > 0 && (
+        <>
+          <button className={styles.List__addButton} onClick={completeTasks}>
+            {' '}
+            Complete Tasks
+          </button>
+          <button className={styles.List__addButton} onClick={deleteTasks}>
+            {' '}
+            Delete Tasks
+          </button>
+        </>
+      )}
+      <dialog ref={dialogRef}>
+        <TaskForm onClose={onClose} onSave={handleSave} task={editingTask} />{' '}
+      </dialog>
     </>
   );
 };
 
-export const TasksContainer = () => <div className={styles.List__container}>
-  <Content />
-</div>
-
+export const TasksContainer = () => (
+  <div className={styles.List__container}>
+    <Content />
+  </div>
+);
 ```
 
 We'll also add the following CSS to a new file: `src/components/TasksContainer/index.module.scss`.
@@ -430,17 +456,17 @@ We'll also add the following CSS to a new file: `src/components/TasksContainer/i
   margin: 3% auto;
 }
 
-.List__empty{
+.List__empty {
   margin: 2% auto;
 }
 
 .List__add {
   float: right;
   margin-right: 16px;
-  background-color: #99CCEE;
+  background-color: #99ccee;
 }
 
-.List__addButton{
+.List__addButton {
   min-width: 100px;
   margin: 4px;
   padding: 8px;
@@ -461,92 +487,100 @@ Add the following Javascript in a new directory inside of the `TasksContainer` w
 **Code**
 
 ```js
-import React from "react";
-import styles from "./index.module.scss";
+import React from 'react';
+import styles from './index.module.scss';
 
 const COLOR_MAP = {
-  High: "#fbad56",
-  Urgent: "#fd9a93",
-  Low: "#fdecad",
+  High: '#fbad56',
+  Urgent: '#fd9a93',
+  Low: '#fdecad',
 };
 
-export const TaskListITem = ({ task, onCheck, onTaskClick }) => 
-    <div>
-      <div className={styles.Main__wrapper}>
-        <div className={styles.Row_content_wrapper}>
-          <input
-            type="checkbox"
-            disabled={task.status === "completed" }
-            className={styles.Row__checkbox}
-            checked={task.isSelected}
-            onChange={(event) => onCheck(task.id)}
-          />
-          <div className={styles.Row__content}>
-            {task.status === "completed" ? (
-              <div className={styles.Row__completedTask__subtitle}>
-                {task.title}
-              </div>
-            ) : (
-              <div className={styles.Row__tasktitle} onClick={() => onTaskClick(task)}>{task.title}</div>
-            )}
-            <div className={styles.Row__subtitle}>{task?.description}</div>
-          </div>
-          <div label={task.priority} className={styles.Row__priority} style={{ background: COLOR_MAP[task.priority] }} />
+export const TaskListITem = ({ task, onCheck, onTaskClick }) => (
+  <div>
+    <div className={styles.Main__wrapper}>
+      <div className={styles.Row_content_wrapper}>
+        <input
+          type="checkbox"
+          disabled={task.status === 'completed'}
+          className={styles.Row__checkbox}
+          checked={task.isSelected}
+          onChange={(event) => onCheck(task.id)}
+        />
+        <div className={styles.Row__content}>
+          {task.status === 'completed' ? (
+            <div className={styles.Row__completedTask__subtitle}>
+              {task.title}
+            </div>
+          ) : (
+            <div
+              className={styles.Row__tasktitle}
+              onClick={() => onTaskClick(task)}
+            >
+              {task.title}
+            </div>
+          )}
+          <div className={styles.Row__subtitle}>{task?.description}</div>
         </div>
+        <div
+          label={task.priority}
+          className={styles.Row__priority}
+          style={{ background: COLOR_MAP[task.priority] }}
+        />
       </div>
     </div>
-
+  </div>
+);
 ```
 
 The CSS specific to this component can then go in: `src/components/TasksContainer/TaskListItem/index.module.scss`.
 
 ```css
 .Main__wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 8px 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 8px 0px;
 }
 
 .Row_content_wrapper {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
-.Row__checkbox{
-    margin-right: 8px;
+.Row__checkbox {
+  margin-right: 8px;
 }
 
-.Row__content{
-    display: flex;
-    width: 300px;
-    flex-direction: column;
-    justify-content: center;
-    align-content: flex-start;
+.Row__content {
+  display: flex;
+  width: 300px;
+  flex-direction: column;
+  justify-content: center;
+  align-content: flex-start;
 }
 
 .Row__subtitle {
-    color: gray;
+  color: gray;
 }
 
-.Row__completedTask__subtitle{
-    text-decoration: line-through;
+.Row__completedTask__subtitle {
+  text-decoration: line-through;
 }
 
-.Row__tasktitle{
-    cursor: pointer;
-    margin: 4px 0px;
-    &:hover{
-        text-decoration: underline;
-    }
+.Row__tasktitle {
+  cursor: pointer;
+  margin: 4px 0px;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
-.Row__priority{
-    width: 20px;
-    height: 20px;
+.Row__priority {
+  width: 20px;
+  height: 20px;
 }
-
 ```
 
 #### TaskForm
@@ -566,8 +600,8 @@ export const TaskForm = ({ onSave, onClose, task = {} }) => {
   const [alert, setAlert] = useState('');
 
   useEffect(() => {
-    setStagedTask(task)
-  }, [task])
+    setStagedTask(task);
+  }, [task]);
 
   const handleStagedTaskUpdate = (key, value) => {
     const newStagedData = { ...stagedTask, [key]: value };
@@ -583,9 +617,11 @@ export const TaskForm = ({ onSave, onClose, task = {} }) => {
       dueDate: stagedTask?.dueDate,
       status: 'active',
     };
-    const response = await onSave(task)
+    const response = await onSave(task);
     if (response?.id !== undefined) setStagedTask({});
-    setAlert(`Task ${task.id !== undefined ? 'updated' : 'created'} Successfully!`);
+    setAlert(
+      `Task ${task.id !== undefined ? 'updated' : 'created'} Successfully!`,
+    );
     setTimeout(() => {
       onClose();
       setAlert('');
@@ -619,9 +655,7 @@ export const TaskForm = ({ onSave, onClose, task = {} }) => {
               handleStagedTaskUpdate('description', event.target.value)
             }
           />
-          <div
-            className={styles.TaskForm__formSubTitle}
-          >
+          <div className={styles.TaskForm__formSubTitle}>
             Completion Due Date
           </div>
           <div>
@@ -630,14 +664,21 @@ export const TaskForm = ({ onSave, onClose, task = {} }) => {
               type="date"
               value={stagedTask?.dueDate}
               onChange={(event) =>
-                handleStagedTaskUpdate('dueDate', new Date(event.target.value).toISOString().split('T')[0])
+                handleStagedTaskUpdate(
+                  'dueDate',
+                  new Date(event.target.value).toISOString().split('T')[0],
+                )
               }
             />
           </div>
           <div className={styles.TaskForm__formSubTitle}>Set Priority</div>
-          <select className={styles.TaskForm__formInput} value={stagedTask.priority} onChange={(event) =>
-            handleStagedTaskUpdate('priority', event.target.value)
-          }>
+          <select
+            className={styles.TaskForm__formInput}
+            value={stagedTask.priority}
+            onChange={(event) =>
+              handleStagedTaskUpdate('priority', event.target.value)
+            }
+          >
             <option value="Low">Low</option>
             <option value="High">High</option>
             <option value="Urgent">Urgent</option>
@@ -650,47 +691,39 @@ export const TaskForm = ({ onSave, onClose, task = {} }) => {
             >
               SAVE
             </button>
-            <button
-              onClick={onClose}
-            >
-              CANCEL
-            </button>
+            <button onClick={onClose}>CANCEL</button>
           </div>
         </div>
-        {alert !== '' && (
-          <div className={styles.TaskForm__alert}>
-            {alert}
-          </div>
-        )}
+        {alert !== '' && <div className={styles.TaskForm__alert}>{alert}</div>}
       </div>
     </div>
   );
 };
-
 ```
 
 Then, we can add the CSS for our form at `src/components/TasksContainer/TaskForm/index.module.scss`;
 
 ```css
-
 .TaskForm {
   border-radius: 12px;
-  background-color: #FAFAFA;  
+  background-color: #fafafa;
   width: 500px;
   height: 575px;
-  & input, select, textarea {
+  & input,
+  select,
+  textarea {
     width: 85%;
     border: 1px solid #999999;
   }
 }
 
-.TaskForm__ButtonsWrapper{
+.TaskForm__ButtonsWrapper {
   margin-top: 30px;
   display: flex;
   gap: 2%;
-   & > button {
-     width: 48%;
-   }
+  & > button {
+    width: 48%;
+  }
 }
 
 .TaskForm__titleBox {
@@ -729,19 +762,19 @@ Then, we can add the CSS for our form at `src/components/TasksContainer/TaskForm
   border-radius: 8px;
   color: black !important;
   margin-bottom: 12px !important;
-  &::placeholder{
+  &::placeholder {
     padding: 12px !important;
   }
 }
 
 .TaskForm__formSubTitle {
   padding-top: 12px;
-  color: rgba(0, 0, 0, 0.5);;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .TaskForm__createButton {
   padding: 8px;
-  background-color: #FC9927 !important;
+  background-color: #fc9927 !important;
   color: white !important;
   font-weight: 700 !important;
   font-size: 12px !important;
@@ -761,19 +794,19 @@ Then, we can add the CSS for our form at `src/components/TasksContainer/TaskForm
 With the custom components created, we just need to call the TasksContainer in the app index.js located at `src/index.js`.
 
 ```js
-import React from "react";
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import { TasksContainer } from "./components/TasksContainer";
-import reportWebVitals from "./reportWebVitals";
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import { TasksContainer } from './components/TasksContainer';
+import reportWebVitals from './reportWebVitals';
 
-const container = document.getElementById("root");
+const container = document.getElementById('root');
 const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <h1>Tasks Manager</h1>
     <TasksContainer />
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

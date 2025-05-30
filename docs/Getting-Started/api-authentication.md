@@ -43,19 +43,19 @@ In either case, admins have the ability to [revoke clients for the Platform APIs
 
 ---
 
-Typically, authentication for the [App Framework APIs](../Domo-App-APIs/AppDB-API.md) is handled automatically when developing with the [Domo Apps CLI](../Apps/App-Framework/Tools/domo-CLI.md) through the `domo login` command or is inherited by virtue of developing from within your Domo Instance (e.g. building [Domo Bricks](../Apps/DDX-Bricks/Quickstart/overview.md)).
+Typically, authentication for the [App Framework APIs](../API-Reference/Domo-App-APIs/AppDB-API.md) is handled automatically when developing with the [Domo Apps CLI](../Apps/App-Framework/Tools/domo-CLI.md) through the `domo login` command or is inherited by virtue of developing from within your Domo Instance (e.g. building [Domo Bricks](../Apps/DDX-Bricks/Quickstart/overview.md)).
 
 Please note that some of the App Framework APIs share (or have a similar) name as a related Platform (OAuth) APIs. This can cause confusion, so it's worth clarifying that the App Framework APIs are for use within the Domo App context and the Platform (OAuth) APIs are more generally accessible.
 
-- [AI Service Layer API](../Domo-App-APIs/AI-Service-Layer-API.md)
-- [AppDB API](../Domo-App-APIs/AppDB-API.md)
-- [Code Engine API](../Domo-App-APIs/Code-Engine-API.md)
-- [Data API](../Domo-App-APIs/Data-API.md)
-- [Files API](../Domo-App-APIs/Files-API.md)
-- [Groups API](../Domo-App-APIs/Groups-API.md)
-- [Queues and Tasks API](../Domo-App-APIs/Queues-and-Tasks-API.md)
-- [User API](../Domo-App-APIs/User-API.md)
-- [Workflows API](../Domo-App-APIs/Workflows-API.md)
+- [AI Service Layer API](../API-Reference/Domo-App-APIs/AI-Service-Layer-API.md)
+- [AppDB API](../API-Reference/Domo-App-APIs/AppDB-API.md)
+- [Code Engine API](../API-Reference/Domo-App-APIs/Code-Engine-API.md)
+- [Data API](../API-Reference/Domo-App-APIs/Data-API.md)
+- [Files API](../API-Reference/Domo-App-APIs/Files-API.md)
+- [Groups API](../API-Reference/Domo-App-APIs/Groups-API.md)
+- [Queues and Tasks API](../API-Reference/Domo-App-APIs/Queues-and-Tasks-API.md)
+- [User API](../API-Reference/Domo-App-APIs/User-API.md)
+- [Workflows API](../API-Reference/Domo-App-APIs/Workflows-API.md)
 
 ## Platform (OAuth) APIs
 

@@ -4,12 +4,14 @@ stoplight-id: 6fa7587d4c2ea
 
 # Querying Data
 
-The following is a short list of examples on how to create complex queries of your data. This is not intended to be an all-encompassing list so be sure you familiarize yourself with all of the possible query parameters documented in the Data API [documentation](../../../Domo-App-APIs/Data-API.md).
+The following is a short list of examples on how to create complex queries of your data. This is not intended to be an all-encompassing list so be sure you familiarize yourself with all of the possible query parameters documented in the Data API [documentation](../../../API-Reference/Domo-App-APIs/Data-API.md).
 
 <strong>Note</strong>: All of these examples leverage ES6 arrow notation, template strings, and the [domo.js](domo.js.md) library.
 
 ### Select All
+
 ---
+
 ```js
 domo
   .get('data/v1/sales')
@@ -18,7 +20,9 @@ domo
 ```
 
 ### GroupBy
+
 ---
+
 Selecting all the data typically isn't practical, especially as you start working with large datasets. Keeping with best practices, you should aim to only get the data you need. Let's change our query so we summarize sales by sales rep
 
 ```js
@@ -29,7 +33,9 @@ domo
 ```
 
 ### Filters
+
 ---
+
 #### Rolling Date
 
 Performance for all time might just give long-time employees the advantage. How about total sales for the last 3 months?
@@ -51,7 +57,7 @@ domo
 
 #### Contains
 
-What if I only want reps with a specific name? 
+What if I only want reps with a specific name?
 
 ```js
 const select = ['rep', 'amount'];
@@ -71,10 +77,10 @@ domo
 
 #### Equal & Dategrain
 
-How about getting monthly sales for a specific sales rep? 
+How about getting monthly sales for a specific sales rep?
 
 ```js
-// be sure you include the date field in the `fields` 
+// be sure you include the date field in the `fields`
 // if you want the month grain returned.
 const select = ['rep', 'amount', 'date'];
 const where = ['rep = Dione Miu'];
@@ -95,7 +101,9 @@ domo
 ```
 
 ### OrderBy
+
 ---
+
 Who had the top 10 biggest sales for the last month?
 
 ```js
@@ -116,7 +124,9 @@ domo
 ```
 
 ### OrderBy an Aggregation
+
 ---
+
 How about getting the Top 10 Reps by the totals sales in the current quarter?
 
 ```js
@@ -131,17 +141,19 @@ const query = `/data/v1/sales?fields=${select.join()}
   &calendar=fiscal
 `;
 
-return domo.get(query).then(res => {
+return domo.get(query).then((res) => {
   // KNOWN LIMITATION: will need to order the results
   // and limit the list on the client side
   return res
     .sort((a, b) => b.amount - a.amount) // sort descending
-    .slice(0, 10);	
+    .slice(0, 10);
 });
 ```
 
 ### Distinct
+
 ---
+
 #### Simple
 
 While there's not a `DISTINCT` option like you'd find in SQL, you can accomplish the same result leveraging `groupby`
@@ -159,8 +171,9 @@ Add you can make it more complex by just adding additional fields to both the `f
 
 ```js
 domo
-  .get('/data/v1/sales?fields=office,territory,state&groupby=office,territory,state')
+  .get(
+    '/data/v1/sales?fields=office,territory,state&groupby=office,territory,state',
+  )
   // do something with the results
   .then(console.table);
 ```
-
