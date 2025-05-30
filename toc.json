@@ -678,7 +678,12 @@
         },
         {
           "type": "item",
-          "title": "Code Editor Overview",
+          "title": "Creating Custom Packages",
+          "uri": "docs/Automate-Actions/Code-Engine/creating-packages.md"
+        },
+        {
+          "type": "item",
+          "title": "Code Editor",
           "uri": "docs/Automate-Actions/Code-Engine/code-editor-overview.md"
         },
         {
