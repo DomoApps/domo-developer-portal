@@ -4,8 +4,6 @@ stoplight-id: 1sirxqzlsb4sk
 
 # Code Engine
 
-## Introduction
-
 Domo Code Engine is a Domo-native runtime environment that executes JavaScript or Python code. It allows you to write, test, and distribute functions for use in Workflows and other Domo Apps. Code Engine provides a library of general packages for common integrations and services, and you can also create custom functions for automated services in your instance.
 
 ![Picture1.jpg](../../../assets/images/Picture1.jpg)
