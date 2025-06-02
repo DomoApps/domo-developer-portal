@@ -1,12 +1,12 @@
 ## Export to S3
 
-Export a dataset to an S3 bucket.
+Export a DataSet to an S3 bucket.
 
-Export your datasets to an S3 device of your choosing. This is an asynchronous call. You can check the status of your export by calling `/api/query/v1/export/{datasetId}`. Only one active export can run per dataset at a time. If the data in the dataset hasn’t changed since the last export, this endpoint returns the export information for the previous export instead of creating a new download. Use temporary AWS credentials whenever possible. If credentials are temporary, provide an AWS session token.
+Export your DataSets to an S3 device of your choosing (this is an asynchronous call). You can check the status of your export by calling `/api/query/v1/export/{datasetId}`. Only one active export can run per DataSet at a time. If the data in the DataSet hasn’t changed since the last export, this endpoint returns the export information for the previous export instead of creating a new download. Use temporary AWS credentials whenever possible; if credentials are temporary, provide an AWS session token.
 
 ### Security Considerations
 
-To export a datasource, consumers must have at least read access to the dataset. Any PDP policies applied will be enforced during the export. Once data is uploaded, security depends on the AWS S3 bucket settings. Ensure secure upload locations to prevent unauthorized access.
+To export a datasource, consumers must have at least read access to the DataSet. Any PDP policies applied will be enforced during the export. Once data is uploaded, security depends on the AWS S3 bucket settings. Ensure secure upload locations to prevent unauthorized access.
 
 **Example:** An administrator initiates an export of sensitive compensation data to an S3 location accessible by the entire company, bypassing internal security measures.
 
