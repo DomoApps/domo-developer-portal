@@ -179,7 +179,7 @@
         {
           "type": "item",
           "title": "Cards API",
-          "uri": "docs/API-Reference/Product-APIs/Update-Card-Title.md"
+          "uri": "docs/API-Reference/Product-APIs/Cards.md"
         },
         {
           "type": "item",
@@ -198,22 +198,17 @@
         },
         {
           "type": "item",
-          "title": "Dataset Schema API",
-          "uri": "docs/API-Reference/Product-APIs/Get-Dataset-Schema.md"
-        },
-        {
-          "type": "item",
           "title": "Data Accounts API",
           "uri": "docs/API-Reference/Product-APIs/Data-Accounts.md"
         },
         {
           "type": "item",
-          "title": "Datasets API",
+          "title": "DataSets API",
           "uri": "docs/API-Reference/Product-APIs/Datasets.md"
         },
         {
           "type": "item",
-          "title": "Dataset Schema API",
+          "title": "DataSet Schema API",
           "uri": "docs/API-Reference/Product-APIs/Get-Dataset-Schema.md"
         },
         {
@@ -264,7 +259,7 @@
         {
           "type": "item",
           "title": "Roles Governance API",
-          "uri": "docs/API-Reference/Product-APIs/RolesGovernance.md"
+          "uri": "docs/API-Reference/Product-APIs/Roles-Governance.md"
         },
         {
           "type": "item",
@@ -284,7 +279,7 @@
         {
           "type": "item",
           "title": "Task Center API",
-          "uri": "docs/API-Reference/Product-APIs/TaskCenter.md"
+          "uri": "docs/API-Reference/Product-APIs/Task-Center.md"
         },
         {
           "type": "item",
