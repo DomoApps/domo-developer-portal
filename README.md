@@ -20,7 +20,7 @@ Domo partners with [Stoplight](https://stoplight.io/) to host our [Developer Por
 
 - `assets/` is where any image files that you want to display will live.
 - `docs/` includes all guides, tutorials, and API References in the Developer Portal. The former two are markdown `.md` files and the latter is either a markdown `.md` file or an OpenAPI spec `.yaml ` file depending on the API.
-- `toc.json` is the configuration file that defines the structure of the left navigation side bar in the Developer Portal.
+- `toc.json` is the configuration file that defines the structure of the left navigation sidebar in the Developer Portal.
 
 The [Stoplight Documentation](https://docs.stoplight.io/) is a great resource for learning how to make the most out of the nice functionality Stoplight can unlock. For writing documentation articles like Tutorials or Guides, [Stoplight-flavored Markdown](https://docs.stoplight.io/docs/platform/b591e6d161539-stoplight-flavored-markdown-smd) is a particularly useful reference.
 
@@ -42,6 +42,7 @@ Across all resources, it's important to remain consistent. Please follow these b
 - Code: Include code snippets within triple backticks for syntax highlighting, and use inline code formatting for short code references.
 - Links: Hyperlink external references with descriptive text.
 - Tone: Aim for a helpful and approachable tone, free of jargon unless necessary, while ensuring accessibility best practices are met.
+- Credentials/PII: Scrub all Personal Identifying Information, live Credentials, Cookies, or any other authentication information. Ideally these should be replaced with `<placeholders>`
 
 ### Guide / How To
 
@@ -78,12 +79,11 @@ These usually have multiple parts, include all code required to build the soluti
 
 [Example Tutorial - Building Dynamic Infographics with Domo and Canva](docs/Apps/App-Framework/Tutorials/Vanilla-Javascript/DynamicInfographic.md)​
 
-
 ### API Reference
 
 API documentation is one of the most critical components to enabling developers to build on Domo.
 
-For convenience we've divided APIs into three categories:
+For convenience, we've divided APIs into three categories:
 
 1. App Framework APIs: APIs available within the Domo App context.
 2. Platform APIs: APIs that use an OAuth 2.0 authorization and authentication pattern which allows you to define clients with a variety of scopes.
@@ -108,13 +108,13 @@ Please include:
 1. Overview of the service - (including links to relevant guides, examples, etc.)
 2. Then, each endpoint should have:
 
-    - title: `h2`
-    - brief description: `plain text`
-    - code example: `code snippet`
-    - http request (including query params): `code snippet`
-    - request body arguments accepted: `table`
-    - request body example code example: `code snippet`
-    - http response example: `code snippet`
+   - title: `h2`
+   - brief description: `plain text`
+   - code example: `code snippet`
+   - http request (including query params): `code snippet`
+   - request body arguments accepted: `table`
+   - request body example code example: `code snippet`
+   - http response example: `code snippet`
 
 #### Platform APIs
 
@@ -124,7 +124,7 @@ These APIs are actively testable in the documentation itself. They are all OpenA
 
 #### Product APIs
 
-As noted above, this is where we currently have the largest gap. Eventually, we'll be able to mirror the internal OpenAPI specs, but in the meantime many developers are already building on these APIs and we need to provide more documentation.
+As noted above, this is where we currently have the largest gap. Eventually, we'll be able to mirror the internal OpenAPI specs, but in the meantime many developers are already building on these APIs, and we need to provide more documentation.
 
 At a minimum, we should prioritize documenting the following APIs:
 

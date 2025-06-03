@@ -53,7 +53,7 @@ paths:
                   Example 1:
                     id: 421696155
                     parentId: 1507324998
-                    ownerId: 8811501
+                    owners: [{"id":8811501, "type":"USER", "displayName": "John Smith"}]
                     name: Custom Maps
                     locked: false
                     collectionIds: []
@@ -77,8 +77,6 @@ paths:
                   parentId:
                     type: integer
                     description: The ID of the page that is higher in organizational hierarchy
-                  ownerId:
-                    type: integer
                   name:
                     type: string
                     description: The name of the page
@@ -124,7 +122,7 @@ paths:
                   value:
                     id: 421696155
                     parentId: 1507324998
-                    ownerId: 8811501
+                    owners: [{"id":8811501, "type":"USER", "displayName": "John Smith"}]
                     name: Custom Maps
                     locked: false
                     collectionIds: []
@@ -163,6 +161,9 @@ paths:
                 name:
                   type: string
                   description: Will update the name of the page
+                owners:
+                  type: array
+                  description: Will update the owners of the page
                 parentId:
                   type: integer
                   description: 'If provided, will either make the page a subpage or simply move the subpage to become a child of a different parent page'
@@ -351,8 +352,8 @@ paths:
                     type: integer
                   parentId:
                     type: integer
-                  ownerId:
-                    type: integer
+                  owners:
+                    type: array
                   name:
                     type: string
                   locked:
@@ -376,7 +377,7 @@ paths:
                   Example 1:
                     id: 3242
                     parentId: 23
-                    ownerId: 88
+                    owners: [{"id":8811501, "type":"USER", "displayName": "John Smith"}]
                     name: Supply Chain
                     locked: true
                     cardIds:
@@ -400,7 +401,7 @@ paths:
                   value:
                     id: 3242
                     parentId: 23
-                    ownerId: 88
+                    owners: [{"id":8811501, "type":"USER", "displayName": "John Smith"}]
                     name: Supply Chain
                     locked: true
                     cardIds:

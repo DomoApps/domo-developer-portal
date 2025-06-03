@@ -4,11 +4,11 @@ x-stoplight:
 info:
   title: DataSet API
   description: |
-    ## The DataSet object
+    ## The DataSet Object
 
     ---
 
-    The DataSet objects allows you to create, import, export and manage DataSets and manage data permissions for DataSets within Domo.
+    The DataSet API allows you to create, replace, append to, export, and manage DataSets, as well as manage data permissions for DataSets within Domo. Most of its calls return a DataSet object.
 
     <!-- theme: info -->
 
@@ -20,7 +20,7 @@ info:
 
     > #### Permissions
     >
-    > To be able to write to or update a DataSet via API, you must have the Manage Dataset grant enabled.
+    > To update or write to a DataSet via API, you must have the Manage DataSet grant enabled.
 
     ### Attributes
 
@@ -60,12 +60,31 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
+  schemas:
+    DataSourceListOrderBy:
+      type: string
+      enum:
+        - name
+        - nameDescending
+        - lastTouched
+        - lastTouchedAscending
+        - lastUpdated
+        - lastUpdatedAscending
+        - createdAt
+        - createdAtAscending
+        - cardCount
+        - cardCountAscending
+        - cardViewCount
+        - cardViewCountAscending
+        - errorState
+        - errorStateDescending
+        - dataSourceId
 security:
   - bearerAuth: []
 paths:
   '/v1/datasets/{dataset_id}':
     get:
-      summary: Retrieve a DataSet
+      summary: Retrieve DataSet Details
       description: Retrieves the details of an existing DataSet.
       parameters:
         - name: dataset_id
@@ -75,7 +94,7 @@ paths:
           required: true
       responses:
         '200':
-          description: 'Returns a DataSet object if valid `dataset_id` was provided. When requesting, if the `dataset_id` is related to a DataSet that has been deleted, a subset of the DataSet''s information will be returned, including a `deleted` property, which will be `true`.'
+          description: 'Returns a DataSet object if a valid `dataset_id` was provided. When requesting, if the `dataset_id` is related to a DataSet that has been deleted, a subset of the DataSet''s information will be returned, including a `deleted` property, which will be `true`.'
           content:
             application/json:
               examples:
@@ -208,8 +227,14 @@ paths:
                   value: '[object Object]'
       operationId: ''
     put:
-      summary: Update a DataSet
-      description: "Updates the specified DataSet’s metadata\_by providing\_values to\_parameters passed."
+      summary: Update DataSet Details
+      description: |
+        Updates the specified DataSet’s metadata by providing values to parameters passed.
+
+        <!-- theme: info -->
+        > #### Appending _Data_
+        >
+        > To import **additional rows** into an existing DataSet, use the DataSet Import endpoint or the [Simple API](https://developer.domo.com/portal/d984e2fec9b18-import-data-into-data-set).
       requestBody:
         content:
           application/json:
@@ -429,7 +454,7 @@ paths:
   /v1/datasets:
     post:
       summary: Create a DataSet
-      description: "Creates a new DataSet\_in your Domo instance. Once the DataSet has been created, data can then be imported into the DataSet."
+      description: 'Creates a new DataSet in your Domo instance. Once a DataSet has been created, data can be imported into the DataSet.'
       requestBody:
         content:
           application/json:
@@ -446,6 +471,9 @@ paths:
                         name: Friend
                       - type: STRING
                         name: Attending
+              required:
+                - name
+                - schema
               properties:
                 name:
                   type: string
@@ -453,19 +481,20 @@ paths:
                 description:
                   type: string
                   description: Description of DataSet to create
-                rows:
-                  type: integer
                 schema:
                   type: object
+                  description: The current schema associated with this DataSet
                   required:
                     - columns
-                  description: The current schema associated with this DataSet
                   properties:
                     columns:
                       type: array
                       description: Array of columns in the DataSet
                       items:
                         type: object
+                        required:
+                          - type
+                          - name
                         properties:
                           type:
                             type: string
@@ -473,13 +502,6 @@ paths:
                           name:
                             type: string
                             description: Column name in the DataSet schema
-                        required:
-                          - type
-                          - name
-              required:
-                - name
-                - description
-                - schema
             examples:
               Example 1:
                 value:
@@ -495,7 +517,7 @@ paths:
         description: ''
       responses:
         '201':
-          description: Returns a DataSet object when successful. The returned object will have DataSet attributes based on the information that was provided when DataSet was created.
+          description: Returns a DataSet object when successful. The returned object will have DataSet attributes based on the information provided when the DataSet was created.
           content:
             application/json:
               schema:
@@ -590,9 +612,9 @@ paths:
         - name: sort
           in: query
           schema:
-            type: string
-          description: The DataSet field to sort by. Fields prefixed with a negative sign reverses the sort (i.e. '-name' does a reverse sort by the name of the DataSets)
-          example: name
+            $ref: '#/components/schemas/DataSourceListOrderBy'
+          description: The order to return the DataSets in.
+          example: createdAt
         - schema:
             type: string
           in: query
@@ -890,17 +912,40 @@ paths:
   '/v1/datasets/{dataset_id}/data':
     put:
       summary: Import data into DataSet
-      description: Import data into a DataSet in your Domo instance. This request **will replace the data currently in the DataSet**.
+      description: |
+        Import data into a DataSet in your Domo instance. You can replace everything or append new data.
       requestBody:
         content:
           text/csv:
+            schema:
+              type: string
+              description: CSV data according to RFC 4180 format.
             examples:
-              Example 1:
-                value: 'Friend,Attending Isaac Newton,Yes Pythagoras,No Carl Friedrich Gauss,Yes Ada Lovelace,Yes'
+              'Example 1':
+                value: |
+                  Friend,Attending
+                  Isaac Newton,Yes
+                  Pythagoras,No
+                  Carl Friedrich Gauss,Yes
+                  Ada Lovelace,Yes
+              'Example 2':
+                value: |
+                  name,role,quote,side
+                  Leia Organa,Rebel Leader,"Help me, Obi-Wan Kenobi. You're my only hope.",light
+                  Qui-Gon Jinn,,,
+                  Darth Vader,Sith Lord,I find your lack of faith disturbing.,dark
+              'Example 3':
+                value: |
+                  "name","age"
+                  "Smith, Jacob","78"
+                  "Corsa, Claire","56"
+                  "Thomas, Liz","33"
         description: |
-          > The only supported content type is currently CSV format.
+          The schema needs to match, even when replacing.
+          
+          The only supported content type for this endpoint is CSV. However, if you use [the Simple API](https://developer.domo.com/portal/d984e2fec9b18-import-data-into-data-set), it will automatically convert JSON to CSV.
 
-          > To upload data in CSV format, the Domo specification used for representing data grids in CSV format closely follows the RFC standard for CSV (RFC-4180). For more details on correct CSV formatting, click here.
+          > The Domo specification used for representing data grids in CSV format closely follows the RFC standard for CSV ([RFC-4180](https://datatracker.ietf.org/doc/html/rfc4180)).
 
           ```
           Content-Type: text/csv
@@ -910,7 +955,6 @@ paths:
           Pythagoras,No
           Carl Friedrich Gauss,Yes
           Ada Lovelace,Yes
-
           ```
       parameters:
         - name: dataset_id
@@ -918,24 +962,70 @@ paths:
           schema:
             type: string
           required: true
+        - name: updateMethod
+          in: query
+          description: |
+            Specifies how the data import should update the DataSet. 
+            
+            Defaults to `REPLACE` if not specified. 
+            
+            Case-sensitive; must be uppercase. Falls back to REPLACE if given an invalid value.
+          required: false
+          schema:
+            type: string
+            default: REPLACE
+            enum:
+              - REPLACE
+              - APPEND
       responses:
         '204':
-          description: Returns a response of success or error for the outcome of data being imported into DataSet.
+          description: Success! Returns an empty response body.
+        '400':
+          description: Bad Request — Invalid input data or schema.
           content:
             application/json:
-              examples:
-                Example 1:
-                  value: HTTP/1.1 204 No Content
+              schema:
+                type: object
+                example: {"status":400,"statusReason":"Bad Request","message":"Data import failed for dataset e6277565-39fc-42d7-835a-5cfe2905a840.","toe":"CA6JIHTO46-28C5D-UEQ7I"}
+        '401':
+          description: Unauthorized — Expired access token, etc.
+          headers:
+            WWW-Authenticate:
+              description: >-
+                Error codes and descriptions.
+              schema:
+                type: string
+                example: >-
+                  Bearer error="invalid_token", error_description="An error occurred while attempting to decode the Jwt: Jwt expired at 2025-04-25T04:28:44Z", error_uri="https://tools.ietf.org/html/rfc6750#section-3.1"
+
+        '403':
+          description: Forbidden — Invalid or missing access token.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 403
+                  toe:
+                    type: string
+                    description: Thread of Execution — a way Domo Support can track down a problem
+                    example: 694M4LH50R-CFNR0-N0VD2
+        
     get:
-      summary: Export data from DataSet
-      description: "Export\_data from\_a DataSet in your Domo instance.\n\n> Data types will be exported as they are currently stored in the dataset. In addition, the only supported export type is CSV.\n"
+      summary: Export Data from DataSet
+      description: |
+        Export data from a DataSet in your Domo instance.
+        
+        > Data types will be exported as they are currently stored in the dataset. In addition, the only supported export type is CSV.
       parameters:
         - name: includeHeader
           in: query
           schema:
             type: boolean
-          example: true
-          description: Include table header
+            default: false
+          description: Include table header row
         - name: fileName
           in: query
           schema:
@@ -954,10 +1044,14 @@ paths:
             text/csv:
               schema:
                 type: string
-              examples: {}
+              examples: 
+                'Example 1':
+                  value: |
+                    name,role,quote,side
+                    Leia Organa,Rebel Leader,"Help me, Obi-Wan Kenobi. You're my only hope.",light
+                    Qui-Gon Jinn,,,
+                    Darth Vader,Sith Lord,I find your lack of faith disturbing.,dark
           headers: {}
-      requestBody:
-        content: {}
     parameters:
       - schema:
           type: string
@@ -1355,7 +1449,7 @@ paths:
                       - 27
                     groups: []
     get:
-      summary: List Personalized Data Permission (PDP) policies
+      summary: List Personalized Data Permission (PDP) Policies
       description: List the Personalized Data Permission (PDP) policies for a specified DataSet.
       parameters:
         - name: dataset_id
