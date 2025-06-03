@@ -814,8 +814,8 @@ Now, for all comments that were loaded at load time (as opposed to being added a
 
 ```html
 <div id="comments-${index}">
-  ${filteredComments .map((commentDocument) => { return `
-  ${generateCommentElement(commentDocument)} `; }) .join("")}
+  ${filteredComments.map((commentDocument) =>
+  `${generateCommentElement(commentDocument)} `).join("") }
 </div>
 ```
 
