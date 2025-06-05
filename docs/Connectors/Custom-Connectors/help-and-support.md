@@ -66,4 +66,4 @@ All custom connectors are available for self-publication and 14 day trial period
 
 **What is the SLA for the review process turn-around time?**
 
-The SLA for the review process turn-around time is 30 days.
+The SLA for the review process turn-around time is 30 days.  However, the review process may take longer if there are significant issues that require customer feedback and changes.
