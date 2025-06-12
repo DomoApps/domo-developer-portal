@@ -284,7 +284,7 @@ chart.update(newData, options);
 
 ### setChartProperties(properties)
 
-You can pass your chart new properties at any time, and it will re-render with those properties you provide. Simply pass an object of property keys and values to the method.
+You can pass your chart new properties at any time and it will re-render accordingly. Simply pass an object of property keys and values to the method.
 
 ```javascript
 // Define your properties
