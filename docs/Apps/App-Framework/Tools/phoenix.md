@@ -137,7 +137,7 @@ To correctly map your data to the chart, you must provide a mapping for each col
 
 ### Chart Properties
 
-All Phoenix charts have default properties set to make your chart look great. You can override these properties if desired. Examples of overrides include the chart's font size, whether or not to show the "Other" category, bar widths, and more. You can use them like so:
+All Phoenix charts have default properties set to make your chart look great. You can override these properties, if desired. Examples of overrides include the chart's font size, whether or not to show the "Other" category, bar widths, and more. You can use them like so:
 
 ```javascript
 const data = {
