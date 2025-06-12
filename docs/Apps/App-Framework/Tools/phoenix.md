@@ -167,7 +167,7 @@ document.getElementById('myDiv').appendChild(chart.canvas);
 chart.render();
 ```
 
-By passing these options, your chart will be customized to those settings. Many properties are supported by each chart type; these will be documented in detail at a later date.
+By passing these options, your chart will be customized to those settings.
 
 ### Color Palettes
 
