@@ -117,7 +117,7 @@ An enum, `CHART_TYPE`, is provided with all supported chart types. Here are a fe
 
 ### Data Types
 
-An enum, `DATA_TYPE`, is provided with all supported data types. Here are the available data types:
+An enum, `DATA_TYPE`, is provided with all supported data types. Here are the supported data types:
 
 - `STRING`
 - `DOUBLE`
@@ -171,7 +171,7 @@ By passing these options, your chart will be customized to those settings. Many 
 
 ### Color Palettes
 
-By default, the chart will use Domo's color palette. You can optionally specify your own custom color palette for your chart by passing an array of hex code strings in your options object. For example, if you create a chart like so:
+By default, the chart will use Domo's color palette. You can optionally specify your own custom color palette for your chart by passing an array of hex code strings in your options object. This example shows how to create a chart with a custom color palette of various shades of blue:
 
 ```javascript
 const data = {
@@ -203,15 +203,13 @@ document.getElementById('myDiv').appendChild(chart.canvas);
 chart.render();
 ```
 
-This would produce a chart with your custom color palette of various shades of blue.
-
 You can pass as few or as many colors as you like in this array. Phoenix will start with the first color in the list and move down the array. If it runs out of colors, it will loop back to the beginning. For best visual results, provide enough different colors to cover the scope of your data.
 
 To update your color palette or reset to the default, see the API documentation.
 
 ## Chart Methods
 
-The following methods are available in addition to those shown above:
+The following methods are supported in addition to those shown above:
 
 ### render()
 
