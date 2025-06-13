@@ -2,6 +2,10 @@
 
 **Domo Workflows** empowers customers to design, implement, and execute automated processes using low-code tools. It enables business experts, process owners, and analysts to create workflows directly within their Domo instance—without requiring extensive technical expertise.
 
+For advanced integrations, automation, and external orchestration, Domo provides a robust [Workflows Product API](../../API-Reference/Product-APIs/Workflows.md). This API allows you to programmatically start, manage, and interact with workflows from external systems, scripts, or even other Domo instances. Whether you're building custom solutions, automating business processes, or integrating with third-party platforms, the Workflows API offers the flexibility and power to extend your workflow capabilities far beyond the UI.
+
+Explore the API documentation to unlock new possibilities for automation and seamless integration with your business processes.
+
 ## Things to keep in mind
 
 - **Size Limits** - The maximum size of a workflow variable is 1Mb
