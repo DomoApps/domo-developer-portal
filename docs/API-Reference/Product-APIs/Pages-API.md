@@ -7,11 +7,11 @@
 
 ### Request Parameters
 
-| Property Name | Type   | Required | Description                        |
-| --------------|--------|----------|------------------------------------|
-| parentPageId  | String | yes      | ID of the parent page              |
-| title         | String | yes      | Title of the subpage               |
-| hasLayout     | Boolean| no, default is true | Whether the page should have a layout |
+| Property Name | Type    | Required            | Description                           |
+| ------------- | ------- | ------------------- | ------------------------------------- |
+| parentPageId  | String  | yes                 | ID of the parent page                 |
+| title         | String  | yes                 | Title of the subpage                  |
+| hasLayout     | Boolean | no, default is true | Whether the page should have a layout |
 
 ### Example
 
@@ -71,13 +71,14 @@
 
 ### Request Parameters
 
-| Property Name  | Type              | Required | Description              |
-|----------------|-------------------|----------|--------------------------|
-| pageIds        | Array of Numbers | yes      | IDs of pages to move     |
-| parentPageId   | Number            | yes      | ID of the new parent page|
-| pagePermission | String            | yes      | Permission for the pages |
+| Property Name  | Type             | Required | Description               |
+| -------------- | ---------------- | -------- | ------------------------- |
+| pageIds        | Array of Numbers | yes      | IDs of pages to move      |
+| parentPageId   | Number           | yes      | ID of the new parent page |
+| pagePermission | String           | yes      | Permission for the pages  |
 
 **Valid Options for `pagePermission`:**
+
 - `"ORIGINAL"`
 
 ### Example
@@ -106,6 +107,59 @@
 
 ---
 
+## Bulk Add Page Owners
+
+**Method:** `PUT`  
+**Endpoint:** `/api/content/v1/pages/bulk/owners`
+
+### Request Parameters
+
+| Property Name | Type             | Required | Description                                            |
+| ------------- | ---------------- | -------- | ------------------------------------------------------ |
+| pageIds       | Array of Numbers | yes      | IDs of pages to update                                 |
+| owners        | Array of Objects | yes      | List of new owners (see below)                         |
+| note          | String           | no       | Optional note for the change                           |
+| sendEmail     | Boolean          | no       | Whether to send an email notification (default: false) |
+
+**Owner Object:**
+
+| Property Name | Type   | Required | Description                  |
+| ------------- | ------ | -------- | ---------------------------- |
+| id            | Number | yes      | ID of the user               |
+| type          | String | yes      | Type of owner (e.g., "USER") |
+
+### Example
+
+```json
+{
+  "method": "PUT",
+  "url": "https://{instance}.domo.com/api/content/v1/pages/bulk/owners",
+  "headers": {
+    "X-DOMO-Developer-Token": "",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "pageIds": [123456789],
+    "owners": [
+      {
+        "id": 123456789,
+        "type": "USER"
+      }
+    ],
+    "note": "",
+    "sendEmail": false
+  }
+}
+```
+
+### Response
+
+**Success (200):** Owners updated successfully.  
+**Forbidden (403):** Permission denied.  
+**Conflict (409):** Conflict encountered (e.g., permission constraints).
+
+---
+
 ## Revoke Page Access
 
 **Method:** `DELETE`  
@@ -113,10 +167,10 @@
 
 ### Path Parameters
 
-| Property Name | Type   | Required | Description                        |
-|---------------|--------|----------|------------------------------------|
-| pageId        | Number | yes      | ID of the page                    |
-| personId      | Number | yes      | ID of the user                    |
+| Property Name | Type   | Required | Description    |
+| ------------- | ------ | -------- | -------------- |
+| pageId        | Number | yes      | ID of the page |
+| personId      | Number | yes      | ID of the user |
 
 ### Example
 
@@ -136,4 +190,3 @@
 **Success (200):** Access revoked successfully.  
 **Forbidden (403):** Operation not permitted.  
 **Conflict (409):** Conflict encountered while attempting to revoke access.
-
