@@ -691,6 +691,17 @@
               "uri": "docs/Automate-Actions/Code-Engine/Packages/Cards-to-PDF.md"
             }
           ]
+        },
+        {
+          "type": "group",
+          "title": "Tutorials",
+          "items": [
+            {
+              "type": "item",
+              "title": "Cards to PDF",
+              "uri": "docs/Automate-Actions/Code-Engine/Tutorials/Cards-to-PDF.md"
+            }
+          ]
         }
       ]
     },
