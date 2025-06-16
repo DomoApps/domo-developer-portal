@@ -37,47 +37,47 @@
         {
           "type": "item",
           "title": "AI Service Layer API",
-          "uri": "docs/API-Reference/Domo-App-APIs/AI-Service-Layer-API.md"
+          "uri": "/docs/API-Reference/Domo-App-APIs/AI-Service-Layer-API.md"
         },
         {
           "type": "item",
           "title": "AppDB API",
-          "uri": "docs/API-Reference/Domo-App-APIs/AppDB-API.md"
+          "uri": "/docs/API-Reference/Domo-App-APIs/AppDB-API.md"
         },
         {
           "type": "item",
           "title": "Code Engine API",
-          "uri": "docs/API-Reference/Domo-App-APIs/Code-Engine-API.md"
+          "uri": "/docs/API-Reference/Domo-App-APIs/Code-Engine-API.md"
         },
         {
           "type": "item",
           "title": "Data API",
-          "uri": "docs/API-Reference/Domo-App-APIs/Data-API.md"
+          "uri": "/docs/API-Reference/Domo-App-APIs/Data-API.md"
         },
         {
           "type": "item",
           "title": "Files API",
-          "uri": "docs/API-Reference/Domo-App-APIs/Files-API.md"
+          "uri": "/docs/API-Reference/Domo-App-APIs/Files-API.md"
         },
         {
           "type": "item",
           "title": "Groups API",
-          "uri": "docs/API-Reference/Domo-App-APIs/Groups-API.md"
+          "uri": "/docs/API-Reference/Domo-App-APIs/Groups-API.md"
         },
         {
           "type": "item",
           "title": "Task Center API",
-          "uri": "docs/API-Reference/Domo-App-APIs/Queues-and-Tasks-API.md"
+          "uri": "/docs/API-Reference/Domo-App-APIs/Queues-and-Tasks-API.md"
         },
         {
           "type": "item",
           "title": "User API",
-          "uri": "docs/API-Reference/Domo-App-APIs/User-API.md"
+          "uri": "/docs/API-Reference/Domo-App-APIs/User-API.md"
         },
         {
           "type": "item",
           "title": "Workflows API",
-          "uri": "docs/API-Reference/Domo-App-APIs/Workflows-API.md"
+          "uri": "/docs/API-Reference/Domo-App-APIs/Workflows-API.md"
         }
       ]
     },
@@ -269,7 +269,7 @@
         {
           "type": "item",
           "title": "Scheduled Reports API",
-          "uri": "docs/API-Reference/Domo-App-APIs/Scheduled-Reports-API.md"
+          "uri": "/docs/API-Reference/Domo-App-APIs/Scheduled-Reports-API.md"
         },
         {
           "type": "item",
@@ -689,7 +689,7 @@
             {
               "type": "item",
               "title": "Cards to PDF",
-              "uri": "docs/Automate-Actions/Code-Engine/Tutorials/Cards-to-PDF.md"
+              "uri": "/docs/Automate-Actions/Code-Engine/Tutorials/Cards-to-PDF.md"
             }
           ]
         }
