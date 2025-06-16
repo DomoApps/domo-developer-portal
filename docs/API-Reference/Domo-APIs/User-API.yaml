@@ -158,7 +158,7 @@ paths:
         - schema:
             type: integer
           in: query
-          description: The ID of the custom or system role of the user
+          description: The ID of the system role of the user
           name: roled
         - schema:
             type: string
