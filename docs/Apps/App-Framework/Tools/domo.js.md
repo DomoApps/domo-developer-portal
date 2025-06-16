@@ -8,29 +8,52 @@ stoplight-id: e947d87e17547
 
 > #### Prerequisites
 >
-> If you are not proficient at programming using JavaScript then please find a tutorial to gain this knowledge before proceeding.
+> If you are new to JavaScript programming, we recommend reviewing a JavaScript tutorial before proceeding. A basic understanding of JavaScript is required to use domo.js effectively.
 
-The `domo.js` library provides some convenient utilities for building custom Apps. The documentation below will give further instructions on how each of these major utilities are used in building a custom App.
+The `domo.js` library provides convenient utilities for building Custom Apps. The documentation below provides instructions on how to use each of these major utilities when building a Custom App.
 
-### Installation
+## Installation
 
 ---
 
-`domo.js` is deployed with every template created via `domo init`. But you can also install it to an existing project via npm:
+There are several ways to install the `domo.js` library in your Custom App. The most common methods are using npm or including it in your HTML with a script tag.
+
+<!--
+type: tab
+title: npm
+-->
 
 ```
-npm install --save ryuu.js
+  npm install ryuu.js
 ```
+
+<!--
+type: tab
+title: Script Tag
+-->
+
+```
+  <script src="https://unpkg.com/ryuu.js"></script>
+```
+
+<!-- type: tab-end -->
+
+## Usage
+
+---
+
+Once installed, you can use the `domo.js` library in your Custom App. The library is available as a global variable named `domo`.
 
 ### domo.get()
 
 ---
 
-`domo.js` makes it easy to request data from Domo. Simply call the data endpoint with your DataSet's alias (`sales` in this example):
+`domo.js` makes it easy to request data from Domo. Simply
+call the data endpoint with your DataSet's alias (`sales` in this example):
 
 ```js
-domo.get("/data/v1/sales").then(function (data) {
-  console.log("data", data);
+domo.get('/data/v1/sales').then(function (data) {
+  console.log('data', data);
 });
 ```
 
@@ -38,13 +61,13 @@ domo.get("/data/v1/sales").then(function (data) {
 
 > #### Best Practice
 >
-> The code above will fetch the entire DataSet. We highly recommend filtering and limiting the data. See the Getting Data Guide to learn how to do this.
+> The code above will fetch the entire DataSet. We highly recommend filtering and paginating the data to avoid app crashes, slow response, and other issues. See the [Getting Data Guide](../Guides/getting-data.md) to learn how to do this.
 
 Domo supports a few different data formats. To specify the one you want, pass an options argument to `domo.get`:
 
 ```js
-domo.get("/data/v1/sales", { format: "csv" }).then(function (data) {
-  console.log("data", data);
+domo.get('/data/v1/sales', { format: 'csv' }).then(function (data) {
+  console.log('data', data);
 });
 ```
 
@@ -55,16 +78,16 @@ The supported data formats are:
 - `excel` and
 - `csv`
 
-The `domo` http client also supports `post`, `put`, and `delete` methods to satisfy the other http method verbs. They operate very much the same way `domo.get` works. However, the `post` and `put` methods also take a body parameter as the second argument before the options parameter. For all `post` and `put` requests, the body is assumed to be in a json format unless the `contentType` property is set to 'multipart' in the options object. Below is an example of using `domo.post` to do a multipart upload of a file to the Files API.
+The `domo` http client also supports `post`, `put`, and `delete` methods to satisfy the other HTTP method verbs. They operate in much the same way as `domo.get`. However, the `post` and `put` methods also take a body parameter as the second argument before the options parameter. For all `post` and `put` requests, the body is assumed to be in JSON format unless the `contentType` property is set to 'multipart' in the options object. Below is an example of using `domo.post` to perform a multipart upload of a file to the Files API.
 
 #### Code Example
 
 ```js
-function uploadFile(name, description = "", isPublic = true, file) {
+function uploadFile(name, description = '', isPublic = true, file) {
   const formData = new FormData();
-  formData.append("file", file);
+  formData.append('file', file);
   const url = `/domo/data-files/v1?name=${name}&description=${description}&public=${isPublic}`;
-  const options = { contentType: "multipart" };
+  const options = { contentType: 'multipart' };
 
   return domo.post(url, formData, options);
 }
@@ -81,22 +104,22 @@ function uploadFile(name, description = "", isPublic = true, file) {
 > Regular HTML link syntax will not work in Domo Apps. Use the domo.navigate javascript function below to create a link.
 > Custom Apps can navigate the main window to other locations in Domo. For example, when the user clicks on a user profile image in a Custom App, the page could navigate to that user's profile page.
 
-Using this `domo.js` library your app can request a navigation change to a specific URL:
+Using the `domo.js` library, your app can request a navigation change to a specific URL:
 
 ```js
-domo.navigate("/profile/3234");
+domo.navigate('/profile/3234');
 ```
 
-If you want the navigation to open a new tab or window rather than navigating away from the current Domo page, pass `true` as the second argument:
+If you want the navigation to open a new tab or window, rather than navigating away from the current Domo page, pass `true` as the second argument:
 
 ```js
-domo.navigate("/profile/3234", true);
+domo.navigate('/profile/3234', true);
 ```
 
 #### Mobile Web
 
-The Domo URLs for mobile web are not always the same as for desktop web. Use the `domo.env.platform` variable to determine which environment your app is running in.
-For mobile web the routes are currently prefixed with `/m#`. For example `/m#/profile/3234`.
+The Domo URLs for mobile web are not always the same as those for desktop web. Use the `domo.env.platform` variable to determine which environment your app is running in.
+For mobile web, the routes are currently prefixed with `/m#`. For example: `/m#/profile/3234`.
 
 #### External Links
 
@@ -187,10 +210,10 @@ If you want to add filters to the page that your domo app lives on, you can do s
 ```js
 domo.filterContainer([
   {
-    column: "category",
-    operator: "IN",
-    values: ["ALERT"],
-    dataType: "string",
+    column: 'category',
+    operator: 'IN',
+    values: ['ALERT'],
+    dataType: 'string',
   },
 ]);
 ```
@@ -229,7 +252,7 @@ This example will programmatically add a page filter for any column that is name
 
 ---
 
-If a page filter is applied to a page and a dataset that is wired to the domoapp is affected by this filter, the domo app will be refreshed by default. In some cases, you may not want the app to refresh because it is in the middle of a stateful operation that needs to continue. In this scenario, you can manually handle the filter event in your app and turn off the default refresh behavior by using the `domo.onFiltersUpdate` method.
+If a page filter is applied and a dataset wired to the Domo app is affected by this filter, the Domo app will be refreshed by default. In some cases, you may not want the app to refresh because it is in the middle of a stateful operation that needs to continue. In this scenario, you can manually handle the filter event in your app and disable the default refresh behavior by using the `domo.onFiltersUpdate` method.
 
 #### Code Example
 
@@ -259,7 +282,7 @@ domo.onFiltersUpdate(console.log);
 
 ---
 
-This method registers a callback function that will execute whenever a variable on the page changes. This method is not required, but is useful when you have variables on the page you want to synchronize the application to.
+This method registers a callback function that executes whenever a variable on the page changes. This method is not required, but is useful when you have variables on the page you want to synchronize the application to.
 
 #### Code Example
 
