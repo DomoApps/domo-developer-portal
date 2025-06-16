@@ -1,24 +1,26 @@
 # Domo Phoenix
 
-Build beautiful charts using Phoenix, Domo's powerful charting engine.
+Build beautiful charts using Phoenix, Domo's powerful charting engine for Domo Apps.
 
 ## Documentation
 
-This library can be found on [npm](https://www.npmjs.com/package/@domoinc/domo-phoenix)
+You can find this library on [npm](https://www.npmjs.com/package/@domoinc/domo-phoenix).
 
-This README provides a quick overview of how to use Phoenix. For more detailed information, please see the [Documentation](https://domoapps.github.io/domo-phoenix/).
+This README provides a quick overview of how to use Phoenix. For more detailed information, please see the [official documentation](https://domoapps.github.io/domo-phoenix/).
 
-If you are looking to build a Domo Dev Studio app that can query data from Domo and chart with Phoenix, please refer to the official [Starter Kit](https://github.com/DomoApps/StarterKit).
+If you are looking to build a Domo Dev Studio app that can query data from Domo and visualize it with Phoenix, please refer to the official [Starter Kit](https://github.com/DomoApps/StarterKit).
+
+## Installation
+
+The Phoenix library is available on npm: [@domoinc/domo-phoenix on npm](https://www.npmjs.com/package/@domoinc/domo-phoenix).
+
+```sh
+npm install @domoinc/domo-phoenix
+```
 
 ## Usage
 
-First install the library:
-
-```shell
-$ npm install --save @domoinc/domo-phoenix
-```
-
-You can then import and use the library:
+Import and use the library in your project:
 
 ```javascript
 import { Chart, CHART_TYPE, DATA_TYPE, MAPPING } from '@domoinc/domo-phoenix';
@@ -45,38 +47,38 @@ const data = {
     ['Critical', 'Home Office', 7416.828],
     ['Not Specified', 'Home Office', 1839.26],
     ['Medium', 'Consumer', 4280.034],
-    ['Medium', 'Corporate', 7965.238]
+    ['Medium', 'Corporate', 7965.238],
   ],
-  // You provide the names, types, and mappings of your ordered columns
+  // You provide the names, types, and mappings for your columns, in order
   columns: [
     {
       type: DATA_TYPE.STRING,
       name: 'Order Priority',
-      mapping: MAPPING.SERIES
+      mapping: MAPPING.SERIES,
     },
     {
       type: DATA_TYPE.STRING,
       name: 'Customer Segment',
-      mapping: MAPPING.ITEM
+      mapping: MAPPING.ITEM,
     },
     {
       type: DATA_TYPE.DOUBLE,
       name: 'Sales',
-      mapping: MAPPING.VALUE
-    }
-  ]
+      mapping: MAPPING.VALUE,
+    },
+  ],
 };
 
-// Chart Options
+// Chart options
 const options = {
   width: 600,
-  height: 500
+  height: 500,
 };
 
-// Create the Phoenix Chart
+// Create the Phoenix chart
 const chart = new Chart(CHART_TYPE.BAR, data, options);
 
-// Append the canvas element to your app
+// Append the chart's canvas element to your app
 document.getElementById('myDiv').appendChild(chart.canvas);
 
 // Render the chart when you're ready for the user to see it
@@ -87,7 +89,7 @@ chart.render();
 
 ### Chart Options
 
-The following are customizable options along with their defaults.
+The following options are customizable, along with their default values:
 
 | Property | Description                                                                         | Type             | Default |
 | -------- | ----------------------------------------------------------------------------------- | ---------------- | ------- |
@@ -98,7 +100,7 @@ The following are customizable options along with their defaults.
 
 ### Chart Types
 
-We have provided an enum, `CHART_TYPE`, for you with all the supported chart types. Here are a few examples of common chart types:
+An enum, `CHART_TYPE`, is provided with all supported chart types. Here are a few examples of common chart types:
 
 - `BAR`
 - `STACKEDBAR`
@@ -115,7 +117,7 @@ We have provided an enum, `CHART_TYPE`, for you with all the supported chart typ
 
 ### Data Types
 
-We have provided an enum, `DATA_TYPE`, for you with all the supported data types. Here are the supported data types:
+An enum, `DATA_TYPE`, is provided with all supported data types. Here are the supported data types:
 
 - `STRING`
 - `DOUBLE`
@@ -127,7 +129,7 @@ We have provided an enum, `DATA_TYPE`, for you with all the supported data types
 
 ### Mappings
 
-To correctly map your data to the chart, we require that you provide a mapping for your columns. We have an enum, `MAPPING`, for the purpose of this mapping. The following are the mappings supported and their purpose:
+To correctly map your data to the chart, you must provide a mapping for each column. The `MAPPING` enum is used for this purpose. The following mappings are supported:
 
 - `ITEM`: In a bar chart, this would be your x axis
 - `VALUE`: In a bar chart, this would be your y axis
@@ -135,7 +137,7 @@ To correctly map your data to the chart, we require that you provide a mapping f
 
 ### Chart Properties
 
-All Phoenix charts have default properties set to make your chart look great. You can, if you wish, override those properties. Examples of overrides include the chart's font size, whether or not to show the "Other" category, bar widths, etc. You can use them like so:
+All Phoenix charts have default properties set to make your chart look great. You can override these properties, if desired. Examples of overrides include the chart's font size, whether or not to show the "Other" category, bar widths, and more. You can use them like so:
 
 ```javascript
 const data = {
@@ -145,14 +147,14 @@ const data = {
 const propertyOverrides = {
   font_size: 'Largest',
   hide_other_category: 'true',
-  width_percentage: '50'
+  width_percentage: '50',
 };
 
 // Chart options
 const options = {
   width: 600,
   height: 500,
-  properties: propertyOverrides
+  properties: propertyOverrides,
 };
 
 // Create the Phoenix Chart
@@ -165,11 +167,11 @@ document.getElementById('myDiv').appendChild(chart.canvas);
 chart.render();
 ```
 
-By passing those options, you'll have your chart customized to those settings. There are many properties supported by each chart type, and those will be documented at a later date.
+By passing these options, your chart will be customized to those settings.
 
 ### Color Palettes
 
-By default, the chart will use Domo's color palette. You can optionally specify your own custom color palette for your chart. This is simply accomplished by passing an array of Hex Code strings in your options object. For example, if we were to create a chart like so:
+By default, the chart will use Domo's color palette. You can optionally specify your own custom color palette for your chart by passing an array of hex code strings in your options object. This example shows how to create a chart with a custom color palette of various shades of blue:
 
 ```javascript
 const data = {
@@ -201,19 +203,17 @@ document.getElementById('myDiv').appendChild(chart.canvas);
 chart.render();
 ```
 
-We would get a chart with that custom color palette of various shades of blue.
-
-You can pass as few or as many colors as you would like in this array. Phoenix handles this for you, by starting with the first color in the list, and moving down the array. If it runs out of colors in the array, it will simply loop back around to the beginning and continue. For best visual results, it is recommended that you provide enough different colors to cover the scope of your data.
+You can pass as few or as many colors as you like in this array. Phoenix will start with the first color in the list and move down the array. If it runs out of colors, it will loop back to the beginning. For best visual results, provide enough different colors to cover the scope of your data.
 
 To update your color palette or reset to the default, see the API documentation.
 
 ## Chart Methods
 
-The following are the methods you have access to in addition to the ones shown above in the example.
+The following methods are supported in addition to those shown above:
 
 ### render()
 
-This performs the actual rendering of the chart on the canvas. Your chart will not show up until you have called this method.
+This method performs the actual rendering of the chart on the canvas. Your chart will not appear until you have called this method.
 
 ```javascript
 // Render chart
@@ -222,7 +222,7 @@ chart.render();
 
 ### resize(width, height)
 
-The resize method allows you to resize your chart to whatever size you want, given a width and a height. These are in numbers of pixels.
+The `resize` method allows you to resize your chart to any width and height (in pixels).
 
 ```javascript
 // Resize chart to 800px by 500px
@@ -231,31 +231,35 @@ chart.resize(800, 500);
 
 ### update(data, options?)
 
-The update method allows you to provide a new data object, which will update your chart to reflect those changes. **NOTE:** You do not need to call `render()` again, this method performs that for you.
+The `update` method allows you to provide a new data object, which will update your chart to reflect those changes. **Note:** You do not need to call `render()` again; this method does that for you.
 
 ```javascript
 // Get new data
 const newData = {
-  rows: [['Michael Scott', 43], ['Jim Halpert', 36], ['Dwight Schrute', 41]],
+  rows: [
+    ['Michael Scott', 43],
+    ['Jim Halpert', 36],
+    ['Dwight Schrute', 41],
+  ],
   columns: [
     {
       type: DATA_TYPE.STRING,
       name: 'Name',
-      mapping: MAPPING.ITEM
+      mapping: MAPPING.ITEM,
     },
     {
       type: DATA_TYPE.DOUBLE,
       name: 'Age',
-      mapping: MAPPING.VALUE
-    }
-  ]
+      mapping: MAPPING.VALUE,
+    },
+  ],
 };
 
 // Update chart with new data
 chart.update(newData);
 ```
 
-You may also **optionally** provide the options object to the update method. In this object you can pass an array of colors for a new color palette, as well as a map of chart property overrides, like so:
+You may also **optionally** provide the options object to the `update` method. In this object, you can pass an array of colors for a new color palette, as well as a map of chart property overrides, like so:
 
 ```javascript
 // Get new data
@@ -268,8 +272,8 @@ const options = {
   properties: {
     'chart-property-1': 'value-1',
     'chart-property-2': 'value-2',
-    'chart-property-3': 'value-3'
-  }
+    'chart-property-3': 'value-3',
+  },
 };
 
 // Update chart with new data as well as options providing a color palette and chart property overrides
@@ -278,14 +282,14 @@ chart.update(newData, options);
 
 ### setChartProperties(properties)
 
-You can pass your chart new properties any time and that will re-render your chart with those properties your provide. Simply pass an object of property keys with their values to the method.
+You can pass your chart new properties at any time and it will re-render accordingly. Simply pass an object of property keys and values to the method.
 
 ```javascript
 // Define your properties
 const properties = {
   'chart-property-1': 'value-1',
   'chart-property-2': 'value-2',
-  'chart-property-3': 'value-3'
+  'chart-property-3': 'value-3',
 };
 // Update chart with new properties
 chart.setChartProperties(properties);
@@ -293,7 +297,7 @@ chart.setChartProperties(properties);
 
 ### resetColorPalette()
 
-This method allows you to reset your chart's color palette back to the default Domo color palette. Your chart will automatically re-draw with the Domo color palette.
+This method allows you to reset your chart's color palette back to the default Domo color palette. Your chart will automatically redraw with the Domo color palette.
 
 ```javascript
 // Reset color palette to default
@@ -311,9 +315,9 @@ Attach a handler to various Phoenix event types. The following events are suppor
 
 ```javascript
 // Define your own drill "click" event
-chart.addEventListener('drill', function(ev) {
+chart.addEventListener('drill', function (ev) {
   const filterStrings = ev.drillInfo.filters.map(
-    f => `${f.column} contains ${f.values.join(' OR ')}`
+    (f) => `${f.column} contains ${f.values.join(' OR ')}`,
   );
   console.log('drilling on: ', filterStrings.join(' AND '));
   return true;
@@ -322,9 +326,9 @@ chart.addEventListener('drill', function(ev) {
 
 ### setUsePhoenixHover(flag)
 
-Have Phoenix render hover tooltips (true by default)
+Have Phoenix render hover tooltips (`true` by default):
 
 ```javascript
-// Don't have Phoenix display hover tooltips
+// Disable Phoenix hover tooltips
 chart.setUsePhoenixHover(false);
 ```

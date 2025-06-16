@@ -27,9 +27,9 @@ As the complexity of your app grows, the full **[App Framework](../Apps/App-Fram
 - Your app requires more than just three files.
 - Your app has many dependencies and is using package management tools (like [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)).
 - You prefer developing in the text editor or IDE of your choice (e.g. VSCode, Sublime Text, Atom, etc.).
-- Your app involves data collection via [CRUD](https://developer.mozilla.org/en-US/docs/Glossary/CRUD) operations (Create, Read, Update, Delete), which requires Domo's built-in transactional datastore called [AppDB](../Domo-App-APIs/AppDB-API.md).
+- Your app involves data collection via [CRUD](https://developer.mozilla.org/en-US/docs/Glossary/CRUD) operations (Create, Read, Update, Delete), which requires Domo's built-in transactional datastore called [AppDB](../API-Reference/Domo-App-APIs/AppDB-API.md).
   - Note: it is possible to leverage AppDB in a Domo Brick (e.g. [DDX Form and Dataset](https://www.domo.com/appstore/app/ddx-form-and-dataset/overview)), but the App Framework is the preferred approach.
-- Your app requires the ability to interface with the [Files API](../Domo-App-APIs/Files-API.md).
+- Your app requires the ability to interface with the [Files API](../API-Reference/Domo-App-APIs/Files-API.md).
 - You'd like greater control over the number of DataSets connected to your App (max: 100) and how a user can configure column mappings to those DataSets on the Wiring Screen.
 - You'd like to leverage JavaScript frameworks like [React, Angular, or Vue](App-Framework/Quickstart/Starter-Kits.md).
 - You'd like to follow standard development lifecycle practices (e.g. version control, CI/CD pipelines, etc.).

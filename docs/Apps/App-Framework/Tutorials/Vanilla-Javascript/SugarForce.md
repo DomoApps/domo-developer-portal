@@ -503,7 +503,7 @@ This code defines how the opportunities will be displayed in the form and adds a
 
 #### Additional Resources</strong>
 
-For additional information on using AppDB, refer to the [AppDB API Reference Guide](../../../../Domo-App-APIs/AppDB-API.md).
+For additional information on using AppDB, refer to the [AppDB API Reference Guide](../../../../API-Reference/Domo-App-APIs/AppDB-API.md).
 
 ### Step 5: Working with Files
 
@@ -511,7 +511,7 @@ For additional information on using AppDB, refer to the [AppDB API Reference Gu
 
 #### Leverage Files API
 
-The [Files API](../../../../Domo-App-APIs/Files-API.md) gives you the ability to handle files in a Domo app. Let users upload a file by adding the following to `opportunities.js`
+The [Files API](../../../../API-Reference/Domo-App-APIs/Files-API.md) gives you the ability to handle files in a Domo app. Let users upload a file by adding the following to `opportunities.js`
 
 <pre><code>functionuploadFile(file) {
   const formData =new FormData();
@@ -521,7 +521,7 @@ The [Files API](../../../../Domo-App-APIs/Files-API.md) gives you the ability 
 }
 </code></pre>
 
-In this example, the [Files API](../../../../Domo-App-APIs/Files-API.md) is receiving a multipart upload based on the File object passed in as the argument `file`. It will return a promise that yields a file ID which we'll store in AppDB to access these attachments later.
+In this example, the [Files API](../../../../API-Reference/Domo-App-APIs/Files-API.md) is receiving a multipart upload based on the File object passed in as the argument `file`. It will return a promise that yields a file ID which we'll store in AppDB to access these attachments later.
 
 Example response:
 

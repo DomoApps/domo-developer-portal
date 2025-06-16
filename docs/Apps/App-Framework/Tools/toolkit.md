@@ -1,33 +1,38 @@
-
 # Toolkit
 
 <!-- theme: info -->
 
 > #### Prerequisites
-> If you are not proficient at programming using JavaScript then please find a tutorial to gain this knowledge before proceeding.
+>
+> If you are new to JavaScript programming, we recommend reviewing a JavaScript tutorial before proceeding. A basic understanding of JavaScript is required to use the Toolkit effectively.
 
-The `domoinc/toolkit` library provides some convenient utilities for building custom Apps.
+The `@domoinc/toolkit` library provides convenient utilities for building custom apps in Domo. It streamlines development by offering pre-built clients for common Domo APIs and services.
 
 ### Installation
 
-The Toolkit library is available on NPM. https://www.npmjs.com/package/@domoinc/toolkit
+The Toolkit library is available on npm: [@domoinc/toolkit on npm](https://www.npmjs.com/package/@domoinc/toolkit)
 
+```sh
+npm install @domoinc/toolkit
 ```
-npm install --save @domoinc/toolkit
-```
+
 ### Documentation
 
-The documentation for this packages can be found here: https://domoapps.github.io/toolkit
+Full documentation for this package is available at: [https://domoapps.github.io/toolkit](https://domoapps.github.io/toolkit)
 
-These clients are provided in this library:
+#### Available Clients
 
-- AppDBClient: [Collections](https://domoapps.github.io/toolkit/classes/clients_appDB_client_collections.CollectionsClient.html), [Documents](https://domoapps.github.io/toolkit/classes/clients_appDB_client_documents.DocumentsClient.html)
-- [DomoClient](https://domoapps.github.io/toolkit/classes/clients_domo_client.DomoClient.html): Utilities for interacting with Domo. [Domo.js](https://developer.domo.com/docs/dev-studio-references/domo-js) alternative
-- [CodeEngineClient](https://domoapps.github.io/toolkit/variables/clients_codeengine_client.CodeEngineClient.html): Utilities for interacting with Domo's Code Engine. [Code Engine docs](https://domo-support.domo.com/s/article/000005173)
-- [WorkflowClient](https://domoapps.github.io/toolkit/variables/clients_workflow_client.WorkflowClient.html): Utilities for interacting with Domo's Workflows. [Workflow docs](https://domo-support.domo.com/s/article/000005108)
-- [FileClient](https://domoapps.github.io/toolkit/classes/clients_file_client.FileClient.html): Utilities for managing files through the File service
-- [GroupClient](https://domoapps.github.io/toolkit/classes/clients_group_client.GroupClient.html): Utilities for obtaining information related to Domo groups
-- [IdentityClient](https://domoapps.github.io/toolkit/classes/clients_identity_client.IdentityClient.html): Utilities for obtaining information related to the current user
-- [SqlClient](https://domoapps.github.io/toolkit/classes/clients_sql_client.SqlClient.html): SDK for using [SQL queries](https://developer.domo.com/docs/dev-studio-references/data-api#SQL%20API)
-- [UserClient](https://domoapps.github.io/toolkit/classes/clients_user_client.UserClient.html): [User API](https://developer.domo.com/docs/dev-studio-references/user-api)
-- [AIClient](https://domoapps.github.io/toolkit/classes/clients_ai_client.AIClient.html)
+The Toolkit provides the following clients:
+
+- **AppDBClient**: [AppDB API](../../../Domo-App-APIs/AppDB-API.md)
+  - [Collections](https://domoapps.github.io/toolkit/classes/clients_appDB_client_collections.CollectionsClient.html)
+  - [Documents](https://domoapps.github.io/toolkit/classes/clients_appDB_client_documents.DocumentsClient.html)
+- **DomoClient**: [DomoClient class](https://domoapps.github.io/toolkit/classes/clients_domo_client.DomoClient.html) — Utilities for interacting with Domo. Alternative to [Domo.js](./domo.js.md)
+- **CodeEngineClient**: [CodeEngineClient variable](https://domoapps.github.io/toolkit/variables/clients_codeengine_client.CodeEngineClient.html) — Utilities for Domo's Code Engine. [Code Engine docs](https://domo-support.domo.com/s/article/000005173)
+- **WorkflowClient**: [WorkflowClient variable](https://domoapps.github.io/toolkit/variables/clients_workflow_client.WorkflowClient.html) — Utilities for Domo Workflows. [Workflow docs](https://domo-support.domo.com/s/article/000005108)
+- **FileClient**: [FileClient class](https://domoapps.github.io/toolkit/classes/clients_file_client.FileClient.html) — [Files API](../../../Domo-App-APIs/Files-API.md)
+- **GroupClient**: [GroupClient class](https://domoapps.github.io/toolkit/classes/clients_group_client.GroupClient.html) — [Groups API](../../../Domo-App-APIs/Groups-API.md)
+- **IdentityClient**: [IdentityClient class](https://domoapps.github.io/toolkit/classes/clients_identity_client.IdentityClient.html) — Utilities for obtaining information about the current user
+- **SqlClient**: [SqlClient class](https://domoapps.github.io/toolkit/classes/clients_sql_client.SqlClient.html) — SDK for [SQL queries](../../../Domo-App-APIs/Data-API.md)
+- **UserClient**: [UserClient class](https://domoapps.github.io/toolkit/classes/clients_user_client.UserClient.html) — [User API](../../../Domo-App-APIs/User-API.md)
+- **AIClient**: [AIClient class](https://domoapps.github.io/toolkit/classes/clients_ai_client.AIClient.html) — [AI Services API](../../../Domo-App-APIs/AI-Service-Layer-API.md)
