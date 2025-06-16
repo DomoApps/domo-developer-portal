@@ -481,7 +481,7 @@ paths:
                 value:
                   name: Supply Chain
                   parentId: 23
-                  locked: 'TRUE'
+                  locked: true
                   cardIds:
                     - 12
                     - 2535
