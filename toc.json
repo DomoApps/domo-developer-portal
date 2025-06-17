@@ -642,8 +642,18 @@
         },
         {
           "type": "item",
+          "title": "Authentication and Permissions",
+          "uri": "/docs/Automate-Actions/Workflows/authentication.md"
+        },
+        {
+          "type": "item",
           "title": "Workflows API",
           "uri": "/docs/Automate-Actions/Workflows/Workflows.yaml"
+        },
+        {
+          "type": "item",
+          "title": "Troubleshooting",
+          "uri": "/docs/Automate-Actions/Workflows/troubleshooting.md"
         }
       ]
     },
