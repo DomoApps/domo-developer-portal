@@ -12,8 +12,25 @@ The [Domo Apps CLI](../Tools/domo-CLI.md) is the command line tool you can use t
 
 <!--
 type: tab
+title: npm
+-->
+
+The DomoApps CLI is distributed through the Homebrew and Chocolately package managers for long term support (LTS). However, there are also canary versions available via npm (Node Package Manager) that have the most recent updates that are being staged for LTS. If you have previously installed the DomoApps CLI using npm and wish to install the LTS version, <strong>you will need to uninstall the npm version first.</strong>
+
+To uninstall the canary version so that you can install the LTS version run the following command from your terminal: <pre><code>npm uninstall -g ryuu </code></pre>
+
+Once you have successfully uninstalled the canary version, <strong>close your terminal</strong> before proceeding. Open a new terminal and run `which domo` to ensure that there are no `domo` packages that exist within the node binaries on your machine.
+
+If you would rather use the canary version, you can run the following command from your terminal to install it from npm: <pre><code>npm install -g ryuu </code></pre>
+
+<!--
+type: tab
 title: Mac OSX / Linux
 -->
+
+<div style="background-color:#ffdddd; color:#a94442; border:1px solid #a94442; padding:10px; margin-bottom:16px;">
+<strong>Deprecated:</strong> As of June 18th, 2025 the Homebrew installation method is deprecated and may not receive future updates. Please use the npm installation method if possible.
+</div>
 
 If you are a Mac or Linux user, you will need to have <a href="https://brew.sh/">Homebrew</a> installed on your machine.
 
@@ -32,23 +49,14 @@ type: tab
 title: Windows
 -->
 
+<div style="background-color:#ffdddd; color:#a94442; border:1px solid #a94442; padding:10px; margin-bottom:16px;">
+<strong>Deprecated:</strong> As of June 18th, 2025 the Chocolatey installation method is deprecated and may not receive future updates. Please use the npm installation method if possible.
+</div>
+
 If you are a Windows user, you will need to have <a href="https://chocolatey.org/">Chocolatey</a> installed on your machine. You may also need to run your commands in PowerShell rather than the standard command prompt.
 
 <pre><code>choco install domo
 </code></pre>
-
-<!--
-type: tab
-title: npm
--->
-
-The DomoApps CLI is distributed through the Homebrew and Chocolately package managers for long term support (LTS). However, there are also canary versions available via npm (Node Package Manager) that have the most recent updates that are being staged for LTS. If you have previously installed the DomoApps CLI using npm and wish to install the LTS version, <strong>you will need to uninstall the npm version first.</strong>
-
-To uninstall the canary version so that you can install the LTS version run the following command from your terminal: <pre><code>npm uninstall -g ryuu </code></pre>
-
-Once you have successfully uninstalled the canary version, <strong>close your terminal</strong> before proceeding. Open a new terminal and run `which domo` to ensure that there are no `domo` packages that exist within the node binaries on your machine.
-
-If you would rather use the canary version, you can run the following command from your terminal to install it from npm: <pre><code>npm install -g ryuu </code></pre>
 
 <!-- type: tab-end -->
 
