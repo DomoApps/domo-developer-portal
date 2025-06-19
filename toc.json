@@ -233,6 +233,11 @@
         },
         {
           "type": "item",
+          "title": "FileSets API",
+          "uri": "docs/API-Reference/Product-APIs/Filesets.md"
+        },
+        {
+          "type": "item",
           "title": "Groups API",
           "uri": "docs/API-Reference/Product-APIs/Groups.md"
         },
