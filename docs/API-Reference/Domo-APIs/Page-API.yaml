@@ -13,17 +13,17 @@ info:
 
     Property Name | Type | Description
     ------- | ------- | -------
-    name | String | The name of the page
-    id | String | The ID of the page
-    parentId | Long | The ID of the page that is higher in organizational hierarchy 
-    owners | Array of objects | List of IDs of page owners
-    locked | Boolean | Determines whether users (besides the page owner) can make updates to page or its content - the default value is false
-    collectionIds | Long | The IDs of collections within a page
-    cardIds | Long | The ID of all cards contained within the page
-    children | Object | All pages that are considered "sub pages" in organizational hierarchy
-    visibility | Object | Determines the access given to both individual users or groups within Domo
-    userIds | Long | The ID of the page
-    groupIds | Long | The ID of the page
+    name | string | The name of the page
+    id | string | The ID of the page
+    parentId | integer | The ID of the page that is higher in organizational hierarchy 
+    owners | array | List of IDs of page owners
+    locked | boolean | Determines whether users (besides the page owner) can make updates to page or its content - the default value is false
+    collectionIds | array | The IDs of collections within a page
+    cardIds | array | The ID of all cards contained within the page
+    children | object | All pages that are considered "sub pages" in organizational hierarchy
+    visibility | object | Determines the access given to both individual users or groups within Domo
+    userIds | array | The IDs of users with access to the page
+    groupIds | array | The IDs of groups with access to the page
 servers:
   - url: 'https://api.domo.com'
     description: Domo API
@@ -49,27 +49,8 @@ paths:
             application/json:
               schema:
                 type: object
-                x-examples:
-                  Example 1:
-                    id: 421696155
-                    parentId: 1507324998
-                    owners: [{"id":8811501, "type":"USER", "displayName": "John Smith"}]
-                    name: Custom Maps
-                    locked: false
-                    collectionIds: []
-                    cardIds:
-                      - 606665948
-                      - 917562931
-                      - 1240307199
-                      - 911423588
-                    visibility:
-                      userIds:
-                        - 8811501
-                      groupIds: []
-                    owners:
-                      - id: 8811501
-                        type: USER
-                        displayName: Noah Finberg
+                required:
+                  - id
                 properties:
                   id:
                     type: integer
@@ -87,7 +68,7 @@ paths:
                     type: array
                     description: The IDs of collections within a page
                     items:
-                      type: object
+                      type: integer
                   cardIds:
                     type: array
                     description: The ID of all cards contained within the page
@@ -104,7 +85,7 @@ paths:
                       groupIds:
                         type: array
                         items:
-                          type: object
+                          type: integer
                   owners:
                     type: array
                     description: List of IDs of page owners
@@ -117,28 +98,33 @@ paths:
                           type: string
                         displayName:
                           type: string
-              examples:
-                Example 1:
-                  value:
-                    id: 421696155
-                    parentId: 1507324998
-                    owners: [{"id":8811501, "type":"USER", "displayName": "John Smith"}]
-                    name: Custom Maps
-                    locked: false
-                    collectionIds: []
-                    cardIds:
-                      - 606665948
-                      - 917562931
-                      - 1240307199
-                      - 911423588
-                    visibility:
-                      userIds:
-                        - 8811501
-                      groupIds: []
-                    owners:
-                      - id: 8811501
-                        type: USER
-                        displayName: Noah Finberg
+              content:
+                application/json:
+                  examples:
+                    Example 1:
+                      value:
+                        id: 421696155
+                        parentId: 1507324998
+                        owners:
+                          [
+                            {
+                              'id': 8811501,
+                              'type': 'USER',
+                              'displayName': 'John Smith',
+                            },
+                          ]
+                        name: Custom Maps
+                        locked: false
+                        collectionIds: []
+                        cardIds:
+                          - 606665948
+                          - 917562931
+                          - 1240307199
+                          - 911423588
+                        visibility:
+                          userIds:
+                            - 8811501
+                          groupIds: []
     put:
       summary: Update a page
       operationId: put-v1-pages-page_id
@@ -155,15 +141,21 @@ paths:
             schema:
               type: object
               properties:
-                page_id:
-                  type: integer
-                  description: ID of page that needs to be updated
                 name:
                   type: string
                   description: Will update the name of the page
                 owners:
                   type: array
                   description: Will update the owners of the page
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                      displayName:
+                        type: string
                 parentId:
                   type: integer
                   description: 'If provided, will either make the page a subpage or simply move the subpage to become a child of a different parent page'
@@ -194,8 +186,6 @@ paths:
                       description: IDs provided will share page with associated groups
                       items:
                         type: integer
-              required:
-                - page_id
     delete:
       summary: Delete a page
       operationId: delete-v1-pages-page_id
@@ -250,8 +240,9 @@ paths:
                                   items:
                                     type: object
                                     properties: {}
-                x-examples:
-                  Example 1:
+              examples:
+                Example 1:
+                  value:
                     - id: 1682608296
                       name: Data Apps
                       children:
@@ -354,6 +345,15 @@ paths:
                     type: integer
                   owners:
                     type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        type:
+                          type: string
+                        displayName:
+                          type: string
                   name:
                     type: string
                   locked:
@@ -373,35 +373,15 @@ paths:
                         type: array
                         items:
                           type: integer
-                x-examples:
-                  Example 1:
-                    id: 3242
-                    parentId: 23
-                    owners: [{"id":8811501, "type":"USER", "displayName": "John Smith"}]
-                    name: Supply Chain
-                    locked: true
-                    cardIds:
-                      - 12
-                      - 2535
-                      - 233
-                      - 694
-                    visibility:
-                      userIds:
-                        - 793
-                        - 20
-                        - 993
-                        - 19234
-                      groupIds:
-                        - 32
-                        - 25
-                        - 17
-                        - 74
               examples:
                 Example 1:
                   value:
                     id: 3242
                     parentId: 23
-                    owners: [{"id":8811501, "type":"USER", "displayName": "John Smith"}]
+                    owners:
+                      - id: 8811501
+                        type: USER
+                        displayName: John Smith
                     name: Supply Chain
                     locked: true
                     cardIds:
@@ -426,27 +406,6 @@ paths:
           application/json:
             schema:
               type: object
-              x-examples:
-                Example 1:
-                  name: Supply Chain
-                  parentId: 23
-                  locked: 'TRUE'
-                  cardIds:
-                    - 12
-                    - 2535
-                    - 233
-                    - 694
-                  visibility:
-                    userIds:
-                      - 793
-                      - 20
-                      - 993
-                      - 19234
-                    groupIds:
-                      - 32
-                      - 25
-                      - 17
-                      - 74
               properties:
                 name:
                   type: string
@@ -476,32 +435,10 @@ paths:
                       description: The IDs of groups that will be given access to view the page
                       items:
                         type: integer
-            examples:
-              Example 1:
-                value:
-                  name: Supply Chain
-                  parentId: 23
-                  locked: true
-                  cardIds:
-                    - 12
-                    - 2535
-                    - 233
-                    - 694
-                  visibility:
-                    userIds:
-                      - 793
-                      - 20
-                      - 993
-                      - 19234
-                    groupIds:
-                      - 32
-                      - 25
-                      - 17
-                      - 74
   '/v1/pages/{page_id}/collections':
     parameters:
       - schema:
-          type: string
+          type: integer
         name: page_id
         in: path
         required: true
@@ -529,44 +466,6 @@ paths:
                       type: array
                       items:
                         type: integer
-                x-examples:
-                  Example 1:
-                    - id: 284760742
-                      title: 'Executive Pulse: 6 metrics you should check every morning.'
-                      description: ''
-                      cardIds:
-                        - 1349867785
-                        - 519660200
-                        - 1581963101
-                        - 1793085897
-                        - 883306279
-                        - 2065775735
-                    - id: 218043425
-                      title: 'Leads and Opportunities: See where most of your prospects are coming from.'
-                      description: ''
-                      cardIds:
-                        - 2142729150
-                        - 722896244
-                        - 817752006
-                        - 417097071
-                        - 2126821636
-                    - id: 1236388313
-                      title: 'Sales: What you can do today to exceed your sales goals.'
-                      description: ''
-                      cardIds:
-                        - 1006593467
-                        - 931119744
-                        - 659079801
-                        - 1885170395
-                    - id: 705581826
-                      title: 'Sales Reps: Recognize, reward and position your top talent for top performance.'
-                      description: ''
-                      cardIds:
-                        - 563365994
-                        - 663359659
-                        - 1901443339
-                        - 623100687
-                        - 1712451993
               examples:
                 Example 1:
                   value:
@@ -606,30 +505,13 @@ paths:
                         - 1901443339
                         - 623100687
                         - 1712451993
-      operationId: get-v1-pages-PAGE_ID-collections
     post:
       summary: Create a page collection
-      operationId: ''
+      operationId: post-v1-pages-page_id-collections
       responses:
         '200':
           description: Returns the parameter of success or error based on the page ID being valid.
       description: ''
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: title
-          description: Page collection's name displayed above the set of cards
-        - schema:
-            type: string
-          in: query
-          name: description
-          description: Additional text within the page collection
-        - schema:
-            type: string
-          in: query
-          name: cardids
-          description: "\tIDs provided will add or remove cards that are not a part of a page collection"
       requestBody:
         content:
           application/json:
@@ -644,14 +526,6 @@ paths:
                   type: array
                   items:
                     type: integer
-              x-examples:
-                Example 1:
-                  title: East Sales
-                  description: East Region team  includes all Eastern states.
-                  cardIds:
-                    - 2535
-                    - 233
-                    - 694
             examples:
               Example 1:
                 value:
@@ -664,12 +538,12 @@ paths:
   '/v1/pages/{page_id}/collections/{page_collection_id}':
     parameters:
       - schema:
-          type: string
+          type: integer
         name: page_id
         in: path
         required: true
       - schema:
-          type: string
+          type: integer
         name: page_collection_id
         in: path
         required: true
@@ -684,16 +558,6 @@ paths:
           application/json:
             schema:
               type: object
-              x-examples:
-                Example 1:
-                  title: East Region Sales Team Funnel
-                  description: 'East Region team  includes all the following states: Maine, New Hampshire, Massachusetts, Rhode Island, Connecticut, New York, New Jersey, Delaware, Maryland, Virginia, North Carolina, South Carolina, Georgia, and Florida.'
-                  cardIds:
-                    - 2535
-                    - 233
-                    - 12
-                    - 884
-                    - 694
               properties:
                 title:
                   type: string
@@ -706,17 +570,6 @@ paths:
                   description: IDs provided will add or remove cards that are not a part of a page collection
                   items:
                     type: integer
-            examples:
-              Example 1:
-                value:
-                  title: East Region Sales Team Funnel
-                  description: 'East Region team  includes all the following states: Maine, New Hampshire, Massachusetts, Rhode Island, Connecticut, New York, New Jersey, Delaware, Maryland, Virginia, North Carolina, South Carolina, Georgia, and Florida.'
-                  cardIds:
-                    - 2535
-                    - 233
-                    - 12
-                    - 884
-                    - 694
     delete:
       summary: Delete a page collection
       operationId: delete-v1-pages-page_id-collections
