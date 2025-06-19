@@ -1,4 +1,6 @@
-# Filesets API
+# Filesets API (BETA)
+
+> **BETA:** This API is currently in BETA and is subject to change. Endpoints, request/response formats, and functionality may change without notice.
 
 This API reference documents the endpoints for managing filesets and files in Domo. These endpoints allow you to upload, download, query, and manage files and filesets programmatically.
 
