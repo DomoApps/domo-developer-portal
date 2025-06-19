@@ -17,34 +17,66 @@ This API reference documents the endpoints for managing filesets and files in Do
 
 - `path` (String, required): The path to the file within the fileset.
 
-**Example:**
+<!--
+type: tab
+title: Javascript
+-->
 
-```json
-{
-  "method": "GET",
-  "url": "https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/path?path=rules.txt",
-  "headers": {
-    "X-DOMO-Developer-Token": "",
-    "Content-Type": "application/json"
-  }
-}
+```js
+fetch(
+  'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/path?path={filePath}',
+  {
+    method: 'GET',
+    headers: {
+      'X-DOMO-Developer-Token': '<your-token-here>',
+      'Content-Type': 'application/json',
+    },
+  },
+)
+  .then((response) => response.json())
+  .then((result) => console.log(result))
+  .catch((error) => console.error('Error:', error));
 ```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/path?path={filePath}'
+
+with httpx.Client() as client:
+    response = client.get(url, headers=headers)
+    print(response.json())
+```
+
+<!-- type: tab-end -->
 
 **Response:**
 
 ```json
 {
-  "id": "38eeca2b-0cc9-4d19-bed7-e48b0e32cda5",
+  "id": "00000000-0000-0000-0000-000000000001",
   "path": "rules.txt",
   "name": "rules.txt",
   "fileType": "TEXT",
   "contentType": "text/plain",
-  "size": 267161,
-  "hash": "960a7135c19cbfb503571a98f85fd0d4995ebc6a3fa146f4f4b9b3495c1b7d41",
+  "size": 12345,
+  "hash": "fakehash00000000000000000000000000000000000000000000000000000000000001",
   "hashAlgorithm": "SHA_256_HEX",
   "downloadUrl": null,
-  "created": "2025-06-12T19:43:31.724369Z",
-  "createdBy": 123456789
+  "created": "2025-01-01T00:00:00.000Z",
+  "createdBy": 111111111,
+  "connectorKey": null,
+  "indexStatus": null,
+  "indexReason": null
 }
 ```
 
@@ -60,34 +92,66 @@ This API reference documents the endpoints for managing filesets and files in Do
 - `filesetId` (String, required): The ID of the fileset.
 - `fileId` (String, required): The ID of the file.
 
-**Example:**
+<!--
+type: tab
+title: Javascript
+-->
 
-```json
-{
-  "method": "GET",
-  "url": "https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files/{fileId}",
-  "headers": {
-    "X-DOMO-Developer-Token": "",
-    "Content-Type": "application/json"
-  }
-}
+```js
+fetch(
+  'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files/{fileId}',
+  {
+    method: 'GET',
+    headers: {
+      'X-DOMO-Developer-Token': '<your-token-here>',
+      'Content-Type': 'application/json',
+    },
+  },
+)
+  .then((response) => response.json())
+  .then((result) => console.log(result))
+  .catch((error) => console.error('Error:', error));
 ```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files/{fileId}'
+
+with httpx.Client() as client:
+    response = client.get(url, headers=headers)
+    print(response.json())
+```
+
+<!-- type: tab-end -->
 
 **Response:**
 
 ```json
 {
-  "id": "38eeca2b-0cc9-4d19-bed7-e48b0e32cda5",
+  "id": "00000000-0000-0000-0000-000000000002",
   "path": "rules.txt",
   "name": "rules.txt",
   "fileType": "TEXT",
   "contentType": "text/plain",
-  "size": 267161,
-  "hash": "960a7135c19cbfb503571a98f85fd0d4995ebc6a3fa146f4f4b9b3495c1b7d41",
+  "size": 12345,
+  "hash": "fakehash00000000000000000000000000000000000000000000000000000000000002",
   "hashAlgorithm": "SHA_256_HEX",
-  "downloadUrl": "https://domo-jon-tiritilli.domo.com/api/files/v1/filesets/6e68073c-9f90-45c9-afa0-37e01d33575e/files/38eeca2b-0cc9-4d19-bed7-e48b0e32cda5/download",
-  "created": "2025-06-12T19:43:31.724369Z",
-  "createdBy": 123456789
+  "downloadUrl": "https://instance-name.domo.com/api/files/v1/filesets/00000000-0000-0000-0000-000000000010/files/00000000-0000-0000-0000-000000000002/download",
+  "created": "2025-01-01T00:00:00.000Z",
+  "createdBy": 111111111,
+  "connectorKey": null,
+  "indexStatus": null,
+  "indexReason": null
 }
 ```
 
@@ -103,22 +167,63 @@ This API reference documents the endpoints for managing filesets and files in Do
 - `filesetId` (String, required): The ID of the fileset.
 - `fileId` (String, required): The ID of the file.
 
-**Example:**
+<!--
+type: tab
+title: Javascript
+-->
 
-```json
-{
-  "method": "GET",
-  "url": "https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files/{fileId}/download",
-  "headers": {
-    "X-DOMO-Developer-Token": "",
-    "Content-Type": "application/json"
-  }
-}
+```js
+fetch(
+  'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files/{fileId}/download',
+  {
+    method: 'GET',
+    headers: {
+      'X-DOMO-Developer-Token': '<your-token-here>',
+      'Content-Type': 'application/json',
+    },
+  },
+)
+  .then((response) => response.blob()) // Use .blob() for file downloads
+  .then((blob) => {
+    // Example: create a download link
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'filename.ext'; // Set desired file name
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  })
+  .catch((error) => console.error('Error:', error));
 ```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files/{fileId}/download'
+
+with httpx.Client() as client:
+    response = client.get(url, headers=headers)
+    with open('filename.ext', 'wb') as f:
+        f.write(response.content)
+    print('File downloaded as filename.ext')
+```
+
+<!-- type: tab-end -->
 
 **Response:**
 
-- Returns the file contents as a download.
+- Returns the file contents as a download (binary/text stream).
 
 ---
 
@@ -131,25 +236,71 @@ This API reference documents the endpoints for managing filesets and files in Do
 
 - `filesetId` (String, required): The ID of the fileset.
 
-**Example:**
+<!--
+type: tab
+title: Javascript
+-->
 
-```json
-{
-  "method": "POST",
-  "url": "https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/query",
-  "headers": {
-    "X-DOMO-Developer-Token": "",
-    "Content-Type": "application/json"
+```js
+fetch('https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/query', {
+  method: 'POST',
+  headers: {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
   },
-  "body": {
-    // Query parameters here
-  }
-}
+  body: JSON.stringify({
+    query: 'some query',
+    directoryPath: '',
+    topK: 5,
+  }),
+})
+  .then((response) => response.json())
+  .then((result) => console.log(result))
+  .catch((error) => console.error('Error:', error));
 ```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/query'
+data = {
+    'query': 'some query',
+    'directoryPath': '',
+    'topK': 5,
+}
+
+with httpx.Client() as client:
+    response = client.post(url, headers=headers, json=data)
+    print(response.json())
+```
+
+<!-- type: tab-end -->
 
 **Response:**
 
-- Returns a list of files matching the query.
+```json
+[
+  {
+    "id": "00000000-0000-0000-0000-000000000003",
+    "path": "rules.txt",
+    "name": "rules.txt",
+    "fileType": "TEXT",
+    "contentType": "text/plain",
+    "size": 12345,
+    "created": "2025-01-01T00:00:00.000Z",
+    "createdBy": 111111111
+  }
+]
+```
 
 ---
 
@@ -162,25 +313,75 @@ This API reference documents the endpoints for managing filesets and files in Do
 
 - `filesetId` (String, required): The ID of the fileset.
 
-**Example:**
+<!--
+type: tab
+title: Javascript
+-->
 
-```json
-{
-  "method": "POST",
-  "url": "https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files",
-  "headers": {
-    "X-DOMO-Developer-Token": "",
-    "Content-Type": "application/json"
+```js
+// Prepare the file and metadata for upload
+const formdata = new FormData();
+formdata.append('file', fileInput.files[0], 'rules.txt');
+formdata.append('createFileRequest', JSON.stringify({ directoryPath: '' }));
+
+const requestOptions = {
+  method: 'POST',
+  headers: {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    // Note: Do not set Content-Type header; browser will set it automatically for FormData
   },
-  "body": {
-    // File upload parameters here
-  }
-}
+  body: formdata,
+  redirect: 'follow',
+};
+
+fetch(
+  'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files',
+  requestOptions,
+)
+  .then((response) => response.json())
+  .then((result) => console.log(result))
+  .catch((error) => console.error('Error:', error));
 ```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+}
+url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files'
+
+with open('rules.txt', 'rb') as file_obj:
+    files = {
+        'file': ('rules.txt', file_obj, 'text/plain'),
+        'createFileRequest': (None, '{"directoryPath": ""}', 'application/json'),
+    }
+    with httpx.Client() as client:
+        response = client.post(url, headers=headers, files=files)
+        print(response.json())
+```
+
+<!-- type: tab-end -->
 
 **Response:**
 
-- Returns details about the uploaded file.
+```json
+{
+  "id": "00000000-0000-0000-0000-000000000004",
+  "path": "fab-rules.txt",
+  "name": "fab-rules.txt",
+  "fileType": "TEXT",
+  "contentType": "text/plain",
+  "size": 12345,
+  "created": "2025-01-01T00:00:00.000Z",
+  "createdBy": 111111111
+}
+```
 
 ---
 
@@ -197,22 +398,56 @@ This API reference documents the endpoints for managing filesets and files in Do
 
 - `path` (String, required): The path to the file within the fileset.
 
-**Example:**
+<!--
+type: tab
+title: Javascript
+-->
 
-```json
-{
-  "method": "DELETE",
-  "url": "https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/path?path=rules.txt",
-  "headers": {
-    "X-DOMO-Developer-Token": "",
-    "Content-Type": "application/json"
-  }
-}
+```js
+fetch(
+  'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/path?path=rules.txt',
+  {
+    method: 'DELETE',
+    headers: {
+      'X-DOMO-Developer-Token': '<your-token-here>',
+      'Content-Type': 'application/json',
+    },
+  },
+)
+  .then((response) => response.json())
+  .then((result) => console.log(result))
+  .catch((error) => console.error('Error:', error));
 ```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/path?path=rules.txt'
+
+with httpx.Client() as client:
+    response = client.delete(url, headers=headers)
+    print(response.json())
+```
+
+<!-- type: tab-end -->
 
 **Response:**
 
-- Returns status of the delete operation.
+```json
+{
+  "status": "success",
+  "message": "File deleted successfully."
+}
+```
 
 ---
 
@@ -239,9 +474,56 @@ This API reference documents the endpoints for managing filesets and files in Do
 }
 ```
 
+<!--
+type: tab
+title: Javascript
+-->
+
+```js
+fetch(
+  'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files/{fileId}',
+  {
+    method: 'DELETE',
+    headers: {
+      'X-DOMO-Developer-Token': '<your-token-here>',
+      'Content-Type': 'application/json',
+    },
+  },
+)
+  .then((response) => response.json())
+  .then((result) => console.log(result))
+  .catch((error) => console.error('Error:', error));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files/{fileId}'
+
+with httpx.Client() as client:
+    response = client.delete(url, headers=headers)
+    print(response.json())
+```
+
+<!-- type: tab-end -->
+
 **Response:**
 
-- Returns status of the delete operation.
+```json
+{
+  "status": "success",
+  "message": "File deleted successfully."
+}
+```
 
 ---
 
@@ -266,9 +548,64 @@ This API reference documents the endpoints for managing filesets and files in Do
 }
 ```
 
+<!--
+type: tab
+title: Javascript
+-->
+
+```js
+fetch('https://{instance}.domo.com/api/files/v1/filesets/query', {
+  method: 'POST',
+  headers: {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    // Query parameters here
+  }),
+})
+  .then((response) => response.json())
+  .then((result) => console.log(result))
+  .catch((error) => console.error('Error:', error));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+url = 'https://{instance}.domo.com/api/files/v1/filesets/query'
+data = {
+    # Query parameters here
+}
+
+with httpx.Client() as client:
+    response = client.post(url, headers=headers, json=data)
+    print(response.json())
+```
+
+<!-- type: tab-end -->
+
 **Response:**
 
-- Returns a list of filesets matching the query.
+```json
+[
+  {
+    "id": "00000000-0000-0000-0000-000000000010",
+    "name": "Sample Fileset",
+    "description": "A sample fileset for demonstration purposes.",
+    "created": "2025-01-01T00:00:00.000Z",
+    "createdBy": 111111111
+  }
+]
+```
 
 ---
 
@@ -293,9 +630,64 @@ This API reference documents the endpoints for managing filesets and files in Do
 }
 ```
 
+<!--
+type: tab
+title: Javascript
+-->
+
+```js
+fetch('https://{instance}.domo.com/api/files/v1/filesets', {
+  method: 'POST',
+  headers: {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    // Query parameters here
+  }),
+})
+  .then((response) => response.json())
+  .then((result) => console.log(result))
+  .catch((error) => console.error('Error:', error));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+url = 'https://{instance}.domo.com/api/files/v1/filesets'
+data = {
+    # Query parameters here
+}
+
+with httpx.Client() as client:
+    response = client.post(url, headers=headers, json=data)
+    print(response.json())
+```
+
+<!-- type: tab-end -->
+
 **Response:**
 
-- Returns a list of filesets.
+```json
+[
+  {
+    "id": "00000000-0000-0000-0000-000000000011",
+    "name": "Sample Fileset",
+    "description": "A sample fileset for demonstration purposes.",
+    "created": "2025-01-01T00:00:00.000Z",
+    "createdBy": 111111111
+  }
+]
+```
 
 ---
 
@@ -320,9 +712,62 @@ This API reference documents the endpoints for managing filesets and files in Do
 }
 ```
 
+<!--
+type: tab
+title: Javascript
+-->
+
+```js
+fetch('https://{instance}.domo.com/api/files/v1/filesets', {
+  method: 'POST',
+  headers: {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    // Fileset creation parameters here
+  }),
+})
+  .then((response) => response.json())
+  .then((result) => console.log(result))
+  .catch((error) => console.error('Error:', error));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+url = 'https://{instance}.domo.com/api/files/v1/filesets'
+data = {
+    # Fileset creation parameters here
+}
+
+with httpx.Client() as client:
+    response = client.post(url, headers=headers, json=data)
+    print(response.json())
+```
+
+<!-- type: tab-end -->
+
 **Response:**
 
-- Returns details about the created fileset.
+```json
+{
+  "id": "00000000-0000-0000-0000-000000000012",
+  "name": "Sample Fileset",
+  "description": "A sample fileset for demonstration purposes.",
+  "created": "2025-01-01T00:00:00.000Z",
+  "createdBy": 111111111
+}
+```
 
 ---
 
@@ -348,9 +793,56 @@ This API reference documents the endpoints for managing filesets and files in Do
 }
 ```
 
+<!--
+type: tab
+title: Javascript
+-->
+
+```js
+fetch('https://{instance}.domo.com/api/files/v1/filesets/{filesetId}', {
+  method: 'GET',
+  headers: {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+  },
+})
+  .then((response) => response.json())
+  .then((result) => console.log(result))
+  .catch((error) => console.error('Error:', error));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}'
+
+with httpx.Client() as client:
+    response = client.get(url, headers=headers)
+    print(response.json())
+```
+
+<!-- type: tab-end -->
+
 **Response:**
 
-- Returns details about the fileset.
+```json
+{
+  "id": "00000000-0000-0000-0000-000000000013",
+  "name": "Sample Fileset",
+  "description": "A sample fileset for demonstration purposes.",
+  "created": "2025-01-01T00:00:00.000Z",
+  "createdBy": 111111111
+}
+```
 
 ---
 
@@ -379,9 +871,62 @@ This API reference documents the endpoints for managing filesets and files in Do
 }
 ```
 
+<!--
+type: tab
+title: Javascript
+-->
+
+```js
+fetch('https://{instance}.domo.com/api/files/v1/filesets/{filesetId}', {
+  method: 'POST',
+  headers: {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    // Fileset update parameters here
+  }),
+})
+  .then((response) => response.json())
+  .then((result) => console.log(result))
+  .catch((error) => console.error('Error:', error));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}'
+data = {
+    # Fileset update parameters here
+}
+
+with httpx.Client() as client:
+    response = client.post(url, headers=headers, json=data)
+    print(response.json())
+```
+
+<!-- type: tab-end -->
+
 **Response:**
 
-- Returns details about the updated fileset.
+```json
+{
+  "id": "00000000-0000-0000-0000-000000000014",
+  "name": "Sample Fileset",
+  "description": "A sample fileset for demonstration purposes.",
+  "created": "2025-01-01T00:00:00.000Z",
+  "createdBy": 111111111
+}
+```
 
 ---
 
@@ -407,6 +952,50 @@ This API reference documents the endpoints for managing filesets and files in Do
 }
 ```
 
+<!--
+type: tab
+title: Javascript
+-->
+
+```js
+fetch('https://{instance}.domo.com/api/files/v1/filesets/{filesetId}', {
+  method: 'DELETE',
+  headers: {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+  },
+})
+  .then((response) => response.json())
+  .then((result) => console.log(result))
+  .catch((error) => console.error('Error:', error));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}'
+
+with httpx.Client() as client:
+    response = client.delete(url, headers=headers)
+    print(response.json())
+```
+
+<!-- type: tab-end -->
+
 **Response:**
 
-- Returns status of the delete operation.
+```json
+{
+  "status": "success",
+  "message": "Fileset deleted successfully."
+}
+```
