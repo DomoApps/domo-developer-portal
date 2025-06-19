@@ -1,16 +1,41 @@
 # Domo Workflows
 
-**Domo Workflows** empowers customers to design, implement, and execute automated processes using low-code tools. It enables business experts, process owners, and analysts to create workflows directly within their Domo instance—without requiring extensive technical expertise.
+**Domo Workflows** is a low-code automation framework that allows you to orchestrate actions across the Domo platform and external systems. While Workflows can be built visually using Domo’s drag-and-drop canvas, developers can also create, manage, and execute them programmatically using the Workflow APIs.
 
-For advanced integrations, automation, and external orchestration, Domo provides a robust [Workflows Product API](../../API-Reference/Product-APIs/Workflows.md). This API allows you to programmatically start, manage, and interact with workflows from external systems, scripts, or even other Domo instances. Whether you're building custom solutions, automating business processes, or integrating with third-party platforms, the Workflows API offers the flexibility and power to extend your workflow capabilities far beyond the UI.
+This page provides a high-level introduction for developers looking to integrate Workflows into automated pipelines, CI/CD tooling, or external applications.
 
-Explore the API documentation to unlock new possibilities for automation and seamless integration with your business processes.
+## What Makes Workflows Developer-Friendly?
 
-## Things to keep in mind
+- **API-driven orchestration**
 
-- **Size Limits** - The maximum size of a workflow variable is 1Mb
-- **Loop Iterrations** - To prevent runaway endless loops, the maximum number of iterations in a loop is 1000 per day
-- **Strict Typing** - Domo Workflows are strongly typed, so you must ensure that the data types you are using are compatible with the data types expected by the steps in the workflow
-- **Entity Permissions** - Using entities in workflows, such as datasets, requires the appropriate permissions to access them. Make sure the people running the workflow will have the necessary permissions
-- **Validation** - Workflows are validated before they are deployed. If there are any errors, the workflow will not be able to be deployed until they are fixed. There are also validation warnings, which won't block the workflow from being deployed, but may cause unexpected behavior
-- **Code Engine Logs** - Code Engine logs are only available in your workflow if you `throw` in your function. If you `console.log` or `print`, the logs will only be available when running the function in Code Engine
+  Programmatically start, manage, and interact with workflows from external systems, scripts, or even other Domo instances.
+
+- **Custom scripting**
+
+  Embed custom logic in JavaScript or Python steps to manipulate inputs, call APIs, or apply business logic within your flow.
+
+- **System integration**
+
+  Workflows can call external services, work with Domo DataSets, trigger DataFlows, and send notifications—all in one pipeline.
+
+- **Security and governance**
+
+  Workflows run with scoped tokens and support fine-grained permissions and execution visibility.
+
+## What You’ll Find in This Documentation
+
+This section of the Developer Portal provides technical guidance on:
+
+**Authentication & API scopes**: How to generate and use tokens for managing workflows.
+
+**Workflow API Reference**: Endpoints for listing, creating, running, and monitoring workflows.
+
+**Scripting & Extensibility**: Using Python or JavaScript within steps to customize logic or interact with services.
+
+**Use Cases & Examples**: Recipes for integrating Workflows into real-world automation scenarios.
+
+## Already Familiar With Workflows?
+
+If you're looking for information on how to use the Workflow Builder UI, configure built-in steps, or troubleshoot common issues, check out the [Domo Knowledge Base](https://domo-support.domo.com/s/article/000005108?language=en_US).
+
+This documentation assumes familiarity with the platform and focuses on developer use cases and API-level control.
