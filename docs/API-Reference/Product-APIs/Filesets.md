@@ -463,19 +463,6 @@ with httpx.Client() as client:
 - `filesetId` (String, required): The ID of the fileset.
 - `fileId` (String, required): The ID of the file.
 
-**Example:**
-
-```json
-{
-  "method": "DELETE",
-  "url": "https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files/{fileId}",
-  "headers": {
-    "X-DOMO-Developer-Token": "",
-    "Content-Type": "application/json"
-  }
-}
-```
-
 <!--
 type: tab
 title: Javascript
@@ -533,22 +520,6 @@ with httpx.Client() as client:
 
 **Method:** `POST`  
 **Endpoint:** `/api/files/v1/filesets/query`
-
-**Example:**
-
-```json
-{
-  "method": "POST",
-  "url": "https://{instance}.domo.com/api/files/v1/filesets/query",
-  "headers": {
-    "X-DOMO-Developer-Token": "",
-    "Content-Type": "application/json"
-  },
-  "body": {
-    // Query parameters here
-  }
-}
-```
 
 <!--
 type: tab
@@ -616,22 +587,6 @@ with httpx.Client() as client:
 **Method:** `POST`  
 **Endpoint:** `/api/files/v1/filesets`
 
-**Example:**
-
-```json
-{
-  "method": "POST",
-  "url": "https://{instance}.domo.com/api/files/v1/filesets",
-  "headers": {
-    "X-DOMO-Developer-Token": "",
-    "Content-Type": "application/json"
-  },
-  "body": {
-    // Query parameters here
-  }
-}
-```
-
 <!--
 type: tab
 title: Javascript
@@ -697,22 +652,6 @@ with httpx.Client() as client:
 
 **Method:** `POST`  
 **Endpoint:** `/api/files/v1/filesets`
-
-**Example:**
-
-```json
-{
-  "method": "POST",
-  "url": "https://{instance}.domo.com/api/files/v1/filesets",
-  "headers": {
-    "X-DOMO-Developer-Token": "",
-    "Content-Type": "application/json"
-  },
-  "body": {
-    // Fileset creation parameters here
-  }
-}
-```
 
 <!--
 type: tab
@@ -782,19 +721,6 @@ with httpx.Client() as client:
 
 - `filesetId` (String, required): The ID of the fileset.
 
-**Example:**
-
-```json
-{
-  "method": "GET",
-  "url": "https://{instance}.domo.com/api/files/v1/filesets/{filesetId}",
-  "headers": {
-    "X-DOMO-Developer-Token": "",
-    "Content-Type": "application/json"
-  }
-}
-```
-
 <!--
 type: tab
 title: Javascript
@@ -856,22 +782,6 @@ with httpx.Client() as client:
 **Path Parameters:**
 
 - `filesetId` (String, required): The ID of the fileset.
-
-**Example:**
-
-```json
-{
-  "method": "POST",
-  "url": "https://{instance}.domo.com/api/files/v1/filesets/{filesetId}",
-  "headers": {
-    "X-DOMO-Developer-Token": "",
-    "Content-Type": "application/json"
-  },
-  "body": {
-    // Fileset update parameters here
-  }
-}
-```
 
 <!--
 type: tab
@@ -940,19 +850,6 @@ with httpx.Client() as client:
 **Path Parameters:**
 
 - `filesetId` (String, required): The ID of the fileset.
-
-**Example:**
-
-```json
-{
-  "method": "DELETE",
-  "url": "https://{instance}.domo.com/api/files/v1/filesets/{filesetId}",
-  "headers": {
-    "X-DOMO-Developer-Token": "",
-    "Content-Type": "application/json"
-  }
-}
-```
 
 <!--
 type: tab
