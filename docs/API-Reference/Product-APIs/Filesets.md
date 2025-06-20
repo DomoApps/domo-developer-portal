@@ -569,23 +569,29 @@ with httpx.Client() as client:
 **Response:**
 
 ```json
-[
-  {
-    "id": "00000000-0000-0000-0000-000000000010",
-    "name": "Sample Fileset",
-    "description": "A sample fileset for demonstration purposes.",
-    "created": "2025-01-01T00:00:00.000Z",
-    "createdBy": 111111111
-  }
-]
+{
+  "id": "00000000-0000-0000-0000-000000000010",
+  "name": "Sample Fileset",
+  "description": "A sample fileset for demonstration purposes.",
+  "created": "2025-01-01T00:00:00.000Z",
+  "createdBy": 111111111,
+  "updated": "2025-01-02T00:00:00.000Z",
+  "updatedBy": 111111111,
+  "owner": "111111111",
+  "accountId": 0,
+  "connectorContext": null,
+  "permission": "OWNER",
+  "size": 123456,
+  "fileCount": 2
+}
 ```
 
 ---
 
-## Get Filesets
+## List Filesets
 
 **Method:** `POST`  
-**Endpoint:** `/api/files/v1/filesets`
+**Endpoint:** `/api/files/v1/filesets/search`
 
 <!--
 type: tab
@@ -593,7 +599,7 @@ title: Javascript
 -->
 
 ```js
-fetch('https://{instance}.domo.com/api/files/v1/filesets', {
+fetch('https://{instance}.domo.com/api/files/v1/filesets/search', {
   method: 'POST',
   headers: {
     'X-DOMO-Developer-Token': '<your-token-here>',
@@ -635,15 +641,25 @@ with httpx.Client() as client:
 **Response:**
 
 ```json
-[
-  {
-    "id": "00000000-0000-0000-0000-000000000011",
-    "name": "Sample Fileset",
-    "description": "A sample fileset for demonstration purposes.",
-    "created": "2025-01-01T00:00:00.000Z",
-    "createdBy": 111111111
-  }
-]
+{
+  "id": "6fbf49f2-b1eb-4dd9-b1ea-4a477480965b",
+  "name": "Unstructured",
+  "description": "",
+  "aiEnabled": true,
+  "indexStatus": null,
+  "batchType": "INCREMENTAL",
+  "connector": "DOMO",
+  "created": "2025-04-19T22:52:23.470150Z",
+  "createdBy": 403368057,
+  "updated": "2025-06-17T20:14:13.298781Z",
+  "updatedBy": 403368057,
+  "owner": "403368057",
+  "accountId": 0,
+  "connectorContext": null,
+  "permission": "OWNER",
+  "size": 730812,
+  "fileCount": 2
+}
 ```
 
 ---
