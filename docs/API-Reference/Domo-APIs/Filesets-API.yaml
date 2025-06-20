@@ -3,9 +3,9 @@ info:
   title: Filesets API
   description: |
     ## The Fileset Object
-    
+
     The Filesets API allows you to create, query, update, and manage Filesets and their files within Domo. Most calls return a Fileset object.
-    
+
     <!-- theme: info -->
     > #### Permissions
     >
@@ -768,5 +768,3 @@ components:
         userId:
           type: string
           nullable: true
-security:
-  - bearerAuth: []
