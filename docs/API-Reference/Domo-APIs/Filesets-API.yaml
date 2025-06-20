@@ -21,8 +21,6 @@ paths:
     post:
       summary: Create a Fileset
       description: Creates a new Fileset in your Domo instance. Most calls return a Fileset object.
-      tags:
-        - Filesets
       operationId: createFileSet
       requestBody:
         content:
@@ -55,8 +53,6 @@ paths:
     get:
       summary: Retrieve Fileset Details
       description: Retrieves the details of an existing Fileset.
-      tags:
-        - Filesets
       operationId: getFileSet
       parameters:
         - name: fileSetId
@@ -88,8 +84,6 @@ paths:
     post:
       summary: Update Fileset Details
       description: Updates the specified Fileset’s metadata by providing values to parameters passed.
-      tags:
-        - Filesets
       operationId: updateFileSet
       parameters:
         - name: fileSetId
@@ -127,8 +121,6 @@ paths:
     delete:
       summary: Delete a Fileset
       description: Permanently deletes a Fileset from your Domo instance. This is destructive and cannot be reversed.
-      tags:
-        - Filesets
       operationId: deleteFileSet
       parameters:
         - name: fileSetId
@@ -157,8 +149,6 @@ paths:
     post:
       summary: Query a Fileset
       description: Queries the files and directories within a Fileset using a search query.
-      tags:
-        - Filesets
       operationId: queryFileSet
       parameters:
         - name: fileSetId
@@ -197,8 +187,6 @@ paths:
     post:
       summary: Update Fileset Ownership
       description: Updates the owner of a Fileset to a new user.
-      tags:
-        - Filesets
       operationId: updateOwnership
       parameters:
         - name: fileSetId
@@ -237,8 +225,6 @@ paths:
     post:
       summary: Upload a File to Fileset
       description: Uploads a new file to the specified Fileset.
-      tags:
-        - Filesets
       operationId: createFile
       parameters:
         - name: fileSetId
@@ -294,8 +280,6 @@ paths:
     post:
       summary: List Files in Fileset
       description: Lists files and directories within a Fileset, optionally filtered by directory path or other criteria.
-      tags:
-        - Filesets
       operationId: listFilesForFileset
       parameters:
         - name: fileSetId
@@ -357,8 +341,6 @@ paths:
     get:
       summary: Get Fileset Access
       description: Retrieves the access permissions for the specified Fileset.
-      tags:
-        - Filesets
       operationId: getAccess_1
       parameters:
         - name: fileSetId
@@ -390,8 +372,6 @@ paths:
     post:
       summary: Update Fileset Access
       description: Updates the access permissions for the specified Fileset.
-      tags:
-        - Filesets
       operationId: updateAccess_1
       parameters:
         - name: fileSetId
@@ -424,8 +404,6 @@ paths:
     post:
       summary: Search Filesets
       description: Searches for Filesets in your Domo instance using filters and criteria.
-      tags:
-        - Filesets
       operationId: listFileSets
       parameters:
         - name: limit
