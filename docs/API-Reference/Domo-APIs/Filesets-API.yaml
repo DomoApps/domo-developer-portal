@@ -569,8 +569,21 @@ components:
       properties:
         files:
           type: array
+          nullable: true
           items:
-            type: object
+            $ref: '#/components/schemas/FileSystemEntity'
+        pageContext:
+          $ref: '#/components/schemas/PageCursorContext_Nullable'
+    PageCursorContext_Nullable:
+      nullable: true
+      allOf:
+        - $ref: '#/components/schemas/PageCursorContext'
+    PageCursorContext:
+      type: object
+      properties:
+        next:
+          type: string
+          nullable: true
     FileSetPage:
       type: object
       properties:
