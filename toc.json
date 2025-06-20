@@ -233,7 +233,7 @@
         },
         {
           "type": "item",
-          "title": "FileSets API",
+          "title": "FileSets API (BETA)",
           "uri": "docs/API-Reference/Product-APIs/Filesets.md"
         },
         {
