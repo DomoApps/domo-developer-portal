@@ -61,6 +61,11 @@
         },
         {
           "type": "item",
+          "title": "Filesets API (BETA)",
+          "uri": "docs/API-Reference/Domo-App-APIs/Filesets-API.md"
+        },
+        {
+          "type": "item",
           "title": "Groups API",
           "uri": "docs/API-Reference/Domo-App-APIs/Groups-API.md"
         },
