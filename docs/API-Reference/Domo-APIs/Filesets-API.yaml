@@ -1,0 +1,772 @@
+openapi: 3.0.0
+info:
+  title: Filesets API
+  description: |
+    ## The Fileset Object
+    
+    The Filesets API allows you to create, query, update, and manage Filesets and their files within Domo. Most calls return a Fileset object.
+    
+    <!-- theme: info -->
+    > #### Permissions
+    >
+    > To update or write to a Fileset via API, you must have the appropriate grants enabled.
+  version: 1.0.0
+servers:
+  - url: 'https://api.domo.com'
+    description: Domo API
+security:
+  - bearerAuth: []
+paths:
+  /api/files/v1/filesets:
+    post:
+      tags:
+        - files-resource
+      operationId: createFileSet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFileSetRequest'
+        required: true
+      responses:
+        '413':
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: object
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileSet'
+  /api/files/v1/filesets/{fileSetId}:
+    get:
+      tags:
+        - files-resource
+      operationId: getFileSet
+      parameters:
+        - name: fileSetId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '413':
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: object
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileSet'
+    post:
+      tags:
+        - files-resource
+      operationId: updateFileSet
+      parameters:
+        - name: fileSetId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFileSetRequest'
+        required: true
+      responses:
+        '413':
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: object
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileSet'
+    delete:
+      tags:
+        - files-resource
+      operationId: deleteFileSet
+      parameters:
+        - name: fileSetId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '413':
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: object
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        '200':
+          description: OK
+  /api/files/v1/filesets/{fileSetId}/query:
+    post:
+      tags:
+        - files-resource
+      operationId: queryFileSet
+      parameters:
+        - name: fileSetId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryFileSetRequest'
+        required: true
+      responses:
+        '413':
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: object
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryFileSetResponse'
+  /api/files/v1/filesets/{fileSetId}/ownership:
+    post:
+      tags:
+        - files-resource
+      operationId: updateOwnership
+      parameters:
+        - name: fileSetId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OwnershipUpdateRequest'
+        required: true
+      responses:
+        '413':
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: object
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessResponse'
+  /api/files/v1/filesets/{fileSetId}/files:
+    post:
+      tags:
+        - files-resource
+      operationId: createFile
+      parameters:
+        - name: fileSetId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: createFileRequest
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  nullable: true
+          application/json:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  nullable: true
+      responses:
+        '413':
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: object
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileSystemEntity'
+  /api/files/v1/filesets/{fileSetId}/files/search:
+    post:
+      tags:
+        - files-resource
+      operationId: listFilesForFileset
+      parameters:
+        - name: fileSetId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: directoryPath
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: immediateChildren
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 100
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+        required: true
+      responses:
+        '413':
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: object
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilePage'
+  /api/files/v1/filesets/{fileSetId}/batches:
+    get:
+      tags:
+        - batch-files-resource
+      operationId: listBatches
+      parameters:
+        - name: fileSetId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Batch'
+    post:
+      tags:
+        - batch-files-resource
+      operationId: createBatch
+      parameters:
+        - name: fileSetId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: jobId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+  /api/files/v1/filesets/{fileSetId}/batches/{batchId}:
+    get:
+      tags:
+        - batch-files-resource
+      operationId: getBatch
+      parameters:
+        - name: batchId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: fileSetId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+    post:
+      tags:
+        - batch-files-resource
+      operationId: bulkUploadBatchFile
+      parameters:
+        - name: fileSetId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: batchId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: allowEmpty
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadBatchFileRequest'
+        required: true
+      responses:
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/files/v1/filesets/{fileSetId}/batches/{batchId}/finish:
+    post:
+      tags:
+        - batch-files-resource
+      operationId: finishBatchFileProcessing
+      parameters:
+        - name: fileSetId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: batchId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: jobId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: isFailureOverride
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/files/v1/filesets/{fileSetId}/access:
+    get:
+      tags:
+        - files-resource
+      operationId: getAccess_1
+      parameters:
+        - name: fileSetId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '413':
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: object
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessResponse'
+    post:
+      tags:
+        - files-resource
+      operationId: updateAccess_1
+      parameters:
+        - name: fileSetId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessUpdateRequest'
+        required: true
+      responses:
+        '413':
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: object
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessResponse'
+  /api/files/v1/filesets/search:
+    post:
+      tags:
+        - files-resource
+      operationId: listFileSets
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 100
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+        required: true
+      responses:
+        '413':
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: object
+        '409':
+          description: Conflict
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileSetPage'
+components:
+  schemas:
+    CreateFileSetRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        accountId:
+          type: integer
+          nullable: true
+        connectorContext:
+          type: object
+          nullable: true
+    FileSet:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        created:
+          type: integer
+        updated:
+          type: integer
+        owner:
+          type: string
+        fileCount:
+          type: integer
+    UpdateFileSetRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    QueryFileSetRequest:
+      type: object
+      properties:
+        query:
+          type: string
+        topK:
+          type: integer
+        directoryPath:
+          type: string
+    QueryFileSetResponse:
+      type: object
+      properties:
+        matches:
+          type: array
+    OwnershipUpdateRequest:
+      type: object
+      properties:
+        userId:
+          type: integer
+    AccessResponse:
+      type: object
+      properties:
+        fileSetId:
+          type: string
+        fileSetAccess:
+          type: array
+    FileSystemEntity:
+      type: object
+      properties:
+        fileType:
+          type: string
+    SearchRequest:
+      type: object
+      properties:
+        filters:
+          type: array
+        dateFilters:
+          type: array
+    FilePage:
+      type: object
+      properties:
+        files:
+          type: array
+    Batch:
+      type: object
+      properties:
+        id:
+          type: string
+        fileSetId:
+          type: string
+        status:
+          type: string
+        created:
+          type: integer
+        completed:
+          type: integer
+    UploadBatchFileRequest:
+      type: object
+      properties:
+        batchFileUploads:
+          type: array
+    FileSetPage:
+      type: object
+      properties:
+        fileSets:
+          type: array
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        statusReason:
+          type: string
+          nullable: true
+        exception:
+          type: string
+          nullable: true
+        path:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+        toe:
+          type: string
+          nullable: true
+        userId:
+          type: string
+          nullable: true
+security:
+  - bearerAuth: []
