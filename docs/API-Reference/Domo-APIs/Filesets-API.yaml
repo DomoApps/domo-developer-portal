@@ -19,6 +19,8 @@ security:
 paths:
   /api/files/v1/filesets:
     post:
+      summary: Create a Fileset
+      description: Creates a new Fileset in your Domo instance. Most calls return a Fileset object.
       tags:
         - files-resource
       operationId: createFileSet
@@ -51,6 +53,8 @@ paths:
                 $ref: '#/components/schemas/FileSet'
   /api/files/v1/filesets/{fileSetId}:
     get:
+      summary: Retrieve Fileset Details
+      description: Retrieves the details of an existing Fileset.
       tags:
         - files-resource
       operationId: getFileSet
@@ -82,6 +86,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/FileSet'
     post:
+      summary: Update Fileset Details
+      description: Updates the specified Fileset’s metadata by providing values to parameters passed.
       tags:
         - files-resource
       operationId: updateFileSet
@@ -119,6 +125,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/FileSet'
     delete:
+      summary: Delete a Fileset
+      description: Permanently deletes a Fileset from your Domo instance. This is destructive and cannot be reversed.
       tags:
         - files-resource
       operationId: deleteFileSet
@@ -147,6 +155,8 @@ paths:
           description: OK
   /api/files/v1/filesets/{fileSetId}/query:
     post:
+      summary: Query a Fileset
+      description: Queries the files and directories within a Fileset using a search query.
       tags:
         - files-resource
       operationId: queryFileSet
@@ -185,6 +195,8 @@ paths:
                 $ref: '#/components/schemas/QueryFileSetResponse'
   /api/files/v1/filesets/{fileSetId}/ownership:
     post:
+      summary: Update Fileset Ownership
+      description: Updates the owner of a Fileset to a new user.
       tags:
         - files-resource
       operationId: updateOwnership
@@ -223,6 +235,8 @@ paths:
                 $ref: '#/components/schemas/AccessResponse'
   /api/files/v1/filesets/{fileSetId}/files:
     post:
+      summary: Upload a File to Fileset
+      description: Uploads a new file to the specified Fileset.
       tags:
         - files-resource
       operationId: createFile
@@ -278,6 +292,8 @@ paths:
                 $ref: '#/components/schemas/FileSystemEntity'
   /api/files/v1/filesets/{fileSetId}/files/search:
     post:
+      summary: List Files in Fileset
+      description: Lists files and directories within a Fileset, optionally filtered by directory path or other criteria.
       tags:
         - files-resource
       operationId: listFilesForFileset
@@ -339,6 +355,8 @@ paths:
                 $ref: '#/components/schemas/FilePage'
   /api/files/v1/filesets/{fileSetId}/batches:
     get:
+      summary: List Batches for Fileset
+      description: Lists all file upload batches for the specified Fileset.
       tags:
         - batch-files-resource
       operationId: listBatches
@@ -378,6 +396,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Batch'
     post:
+      summary: Create a Batch for Fileset
+      description: Creates a new file upload batch for the specified Fileset.
       tags:
         - batch-files-resource
       operationId: createBatch
@@ -410,6 +430,8 @@ paths:
                 $ref: '#/components/schemas/Batch'
   /api/files/v1/filesets/{fileSetId}/batches/{batchId}:
     get:
+      summary: Retrieve Batch Details
+      description: Retrieves the details of a specific file upload batch for a Fileset.
       tags:
         - batch-files-resource
       operationId: getBatch
@@ -440,6 +462,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Batch'
     post:
+      summary: Bulk Upload Files to Batch
+      description: Uploads multiple files in bulk to a specific batch for a Fileset.
       tags:
         - batch-files-resource
       operationId: bulkUploadBatchFile
@@ -483,6 +507,8 @@ paths:
                 type: object
   /api/files/v1/filesets/{fileSetId}/batches/{batchId}/finish:
     post:
+      summary: Finish Batch File Processing
+      description: Marks a batch file upload as complete and triggers processing.
       tags:
         - batch-files-resource
       operationId: finishBatchFileProcessing
@@ -526,6 +552,8 @@ paths:
                 type: object
   /api/files/v1/filesets/{fileSetId}/access:
     get:
+      summary: Get Fileset Access
+      description: Retrieves the access permissions for the specified Fileset.
       tags:
         - files-resource
       operationId: getAccess_1
@@ -557,6 +585,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/AccessResponse'
     post:
+      summary: Update Fileset Access
+      description: Updates the access permissions for the specified Fileset.
       tags:
         - files-resource
       operationId: updateAccess_1
@@ -589,6 +619,8 @@ paths:
                 $ref: '#/components/schemas/AccessResponse'
   /api/files/v1/filesets/search:
     post:
+      summary: Search Filesets
+      description: Searches for Filesets in your Domo instance using filters and criteria.
       tags:
         - files-resource
       operationId: listFileSets
