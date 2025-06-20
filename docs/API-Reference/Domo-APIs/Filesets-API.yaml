@@ -353,203 +353,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FilePage'
-  /api/files/v1/filesets/{fileSetId}/batches:
-    get:
-      summary: List Batches for Fileset
-      description: Lists all file upload batches for the specified Fileset.
-      tags:
-        - Fileset Batches
-      operationId: listBatches
-      parameters:
-        - name: fileSetId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int64
-        - name: offset
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '409':
-          description: Conflict
-        '403':
-          description: Forbidden
-          content:
-            '*/*':
-              schema:
-                type: string
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Batch'
-    post:
-      summary: Create a Batch for Fileset
-      description: Creates a new file upload batch for the specified Fileset.
-      tags:
-        - Fileset Batches
-      operationId: createBatch
-      parameters:
-        - name: fileSetId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: jobId
-          in: query
-          required: false
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '409':
-          description: Conflict
-        '403':
-          description: Forbidden
-          content:
-            '*/*':
-              schema:
-                type: string
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Batch'
-  /api/files/v1/filesets/{fileSetId}/batches/{batchId}:
-    get:
-      summary: Retrieve Batch Details
-      description: Retrieves the details of a specific file upload batch for a Fileset.
-      tags:
-        - Fileset Batches
-      operationId: getBatch
-      parameters:
-        - name: batchId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: fileSetId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '409':
-          description: Conflict
-        '403':
-          description: Forbidden
-          content:
-            '*/*':
-              schema:
-                type: string
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Batch'
-    post:
-      summary: Bulk Upload Files to Batch
-      description: Uploads multiple files in bulk to a specific batch for a Fileset.
-      tags:
-        - Fileset Batches
-      operationId: bulkUploadBatchFile
-      parameters:
-        - name: fileSetId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: batchId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: allowEmpty
-          in: query
-          required: false
-          schema:
-            type: boolean
-            default: false
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UploadBatchFileRequest'
-        required: true
-      responses:
-        '409':
-          description: Conflict
-        '403':
-          description: Forbidden
-          content:
-            '*/*':
-              schema:
-                type: string
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-  /api/files/v1/filesets/{fileSetId}/batches/{batchId}/finish:
-    post:
-      summary: Finish Batch File Processing
-      description: Marks a batch file upload as complete and triggers processing.
-      tags:
-        - Fileset Batches
-      operationId: finishBatchFileProcessing
-      parameters:
-        - name: fileSetId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: batchId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: jobId
-          in: query
-          required: false
-          schema:
-            type: string
-            format: uuid
-        - name: isFailureOverride
-          in: query
-          required: false
-          schema:
-            type: boolean
-            default: false
-      responses:
-        '409':
-          description: Conflict
-        '403':
-          description: Forbidden
-          content:
-            '*/*':
-              schema:
-                type: string
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
   /api/files/v1/filesets/{fileSetId}/access:
     get:
       summary: Get Fileset Access
@@ -682,7 +485,7 @@ components:
           type: integer
           nullable: true
         connectorContext:
-          type: object
+          $ref: '#/components/schemas/ConnectorContext'
           nullable: true
     FileSet:
       type: object
@@ -740,12 +543,16 @@ components:
         fileSetAccess:
           type: array
           items:
-            type: object
+            $ref: '#/components/schemas/FileSetAccess'
     FileSystemEntity:
+      required:
+        - fileType
       type: object
       properties:
         fileType:
           type: string
+      discriminator:
+        propertyName: fileType
     SearchRequest:
       type: object
       properties:
@@ -761,27 +568,6 @@ components:
       type: object
       properties:
         files:
-          type: array
-          items:
-            type: object
-    Batch:
-      type: object
-      required: [id, fileSetId, status]
-      properties:
-        id:
-          type: string
-        fileSetId:
-          type: string
-        status:
-          type: string
-        created:
-          type: integer
-        completed:
-          type: integer
-    UploadBatchFileRequest:
-      type: object
-      properties:
-        batchFileUploads:
           type: array
           items:
             type: object
@@ -817,3 +603,209 @@ components:
         userId:
           type: string
           nullable: true
+    ConnectorContext:
+      required:
+        - connector
+      type: object
+      properties:
+        relativePath:
+          type: string
+          nullable: true
+        connector:
+          type: string
+      discriminator:
+        propertyName: connector
+    FileSetAccess:
+      type: object
+      properties:
+        entityId:
+          type: integer
+          format: int64
+          nullable: true
+        entityType:
+          type: string
+          nullable: true
+          enum:
+            - UNKNOWN
+            - SYSTEM
+            - USER
+            - VIRTUAL_USER
+            - GROUP
+            - CUSTOMER
+            - DOMO_ROLE
+            - CUSTOMER_ROLE
+            - AUTHORITY
+            - CARD
+            - PAGE
+            - DATA_APP_VIEW
+            - REPORT_VIEW_PAGE
+            - REPORT_VIEW
+            - DOMOTALK
+            - BUZZ_CHANNEL
+            - BUZZ_INTEGRATION
+            - PROJECT
+            - PROJECT_TASK
+            - FILE
+            - DATA_SOURCE
+            - METRIC
+            - DATA_MODEL
+            - ACCOUNT
+            - ACCOUNT_TEMPLATE
+            - CREDENTIAL_REQUEST
+            - STREAM
+            - DATAFLOW
+            - DATAFLOW_RECIPE
+            - DATAFLOW_RECIPE_VERSION
+            - DATAFLOW_ENV_IMAGE
+            - ADC_POLICY
+            - ADC_POLICY_GROUP
+            - APPROVAL
+            - APPROVAL_TEMPLATE
+            - CERTIFICATION
+            - ALERT
+            - CONTROL_GROUP
+            - FUSION
+            - BEAST_MODE
+            - DATA_DEFINITION
+            - STORY
+            - SS_SPEC
+            - SS_ACCESS_GROUP
+            - SS_SSO_GROUP
+            - DATA_SCIENCE_NOTEBOOK
+            - FILESHARE
+            - DATA_SCIENCE_PROJECT
+            - DATA_SCIENCE_MODEL
+            - VECTOR_INDEX
+            - FILE_SET
+            - CONVERSATIONAL_AGENT
+            - CONVERSATIONAL_AGENT_PACKAGE
+            - MAGNUM_COLLECTION
+            - RYUU_APP
+            - RYUU_DESIGN
+            - ODYSSEY_WORKFLOW_MODEL
+            - ODYSSEY_WORKFLOW_DEPLOYMENT
+            - ODYSSEY_BUCKET
+            - PIPELINE_EXECUTOR_JOB
+            - REPOSITORY
+            - VERSION_DEPLOYMENT
+            - CODEENGINE_FUNCTION
+            - ENIGMA_FORM
+            - ENIGMA_FORM_INSTANCE
+            - ENIGMA_ADVANCED_FORM
+            - HOPPER_QUEUE
+            - DATA_APP
+            - WORKBENCH_JOB
+            - WORKBENCH_GROUP
+            - WORKBENCH_CREDENTIAL
+            - CONFIG_APP_CONFIGURATION
+            - CONFIG_APP
+            - WORKSPACE
+        permission:
+          type: string
+          nullable: true
+          enum:
+            - OWNER
+            - EDIT
+            - READ
+            - NONE
+    AccessUpdateRequest:
+      type: object
+      properties:
+        indexAccess:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/IndexAccess'
+    IndexAccess:
+      type: object
+      properties:
+        entityId:
+          type: integer
+          format: int64
+          nullable: true
+        entityType:
+          type: string
+          nullable: true
+          enum:
+            - UNKNOWN
+            - SYSTEM
+            - USER
+            - VIRTUAL_USER
+            - GROUP
+            - CUSTOMER
+            - DOMO_ROLE
+            - CUSTOMER_ROLE
+            - AUTHORITY
+            - CARD
+            - PAGE
+            - DATA_APP_VIEW
+            - REPORT_VIEW_PAGE
+            - REPORT_VIEW
+            - DOMOTALK
+            - BUZZ_CHANNEL
+            - BUZZ_INTEGRATION
+            - PROJECT
+            - PROJECT_TASK
+            - FILE
+            - DATA_SOURCE
+            - METRIC
+            - DATA_MODEL
+            - ACCOUNT
+            - ACCOUNT_TEMPLATE
+            - CREDENTIAL_REQUEST
+            - STREAM
+            - DATAFLOW
+            - DATAFLOW_RECIPE
+            - DATAFLOW_RECIPE_VERSION
+            - DATAFLOW_ENV_IMAGE
+            - ADC_POLICY
+            - ADC_POLICY_GROUP
+            - APPROVAL
+            - APPROVAL_TEMPLATE
+            - CERTIFICATION
+            - ALERT
+            - CONTROL_GROUP
+            - FUSION
+            - BEAST_MODE
+            - DATA_DEFINITION
+            - STORY
+            - SS_SPEC
+            - SS_ACCESS_GROUP
+            - SS_SSO_GROUP
+            - DATA_SCIENCE_NOTEBOOK
+            - FILESHARE
+            - DATA_SCIENCE_PROJECT
+            - DATA_SCIENCE_MODEL
+            - VECTOR_INDEX
+            - FILE_SET
+            - CONVERSATIONAL_AGENT
+            - CONVERSATIONAL_AGENT_PACKAGE
+            - MAGNUM_COLLECTION
+            - RYUU_APP
+            - RYUU_DESIGN
+            - ODYSSEY_WORKFLOW_MODEL
+            - ODYSSEY_WORKFLOW_DEPLOYMENT
+            - ODYSSEY_BUCKET
+            - PIPELINE_EXECUTOR_JOB
+            - REPOSITORY
+            - VERSION_DEPLOYMENT
+            - CODEENGINE_FUNCTION
+            - ENIGMA_FORM
+            - ENIGMA_FORM_INSTANCE
+            - ENIGMA_ADVANCED_FORM
+            - HOPPER_QUEUE
+            - DATA_APP
+            - WORKBENCH_JOB
+            - WORKBENCH_GROUP
+            - WORKBENCH_CREDENTIAL
+            - CONFIG_APP_CONFIGURATION
+            - CONFIG_APP
+            - WORKSPACE
+        permission:
+          type: string
+          nullable: true
+          enum:
+            - OWNER
+            - EDIT
+            - READ
+            - NONE

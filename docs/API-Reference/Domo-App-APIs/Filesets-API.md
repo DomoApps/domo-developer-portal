@@ -2,7 +2,7 @@
 
 > **BETA:** This API is currently in BETA and is subject to change. Endpoints, request/response formats, and functionality may change without notice.
 
-This API reference documents the endpoints for managing filesets and files in Domo from within a Domo app. When used from an app inside Domo, authentication is handled automatically and you do not need to provide a token. All endpoints use `/domo` instead of `/api` in the URL.
+This API reference documents the endpoints for managing Filesets and Files in Domo from within a Domo app.
 
 > **Note:** All code examples below are tested and match the working Domo app UI. Use `domo.*` methods for all API calls except file upload/download, which require `fetch` for binary or FormData support.
 
