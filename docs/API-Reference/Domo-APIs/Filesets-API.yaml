@@ -566,25 +566,19 @@ paths:
           required: true
           schema:
             type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AccessUpdateRequest'
-        required: true
       responses:
         '413':
           description: Payload Too Large
           content:
-            '*/*':
+            application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/ErrorResponse'
         '409':
           description: Conflict
         '403':
           description: Forbidden
           content:
-            '*/*':
+            application/json:
               schema:
                 type: string
         '200':
@@ -641,9 +635,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/FileSetPage'
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
   schemas:
     CreateFileSetRequest:
       type: object
+      required: [name]
       properties:
         name:
           type: string
@@ -655,6 +654,7 @@ components:
           nullable: true
     FileSet:
       type: object
+      required: [id, name]
       properties:
         id:
           type: string
@@ -691,18 +691,24 @@ components:
       properties:
         matches:
           type: array
+          items:
+            type: object
     OwnershipUpdateRequest:
       type: object
+      required: [userId]
       properties:
         userId:
           type: integer
     AccessResponse:
       type: object
+      required: [fileSetId, fileSetAccess]
       properties:
         fileSetId:
           type: string
         fileSetAccess:
           type: array
+          items:
+            type: object
     FileSystemEntity:
       type: object
       properties:
@@ -713,15 +719,22 @@ components:
       properties:
         filters:
           type: array
+          items:
+            type: object
         dateFilters:
           type: array
+          items:
+            type: object
     FilePage:
       type: object
       properties:
         files:
           type: array
+          items:
+            type: object
     Batch:
       type: object
+      required: [id, fileSetId, status]
       properties:
         id:
           type: string
@@ -738,11 +751,15 @@ components:
       properties:
         batchFileUploads:
           type: array
+          items:
+            type: object
     FileSetPage:
       type: object
       properties:
         fileSets:
           type: array
+          items:
+            $ref: '#/components/schemas/FileSet'
     ErrorResponse:
       type: object
       properties:
