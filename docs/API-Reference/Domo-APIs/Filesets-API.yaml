@@ -22,7 +22,7 @@ paths:
       summary: Create a Fileset
       description: Creates a new Fileset in your Domo instance. Most calls return a Fileset object.
       tags:
-        - files-resource
+        - Filesets
       operationId: createFileSet
       requestBody:
         content:
@@ -56,7 +56,7 @@ paths:
       summary: Retrieve Fileset Details
       description: Retrieves the details of an existing Fileset.
       tags:
-        - files-resource
+        - Filesets
       operationId: getFileSet
       parameters:
         - name: fileSetId
@@ -89,7 +89,7 @@ paths:
       summary: Update Fileset Details
       description: Updates the specified Fileset’s metadata by providing values to parameters passed.
       tags:
-        - files-resource
+        - Filesets
       operationId: updateFileSet
       parameters:
         - name: fileSetId
@@ -128,7 +128,7 @@ paths:
       summary: Delete a Fileset
       description: Permanently deletes a Fileset from your Domo instance. This is destructive and cannot be reversed.
       tags:
-        - files-resource
+        - Filesets
       operationId: deleteFileSet
       parameters:
         - name: fileSetId
@@ -158,7 +158,7 @@ paths:
       summary: Query a Fileset
       description: Queries the files and directories within a Fileset using a search query.
       tags:
-        - files-resource
+        - Filesets
       operationId: queryFileSet
       parameters:
         - name: fileSetId
@@ -198,7 +198,7 @@ paths:
       summary: Update Fileset Ownership
       description: Updates the owner of a Fileset to a new user.
       tags:
-        - files-resource
+        - Filesets
       operationId: updateOwnership
       parameters:
         - name: fileSetId
@@ -238,7 +238,7 @@ paths:
       summary: Upload a File to Fileset
       description: Uploads a new file to the specified Fileset.
       tags:
-        - files-resource
+        - Filesets
       operationId: createFile
       parameters:
         - name: fileSetId
@@ -295,7 +295,7 @@ paths:
       summary: List Files in Fileset
       description: Lists files and directories within a Fileset, optionally filtered by directory path or other criteria.
       tags:
-        - files-resource
+        - Filesets
       operationId: listFilesForFileset
       parameters:
         - name: fileSetId
@@ -358,7 +358,7 @@ paths:
       summary: List Batches for Fileset
       description: Lists all file upload batches for the specified Fileset.
       tags:
-        - batch-files-resource
+        - Fileset Batches
       operationId: listBatches
       parameters:
         - name: fileSetId
@@ -399,7 +399,7 @@ paths:
       summary: Create a Batch for Fileset
       description: Creates a new file upload batch for the specified Fileset.
       tags:
-        - batch-files-resource
+        - Fileset Batches
       operationId: createBatch
       parameters:
         - name: fileSetId
@@ -433,7 +433,7 @@ paths:
       summary: Retrieve Batch Details
       description: Retrieves the details of a specific file upload batch for a Fileset.
       tags:
-        - batch-files-resource
+        - Fileset Batches
       operationId: getBatch
       parameters:
         - name: batchId
@@ -465,7 +465,7 @@ paths:
       summary: Bulk Upload Files to Batch
       description: Uploads multiple files in bulk to a specific batch for a Fileset.
       tags:
-        - batch-files-resource
+        - Fileset Batches
       operationId: bulkUploadBatchFile
       parameters:
         - name: fileSetId
@@ -510,7 +510,7 @@ paths:
       summary: Finish Batch File Processing
       description: Marks a batch file upload as complete and triggers processing.
       tags:
-        - batch-files-resource
+        - Fileset Batches
       operationId: finishBatchFileProcessing
       parameters:
         - name: fileSetId
@@ -555,7 +555,7 @@ paths:
       summary: Get Fileset Access
       description: Retrieves the access permissions for the specified Fileset.
       tags:
-        - files-resource
+        - Filesets
       operationId: getAccess_1
       parameters:
         - name: fileSetId
@@ -588,7 +588,7 @@ paths:
       summary: Update Fileset Access
       description: Updates the access permissions for the specified Fileset.
       tags:
-        - files-resource
+        - Filesets
       operationId: updateAccess_1
       parameters:
         - name: fileSetId
@@ -622,7 +622,7 @@ paths:
       summary: Search Filesets
       description: Searches for Filesets in your Domo instance using filters and criteria.
       tags:
-        - files-resource
+        - Filesets
       operationId: listFileSets
       parameters:
         - name: limit
