@@ -527,7 +527,7 @@ components:
         matches:
           type: array
           items:
-            type: object
+            $ref: '#/components/schemas/Match'
     OwnershipUpdateRequest:
       type: object
       required: [userId]
