@@ -809,3 +809,44 @@ components:
             - EDIT
             - READ
             - NONE
+    Match:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        node:
+          $ref: '#/components/schemas/ReadNodeInterfaceObject_Nullable'
+        score:
+          type: number
+          format: double
+          nullable: true
+    ReadNodeInterfaceObject_Nullable:
+      nullable: true
+      allOf:
+        - $ref: '#/components/schemas/ReadNodeInterfaceObject'
+    ReadNodeInterfaceObject:
+      type: object
+      properties:
+        created:
+          type: integer
+          format: int64
+          nullable: true
+        updated:
+          type: integer
+          format: int64
+          nullable: true
+        type:
+          type: string
+          nullable: true
+          enum:
+            - TEXT
+            - IMAGE
+            - DATASET
+            - UNKNOWN
+        embedding:
+          type: array
+          nullable: true
+          items:
+            type: number
+            format: double
