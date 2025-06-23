@@ -1,4 +1,4 @@
-# Maxpbox World Map React App Tutorial
+# Mapbox World Map React App Tutorial
 
 This tutorial will walk you through building a custom React app that displays a world map with data points using Mapbox. As you follow along, you will get experience doing a few things:
 
@@ -8,25 +8,25 @@ This tutorial will walk you through building a custom React app that displays a 
 
 All code and files used for this tutorial can be found at [this GitHub repository](https://github.com/DomoApps/mapbox-tutorial).
 
-### Step 1: Setup and Installation
+### Step 1: Setup and installation
 
 ---
 
 Before beginning, please make sure you’ve successfully installed the Domo Apps CLI and followed the basic setup and installation instructions found [here](https://developer.domo.com/docs/dev-studio-quick-start/set-up). When following the article, please skip `Step 3: Create a New App`. We will be creating a React app instead of a simple Javascript app.
 
-### Step 2: Create and Run a New React Project
+### Step 2: Create and run a new React project
 
 ---
 
 Initialize a React project using Domo's template by following the steps in [this article](https://developer.domo.com/portal/u8w475o2245yp-starter-kits). Run the `yarn start` (or `npm start`) command to start developing locally.
 
-### Step 3: Sign Up for a Free Mapbox Account
+### Step 3: Sign up for a free Mapbox account
 
 ---
 
 If you don't already have a Mapbox account, you can create one for free [here](https://account.mapbox.com/auth/signup/). This is a requirement to get your own custom app running with Mapbox. Once you've created your account, you should be able to get your personal `Access tokens` at the bottom of your account home screen. If you're having trouble finding them, or you'd like to learn more about access tokens, read Mapbox's support article on [Access Tokens](https://docs.mapbox.com/help/getting-started/access-tokens/).
 
-### Step 4: Set Up App Components
+### Step 4: Set up app components
 
 ---
 
@@ -136,7 +136,7 @@ Check your browser at `localhost:3000`, where your app should be running. You sh
 
 ![mapbox-globe.png](../../../../../assets/images/mapbox-globe.png)
 
-### Step 6: Style Map and Add a Few Points
+### Step 6: Style map and add a few points
 
 ---
 
@@ -310,7 +310,7 @@ Save your changes and check the browser. You should see our 10 U.S. cities on th
 
 ![mapbox-sample-points.png](../../../../../assets/images/mapbox-sample-points.png)
 
-### Step 7: Wire Data to Our App
+### Step 7: Wire data to our app
 
 ---
 
@@ -458,7 +458,7 @@ Once all is said and done, your `manifest.json` file should look something like 
 
 Now we're ready to query the dataset from our app!
 
-### Step 8: Query Data and Render Points on the Map
+### Step 8: Query data and render points on the map
 
 ---
 
