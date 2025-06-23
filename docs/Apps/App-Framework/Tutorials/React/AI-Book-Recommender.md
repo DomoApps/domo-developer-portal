@@ -4,7 +4,7 @@ This tutorial will guide you through building an AI-powered book recommender app
 
 - Create a web app from scratch using Domo's React app template
 - Pull book data from a public web API (Open Library)
-- Get AI-generated text using Domo's AI Service Layer APIs
+- Get AI-generated text using Domo's AI Service Layer API
 
 All code and files used for this tutorial can be found at [this GitHub repository](https://github.com/DomoApps/book-recommender-tutorial).
 

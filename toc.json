@@ -389,6 +389,11 @@
                       "type": "item",
                       "title": "Bar Code Scanne PWA",
                       "uri": "/docs/Apps/App-Framework/Tutorials/React/Bar-Code-Scanner-PWA.md"
+                    },
+                    {
+                      "type": "item",
+                      "title": "AI Book Recommender App",
+                      "uri": "/docs/Apps/App-Framework/Tutorials/React/AI-Book-Recommender.md"
                     }
                   ]
                 },
