@@ -1,8 +1,8 @@
-# FileSets API (BETA)
-
-> **BETA:** This API is currently in BETA and is subject to change. Endpoints, request/response formats, and functionality may change without notice.
+# FileSet API (BETA)
 
 This API reference documents the endpoints for managing FileSets and Files in Domo from within a Domo app.
+
+> **BETA:** This API is currently in BETA and is subject to change. Endpoints, request/response formats, and functionality may change without notice.
 
 > **Note:** All code examples below are tested and match the working Domo app UI. Use `domo.*` methods for all API calls except file upload/download, which require `fetch` for binary or FormData support.
 
@@ -42,8 +42,6 @@ domo
     }
   });
 ```
-
-<!-- type: tab-end -->
 
 <!--
 type: tab
@@ -186,8 +184,6 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files/${fileId}/download`)
   .catch((error) => console.error('Error:', error));
 ```
 
-<!-- type: tab-end -->
-
 **Response:**
 
 - Returns the file contents as a download (binary/text stream).
@@ -218,8 +214,6 @@ domo
   .then((result) => console.log(result))
   .catch((error) => console.error(error.message || error));
 ```
-
-<!-- type: tab-end -->
 
 <!--
 type: tab
@@ -297,8 +291,6 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files`, {
   .catch((error) => console.error('Error:', error));
 ```
 
-<!-- type: tab-end -->
-
 **Response:**
 
 ```json
@@ -356,8 +348,6 @@ domo
     }
   });
 ```
-
-<!-- type: tab-end -->
 
 <!--
 type: tab
@@ -431,8 +421,6 @@ domo
   });
 ```
 
-<!-- type: tab-end -->
-
 <!--
 type: tab
 title: Javascript (fetch)
@@ -484,8 +472,6 @@ domo
   .then((result) => console.log(result.fileSets))
   .catch((error) => console.error(error.message || error));
 ```
-
-<!-- type: tab-end -->
 
 <!--
 type: tab
@@ -543,8 +529,6 @@ domo
   .catch((error) => console.error(error.message || error));
 ```
 
-<!-- type: tab-end -->
-
 <!--
 type: tab
 title: Javascript (fetch)
@@ -601,8 +585,6 @@ domo
   .catch((error) => console.error(error.message || error));
 ```
 
-<!-- type: tab-end -->
-
 <!--
 type: tab
 title: Javascript (fetch)
@@ -654,8 +636,6 @@ domo
   .then((result) => console.log(result))
   .catch((error) => console.error(error.message || error));
 ```
-
-<!-- type: tab-end -->
 
 <!--
 type: tab
@@ -712,8 +692,6 @@ domo
   .then((result) => console.log(result))
   .catch((error) => console.error(error.message || error));
 ```
-
-<!-- type: tab-end -->
 
 <!--
 type: tab
