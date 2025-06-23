@@ -291,6 +291,8 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files`, {
   .catch((error) => console.error('Error:', error));
 ```
 
+<!-- type: tab-end -->
+
 **Response:**
 
 ```json
