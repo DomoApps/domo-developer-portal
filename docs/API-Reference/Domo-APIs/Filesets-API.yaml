@@ -1,15 +1,15 @@
 openapi: 3.0.0
 info:
-  title: Filesets API
+  title: FileSets API
   description: |
-    ## The Fileset Object
+    ## The FileSet Object
 
-    The Filesets API allows you to create, query, update, and manage Filesets and their files within Domo. Most calls return a Fileset object.
+    The FileSets API allows you to create, query, update, and manage FileSets and their files within Domo. Most calls return a FileSet object.
 
     <!-- theme: info -->
     > #### Permissions
     >
-    > To update or write to a Fileset via API, you must have the appropriate grants enabled.
+    > To update or write to a FileSet via API, you must have the appropriate grants enabled.
   version: 1.0.0
 servers:
   - url: 'https://api.domo.com'
@@ -19,8 +19,8 @@ security:
 paths:
   /api/files/v1/filesets:
     post:
-      summary: Create a Fileset
-      description: Creates a new Fileset in your Domo instance. Most calls return a Fileset object.
+      summary: Create a FileSet
+      description: Creates a new FileSet in your Domo instance. Most calls return a FileSet object.
       operationId: createFileSet
       requestBody:
         content:
@@ -51,8 +51,8 @@ paths:
                 $ref: '#/components/schemas/FileSet'
   /api/files/v1/filesets/{fileSetId}:
     get:
-      summary: Retrieve Fileset Details
-      description: Retrieves the details of an existing Fileset.
+      summary: Retrieve FileSet Details
+      description: Retrieves the details of an existing FileSet.
       operationId: getFileSet
       parameters:
         - name: fileSetId
@@ -82,8 +82,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/FileSet'
     post:
-      summary: Update Fileset Details
-      description: Updates the specified Fileset’s metadata by providing values to parameters passed.
+      summary: Update FileSet Details
+      description: Updates the specified FileSet’s metadata by providing values to parameters passed.
       operationId: updateFileSet
       parameters:
         - name: fileSetId
@@ -119,8 +119,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/FileSet'
     delete:
-      summary: Delete a Fileset
-      description: Permanently deletes a Fileset from your Domo instance. This is destructive and cannot be reversed.
+      summary: Delete a FileSet
+      description: Permanently deletes a FileSet from your Domo instance. This is destructive and cannot be reversed.
       operationId: deleteFileSet
       parameters:
         - name: fileSetId
@@ -147,8 +147,8 @@ paths:
           description: OK
   /api/files/v1/filesets/{fileSetId}/query:
     post:
-      summary: Query a Fileset
-      description: Queries the files and directories within a Fileset using a search query.
+      summary: Query a FileSet
+      description: Queries the files and directories within a FileSet using a search query.
       operationId: queryFileSet
       parameters:
         - name: fileSetId
@@ -185,8 +185,8 @@ paths:
                 $ref: '#/components/schemas/QueryFileSetResponse'
   /api/files/v1/filesets/{fileSetId}/ownership:
     post:
-      summary: Update Fileset Ownership
-      description: Updates the owner of a Fileset to a new user.
+      summary: Update FileSet Ownership
+      description: Updates the owner of a FileSet to a new user.
       operationId: updateOwnership
       parameters:
         - name: fileSetId
@@ -223,8 +223,8 @@ paths:
                 $ref: '#/components/schemas/AccessResponse'
   /api/files/v1/filesets/{fileSetId}/files:
     post:
-      summary: Upload a File to Fileset
-      description: Uploads a new file to the specified Fileset.
+      summary: Upload a File to FileSet
+      description: Uploads a new file to the specified FileSet.
       operationId: createFile
       parameters:
         - name: fileSetId
@@ -278,9 +278,9 @@ paths:
                 $ref: '#/components/schemas/FileSystemEntity'
   /api/files/v1/filesets/{fileSetId}/files/search:
     post:
-      summary: List Files in Fileset
-      description: Lists files and directories within a Fileset, optionally filtered by directory path or other criteria.
-      operationId: listFilesForFileset
+      summary: List Files in FileSet
+      description: Lists files and directories within a FileSet, optionally filtered by directory path or other criteria.
+      operationId: listFilesForFileSet
       parameters:
         - name: fileSetId
           in: path
@@ -339,8 +339,8 @@ paths:
                 $ref: '#/components/schemas/FilePage'
   /api/files/v1/filesets/{fileSetId}/access:
     get:
-      summary: Get Fileset Access
-      description: Retrieves the access permissions for the specified Fileset.
+      summary: Get FileSet Access
+      description: Retrieves the access permissions for the specified FileSet.
       operationId: getAccess_1
       parameters:
         - name: fileSetId
@@ -370,8 +370,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/AccessResponse'
     post:
-      summary: Update Fileset Access
-      description: Updates the access permissions for the specified Fileset.
+      summary: Update FileSet Access
+      description: Updates the access permissions for the specified FileSet.
       operationId: updateAccess_1
       parameters:
         - name: fileSetId
@@ -402,8 +402,8 @@ paths:
                 $ref: '#/components/schemas/AccessResponse'
   /api/files/v1/filesets/search:
     post:
-      summary: Search Filesets
-      description: Searches for Filesets in your Domo instance using filters and criteria.
+      summary: Search FileSets
+      description: Searches for FileSets in your Domo instance using filters and criteria.
       operationId: listFileSets
       parameters:
         - name: limit
