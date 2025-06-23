@@ -1,4 +1,4 @@
-# Filesets API (BETA)
+# FileSets API (BETA)
 
 > **BETA:** This API is currently in BETA and is subject to change. Endpoints, request/response formats, and functionality may change without notice.
 
@@ -516,7 +516,7 @@ with httpx.Client() as client:
 
 ---
 
-## Query Fileset
+## Query FileSet
 
 **Method:** `POST`  
 **Endpoint:** `/api/files/v1/filesets/query`
@@ -571,7 +571,7 @@ with httpx.Client() as client:
 ```json
 {
   "id": "00000000-0000-0000-0000-000000000010",
-  "name": "Sample Fileset",
+  "name": "Sample FileSet",
   "description": "A sample fileset for demonstration purposes.",
   "created": "2025-01-01T00:00:00.000Z",
   "createdBy": 111111111,
@@ -588,7 +588,7 @@ with httpx.Client() as client:
 
 ---
 
-## List Filesets
+## List FileSets
 
 **Method:** `POST`  
 **Endpoint:** `/api/files/v1/filesets/search`
@@ -664,7 +664,7 @@ with httpx.Client() as client:
 
 ---
 
-## Create Fileset
+## Create FileSet
 
 **Method:** `POST`  
 **Endpoint:** `/api/files/v1/filesets`
@@ -682,7 +682,7 @@ fetch('https://{instance}.domo.com/api/files/v1/filesets', {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    // Fileset creation parameters here
+    // FileSet creation parameters here
   }),
 })
   .then((response) => response.json())
@@ -704,7 +704,7 @@ headers = {
 }
 url = 'https://{instance}.domo.com/api/files/v1/filesets'
 data = {
-    # Fileset creation parameters here
+    # FileSet creation parameters here
 }
 
 with httpx.Client() as client:
@@ -719,7 +719,7 @@ with httpx.Client() as client:
 ```json
 {
   "id": "00000000-0000-0000-0000-000000000012",
-  "name": "Sample Fileset",
+  "name": "Sample FileSet",
   "description": "A sample fileset for demonstration purposes.",
   "created": "2025-01-01T00:00:00.000Z",
   "createdBy": 111111111
@@ -728,7 +728,7 @@ with httpx.Client() as client:
 
 ---
 
-## Get Fileset By Id
+## Get FileSet By Id
 
 **Method:** `GET`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}`
@@ -781,7 +781,7 @@ with httpx.Client() as client:
 ```json
 {
   "id": "00000000-0000-0000-0000-000000000013",
-  "name": "Sample Fileset",
+  "name": "Sample FileSet",
   "description": "A sample fileset for demonstration purposes.",
   "created": "2025-01-01T00:00:00.000Z",
   "createdBy": 111111111
@@ -790,7 +790,7 @@ with httpx.Client() as client:
 
 ---
 
-## Update Fileset By Id
+## Update FileSet By Id
 
 **Method:** `POST`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}`
@@ -812,7 +812,7 @@ fetch('https://{instance}.domo.com/api/files/v1/filesets/{filesetId}', {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    // Fileset update parameters here
+    // FileSet update parameters here
   }),
 })
   .then((response) => response.json())
@@ -834,7 +834,7 @@ headers = {
 }
 url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}'
 data = {
-    # Fileset update parameters here
+    # FileSet update parameters here
 }
 
 with httpx.Client() as client:
@@ -849,7 +849,7 @@ with httpx.Client() as client:
 ```json
 {
   "id": "00000000-0000-0000-0000-000000000014",
-  "name": "Sample Fileset",
+  "name": "Sample FileSet",
   "description": "A sample fileset for demonstration purposes.",
   "created": "2025-01-01T00:00:00.000Z",
   "createdBy": 111111111
@@ -858,7 +858,7 @@ with httpx.Client() as client:
 
 ---
 
-## Delete Fileset By Id
+## Delete FileSet By Id
 
 **Method:** `DELETE`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}`
@@ -911,6 +911,6 @@ with httpx.Client() as client:
 ```json
 {
   "status": "success",
-  "message": "Fileset deleted successfully."
+  "message": "FileSet deleted successfully."
 }
 ```

@@ -1,8 +1,8 @@
-# Filesets API (BETA)
+# FileSets API (BETA)
 
 > **BETA:** This API is currently in BETA and is subject to change. Endpoints, request/response formats, and functionality may change without notice.
 
-This API reference documents the endpoints for managing Filesets and Files in Domo from within a Domo app.
+This API reference documents the endpoints for managing FileSets and Files in Domo from within a Domo app.
 
 > **Note:** All code examples below are tested and match the working Domo app UI. Use `domo.*` methods for all API calls except file upload/download, which require `fetch` for binary or FormData support.
 
@@ -466,7 +466,7 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files/${fileId}`, {
 
 ---
 
-## Query Fileset (List/Search Filesets)
+## Query FileSet (List/Search FileSets)
 
 **Method:** `POST`  
 **Endpoint:** `/domo/files/v1/filesets/search`
@@ -512,7 +512,7 @@ fetch('/domo/files/v1/filesets/search', {
   "fileSets": [
     {
       "id": "00000000-0000-0000-0000-000000000010",
-      "name": "Sample Fileset",
+      "name": "Sample FileSet",
       "description": "A sample fileset for demonstration purposes.",
       "created": "2025-01-01T00:00:00.000Z",
       "createdBy": 111111111
@@ -523,7 +523,7 @@ fetch('/domo/files/v1/filesets/search', {
 
 ---
 
-## Create Fileset
+## Create FileSet
 
 **Method:** `POST`  
 **Endpoint:** `/domo/files/v1/filesets`
@@ -536,7 +536,7 @@ title: Javascript (domo.post)
 ```js
 domo
   .post('/domo/files/v1/filesets', {
-    name: 'Sample Fileset',
+    name: 'Sample FileSet',
     description: 'A sample fileset for demonstration purposes.',
   })
   .then((result) => console.log(result))
@@ -555,7 +555,7 @@ fetch('/domo/files/v1/filesets', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
-    name: 'Sample Fileset',
+    name: 'Sample FileSet',
     description: 'A sample fileset for demonstration purposes.',
   }),
 })
@@ -571,7 +571,7 @@ fetch('/domo/files/v1/filesets', {
 ```json
 {
   "id": "00000000-0000-0000-0000-000000000012",
-  "name": "Sample Fileset",
+  "name": "Sample FileSet",
   "description": "A sample fileset for demonstration purposes.",
   "created": "2025-01-01T00:00:00.000Z",
   "createdBy": 111111111
@@ -580,7 +580,7 @@ fetch('/domo/files/v1/filesets', {
 
 ---
 
-## Get Fileset By Id
+## Get FileSet By Id
 
 **Method:** `GET`  
 **Endpoint:** `/domo/files/v1/filesets/{filesetId}`
@@ -622,7 +622,7 @@ fetch(`/domo/files/v1/filesets/${filesetId}`)
 ```json
 {
   "id": "00000000-0000-0000-0000-000000000013",
-  "name": "Sample Fileset",
+  "name": "Sample FileSet",
   "description": "A sample fileset for demonstration purposes.",
   "created": "2025-01-01T00:00:00.000Z",
   "createdBy": 111111111
@@ -631,7 +631,7 @@ fetch(`/domo/files/v1/filesets/${filesetId}`)
 
 ---
 
-## Update Fileset By Id
+## Update FileSet By Id
 
 **Method:** `POST`  
 **Endpoint:** `/domo/files/v1/filesets/{filesetId}`
@@ -648,7 +648,7 @@ title: Javascript (domo.post)
 ```js
 domo
   .post(`/domo/files/v1/filesets/${filesetId}`, {
-    name: 'Updated Fileset Name',
+    name: 'Updated FileSet Name',
     description: 'Updated description.',
   })
   .then((result) => console.log(result))
@@ -667,7 +667,7 @@ fetch(`/domo/files/v1/filesets/${filesetId}`, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
-    name: 'Updated Fileset Name',
+    name: 'Updated FileSet Name',
     description: 'Updated description.',
   }),
 })
@@ -683,7 +683,7 @@ fetch(`/domo/files/v1/filesets/${filesetId}`, {
 ```json
 {
   "id": "00000000-0000-0000-0000-000000000014",
-  "name": "Sample Fileset",
+  "name": "Sample FileSet",
   "description": "A sample fileset for demonstration purposes.",
   "created": "2025-01-01T00:00:00.000Z",
   "createdBy": 111111111
@@ -692,7 +692,7 @@ fetch(`/domo/files/v1/filesets/${filesetId}`, {
 
 ---
 
-## Delete Fileset By Id
+## Delete FileSet By Id
 
 **Method:** `DELETE`  
 **Endpoint:** `/domo/files/v1/filesets/{filesetId}`
@@ -736,6 +736,6 @@ fetch(`/domo/files/v1/filesets/${filesetId}`, {
 ```json
 {
   "status": "success",
-  "message": "Fileset deleted successfully."
+  "message": "FileSet deleted successfully."
 }
 ```
