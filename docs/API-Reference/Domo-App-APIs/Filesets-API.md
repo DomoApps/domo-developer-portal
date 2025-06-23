@@ -112,8 +112,6 @@ domo
   });
 ```
 
-<!-- type: tab-end -->
-
 <!--
 type: tab
 title: Javascript (fetch)
@@ -183,6 +181,8 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files/${fileId}/download`)
   })
   .catch((error) => console.error('Error:', error));
 ```
+
+<!-- type: tab-end -->
 
 **Response:**
 
