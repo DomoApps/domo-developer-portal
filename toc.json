@@ -117,7 +117,7 @@
         },
         {
           "type": "item",
-          "title": "Filesets API",
+          "title": "Filesets API (BETA)",
           "uri": "docs/API-Reference/Domo-APIs/Filesets-API.yaml"
         },
         {
