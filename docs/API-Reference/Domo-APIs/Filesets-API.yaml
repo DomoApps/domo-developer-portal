@@ -278,7 +278,7 @@ paths:
                 $ref: '#/components/schemas/FileSystemEntity'
   /api/files/v1/filesets/{fileSetId}/files/search:
     post:
-      summary: List Files in FileSet
+      summary: Search Files in FileSet
       description: Lists files and directories within a FileSet, optionally filtered by directory path or other criteria.
       operationId: listFilesForFileSet
       parameters:
