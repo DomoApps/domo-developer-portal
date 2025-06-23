@@ -466,7 +466,7 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files/${fileId}`, {
 
 ---
 
-## Query FileSet (List/Search FileSets)
+## Search FileSets
 
 **Method:** `POST`  
 **Endpoint:** `/domo/files/v1/filesets/search`

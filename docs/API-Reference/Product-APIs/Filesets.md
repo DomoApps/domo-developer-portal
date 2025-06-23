@@ -588,7 +588,7 @@ with httpx.Client() as client:
 
 ---
 
-## List FileSets
+## Search FileSets
 
 **Method:** `POST`  
 **Endpoint:** `/api/files/v1/filesets/search`
