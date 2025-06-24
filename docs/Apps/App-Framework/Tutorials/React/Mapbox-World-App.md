@@ -1,4 +1,4 @@
-# Maxpbox World Map React App Tutorial
+# Mapbox World Map React App Tutorial
 
 This tutorial will walk you through building a custom React app that displays a world map with data points using Mapbox. As you follow along, you will get experience doing a few things:
 
@@ -8,25 +8,23 @@ This tutorial will walk you through building a custom React app that displays a 
 
 All code and files used for this tutorial can be found at [this GitHub repository](https://github.com/DomoApps/mapbox-tutorial).
 
-### Step 1: Setup and Installation
+### Step 1: Setup and installation
 
 ---
 
 Before beginning, please make sure you’ve successfully installed the Domo Apps CLI and followed the basic setup and installation instructions found [here](https://developer.domo.com/docs/dev-studio-quick-start/set-up). When following the article, please skip `Step 3: Create a New App`. We will be creating a React app instead of a simple Javascript app.
 
-### Step 2: Create and Run a New React Project
+Initialize a React project using Domo's template by following the steps in [this article](https://developer.domo.com/portal/u8w475o2245yp-starter-kits).
 
----
+Once your project has been created, open it in your preferred IDE and run `yarn` (or `npm install`) to install all required dependencies. When you're ready, run `yarn start` (or `npm start`) to start developing locally.
 
-Initialize a React project using Domo's template by following the steps in [this article](https://developer.domo.com/portal/u8w475o2245yp-starter-kits). Run the `yarn start` (or `npm start`) command to start developing locally.
-
-### Step 3: Sign Up for a Free Mapbox Account
+### Step 2: Sign up for a free Mapbox account
 
 ---
 
 If you don't already have a Mapbox account, you can create one for free [here](https://account.mapbox.com/auth/signup/). This is a requirement to get your own custom app running with Mapbox. Once you've created your account, you should be able to get your personal `Access tokens` at the bottom of your account home screen. If you're having trouble finding them, or you'd like to learn more about access tokens, read Mapbox's support article on [Access Tokens](https://docs.mapbox.com/help/getting-started/access-tokens/).
 
-### Step 4: Set Up App Components
+### Step 3: Set up app components
 
 ---
 
@@ -63,7 +61,7 @@ Next, replace the contents of `App.css` with this simple CSS class:
 }
 ```
 
-### Step 5: Instantiate Mapbox
+### Step 4: Instantiate Mapbox
 
 ---
 
@@ -134,9 +132,9 @@ If you're not already running your local development environment, run the start 
 
 Check your browser at `localhost:3000`, where your app should be running. You should see an interactive globe map. You can use your scroll wheel to zoom in and out, and you can drag the globe to rotate it.
 
-![mapbox-globe.png](../../../../../assets/images/mapbox-globe.png)
+![mapbox-globe.png](../../../../../assets/tutorials/mapbox-world-app/mapbox-globe.png)
 
-### Step 6: Style Map and Add a Few Points
+### Step 5: Style map and add a few points
 
 ---
 
@@ -165,7 +163,7 @@ mapRef.current = new mapboxgl.Map({
 
 If you return to your browser, your app should now look like this:
 
-![mapbox-cartesian.png](../../../../../assets/images/mapbox-cartesian.png)
+![mapbox-cartesian.png](../../../../../assets/tutorials/mapbox-world-app/mapbox-cartesian.png)
 
 Our custom style converts the map from a globe to a cartesian map, where it appears to be laying flat. We also set some dark colors for the land and sea.
 
@@ -308,9 +306,9 @@ useEffect(() => {
 
 Save your changes and check the browser. You should see our 10 U.S. cities on the map as little magenta circles.
 
-![mapbox-sample-points.png](../../../../../assets/images/mapbox-sample-points.png)
+![mapbox-sample-points.png](../../../../../assets/tutorials/mapbox-world-app/mapbox-sample-points.png)
 
-### Step 7: Wire Data to Our App
+### Step 6: Wire data to our app
 
 ---
 
@@ -367,7 +365,7 @@ Now, return to your app and open the `manifest.json` file. We're going to add an
 
 Replace `YOUR_DATASET_ID` with the unique ID for the dataset you created in your Domo instance a moment ago. You can find the ID in the URL bar when viewing the dataset.
 
-![dataset-id-example.png](../../../../../assets/images/dataset-id-example.png)
+![dataset-id-example.png](../../../../../assets/tutorials/mapbox-world-app/dataset-id-example.png)
 
 Before we can query this dataset locally, we'll need to upload our app to Domo in order to establish the connection we've added to the `manifest.json` file. Let's do that now.
 
@@ -381,11 +379,11 @@ Next, run `yarn upload` or `npm upload`.
 
 This will build your project and create a new app Design in your Domo instance. If the command runs successfully, you'll see something like this in your terminal when it's finished:
 
-![app-upload-success.png](../../../../../assets/images/app-upload-success.png)
+![app-upload-success.png](../../../../../assets/tutorials/mapbox-world-app/app-upload-success.png)
 
 Now, let's find the newly created Design in your Domo instance. Return to Domo in the browser, click on the `MORE` option at the top, and select `Asset Library`. You should be able to find your World Map App here. Click on the asset to open its details. Below the name of the asset, you'll see a `Design Id`. Copy that.
 
-![asset-example.png](../../../../../assets/images/asset-example.png)
+![asset-example.png](../../../../../assets/tutorials/mapbox-world-app/asset-example.png)
 
 Return to your app so we can add the `Design Id` to the `manifest.json` file. After the closing square brackets of your `mapping` property, add a comma and a new line. Then, add this line of code:
 
@@ -401,7 +399,7 @@ Click `Save & Finish` in the top right to save your new Card.
 
 Now, return to the `Asset Library` and find your Design again. Click on the `Cards` tab at the top and you should see your newly created card. Find the `Proxy Id` property and copy that value.
 
-![asset-card-example.png](../../../../../assets/images/asset-card-example.png)
+![asset-card-example.png](../../../../../assets/tutorials/mapbox-world-app/asset-card-example.png)
 
 Return to the `manifest.json` file in your app and add another line below the previous addition:
 
@@ -458,7 +456,7 @@ Once all is said and done, your `manifest.json` file should look something like 
 
 Now we're ready to query the dataset from our app!
 
-### Step 8: Query Data and Render Points on the Map
+### Step 7: Query data and render points on the map
 
 ---
 
@@ -671,7 +669,7 @@ export default App;
 
 Return to the browser and look at your finished map (you may need to refresh). You should see thousands of points all over the map, where the size and color of each point is determined by the population size of the city. How beautiful and interesting!
 
-![mapbox-finished.png](../../../../../assets/images/mapbox-finished.png)
+![mapbox-finished.png](../../../../../assets/tutorials/mapbox-world-app/mapbox-finished.png)
 
 Congratulations! You've completed this tutorial. Now that you know how to wire an app to a DataSet and how to render a map from Mapbox, you might have more ideas of how you could use these features to your benefit. A map like this can be further iterated on to add hover interactions to display data, to give one example.
 
