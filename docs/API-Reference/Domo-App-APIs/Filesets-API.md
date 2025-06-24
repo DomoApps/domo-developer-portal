@@ -15,11 +15,10 @@ This API reference documents the endpoints for managing FileSets and Files in Do
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the FileSet.
-
-**Query Parameters:**
-
-- `path` (String, required): The path to the File within the FileSet.
+| Parameter | Type   | Required | Description                             |
+| --------- | ------ | -------- | --------------------------------------- |
+| filesetId | String | Yes      | The ID of the FileSet                   |
+| path      | String | Yes      | The path to the File within the FileSet |
 
 <!--
 type: tab
@@ -85,8 +84,10 @@ fetch(
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the FileSet.
-- `fileId` (String, required): The ID of the File.
+| Parameter | Type   | Required | Description           |
+| --------- | ------ | -------- | --------------------- |
+| filesetId | String | Yes      | The ID of the FileSet |
+| fileId    | String | Yes      | The ID of the File    |
 
 <!--
 type: tab
@@ -144,8 +145,10 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files/${fileId}`)
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the FileSet.
-- `fileId` (String, required): The ID of the File.
+| Parameter | Type   | Required | Description           |
+| --------- | ------ | -------- | --------------------- |
+| filesetId | String | Yes      | The ID of the FileSet |
+| fileId    | String | Yes      | The ID of the File    |
 
 > **Note:** Use `fetch` for File downloads. `domo.get` does not support binary downloads.
 
@@ -185,7 +188,9 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files/${fileId}/download`)
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the FileSet.
+| Parameter | Type   | Required | Description           |
+| --------- | ------ | -------- | --------------------- |
+| filesetId | String | Yes      | The ID of the FileSet |
 
 <!--
 type: tab
@@ -251,7 +256,9 @@ fetch(`/domo/files/v1/filesets/${filesetId}/query`, {
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the FileSet.
+| Parameter | Type   | Required | Description           |
+| --------- | ------ | -------- | --------------------- |
+| filesetId | String | Yes      | The ID of the FileSet |
 
 > **Note:** Use `fetch` for file uploads. Always set the file content type to `text/plain` for text files, as in the app code.
 
@@ -305,11 +312,10 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files`, {
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the FileSet.
-
-**Query Parameters:**
-
-- `path` (String, required): The path to the File within the FileSet.
+| Parameter | Type   | Required | Description                             |
+| --------- | ------ | -------- | --------------------------------------- |
+| filesetId | String | Yes      | The ID of the FileSet                   |
+| filePath  | String | Yes      | The path to the File within the FileSet |
 
 <!--
 type: tab
@@ -378,8 +384,10 @@ fetch(
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the FileSet.
-- `fileId` (String, required): The ID of the File.
+| Parameter | Type   | Required | Description           |
+| --------- | ------ | -------- | --------------------- |
+| filesetId | String | Yes      | The ID of the FileSet |
+| fileId    | String | Yes      | The ID of the File    |
 
 <!--
 type: tab
@@ -549,7 +557,9 @@ fetch('/domo/files/v1/filesets', {
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the FileSet.
+| Parameter | Type   | Required | Description           |
+| --------- | ------ | -------- | --------------------- |
+| filesetId | String | Yes      | The ID of the FileSet |
 
 <!--
 type: tab
@@ -598,7 +608,9 @@ fetch(`/domo/files/v1/filesets/${filesetId}`)
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the FileSet.
+| Parameter | Type   | Required | Description           |
+| --------- | ------ | -------- | --------------------- |
+| filesetId | String | Yes      | The ID of the FileSet |
 
 <!--
 type: tab
@@ -657,7 +669,9 @@ fetch(`/domo/files/v1/filesets/${filesetId}`, {
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the FileSet.
+| Parameter | Type   | Required | Description           |
+| --------- | ------ | -------- | --------------------- |
+| filesetId | String | Yes      | The ID of the FileSet |
 
 <!--
 type: tab
