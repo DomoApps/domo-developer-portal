@@ -2,7 +2,7 @@
 
 > **BETA:** This API is currently in BETA and is subject to change. Endpoints, request/response formats, and functionality may change without notice.
 
-This API reference documents the endpoints for managing filesets and files in Domo. These endpoints allow you to upload, download, query, and manage files and filesets programmatically.
+This API reference documents the endpoints for managing FileSets and files in Domo. These endpoints allow you to upload, download, query, and manage files and FileSets programmatically.
 
 ---
 
@@ -13,11 +13,11 @@ This API reference documents the endpoints for managing filesets and files in Do
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the fileset.
+- `filesetId` (String, required): The ID of the FileSet.
 
 **Query Parameters:**
 
-- `path` (String, required): The path to the file within the fileset.
+- `path` (String, required): The path to the FileSetwithin the FileSet.
 
 <!--
 type: tab
@@ -37,7 +37,7 @@ fetch(
 )
   .then((response) => response.json())
   .then((result) => console.log(result))
-  .catch((error) => console.error('Error:', error));
+  .catch((error) => console.error(`Error: ${error}`));
 ```
 
 <!--
@@ -91,7 +91,7 @@ with httpx.Client() as client:
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the fileset.
+- `filesetId` (String, required): The ID of the FileSet.
 - `fileId` (String, required): The ID of the file.
 
 <!--
@@ -112,7 +112,7 @@ fetch(
 )
   .then((response) => response.json())
   .then((result) => console.log(result))
-  .catch((error) => console.error('Error:', error));
+  .catch((error) => console.error(`Error: ${error}`));
 ```
 
 <!--
@@ -166,7 +166,7 @@ with httpx.Client() as client:
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the fileset.
+- `filesetId` (String, required): The ID of the FileSet.
 - `fileId` (String, required): The ID of the file.
 
 <!--
@@ -197,7 +197,7 @@ fetch(
     a.remove();
     window.URL.revokeObjectURL(url);
   })
-  .catch((error) => console.error('Error:', error));
+  .catch((error) => console.error(`Error: ${error}`));
 ```
 
 <!--
@@ -225,7 +225,7 @@ with httpx.Client() as client:
 
 **Response:**
 
-- Returns the file contents as a download (binary/text stream).
+- Returns the FileSetcontents as a download (binary/text stream).
 
 ---
 
@@ -236,7 +236,7 @@ with httpx.Client() as client:
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the fileset.
+- `filesetId` (String, required): The ID of the FileSet.
 
 <!--
 type: tab
@@ -258,7 +258,7 @@ fetch('https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/query', {
 })
   .then((response) => response.json())
   .then((result) => console.log(result))
-  .catch((error) => console.error('Error:', error));
+  .catch((error) => console.error(`Error: ${error}`));
 ```
 
 <!--
@@ -313,7 +313,7 @@ with httpx.Client() as client:
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the fileset.
+- `filesetId` (String, required): The ID of the FileSet.
 
 <!--
 type: tab
@@ -342,7 +342,7 @@ fetch(
 )
   .then((response) => response.json())
   .then((result) => console.log(result))
-  .catch((error) => console.error('Error:', error));
+  .catch((error) => console.error(`Error: ${error}`));
 ```
 
 <!--
@@ -394,11 +394,11 @@ with open('rules.txt', 'rb') as file_obj:
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the fileset.
+- `filesetId` (String, required): The ID of the FileSet.
 
 **Query Parameters:**
 
-- `path` (String, required): The path to the file within the fileset.
+- `path` (String, required): The path to the File within the FileSet.
 
 <!--
 type: tab
@@ -418,7 +418,7 @@ fetch(
 )
   .then((response) => response.json())
   .then((result) => console.log(result))
-  .catch((error) => console.error('Error:', error));
+  .catch((error) => console.error(`Error: ${error}`));
 ```
 
 <!--
@@ -460,8 +460,8 @@ with httpx.Client() as client:
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the fileset.
-- `fileId` (String, required): The ID of the file.
+- `filesetId` (String, required): The ID of the FileSet.
+- `fileId` (String, required): The ID of the File.
 
 <!--
 type: tab
@@ -481,7 +481,7 @@ fetch(
 )
   .then((response) => response.json())
   .then((result) => console.log(result))
-  .catch((error) => console.error('Error:', error));
+  .catch((error) => console.error(`Error: ${error}`));
 ```
 
 <!--
@@ -539,7 +539,7 @@ fetch('https://{instance}.domo.com/api/files/v1/filesets/query', {
 })
   .then((response) => response.json())
   .then((result) => console.log(result))
-  .catch((error) => console.error('Error:', error));
+  .catch((error) => console.error(`Error: ${error}`));
 ```
 
 <!--
@@ -572,7 +572,7 @@ with httpx.Client() as client:
 {
   "id": "00000000-0000-0000-0000-000000000010",
   "name": "Sample FileSet",
-  "description": "A sample fileset for demonstration purposes.",
+  "description": "A sample FileSet for demonstration purposes.",
   "created": "2025-01-01T00:00:00.000Z",
   "createdBy": 111111111,
   "updated": "2025-01-02T00:00:00.000Z",
@@ -611,7 +611,7 @@ fetch('https://{instance}.domo.com/api/files/v1/filesets/search', {
 })
   .then((response) => response.json())
   .then((result) => console.log(result))
-  .catch((error) => console.error('Error:', error));
+  .catch((error) => console.error(`Error: ${error}`));
 ```
 
 <!--
@@ -687,7 +687,7 @@ fetch('https://{instance}.domo.com/api/files/v1/filesets', {
 })
   .then((response) => response.json())
   .then((result) => console.log(result))
-  .catch((error) => console.error('Error:', error));
+  .catch((error) => console.error(`Error: ${error}`));
 ```
 
 <!--
@@ -720,7 +720,7 @@ with httpx.Client() as client:
 {
   "id": "00000000-0000-0000-0000-000000000012",
   "name": "Sample FileSet",
-  "description": "A sample fileset for demonstration purposes.",
+  "description": "A sample FileSet for demonstration purposes.",
   "created": "2025-01-01T00:00:00.000Z",
   "createdBy": 111111111
 }
@@ -735,7 +735,7 @@ with httpx.Client() as client:
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the fileset.
+- `filesetId` (String, required): The ID of the FileSet.
 
 <!--
 type: tab
@@ -752,7 +752,7 @@ fetch('https://{instance}.domo.com/api/files/v1/filesets/{filesetId}', {
 })
   .then((response) => response.json())
   .then((result) => console.log(result))
-  .catch((error) => console.error('Error:', error));
+  .catch((error) => console.error(`Error: ${error}`));
 ```
 
 <!--
@@ -782,7 +782,7 @@ with httpx.Client() as client:
 {
   "id": "00000000-0000-0000-0000-000000000013",
   "name": "Sample FileSet",
-  "description": "A sample fileset for demonstration purposes.",
+  "description": "A sampleFileSet for demonstration purposes.",
   "created": "2025-01-01T00:00:00.000Z",
   "createdBy": 111111111
 }
@@ -797,7 +797,7 @@ with httpx.Client() as client:
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the fileset.
+- `filesetId` (String, required): The ID of the FileSet.
 
 <!--
 type: tab
@@ -817,7 +817,7 @@ fetch('https://{instance}.domo.com/api/files/v1/filesets/{filesetId}', {
 })
   .then((response) => response.json())
   .then((result) => console.log(result))
-  .catch((error) => console.error('Error:', error));
+  .catch((error) => console.error(`Error: ${error}`));
 ```
 
 <!--
@@ -850,7 +850,7 @@ with httpx.Client() as client:
 {
   "id": "00000000-0000-0000-0000-000000000014",
   "name": "Sample FileSet",
-  "description": "A sample fileset for demonstration purposes.",
+  "description": "A sample FileSet for demonstration purposes.",
   "created": "2025-01-01T00:00:00.000Z",
   "createdBy": 111111111
 }
@@ -865,7 +865,7 @@ with httpx.Client() as client:
 
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the fileset.
+- `filesetId` (String, required): The ID of the FileSet.
 
 <!--
 type: tab
@@ -882,7 +882,7 @@ fetch('https://{instance}.domo.com/api/files/v1/filesets/{filesetId}', {
 })
   .then((response) => response.json())
   .then((result) => console.log(result))
-  .catch((error) => console.error('Error:', error));
+  .catch((error) => console.error(`Error: ${error}`));
 ```
 
 <!--

@@ -4,7 +4,7 @@ info:
   description: |
     ## The FileSet Object
 
-    The FileSets API allows you to create, query, update, and manage FileSets and their files within Domo. Most calls return a FileSet object.
+    The FileSets API allows you to create, query, update, and manage FileSets and their Files within Domo
 
     <!-- theme: info -->
     > #### Permissions
@@ -20,7 +20,7 @@ paths:
   /api/files/v1/filesets:
     post:
       summary: Create a FileSet
-      description: Creates a new FileSet in your Domo instance. Most calls return a FileSet object.
+      description: Creates a new FileSet in your Domo instance
       operationId: createFileSet
       requestBody:
         content:
@@ -224,7 +224,7 @@ paths:
   /api/files/v1/filesets/{fileSetId}/files:
     post:
       summary: Upload a File to FileSet
-      description: Uploads a new file to the specified FileSet.
+      description: Uploads a new File to the specified FileSet.
       operationId: createFile
       parameters:
         - name: fileSetId
@@ -279,7 +279,7 @@ paths:
   /api/files/v1/filesets/{fileSetId}/files/search:
     post:
       summary: Search Files in FileSet
-      description: Lists files and directories within a FileSet, optionally filtered by directory path or other criteria.
+      description: Lists Files and directories within a FileSet, optionally filtered by directory path or other criteria.
       operationId: listFilesForFileSet
       parameters:
         - name: fileSetId
