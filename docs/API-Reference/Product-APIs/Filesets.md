@@ -459,6 +459,22 @@ with open('rules.txt', 'rb') as file_obj:
 | filters     | Array | No       | Filter criteria for the search |
 | dateFilters | Array | No       | Date-based filter criteria     |
 
+**FieldSort Object Properties:**
+
+| Property | Type   | Description                     |
+| -------- | ------ | ------------------------------- |
+| field    | String | Field name to sort by           |
+| order    | String | Sort direction: 'ASC' or 'DESC' |
+
+**DateFilter Object Properties:**
+
+| Property | Type    | Description                                  |
+| -------- | ------- | -------------------------------------------- |
+| field    | String  | Field name for date filter (e.g., 'created') |
+| start    | String  | Start timestamp as ISO string                |
+| end      | String  | End timestamp as ISO string                  |
+| not      | Boolean | If true, inverts the date filter match       |
+
 > **Note:** The Filter, FieldSort, and DateFilter objects have the same structure as in the Search FileSets endpoint.
 
 <!--
@@ -872,8 +888,8 @@ with httpx.Client() as client:
 | Property | Type    | Description                                  |
 | -------- | ------- | -------------------------------------------- |
 | field    | String  | Field name for date filter (e.g., 'created') |
-| start    | Long    | Start timestamp as ISO string                |
-| end      | Long    | End timestamp as ISO string                  |
+| start    | String  | Start timestamp as ISO string                |
+| end      | String  | End timestamp as ISO string                  |
 | not      | Boolean | If true, inverts the date filter match       |
 
 > **Note:** To list all FileSets, send an empty object as the body. To filter, provide filter parameters in the body.

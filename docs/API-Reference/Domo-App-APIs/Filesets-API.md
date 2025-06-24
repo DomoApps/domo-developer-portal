@@ -354,8 +354,8 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files`, {
 | Property | Type    | Description                                  |
 | -------- | ------- | -------------------------------------------- |
 | field    | String  | Field name for date filter (e.g., 'created') |
-| start    | Long    | Start timestamp as ISO string                |
-| end      | Long    | End timestamp as ISO string                  |
+| start    | String  | Start timestamp as ISO string                |
+| end      | String  | End timestamp as ISO string                  |
 | not      | Boolean | If true, inverts the date filter match       |
 
 <!--
@@ -662,8 +662,8 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files/${fileId}`, {
 | Property | Type    | Description                                  |
 | -------- | ------- | -------------------------------------------- |
 | field    | String  | Field name for date filter (e.g., 'created') |
-| start    | Long    | Start timestamp as ISO string                |
-| end      | Long    | End timestamp as ISO string                  |
+| start    | String  | Start timestamp as ISO string                |
+| end      | String  | End timestamp as ISO string                  |
 | not      | Boolean | If true, inverts the date filter match       |
 
 <!--
@@ -700,8 +700,8 @@ domo
     dateFilters: [
       {
         field: 'created',
-        start: 1717027200000, // June 1, 2024
-        end: 1719705600000, // June 30, 2024
+        start: '2025-06-01T19:23:55.156Z', // June 1, 2024
+        end: '2025-06-30T19:23:55.156Z', // June 30, 2024
       },
     ],
   })
@@ -749,8 +749,8 @@ fetch('/domo/files/v1/filesets/search?limit=50&offset=0', {
     dateFilters: [
       {
         field: 'created',
-        start: 1717027200000, // June 1, 2024
-        end: 1719705600000, // June 30, 2024
+        start: '2025-06-01T19:23:55.156Z', // June 1, 2024
+        end: '2025-06-30T19:23:55.156Z', // June 30, 2024
       },
     ],
   }),
