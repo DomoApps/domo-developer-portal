@@ -534,14 +534,76 @@ components:
     SearchRequest:
       type: object
       properties:
+        fieldSort:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/FieldSort'
         filters:
           type: array
+          nullable: true
           items:
-            type: object
+            $ref: '#/components/schemas/Filter'
         dateFilters:
           type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/DateFilter'
+    DateFilter:
+      type: object
+      properties:
+        field:
+          type: string
+          nullable: true
+        start:
+          type: integer
+          format: int64
+          nullable: true
+        end:
+          type: integer
+          format: int64
+          nullable: true
+        not:
+          type: boolean
+          nullable: true
+    FieldSort:
+      type: object
+      properties:
+        field:
+          type: string
+          nullable: true
+        order:
+          type: string
+          nullable: true
+          enum:
+            - ASC
+            - DESC
+    Filter:
+      type: object
+      properties:
+        field:
+          type: string
+          nullable: true
+        value:
+          type: array
+          nullable: true
           items:
             type: object
+        not:
+          type: boolean
+          nullable: true
+        operator:
+          type: string
+          nullable: true
+          enum:
+            - EQUALS
+            - GREATER_THAN
+            - GREATER_THAN_OR_EQUAL
+            - LESS_THAN
+            - LESS_THAN_OR_EQUAL
+            - IN
+            - IS_NULL
+            - LIKE
     FilePage:
       type: object
       properties:
