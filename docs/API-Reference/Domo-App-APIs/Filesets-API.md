@@ -354,8 +354,8 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files`, {
 | Property | Type    | Description                                  |
 | -------- | ------- | -------------------------------------------- |
 | field    | String  | Field name for date filter (e.g., 'created') |
-| start    | Long    | Start timestamp in milliseconds              |
-| end      | Long    | End timestamp in milliseconds                |
+| start    | Long    | Start timestamp as ISO string                |
+| end      | Long    | End timestamp as ISO string                  |
 | not      | Boolean | If true, inverts the date filter match       |
 
 <!--
@@ -662,8 +662,8 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files/${fileId}`, {
 | Property | Type    | Description                                  |
 | -------- | ------- | -------------------------------------------- |
 | field    | String  | Field name for date filter (e.g., 'created') |
-| start    | Long    | Start timestamp in milliseconds              |
-| end      | Long    | End timestamp in milliseconds                |
+| start    | Long    | Start timestamp as ISO string                |
+| end      | Long    | End timestamp as ISO string                  |
 | not      | Boolean | If true, inverts the date filter match       |
 
 <!--
