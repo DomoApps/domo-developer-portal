@@ -394,8 +394,8 @@ domo
       dateFilters: [
         {
           field: 'created',
-          start: Date.now() - 30 * 24 * 60 * 60 * 1000,
-          end: Date.now(),
+          start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days ago as ISO string
+          end: new Date().toISOString(), // Current time as ISO string
         },
       ],
     },
@@ -446,8 +446,8 @@ fetch(
       dateFilters: [
         {
           field: 'created',
-          start: Date.now() - 30 * 24 * 60 * 60 * 1000,
-          end: Date.now(),
+          start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days ago as ISO string
+          end: new Date().toISOString(), // Current time as ISO string
         },
       ],
     }),

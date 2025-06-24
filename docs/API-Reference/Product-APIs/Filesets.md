@@ -234,9 +234,21 @@ with httpx.Client() as client:
 **Method:** `POST`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}/query`
 
+**Description:** Queries the files and directories within a FileSet using a search query.
+
 **Path Parameters:**
 
-- `filesetId` (String, required): The ID of the FileSet.
+| Parameter | Type   | Required | Description           |
+| --------- | ------ | -------- | --------------------- |
+| filesetId | String | Yes      | The ID of the FileSet |
+
+**Request Body Parameters:**
+
+| Parameter     | Type    | Required | Description                          |
+| ------------- | ------- | -------- | ------------------------------------ |
+| query         | String  | Yes      | Text to search for in files          |
+| directoryPath | String  | No       | Limit search to a specific directory |
+| topK          | Integer | No       | Maximum number of results to return  |
 
 <!--
 type: tab
@@ -244,20 +256,26 @@ title: Javascript
 -->
 
 ```js
-fetch('https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/query', {
+// Example: Search for text in documents, limited to 5 results
+fetch(`https://{instance}.domo.com/api/files/v1/filesets/${filesetId}/query`, {
   method: 'POST',
   headers: {
     'X-DOMO-Developer-Token': '<your-token-here>',
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    query: 'some query',
-    directoryPath: '',
-    topK: 5,
+    query: 'quarterly sales data', // Text to search for in files
+    directoryPath: 'reports/quarterly', // Optional: Limit search to specific directory
+    topK: 5, // Optional: Maximum number of results to return
   }),
 })
   .then((response) => response.json())
-  .then((result) => console.log(result))
+  .then((result) => {
+    console.log(`Found ${result.matches.length} matching files:`);
+    result.matches.forEach((match) => {
+      console.log(`- ${match.node.name} (Score: ${match.score})`);
+    });
+  })
   .catch((error) => console.error(`Error: ${error}`));
 ```
 
@@ -275,14 +293,18 @@ headers = {
 }
 url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/query'
 data = {
-    'query': 'some query',
-    'directoryPath': '',
-    'topK': 5,
+    'query': 'quarterly sales data',     # Text to search for in files
+    'directoryPath': 'reports/quarterly', # Optional: Limit search to specific directory
+    'topK': 5,                           # Optional: Maximum number of results to return
 }
 
 with httpx.Client() as client:
     response = client.post(url, headers=headers, json=data)
-    print(response.json())
+    result = response.json()
+
+    print(f"Found {len(result['matches'])} matching files:")
+    for match in result['matches']:
+        print(f"- {match['node']['name']} (Score: {match['score']})")
 ```
 
 <!-- type: tab-end -->
@@ -290,18 +312,38 @@ with httpx.Client() as client:
 **Response:**
 
 ```json
-[
-  {
-    "id": "00000000-0000-0000-0000-000000000003",
-    "path": "rules.txt",
-    "name": "rules.txt",
-    "fileType": "TEXT",
-    "contentType": "text/plain",
-    "size": 12345,
-    "created": "2025-01-01T00:00:00.000Z",
-    "createdBy": 111111111
-  }
-]
+{
+  "matches": [
+    {
+      "id": "00000000-0000-0000-0000-000000000003",
+      "node": {
+        "id": "00000000-0000-0000-0000-000000000003",
+        "path": "reports/quarterly/Q2-2024-sales.pdf",
+        "name": "Q2-2024-sales.pdf",
+        "fileType": "FILE",
+        "contentType": "application/pdf",
+        "size": 12345,
+        "created": 1718826000000,
+        "type": "TEXT"
+      },
+      "score": 0.89
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000004",
+      "node": {
+        "id": "00000000-0000-0000-0000-000000000004",
+        "path": "reports/quarterly/Q1-2024-sales.pdf",
+        "name": "Q1-2024-sales.pdf",
+        "fileType": "FILE",
+        "contentType": "application/pdf",
+        "size": 10245,
+        "created": 1712066400000,
+        "type": "TEXT"
+      },
+      "score": 0.76
+    }
+  ]
+}
 ```
 
 ---
@@ -382,6 +424,205 @@ with open('rules.txt', 'rb') as file_obj:
   "size": 12345,
   "created": "2025-01-01T00:00:00.000Z",
   "createdBy": 111111111
+}
+```
+
+---
+
+## Search Files in FileSet
+
+**Method:** `POST`  
+**Endpoint:** `/api/files/v1/filesets/{filesetId}/files/search`
+
+**Description:** Lists Files and directories within a FileSet, optionally filtered by directory path or other criteria.
+
+**Path Parameters:**
+
+| Parameter | Type   | Required | Description           |
+| --------- | ------ | -------- | --------------------- |
+| filesetId | String | Yes      | The ID of the FileSet |
+
+**Query Parameters:**
+
+| Parameter         | Type    | Required | Default | Description                                           |
+| ----------------- | ------- | -------- | ------- | ----------------------------------------------------- |
+| directoryPath     | String  | No       | null    | Filter files by specific directory path               |
+| immediateChildren | Boolean | No       | false   | If true, returns only immediate children of directory |
+| limit             | Integer | No       | 100     | Maximum number of results                             |
+| next              | String  | No       | null    | Pagination token for fetching next set of results     |
+
+**Request Body Parameters:**
+
+| Parameter   | Type  | Required | Description                    |
+| ----------- | ----- | -------- | ------------------------------ |
+| fieldSort   | Array | No       | Sort options for results       |
+| filters     | Array | No       | Filter criteria for the search |
+| dateFilters | Array | No       | Date-based filter criteria     |
+
+> **Note:** The Filter, FieldSort, and DateFilter objects have the same structure as in the Search FileSets endpoint.
+
+<!--
+type: tab
+title: Javascript
+-->
+
+```js
+// Example 1: List all files in FileSet
+fetch(
+  `https://{instance}.domo.com/api/files/v1/filesets/${filesetId}/files/search`,
+  {
+    method: 'POST',
+    headers: {
+      'X-DOMO-Developer-Token': '<your-token-here>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({}),
+  },
+)
+  .then((response) => response.json())
+  .then((result) => console.log(result.files))
+  .catch((error) => console.error(`Error: ${error}`));
+
+// Example 2: Advanced search with directory path and filters
+fetch(
+  `https://{instance}.domo.com/api/files/v1/filesets/${filesetId}/files/search?directoryPath=reports&limit=20`,
+  {
+    method: 'POST',
+    headers: {
+      'X-DOMO-Developer-Token': '<your-token-here>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      // Sort by file name in ascending order
+      fieldSort: [
+        {
+          field: 'name',
+          order: 'ASC',
+        },
+      ],
+      // Filter files by name
+      filters: [
+        {
+          field: 'name',
+          value: ['.pdf'],
+          operator: 'LIKE',
+          not: false,
+        },
+      ],
+      // Filter files created in past 30 days
+      dateFilters: [
+        {
+          field: 'created',
+          start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days ago as ISO string
+          end: new Date().toISOString(), // Current time as ISO string
+        },
+      ],
+    }),
+  },
+)
+  .then((response) => response.json())
+  .then((result) => console.log(result.files))
+  .catch((error) => console.error(`Error: ${error}`));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+import time
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+
+# Example 1: List all files in FileSet
+url = f'https://{{instance}}.domo.com/api/files/v1/filesets/{filesetId}/files/search'
+data = {}
+
+with httpx.Client() as client:
+    response = client.post(url, headers=headers, json=data)
+    print(response.json())
+
+# Example 2: Advanced search with directory path and filters
+url = f'https://{{instance}}.domo.com/api/files/v1/filesets/{filesetId}/files/search?directoryPath=reports&limit=20'
+from datetime import datetime, timedelta
+
+current_time = datetime.now()
+thirty_days_ago = current_time - timedelta(days=30)
+
+data = {
+    # Sort by file name in ascending order
+    "fieldSort": [
+        {
+            "field": "name",
+            "order": "ASC"
+        }
+    ],
+    # Filter files by name
+    "filters": [
+        {
+            "field": "name",
+            "value": [".pdf"],
+            "operator": "LIKE",
+            "not": False
+        }
+    ],
+    # Filter files created in past 30 days
+    "dateFilters": [
+        {
+            "field": "created",
+            "start": thirty_days_ago.isoformat(),  # ISO format string
+            "end": current_time.isoformat()        # ISO format string
+        }
+    ]
+}
+
+with httpx.Client() as client:
+    response = client.post(url, headers=headers, json=data)
+    print(response.json())
+```
+
+<!-- type: tab-end -->
+
+**Response:**
+
+```json
+{
+  "files": [
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "path": "reports/quarterly-report.pdf",
+      "name": "quarterly-report.pdf",
+      "fileType": "FILE",
+      "contentType": "application/pdf",
+      "size": 234567,
+      "hash": "hash123456789abcdef",
+      "hashAlgorithm": "SHA_256_HEX",
+      "downloadUrl": "https://instance.domo.com/api/files/v1/filesets/00000000-0000-0000-0000-000000000010/files/00000000-0000-0000-0000-000000000001/download",
+      "created": "2024-06-15T00:00:00.000Z",
+      "createdBy": 111111111
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000002",
+      "path": "reports/annual-report.pdf",
+      "name": "annual-report.pdf",
+      "fileType": "FILE",
+      "contentType": "application/pdf",
+      "size": 456789,
+      "hash": "hash987654321fedcba",
+      "hashAlgorithm": "SHA_256_HEX",
+      "downloadUrl": "https://instance.domo.com/api/files/v1/filesets/00000000-0000-0000-0000-000000000010/files/00000000-0000-0000-0000-000000000002/download",
+      "created": "2024-06-10T00:00:00.000Z",
+      "createdBy": 111111111
+    }
+  ],
+  "pageContext": {
+    "next": "eyJpZCI6IjEyMzQ1Njc4OTAifQ=="
+  }
 }
 ```
 
@@ -593,12 +834,73 @@ with httpx.Client() as client:
 **Method:** `POST`  
 **Endpoint:** `/api/files/v1/filesets/search`
 
+**Description:** Searches for FileSets in your Domo instance using filters and criteria.
+
+**Query Parameters:**
+
+| Parameter | Type    | Required | Default | Description                         |
+| --------- | ------- | -------- | ------- | ----------------------------------- |
+| limit     | Integer | No       | 100     | Maximum number of results to return |
+| offset    | Integer | No       | 0       | Pagination offset                   |
+
+**Request Body Parameters:**
+
+| Parameter   | Type  | Required | Description                    |
+| ----------- | ----- | -------- | ------------------------------ |
+| fieldSort   | Array | No       | Sort options for results       |
+| filters     | Array | No       | Filter criteria for the search |
+| dateFilters | Array | No       | Date-based filter criteria     |
+
+**Filter Object Properties:**
+
+| Property | Type    | Description                                                                                                                   |
+| -------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| field    | String  | Field name to filter on (e.g., 'name', 'description')                                                                         |
+| value    | Array   | Values to match against                                                                                                       |
+| not      | Boolean | If true, inverts the filter match                                                                                             |
+| operator | String  | Operation type: 'EQUALS', 'GREATER_THAN', 'LESS_THAN', 'LESS_THAN_OR_EQUAL', 'GREATER_THAN_OR_EQUAL', 'IN', 'IS_NULL', 'LIKE' |
+
+**FieldSort Object Properties:**
+
+| Property | Type   | Description                     |
+| -------- | ------ | ------------------------------- |
+| field    | String | Field name to sort by           |
+| order    | String | Sort direction: 'ASC' or 'DESC' |
+
+**DateFilter Object Properties:**
+
+| Property | Type    | Description                                  |
+| -------- | ------- | -------------------------------------------- |
+| field    | String  | Field name for date filter (e.g., 'created') |
+| start    | Long    | Start timestamp as ISO string                |
+| end      | Long    | End timestamp as ISO string                  |
+| not      | Boolean | If true, inverts the date filter match       |
+
+> **Note:** To list all FileSets, send an empty object as the body. To filter, provide filter parameters in the body.
+
 <!--
 type: tab
 title: Javascript
 -->
 
 ```js
+// Example 1: List all FileSets (empty search)
+fetch(
+  'https://{instance}.domo.com/api/files/v1/filesets/search?limit=50&offset=0',
+  {
+    method: 'POST',
+    headers: {
+      'X-DOMO-Developer-Token': '<your-token-here>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({}),
+  },
+)
+  .then((response) => response.json())
+  .then((result) => console.log(result.fileSets))
+  .catch((error) => console.error(`Error: ${error}`));
+
+// Example 2: Advanced search with filters and sorting
 fetch('https://{instance}.domo.com/api/files/v1/filesets/search', {
   method: 'POST',
   headers: {
@@ -606,11 +908,34 @@ fetch('https://{instance}.domo.com/api/files/v1/filesets/search', {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    // Query parameters here
+    // Sort by name in ascending order
+    fieldSort: [
+      {
+        field: 'name',
+        order: 'ASC',
+      },
+    ],
+    // Filter FileSet by name containing "Marketing"
+    filters: [
+      {
+        field: 'name',
+        value: ['Marketing'],
+        operator: 'LIKE',
+        not: false,
+      },
+    ],
+    // Filter FileSet created between two dates
+    dateFilters: [
+      {
+        field: 'created',
+        start: new Date('2024-06-01').toISOString(), // June 1, 2024 as ISO string
+        end: new Date('2024-06-30').toISOString(), // June 30, 2024 as ISO string
+      },
+    ],
   }),
 })
   .then((response) => response.json())
-  .then((result) => console.log(result))
+  .then((result) => console.log(result.fileSets))
   .catch((error) => console.error(`Error: ${error}`));
 ```
 
@@ -626,9 +951,86 @@ headers = {
     'X-DOMO-Developer-Token': '<your-token-here>',
     'Content-Type': 'application/json',
 }
-url = 'https://{instance}.domo.com/api/files/v1/filesets'
+
+# Example 1: List all FileSets (empty search)
+url = 'https://{instance}.domo.com/api/files/v1/filesets/search?limit=50&offset=0'
+data = {}
+
+with httpx.Client() as client:
+    response = client.post(url, headers=headers, json=data)
+    print(response.json())
+
+# Example 2: Advanced search with filters and sorting
+url = 'https://{instance}.domo.com/api/files/v1/filesets/search'
 data = {
-    # Query parameters here
+    # Sort by name in ascending order
+    "fieldSort": [
+        {
+            "field": "name",
+            "order": "ASC"
+        }
+    ],
+    # Filter FileSet by name containing "Marketing"
+    "filters": [
+        {
+            "field": "name",
+            "value": ["Marketing"],
+            "operator": "LIKE",
+            "not": False
+        }
+    ],
+    # Filter FileSet created between two dates
+    "dateFilters": [
+        {
+            "field": "created",
+            "start": "2024-06-01T00:00:00Z",  # June 1, 2024 as ISO string
+            "end": "2024-06-30T23:59:59Z"     # June 30, 2024 as ISO string
+        }
+    ]
+}
+
+with httpx.Client() as client:
+    response = client.post(url, headers=headers, json=data)
+    print(response.json())
+```
+
+<!-- type: tab-end -->
+
+**Response:**
+
+```json
+{
+  "fileSets": [
+    {
+      "id": "00000000-0000-0000-0000-000000000010",
+      "name": "Marketing Assets",
+      "description": "Contains marketing assets for campaigns",
+      "created": "2024-06-15T00:00:00.000Z",
+      "createdBy": 111111111,
+      "updated": "2024-06-20T00:00:00.000Z",
+      "updatedBy": 111111111,
+      "owner": "111111111",
+      "permission": "OWNER",
+      "fileCount": 25
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000011",
+      "name": "Marketing Reports",
+      "description": "Marketing analysis and reports",
+      "created": "2024-06-10T00:00:00.000Z",
+      "createdBy": 111111111,
+      "updated": "2024-06-18T00:00:00.000Z",
+      "updatedBy": 111111111,
+      "owner": "111111111",
+      "permission": "OWNER",
+      "fileCount": 12
+    }
+  ],
+  "pageContext": {
+    "offset": 0,
+    "limit": 50,
+    "total": 2
+  }
 }
 
 with httpx.Client() as client:
