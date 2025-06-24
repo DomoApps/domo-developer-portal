@@ -200,9 +200,9 @@ title: Javascript (domo.post)
 ```js
 domo
   .post(`/domo/files/v1/filesets/${filesetId}/query`, {
-    query: 'some query',
-    directoryPath: '', // optional
-    topK: 5, // optional
+    query: 'search for text in documents', // Required: Text to search for in files
+    directoryPath: 'reports/quarterly', // Optional: Limit search to specific directory
+    topK: 5, // Optional: Maximum number of results to return
   })
   .then((result) => console.log(result))
   .catch((error) => console.error(`Error: ${error}`));
@@ -218,9 +218,9 @@ fetch(`/domo/files/v1/filesets/${filesetId}/query`, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
-    query: 'some query',
-    directoryPath: '', // optional
-    topK: 5, // optional
+    query: 'search for text in documents', // Required: Text to search for in files
+    directoryPath: 'reports/quarterly', // Optional: Limit search to specific directory
+    topK: 5, // Optional: Maximum number of results to return
   }),
 })
   .then((response) => response.json())
@@ -300,6 +300,185 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files`, {
   "size": 12345,
   "created": "2025-01-01T00:00:00.000Z",
   "createdBy": 111111111
+}
+```
+
+---
+
+## Search Files in FileSet
+
+**Method:** `POST`  
+**Endpoint:** `/domo/files/v1/filesets/{filesetId}/files/search`
+
+**Path Parameters:**
+
+| Parameter | Type   | Required | Description           |
+| --------- | ------ | -------- | --------------------- |
+| filesetId | String | Yes      | The ID of the FileSet |
+
+**Query Parameters:**
+
+| Parameter         | Type    | Required | Description                                                            |
+| ----------------- | ------- | -------- | ---------------------------------------------------------------------- |
+| directoryPath     | String  | No       | Filter files by specific directory path                                |
+| immediateChildren | Boolean | No       | If true, returns only immediate children of directory (default: false) |
+| limit             | Integer | No       | Maximum number of results (default: 100)                               |
+| next              | String  | No       | Pagination token for fetching next set of results                      |
+
+**Request Body Parameters:**
+
+| Parameter   | Type  | Required | Description                    |
+| ----------- | ----- | -------- | ------------------------------ |
+| fieldSort   | Array | No       | Sort options for results       |
+| filters     | Array | No       | Filter criteria for the search |
+| dateFilters | Array | No       | Date-based filter criteria     |
+
+**Filter Object Properties:**
+
+| Property | Type    | Description                                                               |
+| -------- | ------- | ------------------------------------------------------------------------- |
+| field    | String  | Field name to filter on (e.g., 'name', 'description')                     |
+| value    | Array   | Values to match against                                                   |
+| not      | Boolean | If true, inverts the filter match                                         |
+| operator | String  | Operation type: 'EQUALS', 'GREATER_THAN', 'LESS_THAN', 'IN', 'LIKE', etc. |
+
+**FieldSort Object Properties:**
+
+| Property | Type   | Description                     |
+| -------- | ------ | ------------------------------- |
+| field    | String | Field name to sort by           |
+| order    | String | Sort direction: 'ASC' or 'DESC' |
+
+**DateFilter Object Properties:**
+
+| Property | Type    | Description                                  |
+| -------- | ------- | -------------------------------------------- |
+| field    | String  | Field name for date filter (e.g., 'created') |
+| start    | Long    | Start timestamp in milliseconds              |
+| end      | Long    | End timestamp in milliseconds                |
+| not      | Boolean | If true, inverts the date filter match       |
+
+<!--
+type: tab
+title: Javascript (domo.post)
+-->
+
+```js
+// Example 1: List all files
+domo
+  .post(`/domo/files/v1/filesets/${filesetId}/files/search`, {})
+  .then((result) => console.log(result.files))
+  .catch((error) => console.error(`Error: ${error}`));
+
+// Example 2: Advanced search with directory path and filters
+domo
+  .post(
+    `/domo/files/v1/filesets/${filesetId}/files/search?directoryPath=reports&limit=20`,
+    {
+      // Sort by file name in ascending order
+      fieldSort: [
+        {
+          field: 'name',
+          order: 'ASC',
+        },
+      ],
+      // Filter files by name
+      filters: [
+        {
+          field: 'name',
+          value: ['.pdf'],
+          operator: 'LIKE',
+        },
+      ],
+      // Filter files created in past 30 days
+      dateFilters: [
+        {
+          field: 'created',
+          start: Date.now() - 30 * 24 * 60 * 60 * 1000,
+          end: Date.now(),
+        },
+      ],
+    },
+  )
+  .then((result) => console.log(result.files))
+  .catch((error) => console.error(`Error: ${error}`));
+```
+
+<!--
+type: tab
+title: Javascript (fetch)
+-->
+
+```js
+// Example 1: List all files
+fetch(`/domo/files/v1/filesets/${filesetId}/files/search`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({}),
+})
+  .then((response) => response.json())
+  .then((result) => console.log(result.files))
+  .catch((error) => console.error(`Error: ${error}`));
+
+// Example 2: Advanced search with directory path and filters
+fetch(
+  `/domo/files/v1/filesets/${filesetId}/files/search?directoryPath=reports&immediateChildren=true&limit=20`,
+  {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      // Sort by file name in ascending order
+      fieldSort: [
+        {
+          field: 'name',
+          order: 'ASC',
+        },
+      ],
+      // Filter files by name
+      filters: [
+        {
+          field: 'name',
+          value: ['.pdf'],
+          operator: 'LIKE',
+        },
+      ],
+      // Filter files created in past 30 days
+      dateFilters: [
+        {
+          field: 'created',
+          start: Date.now() - 30 * 24 * 60 * 60 * 1000,
+          end: Date.now(),
+        },
+      ],
+    }),
+  },
+)
+  .then((response) => response.json())
+  .then((result) => console.log(result.files))
+  .catch((error) => console.error(`Error: ${error}`));
+```
+
+<!-- type: tab-end -->
+
+**Response:**
+
+```json
+{
+  "files": [
+    {
+      "id": "00000000-0000-0000-0000-000000000005",
+      "path": "reports/quarterly-report.pdf",
+      "name": "quarterly-report.pdf",
+      "fileType": "FILE",
+      "contentType": "application/pdf",
+      "size": 234567,
+      "created": "2025-06-15T00:00:00.000Z",
+      "createdBy": 111111111
+    }
+  ],
+  "pageContext": {
+    "next": "eyJpZCI6IjEyMzQ1Njc4OTAifQ=="
+  }
 }
 ```
 
@@ -445,7 +624,47 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files/${fileId}`, {
 **Method:** `POST`  
 **Endpoint:** `/domo/files/v1/filesets/search`
 
+**Query Parameters:**
+
+| Parameter | Type    | Required | Description                              |
+| --------- | ------- | -------- | ---------------------------------------- |
+| limit     | Integer | No       | Maximum number of results (default: 100) |
+| offset    | Integer | No       | Pagination offset (default: 0)           |
+
 > **Note:** To list all FileSets, send an empty object as the body. To filter, provide filter parameters in the body.
+
+**Request Body Parameters:**
+
+| Parameter   | Type  | Required | Description                    |
+| ----------- | ----- | -------- | ------------------------------ |
+| fieldSort   | Array | No       | Sort options for results       |
+| filters     | Array | No       | Filter criteria for the search |
+| dateFilters | Array | No       | Date-based filter criteria     |
+
+**Filter Object Properties:**
+
+| Property | Type    | Description                                                               |
+| -------- | ------- | ------------------------------------------------------------------------- |
+| field    | String  | Field name to filter on (e.g., 'name', 'description')                     |
+| value    | Array   | Values to match against                                                   |
+| not      | Boolean | If true, inverts the filter match                                         |
+| operator | String  | Operation type: 'EQUALS', 'GREATER_THAN', 'LESS_THAN', 'IN', 'LIKE', etc. |
+
+**FieldSort Object Properties:**
+
+| Property | Type   | Description                     |
+| -------- | ------ | ------------------------------- |
+| field    | String | Field name to sort by           |
+| order    | String | Sort direction: 'ASC' or 'DESC' |
+
+**DateFilter Object Properties:**
+
+| Property | Type    | Description                                  |
+| -------- | ------- | -------------------------------------------- |
+| field    | String  | Field name for date filter (e.g., 'created') |
+| start    | Long    | Start timestamp in milliseconds              |
+| end      | Long    | End timestamp in milliseconds                |
+| not      | Boolean | If true, inverts the date filter match       |
 
 <!--
 type: tab
@@ -453,8 +672,39 @@ title: Javascript (domo.post)
 -->
 
 ```js
+// Example 1: List all FileSets (empty search)
 domo
   .post('/domo/files/v1/filesets/search', {})
+  .then((result) => console.log(result.fileSets))
+  .catch((error) => console.error(`Error: ${error}`));
+
+// Example 2: Advanced search with filters and sorting
+domo
+  .post('/domo/files/v1/filesets/search', {
+    // Sort by name in ascending order
+    fieldSort: [
+      {
+        field: 'name',
+        order: 'ASC',
+      },
+    ],
+    // Filter FileSet by name containing "Marketing"
+    filters: [
+      {
+        field: 'name',
+        value: ['Marketing'],
+        operator: 'LIKE',
+      },
+    ],
+    // Filter FileSet created between two dates
+    dateFilters: [
+      {
+        field: 'created',
+        start: 1717027200000, // June 1, 2024
+        end: 1719705600000, // June 30, 2024
+      },
+    ],
+  })
   .then((result) => console.log(result.fileSets))
   .catch((error) => console.error(`Error: ${error}`));
 ```
@@ -465,10 +715,45 @@ title: Javascript (fetch)
 -->
 
 ```js
+// Example 1: List all FileSets (empty search)
 fetch('/domo/files/v1/filesets/search', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({}),
+})
+  .then((response) => response.json())
+  .then((result) => console.log(result.fileSets))
+  .catch((error) => console.error(`Error: ${error}`));
+
+// Example 2: Advanced search with filters and sorting
+fetch('/domo/files/v1/filesets/search?limit=50&offset=0', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    // Sort by name in ascending order
+    fieldSort: [
+      {
+        field: 'name',
+        order: 'ASC',
+      },
+    ],
+    // Filter FileSet by name containing "Marketing"
+    filters: [
+      {
+        field: 'name',
+        value: ['Marketing'],
+        operator: 'LIKE',
+      },
+    ],
+    // Filter FileSet created between two dates
+    dateFilters: [
+      {
+        field: 'created',
+        start: 1717027200000, // June 1, 2024
+        end: 1719705600000, // June 30, 2024
+      },
+    ],
+  }),
 })
   .then((response) => response.json())
   .then((result) => console.log(result.fileSets))
