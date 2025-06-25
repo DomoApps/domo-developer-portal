@@ -49,47 +49,6 @@ This endpoint executes an SQL query on the specified DataSet and returns the res
 ]
 ```
 
-## DataSet Access List
-
-**Method**: `GET`  
-**Endpoint**: `/api/data/v3/datasources/{dataset_id}/permissions`
-
-**Description**:  
-Retrieves a list of users and groups with access to the dataset, along with their permissions.
-
-**Parameters**:
-
-| Property Name | Type   | Required | Description                       |
-| ------------- | ------ | -------- | --------------------------------- |
-| dataset_id    | String | Yes      | Unique identifier of the dataset. |
-
-**Example Request**:
-
-```json
-{
-  "method": "GET",
-  "url": "https://{domo_instance}.domo.com/api/data/v3/datasources/{dataset_id}/permissions",
-  "headers": {}
-}
-```
-
-**Example Response**:
-
-```json
-{
-  "list": [
-    {
-      "type": "USER",
-      "id": "966365811",
-      "accessLevel": "OWNER",
-      "name": "Scott Thompson"
-    }
-  ],
-  "totalUserCount": 1,
-  "totalGroupCount": 0
-}
-```
-
 ## Revoke DataSet Access
 
 **Method**: `DELETE`  
@@ -1456,41 +1415,6 @@ Removes the association of a partition tag with its dataset, ensuring it no long
 - Removing the partition tag does not count against the 400-partition limit in Magic 2.0.
 - Partitions against deleted data versions will not appear in the partition list.
 
-## Index DataSet
-
-**Method**: `POST`  
-**Endpoint**: `/api/data/v3/datasources/{dataset_id}/indexes`
-
-**Description**:  
-Indexes data versions for a DataSet to make them queryable. If no `dataIds` are provided, all complete and unindexed versions are indexed.
-
-**Parameters**:
-
-| Property Name | Type   | Required | Description                        |
-| ------------- | ------ | -------- | ---------------------------------- |
-| dataset_id    | String | Yes      | Unique identifier of the dataset.  |
-| dataIds       | Array  | No       | List of data version IDs to index. |
-
-**Example Request**:
-
-```json
-{
-  "method": "POST",
-  "url": "https://{domo_instance}.domo.com/api/data/v3/datasources/{dataset_id}/indexes",
-  "headers": {
-    "Content-Type": "application/json"
-  },
-  "body": {
-    "dataIds": []
-  }
-}
-```
-
-**Notes**:
-
-- Sending an empty `dataIds` array will index all eligible data versions.
-- Indexing is required for datasets to become accessible for querying.
-
 ## Create DataSet Copy
 
 **Method**: `POST`  
@@ -1739,6 +1663,41 @@ Indexes a DataSet to make it available for querying. This process is required af
 }
 ```
 
+## Index Data Versions
+
+**Method**: `POST`  
+**Endpoint**: `/api/data/v3/datasources/{dataset_id}/indexes`
+
+**Description**:  
+Indexes data versions for a DataSet to make them queryable. If no `dataIds` are provided, all complete and unindexed versions are indexed.
+
+**Parameters**:
+
+| Property Name | Type   | Required | Description                        |
+| ------------- | ------ | -------- | ---------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset.  |
+| dataIds       | Array  | No       | List of data version IDs to index. |
+
+**Example Request**:
+
+```json
+{
+  "method": "POST",
+  "url": "https://{domo_instance}.domo.com/api/data/v3/datasources/{dataset_id}/indexes",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "dataIds": []
+  }
+}
+```
+
+**Notes**:
+
+- Sending an empty `dataIds` array will index all eligible data versions.
+- Indexing is required for datasets to become accessible for querying.
+
 ## Index DataSet Progress
 
 **Method**: `GET`  
@@ -1761,36 +1720,6 @@ Retrieves the status of a DataSet indexing operation for the specified index ID.
   "method": "GET",
   "url": "https://{domo_instance}.domo.com/api/data/v3/datasources/{dataset_id}/indexes/{index_id}/statuses",
   "headers": {}
-}
-```
-
-## Change DataSet Properties
-
-**Method**: `PUT`  
-**Endpoint**: `/api/data/v3/datasources/{dataset_id}/properties`
-
-**Description**:  
-Updates the properties of a dataset, such as the data provider type.
-
-**Parameters**:
-
-| Property Name    | Type   | Required | Description                       |
-| ---------------- | ------ | -------- | --------------------------------- |
-| dataset_id       | String | Yes      | Unique identifier of the dataset. |
-| dataProviderType | String | Yes      | The type of the data provider.    |
-
-**Example Request**:
-
-```json
-{
-  "method": "PUT",
-  "url": "https://{domo_instance}.domo.com/api/data/v3/datasources/{dataset_id}/properties",
-  "headers": {
-    "Content-Type": "application/json"
-  },
-  "body": {
-    "dataProviderType": "domo-jupyterdata"
-  }
 }
 ```
 
@@ -1835,12 +1764,14 @@ Retrieves a list of users and groups with access to the dataset, along with thei
 }
 ```
 
+````
+
 ## Change DataSet Properties
 
-**Method**: `PUT`  
+**Method**: `PUT`
 **Endpoint**: `/api/data/v3/datasources/{dataset_id}/properties`
 
-**Description**:  
+**Description**:
 Updates the properties of a dataset, such as the data provider type.
 
 **Parameters**:
@@ -1863,4 +1794,4 @@ Updates the properties of a dataset, such as the data provider type.
     "dataProviderType": "domo-jupyterdata"
   }
 }
-```
+````
