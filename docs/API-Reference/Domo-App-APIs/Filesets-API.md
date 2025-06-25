@@ -192,6 +192,14 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files/${fileId}/download`)
 | --------- | ------ | -------- | --------------------- |
 | filesetId | String | Yes      | The ID of the FileSet |
 
+**Request Body Parameters:**
+
+| Parameter     | Type    | Required | Description                          |
+| ------------- | ------- | -------- | ------------------------------------ |
+| query         | String  | Yes      | Text to search for in files          |
+| directoryPath | String  | No       | Limit search to a specific directory |
+| topK          | Integer | No       | Maximum number of results to return  |
+
 <!--
 type: tab
 title: Javascript (domo.post)
@@ -293,8 +301,8 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files`, {
 ```json
 {
   "id": "00000000-0000-0000-0000-000000000004",
-  "path": "fab-rules.txt",
-  "name": "fab-rules.txt",
+  "path": "rules.txt",
+  "name": "rules.txt",
   "fileType": "TEXT",
   "contentType": "text/plain",
   "size": 12345,

@@ -17,7 +17,7 @@ This API reference documents the endpoints for managing FileSets and files in Do
 
 **Query Parameters:**
 
-- `path` (String, required): The path to the FileSetwithin the FileSet.
+- `path` (String, required): The path to the File within the FileSet.
 
 <!--
 type: tab
@@ -225,7 +225,7 @@ with httpx.Client() as client:
 
 **Response:**
 
-- Returns the FileSetcontents as a download (binary/text stream).
+- Returns the FileSet contents as a download (binary/text stream).
 
 ---
 
@@ -1200,7 +1200,7 @@ with httpx.Client() as client:
 {
   "id": "00000000-0000-0000-0000-000000000013",
   "name": "Sample FileSet",
-  "description": "A sampleFileSet for demonstration purposes.",
+  "description": "A sample FileSet for demonstration purposes.",
   "created": "2025-01-01T00:00:00.000Z",
   "createdBy": 111111111
 }

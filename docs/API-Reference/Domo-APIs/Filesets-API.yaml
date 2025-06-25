@@ -20,7 +20,7 @@ paths:
   /api/files/v1/filesets:
     post:
       summary: Create a FileSet
-      description: Creates a new FileSet in your Domo instance
+      description: Creates a new FileSet in your Domo instance.
       operationId: createFileSet
       requestBody:
         content:
