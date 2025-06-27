@@ -2,7 +2,7 @@
 
 > **BETA:** This API is currently in BETA and is subject to change. Endpoints, request/response formats, and functionality may change without notice.
 
-This API reference documents the endpoints for managing FileSets and files in Domo. These endpoints allow you to upload, download, query, and manage files and FileSets programmatically.
+This API reference documents the endpoints for managing FileSets and Files in Domo. These endpoints allow you to upload, download, query, and manage Files and FileSets programmatically.
 
 ---
 
@@ -234,7 +234,7 @@ with httpx.Client() as client:
 **Method:** `POST`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}/query`
 
-**Description:** Queries the files and directories within a FileSet using a search query.
+**Description:** Queries the Files and directories within a FileSet using a search query.
 
 **Path Parameters:**
 
@@ -246,7 +246,7 @@ with httpx.Client() as client:
 
 | Parameter     | Type    | Required | Description                          |
 | ------------- | ------- | -------- | ------------------------------------ |
-| query         | String  | Yes      | Text to search for in files          |
+| query         | String  | Yes      | Text to search for in Files          |
 | directoryPath | String  | No       | Limit search to a specific directory |
 | topK          | Integer | No       | Maximum number of results to return  |
 
@@ -446,7 +446,7 @@ with open('rules.txt', 'rb') as file_obj:
 
 | Parameter         | Type    | Required | Default | Description                                           |
 | ----------------- | ------- | -------- | ------- | ----------------------------------------------------- |
-| directoryPath     | String  | No       | null    | Filter files by specific directory path               |
+| directoryPath     | String  | No       | null    | Filter Files by specific directory path               |
 | immediateChildren | Boolean | No       | false   | If true, returns only immediate children of directory |
 | limit             | Integer | No       | 100     | Maximum number of results                             |
 | next              | String  | No       | null    | Pagination token for fetching next set of results     |

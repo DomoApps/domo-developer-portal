@@ -196,7 +196,7 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files/${fileId}/download`)
 
 | Parameter     | Type    | Required | Description                          |
 | ------------- | ------- | -------- | ------------------------------------ |
-| query         | String  | Yes      | Text to search for in files          |
+| query         | String  | Yes      | Text to search for in Files          |
 | directoryPath | String  | No       | Limit search to a specific directory |
 | topK          | Integer | No       | Maximum number of results to return  |
 
@@ -328,7 +328,7 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files`, {
 
 | Parameter         | Type    | Required | Description                                                            |
 | ----------------- | ------- | -------- | ---------------------------------------------------------------------- |
-| directoryPath     | String  | No       | Filter files by specific directory path                                |
+| directoryPath     | String  | No       | Filter Files by specific directory path                                |
 | immediateChildren | Boolean | No       | If true, returns only immediate children of directory (default: false) |
 | limit             | Integer | No       | Maximum number of results (default: 100)                               |
 | next              | String  | No       | Pagination token for fetching next set of results                      |
