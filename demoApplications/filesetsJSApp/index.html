@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Domo Filesets API Tester</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Domo Filesets API Tester</h1>
+      <p>
+        Test each Filesets API endpoint from your Domo app. All requests use
+        <code>/domo</code> endpoints and authentication is automatic.
+      </p>
+
+      <!-- Results always visible at the top -->
+      <section>
+        <h2>Results</h2>
+        <pre id="results"></pre>
+      </section>
+
+      <!-- Fileset Selector always visible at the top -->
+      <section>
+        <label for="filesetSelector"><strong>Select Fileset:</strong></label>
+        <select id="filesetSelector" name="filesetSelector">
+          <option value="" disabled selected>Loading filesets...</option>
+        </select>
+        <span id="filesetLoading" style="display: none">Loading...</span>
+      </section>
+
+      <!-- Tab Menu -->
+      <nav class="tab-menu">
+        <button class="tab active" data-tab="files">Files</button>
+        <button class="tab" data-tab="filesets">Filesets</button>
+      </nav>
+
+      <!-- Files Tab -->
+      <div class="tab-content" id="tab-files">
+        <nav class="subtab-menu">
+          <button class="subtab active" data-subtab="view-files">
+            Get/List
+          </button>
+          <button class="subtab" data-subtab="query-files">Query</button>
+          <button class="subtab" data-subtab="other-files">Create</button>
+          <button class="subtab" data-subtab="delete-files">Delete</button>
+        </nav>
+        <div class="subtab-content" id="subtab-view-files">
+          <section>
+            <h4>Get File By Path</h4>
+            <form id="getFileByPathForm">
+              <input type="hidden" name="filesetId" />
+              <input
+                type="text"
+                name="filePath"
+                placeholder="File Path"
+                required
+              />
+              <button type="submit">Get File By Path</button>
+            </form>
+          </section>
+          <section>
+            <h4>Get File By Id</h4>
+            <form id="getFileByIdForm">
+              <input type="hidden" name="filesetId" />
+              <input type="text" name="fileId" placeholder="File ID" required />
+              <button type="submit">Get File By Id</button>
+            </form>
+          </section>
+          <section>
+            <h4>Download File By Id</h4>
+            <form id="downloadFileByIdForm">
+              <input type="hidden" name="filesetId" />
+              <input type="text" name="fileId" placeholder="File ID" required />
+              <button type="submit">Download File</button>
+            </form>
+          </section>
+        </div>
+        <div
+          class="subtab-content"
+          id="subtab-query-files"
+          style="display: none"
+        >
+          <section>
+            <h4>Query Files</h4>
+            <form id="queryFilesForm">
+              <input type="hidden" name="filesetId" />
+              <input type="text" name="query" placeholder="Query" required />
+              <input
+                type="text"
+                name="directoryPath"
+                placeholder="Directory Path (optional)"
+              />
+              <input type="number" name="topK" placeholder="Top K (optional)" />
+              <button type="submit">Query Files</button>
+            </form>
+          </section>
+        </div>
+        <div
+          class="subtab-content"
+          id="subtab-other-files"
+          style="display: none"
+        >
+          <section>
+            <h4>Upload File</h4>
+            <form id="uploadFileForm">
+              <input type="hidden" name="filesetId" />
+              <input type="file" name="file" required />
+              <input
+                type="text"
+                name="directoryPath"
+                placeholder="Directory Path (optional)"
+              />
+              <button type="submit">Upload File</button>
+            </form>
+          </section>
+        </div>
+        <div
+          class="subtab-content"
+          id="subtab-delete-files"
+          style="display: none"
+        >
+          <section>
+            <h4>Delete Files By Path</h4>
+            <form id="deleteFilesByPathForm">
+              <input type="hidden" name="filesetId" />
+              <input
+                type="text"
+                name="filePath"
+                placeholder="File Path"
+                required
+              />
+              <button type="submit">Delete File By Path</button>
+            </form>
+          </section>
+          <section>
+            <h4>Delete File By Id</h4>
+            <form id="deleteFileByIdForm">
+              <input type="hidden" name="filesetId" />
+              <input type="text" name="fileId" placeholder="File ID" required />
+              <button type="submit">Delete File By Id</button>
+            </form>
+          </section>
+        </div>
+      </div>
+
+      <!-- Filesets Tab -->
+      <div class="tab-content" id="tab-filesets" style="display: none">
+        <nav class="subtab-menu">
+          <button class="subtab active" data-subtab="view-filesets">
+            Get/List
+          </button>
+          <button class="subtab" data-subtab="query-filesets">Query</button>
+          <button class="subtab" data-subtab="other-filesets">Create</button>
+          <button class="subtab" data-subtab="delete-filesets">Delete</button>
+        </nav>
+        <div class="subtab-content" id="subtab-view-filesets">
+          <section>
+            <h4>Get Fileset By Id</h4>
+            <form id="getFilesetByIdForm">
+              <input type="hidden" name="filesetId" />
+              <button type="submit">Get Fileset By Id</button>
+            </form>
+          </section>
+        </div>
+        <div
+          class="subtab-content"
+          id="subtab-query-filesets"
+          style="display: none"
+        >
+          <section>
+            <h4>Query Files in Fileset</h4>
+            <form id="queryFilesetForm">
+              <div class="query-fields">
+                <label for="queryFilesetDirectoryPath">Directory Path</label>
+                <input
+                  id="queryFilesetDirectoryPath"
+                  type="text"
+                  name="directoryPath"
+                  placeholder="/ (root)"
+                  autocomplete="off"
+                />
+                <label for="queryFilesetImmediateChildren">
+                  <input
+                    id="queryFilesetImmediateChildren"
+                    type="checkbox"
+                    name="immediateChildren"
+                  />
+                  Immediate Children Only
+                </label>
+                <label for="queryFilesetLimit">Limit</label>
+                <input
+                  id="queryFilesetLimit"
+                  type="number"
+                  name="limit"
+                  min="1"
+                  max="1000"
+                  placeholder="50"
+                />
+                <label for="queryFilesetBody"
+                  >Advanced Query (JSON body, optional)</label
+                >
+                <input
+                  id="queryFilesetBody"
+                  type="text"
+                  name="body"
+                  placeholder='e.g. {"filters":[],"fieldSort":[]}'
+                  autocomplete="off"
+                />
+              </div>
+              <button type="submit">Query Files</button>
+            </form>
+            <div class="query-help">
+              <details>
+                <summary>How to use this query</summary>
+                <div>
+                  <ul>
+                    <li>
+                      <b>Directory Path</b>: The folder to search in (e.g.
+                      <code>/</code> for root).
+                    </li>
+                    <li>
+                      <b>Immediate Children Only</b>: If checked, only direct
+                      children of the directory are returned.
+                    </li>
+                    <li><b>Limit</b>: Max number of results (default 50).</li>
+                    <li>
+                      <b>Advanced Query</b>: Optional JSON for advanced filters
+                      and sort, e.g. <code>{"filters":[],"fieldSort":[]}</code>.
+                    </li>
+                  </ul>
+                  <p>
+                    All fields are optional. You can combine directory,
+                    children, limit, and advanced filters.
+                  </p>
+                </div>
+              </details>
+            </div>
+          </section>
+        </div>
+        <div
+          class="subtab-content"
+          id="subtab-other-filesets"
+          style="display: none"
+        >
+          <section>
+            <h4>Create Fileset</h4>
+            <form id="createFilesetForm">
+              <input
+                type="text"
+                name="body"
+                placeholder="Fileset Creation Body (JSON)"
+                required
+              />
+              <button type="submit">Create Fileset</button>
+            </form>
+          </section>
+          <section>
+            <h4>Update Fileset By Id</h4>
+            <form id="updateFilesetByIdForm">
+              <input type="hidden" name="filesetId" />
+              <input
+                type="text"
+                name="body"
+                placeholder="Fileset Update Body (JSON)"
+                required
+              />
+              <button type="submit">Update Fileset By Id</button>
+            </form>
+          </section>
+        </div>
+        <div
+          class="subtab-content"
+          id="subtab-delete-filesets"
+          style="display: none"
+        >
+          <section>
+            <h4>Delete Fileset By Id</h4>
+            <form id="deleteFilesetByIdForm">
+              <input type="hidden" name="filesetId" />
+              <button type="submit">Delete Fileset By Id</button>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://unpkg.com/ryuu.js@4.6.0/dist/domo.js"
+      integrity="sha384-YYsd9wQ+wDlUWhvpfGdptxmNYIqBC+52oJtWgPKJadbs3sSFTY/+ZotPbEHTTRWz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="app.js"></script>
+  </body>
+</html>

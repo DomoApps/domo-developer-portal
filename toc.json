@@ -61,6 +61,11 @@
         },
         {
           "type": "item",
+          "title": "FileSet API (BETA)",
+          "uri": "docs/API-Reference/Domo-App-APIs/Filesets-API.md"
+        },
+        {
+          "type": "item",
           "title": "Groups API",
           "uri": "/docs/API-Reference/Domo-App-APIs/Groups-API.md"
         },
@@ -109,6 +114,11 @@
           "type": "item",
           "title": "DataSet API",
           "uri": "/docs/API-Reference/Domo-APIs/DataSet-API.yaml"
+        },
+        {
+          "type": "item",
+          "title": "FileSet API (BETA)",
+          "uri": "docs/API-Reference/Domo-APIs/Filesets-API.yaml"
         },
         {
           "type": "item",
@@ -230,6 +240,11 @@
           "type": "item",
           "title": "Files API",
           "uri": "/docs/API-Reference/Product-APIs/Files.md"
+        },
+        {
+          "type": "item",
+          "title": "FileSet API (BETA)",
+          "uri": "docs/API-Reference/Product-APIs/Filesets.md"
         },
         {
           "type": "item",
