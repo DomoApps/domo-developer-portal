@@ -3,7 +3,6 @@
 This API reference documents the endpoints for managing FileSets and Files in Domo from within a Domo app.
 
 > **BETA:** This API is currently in BETA and is subject to change. Endpoints, request/response formats, and functionality may change without notice.
-
 > **Note:** All code examples below are tested and match the working Domo app UI. Use `domo.*` methods for all API calls except File upload/download, which require `fetch` for binary or FormData support.
 
 ---
@@ -793,6 +792,22 @@ fetch('/domo/files/v1/filesets/search?limit=50&offset=0', {
 **Method:** `POST`  
 **Endpoint:** `/domo/files/v1/filesets`
 
+**Request Body Parameters:**
+
+| Parameter        | Type    | Required | Description                                  |
+| ---------------- | ------- | -------- | -------------------------------------------- |
+| name             | String  | Yes      | The name of the FileSet                      |
+| accountId        | Integer | No       | The account ID to associate (nullable)       |
+| connectorContext | Object  | No       | Connector context for the FileSet (nullable) |
+| description      | String  | No       | Description for the FileSet                  |
+
+**ConnectorContext Object Properties:**
+
+| Property     | Type   | Required | Description                                |
+| ------------ | ------ | -------- | ------------------------------------------ |
+| connector    | String | Yes      | The connector key                          |
+| relativePath | String | No       | Relative path for the connector (nullable) |
+
 <!--
 type: tab
 title: Javascript (domo.post)
@@ -803,6 +818,8 @@ domo
   .post('/domo/files/v1/filesets', {
     name: 'Sample FileSet',
     description: 'A sample FileSet for demonstration purposes.',
+    // accountId: 12345, // Optional
+    // connectorContext: { connector: 'S3', relativePath: 'bucket/path' }, // Optional
   })
   .then((result) => console.log(result))
   .catch((error) => console.error(`Error: ${error}`));
@@ -820,6 +837,8 @@ fetch('/domo/files/v1/filesets', {
   body: JSON.stringify({
     name: 'Sample FileSet',
     description: 'A sample FileSet for demonstration purposes.',
+    // accountId: 12345, // Optional
+    // connectorContext: { connector: 'S3', relativePath: 'bucket/path' }, // Optional
   }),
 })
   .then((response) => response.json())
@@ -845,7 +864,7 @@ fetch('/domo/files/v1/filesets', {
 
 ## Get FileSet By Id
 
-**Method:** `GET`  
+**Method:** `GET`
 **Endpoint:** `/domo/files/v1/filesets/{filesetId}`
 
 **Path Parameters:**

@@ -1015,6 +1015,22 @@ with httpx.Client() as client:
 **Method:** `POST`  
 **Endpoint:** `/api/files/v1/filesets`
 
+**Request Body Parameters:**
+
+| Parameter        | Type    | Required | Description                                  |
+| ---------------- | ------- | -------- | -------------------------------------------- |
+| name             | String  | Yes      | The name of the FileSet                      |
+| accountId        | Integer | No       | The account ID to associate (nullable)       |
+| connectorContext | Object  | No       | Connector context for the FileSet (nullable) |
+| description      | String  | No       | Description for the FileSet                  |
+
+**ConnectorContext Object Properties:**
+
+| Property     | Type   | Required | Description                                |
+| ------------ | ------ | -------- | ------------------------------------------ |
+| connector    | String | Yes      | The connector key                          |
+| relativePath | String | No       | Relative path for the connector (nullable) |
+
 <!--
 type: tab
 title: Javascript
@@ -1028,7 +1044,10 @@ fetch('https://{instance}.domo.com/api/files/v1/filesets', {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    // FileSet creation parameters here
+    name: 'Sample FileSet',
+    description: 'A sample FileSet for demonstration purposes.',
+    // accountId: 12345, // Optional
+    // connectorContext: { connector: 'S3', relativePath: 'bucket/path' }, // Optional
   }),
 })
   .then((response) => response.json())
@@ -1050,7 +1069,10 @@ headers = {
 }
 url = 'https://{instance}.domo.com/api/files/v1/filesets'
 data = {
-    # FileSet creation parameters here
+    "name": "Sample FileSet",
+    "description": "A sample FileSet for demonstration purposes.",
+    # "accountId": 12345, # Optional
+    # "connectorContext": {"connector": "S3", "relativePath": "bucket/path"}, # Optional
 }
 
 with httpx.Client() as client:
@@ -1076,7 +1098,7 @@ with httpx.Client() as client:
 
 ## Get FileSet By Id
 
-**Method:** `GET`  
+**Method:** `GET`
 **Endpoint:** `/api/files/v1/filesets/{filesetId}`
 
 **Path Parameters:**
