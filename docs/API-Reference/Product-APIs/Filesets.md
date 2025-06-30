@@ -773,78 +773,6 @@ with httpx.Client() as client:
 
 ---
 
-## Query FileSet
-
-**Method:** `POST`  
-**Endpoint:** `/api/files/v1/filesets/query`
-
-<!--
-type: tab
-title: Javascript
--->
-
-```js
-fetch('https://{instance}.domo.com/api/files/v1/filesets/query', {
-  method: 'POST',
-  headers: {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    // Query parameters here
-  }),
-})
-  .then((response) => response.json())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(`Error: ${error}`));
-```
-
-<!--
-type: tab
-title: Python
--->
-
-```python
-import httpx
-
-headers = {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
-}
-url = 'https://{instance}.domo.com/api/files/v1/filesets/query'
-data = {
-    # Query parameters here
-}
-
-with httpx.Client() as client:
-    response = client.post(url, headers=headers, json=data)
-    print(response.json())
-```
-
-<!-- type: tab-end -->
-
-**Response:**
-
-```json
-{
-  "id": "00000000-0000-0000-0000-000000000010",
-  "name": "Sample FileSet",
-  "description": "A sample FileSet for demonstration purposes.",
-  "created": "2025-01-01T00:00:00.000Z",
-  "createdBy": 111111111,
-  "updated": "2025-01-02T00:00:00.000Z",
-  "updatedBy": 111111111,
-  "owner": "111111111",
-  "accountId": 0,
-  "connectorContext": null,
-  "permission": "OWNER",
-  "size": 123456,
-  "fileCount": 2
-}
-```
-
----
-
 ## Search FileSets
 
 **Method:** `POST`  
@@ -1206,8 +1134,6 @@ with httpx.Client() as client:
 }
 ```
 
----
-
 ## Update FileSet By Id
 
 **Method:** `POST`  
@@ -1216,6 +1142,13 @@ with httpx.Client() as client:
 **Path Parameters:**
 
 - `filesetId` (String, required): The ID of the FileSet.
+
+**Request Body Parameters:**
+
+| Parameter   | Type   | Required | Description                     |
+| ----------- | ------ | -------- | ------------------------------- |
+| name        | String | No       | The new name for the FileSet    |
+| description | String | No       | The new description for FileSet |
 
 <!--
 type: tab
@@ -1230,7 +1163,8 @@ fetch('https://{instance}.domo.com/api/files/v1/filesets/{filesetId}', {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    // FileSet update parameters here
+    name: 'Updated FileSet Name', // Optional: New name for the FileSet
+    description: 'Updated description.', // Optional: New description
   }),
 })
   .then((response) => response.json())
@@ -1252,7 +1186,8 @@ headers = {
 }
 url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}'
 data = {
-    # FileSet update parameters here
+    "name": "Updated FileSet Name",  # Optional: New name for the FileSet
+    "description": "Updated description."  # Optional: New description
 }
 
 with httpx.Client() as client:

@@ -892,8 +892,6 @@ fetch(`/domo/files/v1/filesets/${filesetId}`)
 }
 ```
 
----
-
 ## Update FileSet By Id
 
 **Method:** `POST`  
@@ -905,6 +903,13 @@ fetch(`/domo/files/v1/filesets/${filesetId}`)
 | --------- | ------ | -------- | --------------------- |
 | filesetId | String | Yes      | The ID of the FileSet |
 
+**Request Body Parameters:**
+
+| Parameter   | Type   | Required | Description                         |
+| ----------- | ------ | -------- | ----------------------------------- |
+| name        | String | No       | The new name for the FileSet        |
+| description | String | No       | The new description for the FileSet |
+
 <!--
 type: tab
 title: Javascript (domo.post)
@@ -913,8 +918,8 @@ title: Javascript (domo.post)
 ```js
 domo
   .post(`/domo/files/v1/filesets/${filesetId}`, {
-    name: 'Updated FileSet Name',
-    description: 'Updated description.',
+    name: 'Updated FileSet Name', // Optional: New name for the FileSet
+    description: 'Updated description.', // Optional: New description
   })
   .then((result) => console.log(result))
   .catch((error) => console.error(`Error: ${error}`));
@@ -930,8 +935,8 @@ fetch(`/domo/files/v1/filesets/${filesetId}`, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
-    name: 'Updated FileSet Name',
-    description: 'Updated description.',
+    name: 'Updated FileSet Name', // Optional: New name for the FileSet
+    description: 'Updated description.', // Optional: New description
   }),
 })
   .then((response) => response.json())
