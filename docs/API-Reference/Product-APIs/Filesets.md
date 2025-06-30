@@ -6,7 +6,7 @@ This API reference documents the endpoints for managing FileSets and Files in Do
 
 ---
 
-## Get File By Path
+## Get File by Path
 
 **Method:** `GET`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}/path?path={filePath}`
@@ -84,7 +84,7 @@ with httpx.Client() as client:
 
 ---
 
-## Get File By Id
+## Get File by Id
 
 **Method:** `GET`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}/files/{fileId}`
@@ -159,7 +159,7 @@ with httpx.Client() as client:
 
 ---
 
-## Download File By Id
+## Download File by Id
 
 **Method:** `GET`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}/files/{fileId}/download`
@@ -453,11 +453,11 @@ with open('rules.txt', 'rb') as file_obj:
 
 **Request Body Parameters:**
 
-| Parameter   | Type  | Required | Description                    |
-| ----------- | ----- | -------- | ------------------------------ |
-| fieldSort   | Array | No       | Sort options for results       |
-| filters     | Array | No       | Filter criteria for the search |
-| dateFilters | Array | No       | Date-based filter criteria     |
+| Parameter   | Type  | Required | Description                                              |
+| ----------- | ----- | -------- | -------------------------------------------------------- |
+| fieldSort   | Array | No       | Sort options for results. Array of FieldSort Objects.    |
+| filters     | Array | No       | Filter criteria for the search. Array of Filter Objects. |
+| dateFilters | Array | No       | Date-based filter criteria. Array of DateFilter Objects. |
 
 **FieldSort Object Properties:**
 
@@ -644,7 +644,7 @@ with httpx.Client() as client:
 
 ---
 
-## Delete Files By Path
+## Delete Files by Path
 
 **Method:** `DELETE`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}/path?path={filePath}`
@@ -710,7 +710,7 @@ with httpx.Client() as client:
 
 ---
 
-## Delete File By Id
+## Delete File by Id
 
 **Method:** `DELETE`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}/files/{fileId}`
@@ -773,78 +773,6 @@ with httpx.Client() as client:
 
 ---
 
-## Query FileSet
-
-**Method:** `POST`  
-**Endpoint:** `/api/files/v1/filesets/query`
-
-<!--
-type: tab
-title: Javascript
--->
-
-```js
-fetch('https://{instance}.domo.com/api/files/v1/filesets/query', {
-  method: 'POST',
-  headers: {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    // Query parameters here
-  }),
-})
-  .then((response) => response.json())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(`Error: ${error}`));
-```
-
-<!--
-type: tab
-title: Python
--->
-
-```python
-import httpx
-
-headers = {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
-}
-url = 'https://{instance}.domo.com/api/files/v1/filesets/query'
-data = {
-    # Query parameters here
-}
-
-with httpx.Client() as client:
-    response = client.post(url, headers=headers, json=data)
-    print(response.json())
-```
-
-<!-- type: tab-end -->
-
-**Response:**
-
-```json
-{
-  "id": "00000000-0000-0000-0000-000000000010",
-  "name": "Sample FileSet",
-  "description": "A sample FileSet for demonstration purposes.",
-  "created": "2025-01-01T00:00:00.000Z",
-  "createdBy": 111111111,
-  "updated": "2025-01-02T00:00:00.000Z",
-  "updatedBy": 111111111,
-  "owner": "111111111",
-  "accountId": 0,
-  "connectorContext": null,
-  "permission": "OWNER",
-  "size": 123456,
-  "fileCount": 2
-}
-```
-
----
-
 ## Search FileSets
 
 **Method:** `POST`  
@@ -861,11 +789,11 @@ with httpx.Client() as client:
 
 **Request Body Parameters:**
 
-| Parameter   | Type  | Required | Description                    |
-| ----------- | ----- | -------- | ------------------------------ |
-| fieldSort   | Array | No       | Sort options for results       |
-| filters     | Array | No       | Filter criteria for the search |
-| dateFilters | Array | No       | Date-based filter criteria     |
+| Parameter   | Type  | Required | Description                                              |
+| ----------- | ----- | -------- | -------------------------------------------------------- |
+| fieldSort   | Array | No       | Sort options for results. Array of FieldSort Objects.    |
+| filters     | Array | No       | Filter criteria for the search. Array of Filter Objects. |
+| dateFilters | Array | No       | Date-based filter criteria. Array of DateFilter Objects. |
 
 **Filter Object Properties:**
 
@@ -1087,6 +1015,22 @@ with httpx.Client() as client:
 **Method:** `POST`  
 **Endpoint:** `/api/files/v1/filesets`
 
+**Request Body Parameters:**
+
+| Parameter        | Type    | Required | Description                                                            |
+| ---------------- | ------- | -------- | ---------------------------------------------------------------------- |
+| name             | String  | Yes      | The name of the FileSet                                                |
+| accountId        | Integer | No       | The account ID to associate (nullable)                                 |
+| connectorContext | Object  | No       | Connector context for the FileSet (nullable). ConnectorContext Object. |
+| description      | String  | No       | Description for the FileSet                                            |
+
+**ConnectorContext Object Properties:**
+
+| Property     | Type   | Required | Description                                |
+| ------------ | ------ | -------- | ------------------------------------------ |
+| connector    | String | Yes      | The connector key                          |
+| relativePath | String | No       | Relative path for the connector (nullable) |
+
 <!--
 type: tab
 title: Javascript
@@ -1100,7 +1044,10 @@ fetch('https://{instance}.domo.com/api/files/v1/filesets', {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    // FileSet creation parameters here
+    name: 'Sample FileSet',
+    description: 'A sample FileSet for demonstration purposes.',
+    // accountId: 12345, // Optional
+    // connectorContext: { connector: 'S3', relativePath: 'bucket/path' }, // Optional
   }),
 })
   .then((response) => response.json())
@@ -1122,7 +1069,10 @@ headers = {
 }
 url = 'https://{instance}.domo.com/api/files/v1/filesets'
 data = {
-    # FileSet creation parameters here
+    "name": "Sample FileSet",
+    "description": "A sample FileSet for demonstration purposes.",
+    # "accountId": 12345, # Optional
+    # "connectorContext": {"connector": "S3", "relativePath": "bucket/path"}, # Optional
 }
 
 with httpx.Client() as client:
@@ -1146,9 +1096,9 @@ with httpx.Client() as client:
 
 ---
 
-## Get FileSet By Id
+## Get FileSet by Id
 
-**Method:** `GET`  
+**Method:** `GET`
 **Endpoint:** `/api/files/v1/filesets/{filesetId}`
 
 **Path Parameters:**
@@ -1206,9 +1156,7 @@ with httpx.Client() as client:
 }
 ```
 
----
-
-## Update FileSet By Id
+## Update FileSet by Id
 
 **Method:** `POST`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}`
@@ -1216,6 +1164,13 @@ with httpx.Client() as client:
 **Path Parameters:**
 
 - `filesetId` (String, required): The ID of the FileSet.
+
+**Request Body Parameters:**
+
+| Parameter   | Type   | Required | Description                     |
+| ----------- | ------ | -------- | ------------------------------- |
+| name        | String | No       | The new name for the FileSet    |
+| description | String | No       | The new description for FileSet |
 
 <!--
 type: tab
@@ -1230,7 +1185,8 @@ fetch('https://{instance}.domo.com/api/files/v1/filesets/{filesetId}', {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    // FileSet update parameters here
+    name: 'Updated FileSet Name', // Optional: New name for the FileSet
+    description: 'Updated description.', // Optional: New description
   }),
 })
   .then((response) => response.json())
@@ -1252,7 +1208,8 @@ headers = {
 }
 url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}'
 data = {
-    # FileSet update parameters here
+    "name": "Updated FileSet Name",  # Optional: New name for the FileSet
+    "description": "Updated description."  # Optional: New description
 }
 
 with httpx.Client() as client:
@@ -1276,7 +1233,7 @@ with httpx.Client() as client:
 
 ---
 
-## Delete FileSet By Id
+## Delete FileSet by Id
 
 **Method:** `DELETE`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}`
