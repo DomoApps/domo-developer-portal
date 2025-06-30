@@ -6,7 +6,7 @@ This API reference documents the endpoints for managing FileSets and Files in Do
 
 ---
 
-## Get File By Path
+## Get File by Path
 
 **Method:** `GET`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}/path?path={filePath}`
@@ -84,7 +84,7 @@ with httpx.Client() as client:
 
 ---
 
-## Get File By Id
+## Get File by Id
 
 **Method:** `GET`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}/files/{fileId}`
@@ -159,7 +159,7 @@ with httpx.Client() as client:
 
 ---
 
-## Download File By Id
+## Download File by Id
 
 **Method:** `GET`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}/files/{fileId}/download`
@@ -453,11 +453,11 @@ with open('rules.txt', 'rb') as file_obj:
 
 **Request Body Parameters:**
 
-| Parameter   | Type  | Required | Description                    |
-| ----------- | ----- | -------- | ------------------------------ |
-| fieldSort   | Array | No       | Sort options for results       |
-| filters     | Array | No       | Filter criteria for the search |
-| dateFilters | Array | No       | Date-based filter criteria     |
+| Parameter   | Type  | Required | Description                                              |
+| ----------- | ----- | -------- | -------------------------------------------------------- |
+| fieldSort   | Array | No       | Sort options for results. Array of FieldSort Objects.    |
+| filters     | Array | No       | Filter criteria for the search. Array of Filter Objects. |
+| dateFilters | Array | No       | Date-based filter criteria. Array of DateFilter Objects. |
 
 **FieldSort Object Properties:**
 
@@ -644,7 +644,7 @@ with httpx.Client() as client:
 
 ---
 
-## Delete Files By Path
+## Delete Files by Path
 
 **Method:** `DELETE`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}/path?path={filePath}`
@@ -710,7 +710,7 @@ with httpx.Client() as client:
 
 ---
 
-## Delete File By Id
+## Delete File by Id
 
 **Method:** `DELETE`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}/files/{fileId}`
@@ -789,11 +789,11 @@ with httpx.Client() as client:
 
 **Request Body Parameters:**
 
-| Parameter   | Type  | Required | Description                    |
-| ----------- | ----- | -------- | ------------------------------ |
-| fieldSort   | Array | No       | Sort options for results       |
-| filters     | Array | No       | Filter criteria for the search |
-| dateFilters | Array | No       | Date-based filter criteria     |
+| Parameter   | Type  | Required | Description                                              |
+| ----------- | ----- | -------- | -------------------------------------------------------- |
+| fieldSort   | Array | No       | Sort options for results. Array of FieldSort Objects.    |
+| filters     | Array | No       | Filter criteria for the search. Array of Filter Objects. |
+| dateFilters | Array | No       | Date-based filter criteria. Array of DateFilter Objects. |
 
 **Filter Object Properties:**
 
@@ -1017,12 +1017,12 @@ with httpx.Client() as client:
 
 **Request Body Parameters:**
 
-| Parameter        | Type    | Required | Description                                  |
-| ---------------- | ------- | -------- | -------------------------------------------- |
-| name             | String  | Yes      | The name of the FileSet                      |
-| accountId        | Integer | No       | The account ID to associate (nullable)       |
-| connectorContext | Object  | No       | Connector context for the FileSet (nullable) |
-| description      | String  | No       | Description for the FileSet                  |
+| Parameter        | Type    | Required | Description                                                            |
+| ---------------- | ------- | -------- | ---------------------------------------------------------------------- |
+| name             | String  | Yes      | The name of the FileSet                                                |
+| accountId        | Integer | No       | The account ID to associate (nullable)                                 |
+| connectorContext | Object  | No       | Connector context for the FileSet (nullable). ConnectorContext Object. |
+| description      | String  | No       | Description for the FileSet                                            |
 
 **ConnectorContext Object Properties:**
 
@@ -1096,7 +1096,7 @@ with httpx.Client() as client:
 
 ---
 
-## Get FileSet By Id
+## Get FileSet by Id
 
 **Method:** `GET`
 **Endpoint:** `/api/files/v1/filesets/{filesetId}`
@@ -1156,7 +1156,7 @@ with httpx.Client() as client:
 }
 ```
 
-## Update FileSet By Id
+## Update FileSet by Id
 
 **Method:** `POST`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}`
@@ -1233,7 +1233,7 @@ with httpx.Client() as client:
 
 ---
 
-## Delete FileSet By Id
+## Delete FileSet by Id
 
 **Method:** `DELETE`  
 **Endpoint:** `/api/files/v1/filesets/{filesetId}`

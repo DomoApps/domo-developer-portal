@@ -7,7 +7,7 @@ This API reference documents the endpoints for managing FileSets and Files in Do
 
 ---
 
-## Get File By Path
+## Get File by Path
 
 **Method:** `GET`  
 **Endpoint:** `/domo/files/v1/filesets/{filesetId}/path?path={filePath}`
@@ -76,7 +76,7 @@ fetch(
 
 ---
 
-## Get File By Id
+## Get File by Id
 
 **Method:** `GET`  
 **Endpoint:** `/domo/files/v1/filesets/{filesetId}/files/{fileId}`
@@ -137,7 +137,7 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files/${fileId}`)
 
 ---
 
-## Download File By Id
+## Download File by Id
 
 **Method:** `GET`  
 **Endpoint:** `/domo/files/v1/filesets/{filesetId}/files/{fileId}/download`
@@ -334,11 +334,11 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files`, {
 
 **Request Body Parameters:**
 
-| Parameter   | Type  | Required | Description                    |
-| ----------- | ----- | -------- | ------------------------------ |
-| fieldSort   | Array | No       | Sort options for results       |
-| filters     | Array | No       | Filter criteria for the search |
-| dateFilters | Array | No       | Date-based filter criteria     |
+| Parameter   | Type  | Required | Description                                              |
+| ----------- | ----- | -------- | -------------------------------------------------------- |
+| fieldSort   | Array | No       | Sort options for results. Array of FieldSort Objects.    |
+| filters     | Array | No       | Filter criteria for the search. Array of Filter Objects. |
+| dateFilters | Array | No       | Date-based filter criteria. Array of DateFilter Objects. |
 
 **Filter Object Properties:**
 
@@ -491,7 +491,7 @@ fetch(
 
 ---
 
-## Delete Files By Path
+## Delete Files by Path
 
 **Method:** `DELETE`  
 **Endpoint:** `/domo/files/v1/filesets/{filesetId}/path?path={filePath}`
@@ -563,7 +563,7 @@ fetch(
 
 ---
 
-## Delete File By Id
+## Delete File by Id
 
 **Method:** `DELETE`  
 **Endpoint:** `/domo/files/v1/filesets/{filesetId}/files/{fileId}`
@@ -642,11 +642,11 @@ fetch(`/domo/files/v1/filesets/${filesetId}/files/${fileId}`, {
 
 **Request Body Parameters:**
 
-| Parameter   | Type  | Required | Description                    |
-| ----------- | ----- | -------- | ------------------------------ |
-| fieldSort   | Array | No       | Sort options for results       |
-| filters     | Array | No       | Filter criteria for the search |
-| dateFilters | Array | No       | Date-based filter criteria     |
+| Parameter   | Type  | Required | Description                                              |
+| ----------- | ----- | -------- | -------------------------------------------------------- |
+| fieldSort   | Array | No       | Sort options for results. Array of FieldSort Objects.    |
+| filters     | Array | No       | Filter criteria for the search. Array of Filter Objects. |
+| dateFilters | Array | No       | Date-based filter criteria. Array of DateFilter Objects. |
 
 **Filter Object Properties:**
 
@@ -794,12 +794,12 @@ fetch('/domo/files/v1/filesets/search?limit=50&offset=0', {
 
 **Request Body Parameters:**
 
-| Parameter        | Type    | Required | Description                                  |
-| ---------------- | ------- | -------- | -------------------------------------------- |
-| name             | String  | Yes      | The name of the FileSet                      |
-| accountId        | Integer | No       | The account ID to associate (nullable)       |
-| connectorContext | Object  | No       | Connector context for the FileSet (nullable) |
-| description      | String  | No       | Description for the FileSet                  |
+| Parameter        | Type    | Required | Description                                                            |
+| ---------------- | ------- | -------- | ---------------------------------------------------------------------- |
+| name             | String  | Yes      | The name of the FileSet                                                |
+| accountId        | Integer | No       | The account ID to associate (nullable)                                 |
+| connectorContext | Object  | No       | Connector context for the FileSet (nullable). ConnectorContext Object. |
+| description      | String  | No       | Description for the FileSet                                            |
 
 **ConnectorContext Object Properties:**
 
@@ -862,7 +862,7 @@ fetch('/domo/files/v1/filesets', {
 
 ---
 
-## Get FileSet By Id
+## Get FileSet by Id
 
 **Method:** `GET`
 **Endpoint:** `/domo/files/v1/filesets/{filesetId}`
@@ -911,7 +911,7 @@ fetch(`/domo/files/v1/filesets/${filesetId}`)
 }
 ```
 
-## Update FileSet By Id
+## Update FileSet by Id
 
 **Method:** `POST`  
 **Endpoint:** `/domo/files/v1/filesets/{filesetId}`
@@ -979,7 +979,7 @@ fetch(`/domo/files/v1/filesets/${filesetId}`, {
 
 ---
 
-## Delete FileSet By Id
+## Delete FileSet by Id
 
 **Method:** `DELETE`  
 **Endpoint:** `/domo/files/v1/filesets/{filesetId}`
