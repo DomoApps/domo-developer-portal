@@ -1000,12 +1000,12 @@
     {
       "type": "item",
       "title": "Overview",
-      "uri": "/docs/Embedded-Analytics/overview.md"
+      "uri": "/docs/Embed/Embedded-Analytics/overview.md"
     },
     {
       "type": "item",
       "title": "Publish To Other Domo Users",
-      "uri": "/docs/Embedded-Analytics/publishing-to-other-domo-users.md"
+      "uri": "/docs/Embed/Embedded-Analytics/publishing-to-other-domo-users.md"
     },
     {
       "type": "group",
@@ -1014,59 +1014,59 @@
         {
           "type": "item",
           "title": "Overview",
-          "uri": "/docs/Embedded-Analytics/Embedding-in-Sites-and-Software/overview.md"
+          "uri": "/docs/Embed/Embedding-in-Sites-and-Software/overview.md"
         },
         {
           "type": "item",
           "title": "Programmatic Filtering",
-          "uri": "/docs/Embedded-Analytics/Embedding-in-Sites-and-Software/programmatic-filtering.md"
+          "uri": "/docs/Embed/Embedding-in-Sites-and-Software/programmatic-filtering.md"
         },
         {
           "type": "item",
           "title": "App Embed Authentication",
-          "uri": "/docs/Embedded-Analytics/Embedding-in-Sites-and-Software/app-embed-authentication.md"
+          "uri": "/docs/Embed/Embedding-in-Sites-and-Software/app-embed-authentication.md"
         },
         {
           "type": "item",
           "title": "Dataset Switching",
-          "uri": "/docs/Embedded-Analytics/Embedding-in-Sites-and-Software/dataset-switching.md"
+          "uri": "/docs/Embed/Embedding-in-Sites-and-Software/dataset-switching.md"
         },
         {
           "type": "item",
           "title": "Filtering Options",
-          "uri": "/docs/Embedded-Analytics/Embedding-in-Sites-and-Software/filtering-options.md"
+          "uri": "/docs/Embed/Embedding-in-Sites-and-Software/filtering-options.md"
         },
         {
           "type": "item",
           "title": "URL Parameters in Embedded Content",
-          "uri": "/docs/Embedded-Analytics/Embedding-in-Sites-and-Software/url-parameters-in-embedded-content.md"
+          "uri": "/docs/Embed/Embedding-in-Sites-and-Software/url-parameters-in-embedded-content.md"
         },
         {
           "type": "item",
           "title": "Dynamic IFrame Height",
-          "uri": "/docs/Embedded-Analytics/Embedding-in-Sites-and-Software/dynamic-iframe-height.md"
+          "uri": "/docs/Embed/Embedding-in-Sites-and-Software/dynamic-iframe-height.md"
         },
         {
           "type": "item",
           "title": "Code Examples",
-          "uri": "/docs/Embedded-Analytics/Embedding-in-Sites-and-Software/code-examples.md"
+          "uri": "/docs/Embed/Embedding-in-Sites-and-Software/code-examples.md"
         },
         {
           "type": "item",
           "title": "Necessary dependencies",
-          "uri": "/docs/Embedded-Analytics/Embedding-in-Sites-and-Software/necessary-dependencies.md"
+          "uri": "/docs/Embed/Embedding-in-Sites-and-Software/necessary-dependencies.md"
         },
         {
           "type": "item",
           "title": "Embedding Into Sites and Web Portals",
-          "uri": "/docs/Embedded-Analytics/Embedding-in-Sites-and-Software/embedding-into-sites-and-web-portals.md"
+          "uri": "/docs/Embed/Embedding-in-Sites-and-Software/embedding-into-sites-and-web-portals.md"
         }
       ]
     },
     {
       "type": "item",
       "title": "Embed Edit Experiences",
-      "uri": "/docs/Embedded-Analytics/embedded-edit-experiences.md"
+      "uri": "/docs/Embed/Embedded-Analytics/embedded-edit-experiences.md"
     },
     {
       "type": "divider",
