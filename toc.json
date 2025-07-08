@@ -117,11 +117,6 @@
         },
         {
           "type": "item",
-          "title": "FileSets API (BETA)",
-          "uri": "docs/API-Reference/Domo-APIs/Filesets-API.yaml"
-        },
-        {
-          "type": "item",
           "title": "Embed Token API",
           "uri": "/docs/API-Reference/Embed-APIs/Embed-Token-API.yaml"
         },
