@@ -49,7 +49,7 @@ The `domo` object is available globally and provides these main features:
 - **HTTP Methods:** Fetch and modify data (`get`, `getAll`, `post`, `put`, `delete`)
 - **Navigation:** Change the current Domo page (`navigate`)
 - **Environment:** Access app and user context (`env`)
-- **Filters:** Listen for and set page filters (`requestFiltersUpdate`, `onFiltersUpdate`)
+- **Filters:** Listen for and set page filters (`requestFiltersUpdated`, `onFiltersUpdate`)
 - **Variables:** Listen for and update page variables (`requestVariablesUpdate`, `onVariablesUpdated`)
 - **App Data:** Listen for and send custom app data (`requestAppDataUpdate`, `onAppDataUpdated`)
 - **Events:** Listen for dataset changes (`onDataUpdated`)
@@ -64,7 +64,7 @@ The `domo` object is available globally and provides these main features:
 - `domo.onDataUpdate` → `domo.onDataUpdated` — Listen for dataset changes
 - `domo.onFiltersUpdate` → `domo.onFiltersUpdated` — Listen for filter changes
 - `domo.onAppData` → `domo.onAppDataUpdated` — Listen for app data changes
-- `domo.filterContainer` → `domo.requestFiltersUpdate` — Set page filters
+- `domo.filterContainer` → `domo.requestFiltersUpdated` — Set page filters
 - `domo.sendVariables` → `domo.requestVariablesUpdate` — Update page variables
 - `domo.sendAppData` → `domo.requestAppDataUpdate` — Send custom app data
 
@@ -199,10 +199,10 @@ domo.onDataUpdated((datasetAlias) => {
 });
 ```
 
-#### domo.requestFiltersUpdate()
+#### domo.requestFiltersUpdated()
 Programmatically add or update page filters.
 ```js
-domo.requestFiltersUpdate([
+domo.requestFiltersUpdated([
   { column: 'category', operator: 'IN', values: ['ALERT'], dataType: 'string' },
 ]);
 ```
