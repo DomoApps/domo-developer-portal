@@ -1,4 +1,8 @@
-# Embedded Scheduled Reports
+
+# Embedded Scheduled Reports (BETA)
+
+> **Note:** This feature is currently in **BETA** and is subject to change. Functionality, configuration, and requirements may be updated in future releases.
+
 
 
 ## Overview
