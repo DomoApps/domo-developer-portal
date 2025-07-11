@@ -93,8 +93,6 @@ def decrypt(enc, secretKey):
 
 ```
 
-<!-- type: tab-end -->
-
 <!--
 type: tab
 title: Java
