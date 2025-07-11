@@ -1,9 +1,6 @@
-
 # Embedded Scheduled Reports (BETA)
 
 > **Note:** This feature is currently in **BETA** and is subject to change. Functionality, configuration, and requirements may be updated in future releases.
-
-
 
 ## Overview
 
@@ -11,8 +8,8 @@ Domo Scheduled Reports allow you to automatically deliver report content to user
 
 This guide explains how to use scheduled reports with embedded Domo content, enabling you to securely deliver scheduled report data to recipients outside of Domo. When configuring embedded scheduled reports, you can provide a **Recipient authentication callback URL**. This is a customer-hosted endpoint that Domo will call with a list of email addresses requesting access to the scheduled report.
 
-
 Your endpoint is responsible for:
+
 - Decrypting the request payload using the Authentication secret you generated in the Domo Everywhere settings screen.
 - Validating the list of email addresses and returning a JSON object with two fields: `validEmails` and `invalidEmails`, each containing a list of email addresses (strings).
 - Encrypting the response body before returning it to Domo (encryption details are covered later in this guide).
@@ -23,15 +20,12 @@ This approach allows you to control which recipients are authorized to receive s
 
 For more details on configuring scheduled reports, see the [here](https://domo-support.domo.com/s/article/360043437773?language=en_US).
 
-
 ## How It Works
 
-
 1. You configure your validation webhook URL in the Domo Everywhere Settings screen (see the image below).
-2. When a scheduled report is requested for a given list of email addresses (for example, when a user attempts to send a report to those recipients), Domo sends a request to your validation webhook with an encrypted payload containing the list of recipient email addresses.  We will also send a X-Domo-Signature header with an hmac signature of the encrypted body you may use to ensure the integrety of the payload.
+2. When a scheduled report is requested for a given list of email addresses (for example, when a user attempts to send a report to those recipients), Domo sends a request to your validation webhook with an encrypted payload containing the list of recipient email addresses. We will also send a X-Domo-Signature header with an hmac signature of the encrypted body you may use to ensure the integrety of the payload.
 3. Your endpoint decrypts the payload, validates the email addresses, and returns a JSON object with `validEmails` and `invalidEmails`, encrypted as required. The response must have an HTTP 200 status code; any non-200 response will result in all provided emails being treated as invalid.
 4. Domo uses your response to determine which recipients are eligible to receive the scheduled report.
-
 
 ## Prerequisites
 
@@ -40,7 +34,6 @@ To successfully implement embedded scheduled reports with secure recipient valid
 - A webhook endpoint capable of receiving POST requests with encrypted payloads as described above.
 
 - The ability to decrypt incoming requests and respond with a JSON object, encrypting the response using the provided secret according to the documented encryption scheme.
-
 
 ## Step-by-Step Setup
 
@@ -66,6 +59,7 @@ See the sections below for code examples on how to encrypt and decrypt the conte
 type: tab
 title: Python
 -->
+
 ```python
 # Example Python code for AES encryption/decryption with HMAC-SHA256
 import base64
@@ -98,13 +92,14 @@ def decrypt(enc, secretKey):
     return unpad(cipher.decrypt(enc[2*BS:]))
 
 ```
-<!-- type: tab-end -->
 
+<!-- type: tab-end -->
 
 <!--
 type: tab
 title: Java
 -->
+
 ```java
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -183,22 +178,21 @@ public class EmbedEncryptionUtil {
     }
 }
 ```
+
 <!-- type: tab-end -->
 
 **Expected Response**
 
 Your response to Domo should be a JSON object with the following structure:
 
-
 ```json
 {
-    "validEmails": ["user1@example.com", "user2@example.com"],
-    "invalidEmails": ["baduser@example.com"]
+  "validEmails": ["user1@example.com", "user2@example.com"],
+  "invalidEmails": ["baduser@example.com"]
 }
 ```
 
 Your response must be encrypted and base64 encoded using the same pattern as the request payload you received from Domo.
-
 
 ### 2. Generate an Authentication Secret
 
@@ -211,10 +205,7 @@ You will need a secure authentication secret to derive the private key used for 
 
 ![Domo Everywhere Settings - Generate Secret](../../assets/images/domo-everywhere-settings-scheduled-reports.png)
 
-
 ### 3. Configure Scheduled Reports
-
-
 
 In the platform, when embedding your Domo dashboard or card, make sure to check the box for **Allow scheduled reports** in the embed options. **Note:** This option is only available when you are embedding your content as "Private" (privately embedded). Scheduled reports are not supported for public or non-private embeds.
 
@@ -222,9 +213,7 @@ Checking this box enables scheduled reports for your embedded content. Then, emb
 
 ![Embed Scheduled Reports Setup](../../assets/images/domo-everywhere-embed-schedule-reports-setup.png)
 
-
 After enabling this option and completing your embed setup, scheduled reports will be available for your embedded content, and your configured webhook will be used for recipient validation.
-
 
 ### 4. Schedule a Report in Embedded Domo Content
 
@@ -239,6 +228,3 @@ If any email addresses are rejected by your webhook (for example, if they are no
 ![Invalid Email Error Example](../../assets/images/domo-everywhere-bademail-embed-schedule-reports.png)
 
 If all emails are valid and no errors are returned, the popup will close and the report will be scheduled successfully for the provided recipients.
-
-
-

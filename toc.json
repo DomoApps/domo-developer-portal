@@ -1004,12 +1004,17 @@
     },
     {
       "type": "item",
+      "title": "Overview",
+      "uri": "docs/Embedded-Analytics/embedded-scheduled-reports.md"
+    },
+    {
+      "type": "item",
       "title": "Publish To Other Domo Users",
       "uri": "/docs/Embedded-Analytics/publishing-to-other-domo-users.md"
     },
     {
       "type": "group",
-      "title": "Embed In Sites And Software",
+      "title": "Embed In Sites and Software",
       "items": [
         {
           "type": "item",
