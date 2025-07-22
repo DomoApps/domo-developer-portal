@@ -130,3 +130,98 @@ At a minimum, we should prioritize documenting the following APIs:
 
 1. All endpoints referenced in Global Code Engine packages.
 2. Anything that you, or customers have built scripts on.
+
+
+## Using AI Tools for Documentation Updates
+
+This project supports advanced AI-powered tools to help automate and streamline documentation updates. Below is an overview of how to configure and use these tools, including the required `settings.json` configuration and a description of each AI service.
+
+### AI Tool Configuration (`settings.json`)
+
+To enable AI-powered features, add the following configuration to your VS Code `settings.json` file (usually found at `~/Library/Application Support/Code/User/settings.json` on macOS):
+
+```jsonc
+{
+  "mcp": {
+    "servers": {
+      "github": {
+        "command": "docker",
+        "args": [
+          "run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server"
+        ],
+        "env": {
+          "GITHUB_PERSONAL_ACCESS_TOKEN": "<insert GH Key>"
+        }
+      },
+      "brave-search": {
+        "command": "docker",
+        "args": [
+          "run", "-i", "--rm", "-e", "BRAVE_API_KEY", "mcp/brave-search"
+        ],
+        "env": {
+          "BRAVE_API_KEY": "<insert Brave API Key>"
+        }
+      },
+      "sequentialthinking": {
+        "command": "docker",
+        "args": ["run", "--rm", "-i", "mcp/sequentialthinking"]
+      },
+      "context7": {
+        "command": "docker",
+        "args": ["run", "-i", "--rm", "mcp/context7"]
+      }
+    }
+  }
+}
+```
+
+#### Service Descriptions
+
+- **github**: Enables AI-powered code search, code review, and documentation suggestions using the GitHub MCP server. Requires a GitHub Personal Access Token for authentication.
+- **brave-search**: Integrates Brave Search for web and documentation lookups directly from your editor. Requires a Brave API key.
+- **sequentialthinking**: Provides advanced step-by-step reasoning and planning capabilities for complex documentation or code changes.
+- **context7**: Supplies additional context-aware AI features, such as summarization and semantic search, to improve the quality and relevance of AI suggestions.
+
+> **Tip:** Be sure to replace `<insert GH Key>` and `<insert Brave API Key>` with your actual credentials. Never commit real credentials to version control.
+
+With this setup, you can leverage AI tools to:
+- Search and summarize code or documentation
+- Generate and update markdown content
+- Validate and review changes
+- Plan and execute multi-step documentation improvements
+
+For more information on using these tools, see the documentation for your AI extension or contact your project administrator.
+
+### Ensure Each Service is Running
+
+To start and manage the AI services in your workspace:
+
+1. Press <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> (on macOS) to open the VS Code Command Palette.
+2. Type and select **MCP: List Servers**.
+3. In the list that appears, you will see each configured service (e.g., github, brave-search, sequentialthinking, context7) with a status indicator.
+4. Click on any service marked **Stopped** to start it. The status will change to **Running** once the service is active.
+
+Repeat this process for each service you want to use. Once running, these services will be available for AI-powered code search, documentation, and reasoning tasks in your workspace.
+
+
+### Open the Chat and Begin
+
+To use the AI chat for documentation or code projects:
+
+1. Open the Command Palette with <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> (on macOS).
+2. Type and select **MCP: Open Chat** (or the equivalent command for your AI extension) to launch the chat view.
+3. In the chat, you can ask for a framework or plan for a complex documentation project. For example, you might say: “Give me a step-by-step framework for documenting a new API with code samples and usage scenarios.”
+
+This process is iterative—work with the AI to refine your plan, add or update sections, and address feedback one piece at a time. You can:
+- Add context by referencing specific files, code snippets, or documentation sections.
+- Upload or reference images and other files by first placing them in the `assets/` folder (for images) or another appropriate location in your project, then mentioning them in your chat or documentation.
+- Ask for code, markdown, or content updates, and review the changes before applying them.
+
+**Tips:**
+- Break down large documentation projects into smaller, manageable tasks and tackle them step by step.
+- Provide as much context as possible for the AI to generate relevant and accurate suggestions.
+- Use the chat to clarify requirements, request examples, or iterate on drafts until you’re satisfied with the result.
+
+With this workflow, you can efficiently collaborate with AI to produce high-quality, well-structured documentation and code updates.
+
+
