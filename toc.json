@@ -683,6 +683,21 @@
         },
         {
           "type": "item",
+          "title": "Global vs. Custom Packages",
+          "uri": "docs/Automate-Actions/Code-Engine/global-vs-custom-packages.md"
+        },
+        {
+          "type": "item",
+          "title": "Creating Custom Packages",
+          "uri": "docs/Automate-Actions/Code-Engine/creating-packages.md"
+        },
+        {
+          "type": "item",
+          "title": "Code Editor",
+          "uri": "docs/Automate-Actions/Code-Engine/code-editor-overview.md"
+        },
+        {
+          "type": "item",
           "title": "JavaScript Libraries",
           "uri": "/docs/Automate-Actions/Code-Engine/javascript-libraries.md"
         },
@@ -690,6 +705,11 @@
           "type": "item",
           "title": "Python Packages",
           "uri": "/docs/Automate-Actions/Code-Engine/python-packages.md"
+        },
+        {
+          "type": "item",
+          "title": "Common Use Cases",
+          "uri": "docs/Automate-Actions/Code-Engine/common-use-cases.md"
         },
         {
           "type": "group",
@@ -717,6 +737,11 @@
               "uri": "/docs/Automate-Actions/Code-Engine/Tutorials/Cards-to-PDF.md"
             }
           ]
+        },
+        {
+          "type": "item",
+          "title": "Limitations and Troubleshooting",
+          "uri": "docs/Automate-Actions/Code-Engine/limitations-and-troubleshooting.md"
         }
       ]
     },
