@@ -22,9 +22,10 @@ Navigate to your Asset Library.
 
 Click on 'Pro-Code Editor' in the top right corner of your screen to open the editor in your browser.
 
-[![pro_code_button](../../../../assets/images/procode-button.png)
+![pro_code_button](../../../../assets/images/procode-button.png)
 
 You can now edit the files in your project.
+![pro_code_editor](../../../../assets/images/procode-editor.png)
 
 ---
 
