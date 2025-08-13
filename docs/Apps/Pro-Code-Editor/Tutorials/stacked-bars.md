@@ -21,31 +21,23 @@ In this tutorial, we'll guide you through creating a stacked bar chart with a tr
 Ensure that Pro-Code Editor is enabled in your Domo instance.
 Navigate to your Asset Library.
 
-<p align="center">
-   <img src="../../../../assets/images/asset-library-tutorial.png" width="500">
-</p>
-   
+![asset_library](../../../../assets/images/asset-library-tutorial.png)
+
 Click on 'Pro-Code Editor' in the top right corner of your screen to open the editor in your browser.
-<p align="center">
-   <img src="../../../../assets/images/procode-button.png" width="500">
-   </p>
-   
+![pro_code_button](../../../../assets/images/procode-button.png)
 You can now edit the files in your project.
-<p align="center">
-   <img src="../../../../assets/images/procode-editor.png" width="900">
-</p>
-   
-  
-1.  **File Structure**:
-    
-    *   The following files are created automatically in your project:
-        *   `index.html`
-        *   `app.js`
-        *   `app.css`
-        *   `manifest.json`
-    *   You can modify the `manifest.json` using the JSON Editor by clicking 'Edit in JSON Editor' at the top right of the file, or by using the GUI by using the GUI Editor. This will be explained in the next section.
- 
-* * *
+![pro_code_editor](../../../../assets/images/procode-editor.png)
+
+1. **File Structure**:
+
+   - The following files are created automatically in your project:
+     - `index.html`
+     - `app.js`
+     - `app.css`
+     - `manifest.json`
+   - You can modify the `manifest.json` using the JSON Editor by clicking 'Edit in JSON Editor' at the top right of the file, or by using the GUI by using the GUI Editor. This will be explained in the next section.
+
+---
 
 ### **Step 2: Define the Manifest File (`manifest.json`)**
 
@@ -124,9 +116,7 @@ For example, here's some data:
 
 Another way of setting this up is by using the GUI Editor. Simply select the dataset and it will autopopulate the fields.
 
-<p align="center">
-   <img src="../../../../assets/images/manifestGui.png" width="500">
-</p>
+![Manifest GUI](../../../../assets/images/manifestGui.png)
 
 You can change the names of the field aliases. Make sure there is no spaces in the field aliases, because it will not accept it.
 
@@ -138,26 +128,26 @@ The `index.html` file contains the structure of your app, including the canvas e
 
 ```html
 <html>
-	<head>
-		<link rel="stylesheet" href="app.css" />
-		<link
-			href="//fonts.googleapis.com/css?family=Roboto+Mono:600,400,300"
-			rel="stylesheet"
-			type="text/css"
-		/>
-	</head>
-	<body>
-		<div class="chartAreaWrapper">
-			<canvas id="chart" height="400" width="1500"> </canvas>
-		</div>
-		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-		<!-- Importing Chart.js -->
-		<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-		<!-- Importing Datalabels -->
-		<script src="https://unpkg.com/ryuu.js"></script>
-		<!-- Importing Ryuu.js -->
-		<script src="app.js"></script>
-	</body>
+  <head>
+    <link rel="stylesheet" href="app.css" />
+    <link
+      href="//fonts.googleapis.com/css?family=Roboto+Mono:600,400,300"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <div class="chartAreaWrapper">
+      <canvas id="chart" height="400" width="1500"> </canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Importing Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <!-- Importing Datalabels -->
+    <script src="https://unpkg.com/ryuu.js"></script>
+    <!-- Importing Ryuu.js -->
+    <script src="app.js"></script>
+  </body>
 </html>
 ```
 
@@ -171,12 +161,12 @@ The `app.css` file will control the appearance of your chart container, includin
 
 ```css
 body {
-	width: 100vw;
+  width: 100vw;
 }
 
 .chartAreaWrapper {
-	width: 3000px; /* Extend the width for scrolling */
-	overflow-x: scroll;
+  width: 3000px; /* Extend the width for scrolling */
+  overflow-x: scroll;
 }
 ```
 
@@ -190,15 +180,15 @@ This section covers the main logic of the app. To modularize the code and improv
 
 ```javascript
 // Fetch data using domo.get() method
-const query = domo.get("/data/v1/dataset").then((res) => prepareData(res));
+const query = domo.get('/data/v1/dataset').then((res) => prepareData(res));
 
 function prepareData(data) {
-	const labels = [...new Set(data.map((item) => item["Date"]))];
-	const stacks = [...new Set(data.map((item) => item["Stacks"]))];
-	const categories = Object.keys(data[0]).filter((key) =>
-		key.startsWith("Bar")
-	);
-	createDatasets(data, labels, stacks, categories);
+  const labels = [...new Set(data.map((item) => item['Date']))];
+  const stacks = [...new Set(data.map((item) => item['Stacks']))];
+  const categories = Object.keys(data[0]).filter((key) =>
+    key.startsWith('Bar'),
+  );
+  createDatasets(data, labels, stacks, categories);
 }
 ```
 
@@ -209,40 +199,40 @@ function prepareData(data) {
 
 ```javascript
 function createDatasets(data, labels, stacks, categories) {
-	const colorPalette = [
-		"#4e79a7",
-		"#f28e2b",
-		"#e15759",
-		"#76b7b2",
-		"#59a14f",
-		"#edc949",
-	];
+  const colorPalette = [
+    '#4e79a7',
+    '#f28e2b',
+    '#e15759',
+    '#76b7b2',
+    '#59a14f',
+    '#edc949',
+  ];
 
-	const stackColors = stacks.reduce((acc, stack, index) => {
-		acc[stack] = colorPalette[index % colorPalette.length];
-		return acc;
-	}, {});
+  const stackColors = stacks.reduce((acc, stack, index) => {
+    acc[stack] = colorPalette[index % colorPalette.length];
+    return acc;
+  }, {});
 
-	const datasets = categories.flatMap((category) =>
-		stacks.map((stack) => ({
-			label: stack,
-			data: labels.map((label) => {
-				const filteredData = data.filter(
-					(item) =>
-						item["Date"] === label &&
-						item[category] > 0 &&
-						item["Stacks"] === stack
-				);
-				return filteredData.length > 0
-					? filteredData.reduce((sum, item) => sum + item[category], 0)
-					: 0;
-			}),
-			backgroundColor: stackColors[stack],
-			stack: category,
-		}))
-	);
+  const datasets = categories.flatMap((category) =>
+    stacks.map((stack) => ({
+      label: stack,
+      data: labels.map((label) => {
+        const filteredData = data.filter(
+          (item) =>
+            item['Date'] === label &&
+            item[category] > 0 &&
+            item['Stacks'] === stack,
+        );
+        return filteredData.length > 0
+          ? filteredData.reduce((sum, item) => sum + item[category], 0)
+          : 0;
+      }),
+      backgroundColor: stackColors[stack],
+      stack: category,
+    })),
+  );
 
-	calculateTrendedLine(data, labels, datasets);
+  calculateTrendedLine(data, labels, datasets);
 }
 ```
 
@@ -252,30 +242,30 @@ function createDatasets(data, labels, stacks, categories) {
 
 ```javascript
 function calculateTrendedLine(data, labels, datasets) {
-	const trendedPercentageData = labels.map((label) => {
-		const billableHours = data
-			.filter((item) => item["Date"] === label)
-			.reduce((sum, item) => sum + (item["Bar1"] || 0), 0);
-		const extra1 = data
-			.filter((item) => item["Date"] === label)
-			.reduce((sum, item) => sum + item["Extra1"], 0);
-		const extra2 = data
-			.filter((item) => item["Date"] === label)
-			.reduce((sum, item) => sum + item["Extra2"], 0);
-		return extra1 - extra2 > 0 ? (billableHours / (extra1 - extra2)) * 100 : 0;
-	});
+  const trendedPercentageData = labels.map((label) => {
+    const billableHours = data
+      .filter((item) => item['Date'] === label)
+      .reduce((sum, item) => sum + (item['Bar1'] || 0), 0);
+    const extra1 = data
+      .filter((item) => item['Date'] === label)
+      .reduce((sum, item) => sum + item['Extra1'], 0);
+    const extra2 = data
+      .filter((item) => item['Date'] === label)
+      .reduce((sum, item) => sum + item['Extra2'], 0);
+    return extra1 - extra2 > 0 ? (billableHours / (extra1 - extra2)) * 100 : 0;
+  });
 
-	const lineData = {
-		label: "Trend %",
-		data: trendedPercentageData,
-		borderColor: "rgba(255, 99, 132, 1)",
-		backgroundColor: "rgba(255, 99, 132, 0.2)",
-		type: "line",
-		yAxisID: "percentLine",
-	};
+  const lineData = {
+    label: 'Trend %',
+    data: trendedPercentageData,
+    borderColor: 'rgba(255, 99, 132, 1)',
+    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    type: 'line',
+    yAxisID: 'percentLine',
+  };
 
-	datasets.push(lineData);
-	createChart(labels, datasets);
+  datasets.push(lineData);
+  createChart(labels, datasets);
 }
 ```
 
@@ -285,105 +275,103 @@ function calculateTrendedLine(data, labels, datasets) {
 
 ```javascript
 function createChart(labels, datasets) {
-	const ctx = document.getElementById("chart").getContext("2d");
-	Chart.register(ChartDataLabels);
+  const ctx = document.getElementById('chart').getContext('2d');
+  Chart.register(ChartDataLabels);
 
-	new Chart(ctx, {
-		type: "bar",
-		data: {
-			labels: labels,
-			datasets: datasets,
-		},
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,
-			scales: {
-				x: { position: "top" },
-				y: { beginAtZero: true, offset: true },
-				percentLine: {
-					type: "linear",
-					position: "left",
-					beginAtZero: true,
-					grid: { drawOnChartArea: false },
-					ticks: {
-						callback: (value) => `${value}%`,
-						z: 1,
-					},
-					min: 0,
-					max: 120,
-				},
-			},
-			plugins: {
-				datalabels: {
-					labels: {
-						value: {
-							color: "white",
-							font: { size: 12 },
-							textStrokeWidth: 2,
-							textStrokeColor: "black",
-							formatter: (value, context) =>
-								context.dataset.label === "Trend %"
-									? `${value.toFixed(1)}%`
-									: value > 0
-									? value
-									: "",
-						},
-						legend: {
-							display: true,
-							color: "black",
-							anchor: "start",
-							align: "start",
-							rotation: -90,
-							font: { size: "10px", weight: "bold" },
-							formatter: (value, context) => {
-								const { datasets } = context.chart.data;
-								const dataset = datasets[context.datasetIndex];
-								const stack = dataset.stack;
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: datasets,
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { position: 'top' },
+        y: { beginAtZero: true, offset: true },
+        percentLine: {
+          type: 'linear',
+          position: 'left',
+          beginAtZero: true,
+          grid: { drawOnChartArea: false },
+          ticks: {
+            callback: (value) => `${value}%`,
+            z: 1,
+          },
+          min: 0,
+          max: 120,
+        },
+      },
+      plugins: {
+        datalabels: {
+          labels: {
+            value: {
+              color: 'white',
+              font: { size: 12 },
+              textStrokeWidth: 2,
+              textStrokeColor: 'black',
+              formatter: (value, context) =>
+                context.dataset.label === 'Trend %'
+                  ? `${value.toFixed(1)}%`
+                  : value > 0
+                  ? value
+                  : '',
+            },
+            legend: {
+              display: true,
+              color: 'black',
+              anchor: 'start',
+              align: 'start',
+              rotation: -90,
+              font: { size: '10px', weight: 'bold' },
+              formatter: (value, context) => {
+                const { datasets } = context.chart.data;
+                const dataset = datasets[context.datasetIndex];
+                const stack = dataset.stack;
 
-								const stackLabels = categories.reduce(
-									(acc, category, index) => {
-										acc[category] = `Bar ${index + 1}`;
-										return acc;
-									},
-									{}
-								);
+                const stackLabels = categories.reduce(
+                  (acc, category, index) => {
+                    acc[category] = `Bar ${index + 1}`;
+                    return acc;
+                  },
+                  {},
+                );
 
-								return datasets
-									.filter((ds) => ds.stack === stack)
-									.indexOf(dataset) === 0 && stack !== undefined
-									? stackLabels[stack]
-									: "";
-							},
-						},
-					},
-				},
-				legend: {
-					position: "bottom",
-					title: { display: true, padding: 40 },
-					labels: {
-						font: { size: 12 },
-						boxHeight: 4,
-						boxWidth: 8,
-						generateLabels: () =>
-							stacks.map((item, datasetIndex) => ({
-								text: item,
-								fillStyle: stackColors[item],
-							})),
-					},
-					maxHeight: 300,
-				},
-			},
-		},
-	});
+                return datasets
+                  .filter((ds) => ds.stack === stack)
+                  .indexOf(dataset) === 0 && stack !== undefined
+                  ? stackLabels[stack]
+                  : '';
+              },
+            },
+          },
+        },
+        legend: {
+          position: 'bottom',
+          title: { display: true, padding: 40 },
+          labels: {
+            font: { size: 12 },
+            boxHeight: 4,
+            boxWidth: 8,
+            generateLabels: () =>
+              stacks.map((item, datasetIndex) => ({
+                text: item,
+                fillStyle: stackColors[item],
+              })),
+          },
+          maxHeight: 300,
+        },
+      },
+    },
+  });
 }
 ```
 
 - This function sets up and renders the chart using Chart.js, with customizable options and [Datalabels plugin](https://chartjs-plugin-datalabels.netlify.app/) for better visualization.
 - Each `legend` object inside the `options` object configures a legend or label for the chart. For example, `plugin.datalabels.labels.legend` specifies will customize the label for each bar in the chart.
 
-<p align="center">  
-   <img src="../../../../assets/images/bar-label.png" width="500">
-</p>
+![Bar Label](../../../../assets/images/bar-label.png)
 
 All the information to customize the labels and legends can be found by looking for the [Datalabels plugin](https://chartjs-plugin-datalabels.netlify.app/) documentation.
 
@@ -403,8 +391,6 @@ All the information to customize the labels and legends can be found by looking 
 
 Congratulations! You've successfully built a stacked bar chart with a trended line in Domo's Pro-Code Editor. This tutorial provided you with the foundational steps to create a custom chart using JavaScript, Chart.js, and Domo's data platform. Feel free to customize and expand on this tutorial to fit your specific needs.
 
-<p align="center">  
-   <img src="../../../../assets/images/stacked-bars.gif">
-</p>
+![Stacked Bars](../../../../assets/images/stacked-bars.gif)
 
 This guide should get you started on building more complex visualizations in Domo's Pro-Code Editor. Remember to explore Domo’s documentation for advanced features and customization options.
