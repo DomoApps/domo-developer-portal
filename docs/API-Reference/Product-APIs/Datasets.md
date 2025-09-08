@@ -1,6 +1,6 @@
 # Datasets API
 
-The Domo Datasets API provides a set of endpoints for managing, creating, and updating datasets within Domo. The API allows developers to execute SQL queries on datasets, revoke access to datasets for specific users, retrieve dataset metadata, append rows to datasets, share datasets with access permissions, etc. With these endpoints, developers can build integrations that interact with Domo datasets, enabling data-driven decision-making and automation of business processes.
+The Domo Datasets API empowers developers to seamlessly manage, create, and update datasets within the Domo platform. With robust capabilities like executing SQL queries, appending rows, sharing datasets with granular access permissions, and retrieving detailed metadata, this API is designed to streamline data-driven workflows. Whether you're building integrations to automate business processes or enabling real-time analytics, the Datasets API provides the tools to unlock the full potential of your data. Dive in to transform raw data into actionable insights and drive smarter decision-making across your organization.
 
 ## Query with SQL
 
@@ -9,14 +9,14 @@ The Domo Datasets API provides a set of endpoints for managing, creating, and up
 
 This endpoint executes an SQL query on the specified DataSet and returns the result in the form of a list of objects.
 
-### Parameters:
+**Parameters**
 
-| Property Name | Type   | Required | Description                                             |
-| ------------- | ------ | -------- | ------------------------------------------------------- |
-| datasetId     | String | Yes      | The ID of the DataSet to query.                         |
-| sql           | String | Yes      | The SQL statement to execute.                           |
+| Property Name | Type   | Required | Description                     |
+| ------------- | ------ | -------- | ------------------------------- |
+| datasetId     | String | Yes      | The ID of the DataSet to query. |
+| sql           | String | Yes      | The SQL statement to execute.   |
 
-### Example:
+**Example**
 
 ```json
 {
@@ -32,22 +32,59 @@ This endpoint executes an SQL query on the specified DataSet and returns the res
 }
 ```
 
-### Response:
+**Response**
 
-```json
-[
+- **200 OK**: The request was successful, and the query results are returned.
+
+  ```json
   {
-    "column1": "value 1",
-    "column2": "value 2",
-    "column3": "value 3"
-  },
-  {
-    "column1": "value 1",
-    "column2": "value 2",
-    "column3": "value 3"
+    "datasource": "dummy-datasource-id",
+    "device": "dummy-device-01",
+    "columns": ["UID", "Last Updated By", "Last Updated Date"],
+    "metadata": [
+      {
+        "type": "STRING",
+        "dataSourceId": "dummy-datasource-id",
+        "maxLength": -1,
+        "minLength": -1,
+        "aggregated": false,
+        "analytic": false
+      },
+      {
+        "type": "STRING",
+        "dataSourceId": "dummy-datasource-id",
+        "maxLength": -1,
+        "minLength": -1,
+        "aggregated": false,
+        "analytic": false
+      },
+      {
+        "type": "DATETIME",
+        "dataSourceId": "dummy-datasource-id",
+        "maxLength": -1,
+        "minLength": -1,
+        "aggregated": false,
+        "analytic": false
+      }
+    ],
+    "fromcache": "false",
+    "numColumns": 3,
+    "rows": [
+      ["ABC123", "Jane Doe", "2024-01-01T12:00:00"],
+      ["XYZ789", "John Smith", "2024-01-02T15:30:00"]
+    ],
+    "numRows": 2,
+    "duration": "1"
   }
-]
-```
+  ```
+
+- **400 Bad Request**: The request was malformed or missing required parameters.
+- **403 Forbidden**: The client does not have permission to access the requested resource.
+- **409 Conflict**: The request could not be completed due to a conflict with the current state of the resource.
+- **416 Requested Range Not Satisfiable**: The range specified in the request is invalid or cannot be satisfied.
+- **500 Internal Server Error**: An unexpected error occurred on the server. Possible schemas for the error response include:
+  - `ErrorResponse`
+  - `OauthErrorResponse`
 
 ## Dataset Access List
 
@@ -57,13 +94,13 @@ This endpoint executes an SQL query on the specified DataSet and returns the res
 **Description**:  
 Retrieves a list of users and groups with access to the dataset, along with their permissions.
 
-**Parameters**:
+**Parameters**
 
-| Property Name | Type   | Required | Description                         |
-|---------------|--------|----------|-------------------------------------|
-| dataset_id    | String | Yes      | Unique identifier of the dataset.  |
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset. |
 
-**Example Request**:
+**Example**
 
 ```json
 {
@@ -73,22 +110,24 @@ Retrieves a list of users and groups with access to the dataset, along with thei
 }
 ```
 
-**Example Response**:
+**Response**
 
-```json
-{
-  "list": [
-    {
-      "type": "USER",
-      "id": "966365811",
-      "accessLevel": "OWNER",
-      "name": "Scott Thompson"
-    }
-  ],
-  "totalUserCount": 1,
-  "totalGroupCount": 0
-}
-```
+- **200 OK**: The request was successful, and the list of users and groups with access to the dataset is returned.
+
+  ```json
+  {
+    "list": [
+      {
+        "type": "USER",
+        "id": "966365811",
+        "accessLevel": "OWNER",
+        "name": "Scott Thompson"
+      }
+    ],
+    "totalUserCount": 1,
+    "totalGroupCount": 0
+  }
+  ```
 
 ## Revoke Dataset Access
 
@@ -97,14 +136,14 @@ Retrieves a list of users and groups with access to the dataset, along with thei
 
 This endpoint revokes access to a specified DataSet for a given user.
 
-### Parameters:
+**Parameters**
 
-| Property Name | Type   | Required | Description                                              |
-| ------------- | ------ | -------- | -------------------------------------------------------- |
-| datasetId     | String | Yes      | The ID of the DataSet to revoke access from.             |
-| userId      | String | Yes      | The ID of the user to revoke access for.               |
+| Property Name | Type   | Required | Description                                  |
+| ------------- | ------ | -------- | -------------------------------------------- |
+| datasetId     | String | Yes      | The ID of the DataSet to revoke access from. |
+| userId        | String | Yes      | The ID of the user to revoke access for.     |
 
-### Example:
+**Example**
 
 ```json
 {
@@ -113,18 +152,17 @@ This endpoint revokes access to a specified DataSet for a given user.
   "headers": {
     "X-DOMO-Developer-Token": "",
     "Content-Type": "application/json"
-  },
+  }
 }
 ```
 
-### Response:
+**Response**
 
-```json
-{
-  "HTTP/1.1": "200 OK",
-  "body": {}
-}
-```
+- **200 OK**: The request was successful, and the user's access was revoked.
+
+- **403 Forbidden**: The client does not have permission to revoke access for the specified user.
+
+- **409 Conflict**: The request could not be completed due to a conflict with the current state of the resource.
 
 ## Get Metadata
 
@@ -133,14 +171,14 @@ This endpoint revokes access to a specified DataSet for a given user.
 
 This endpoint retrieves metadata for a specified DataSet, including the dataset's properties and optionally requested parts of the metadata.
 
-### Parameters:
+**Parameters**
 
-| Property Name | Type   | Required | Description                                           |
-| ------------- | ------ | -------- | ----------------------------------------------------- |
-| datasetId     | String | Yes      | The ID of the DataSet to retrieve metadata for.      |
-| requestedParts| String | No       | A comma-separated list of metadata parts to include. |
+| Property Name  | Type   | Required | Description                                          |
+| -------------- | ------ | -------- | ---------------------------------------------------- |
+| datasetId      | String | Yes      | The ID of the DataSet to retrieve metadata for.      |
+| requestedParts | String | No       | A comma-separated list of metadata parts to include. |
 
-### Example:
+**Example (Get Metadata)**
 
 ```json
 {
@@ -149,57 +187,57 @@ This endpoint retrieves metadata for a specified DataSet, including the dataset'
   "headers": {
     "X-DOMO-Developer-Token": "",
     "Content-Type": "application/json"
-  },
+  }
 }
 ```
 
-### Response:
+**Response (Get Metadata)**
 
 ```json
 {
-    "id": "dataset id",
-    "displayType": "webform",
-    "dataProviderType": "webform",
-    "type": "webform",
-    "name": "dataset name",
-    "owner": {
-        "id": "User id",
-        "name": "User name",
-        "type": "USER",
-        "group": false
-    },
-    "status": "SUCCESS",
-    "created": 1231234124,
-    "lastTouched": 1231421312,
-    "lastUpdated": 12341234412,
-    "rowCount": 2,
-    "columnCount": 3,
-    "cardInfo": {
-        "cardCount": 3,
-        "cardViewCount": 0
-    },
-    "properties": {
-        "formulas": {
-            "formulas": {}
-        }
-    },
-    "state": "SUCCESS",
-    "validConfiguration": true,
-    "validAccount": true,
-    "streamId": 25222,
-    "transportType": "WEBFORM",
-    "adc": true,
-    "adcExternal": false,
-    "adcSource": "DIRECT",
-    "masked": false,
-    "currentUserFullAccess": true,
-    "cloudId": "domo",
-    "cloudName": "Domo",
-    "permissions": "READ_WRITE_DELETE_SHARE_ADMIN",
-    "hidden": false,
-    "scheduleActive": true,
+  "id": "dataset id",
+  "displayType": "webform",
+  "dataProviderType": "webform",
+  "type": "webform",
+  "name": "dataset name",
+  "owner": {
+    "id": "User id",
+    "name": "User name",
+    "type": "USER",
+    "group": false
+  },
+  "status": "SUCCESS",
+  "created": 1231234124,
+  "lastTouched": 1231421312,
+  "lastUpdated": 12341234412,
+  "rowCount": 2,
+  "columnCount": 3,
+  "cardInfo": {
     "cardCount": 3,
-    "cloudEngine": "domo"
+    "cardViewCount": 0
+  },
+  "properties": {
+    "formulas": {
+      "formulas": {}
+    }
+  },
+  "state": "SUCCESS",
+  "validConfiguration": true,
+  "validAccount": true,
+  "streamId": 25222,
+  "transportType": "WEBFORM",
+  "adc": true,
+  "adcExternal": false,
+  "adcSource": "DIRECT",
+  "masked": false,
+  "currentUserFullAccess": true,
+  "cloudId": "domo",
+  "cloudName": "Domo",
+  "permissions": "READ_WRITE_DELETE_SHARE_ADMIN",
+  "hidden": false,
+  "scheduleActive": true,
+  "cardCount": 3,
+  "cloudEngine": "domo"
 }
 ```
 
@@ -208,43 +246,41 @@ This endpoint retrieves metadata for a specified DataSet, including the dataset'
 **Method**: `POST`  
 **Endpoint**: `/api/data/v3/datasources/:datasetId/uploads`
 
-### Description:
+### Description: Append row to Dataset
+
 This endpoint appends a row of values to a specified dataset.
 
-### Parameters:
+**Parameters**
 
-| Property Name | Type   | Required | Description                                                             |
-| ------------- | ------ | -------- | ----------------------------------------------------------------------- |
-| datasetId     | String | Yes      | The ID of the dataset to which values will be appended.                  |
-| values        | String | Yes      | A comma-delimited text string of values to append to the dataset.       |
-| delimiter     | String | No       | The delimiter used to split the values (default is comma).               |
+| Property Name | Type   | Required | Description                              |
+| ------------- | ------ | -------- | ---------------------------------------- |
+| datasetId     | String | Yes      | The ID of the DataSet to append rows to. |
 
-### Example Request:
+**Example Request: Append row to Dataset**
 
 ```json
 {
   "method": "POST",
-  "url": "https://{instance}.domo.com/api/data/v3/datasources/{datasetId}/uploads",
+  "url": "https://{instance}.domo.com/api/data/v3/datasources/{datasetId}/data",
   "headers": {
     "X-DOMO-Developer-Token": "",
     "Content-Type": "application/json"
   },
   "body": {
-    "action": "APPEND",
-    "message": "Uploading",
-    "appendId": "latest"
+    "data": [{ "column1": "value1", "column2": "value2" }]
   }
 }
 ```
 
-### Response:
+**Response: Append row to Dataset**
 
-```json
-{
-  "HTTP/1.1": "200 OK",
-  "body": {}
-}
-```
+- **200 OK**: The request was successful, and the rows were appended to the dataset.
+
+- **400 Bad Request**: The request was malformed or missing required parameters.
+
+- **403 Forbidden**: The client does not have permission to append rows to the dataset.
+
+- **409 Conflict**: The request could not be completed due to a conflict with the current state of the resource.
 
 ## Stream (Connector) - Create
 
@@ -254,19 +290,19 @@ This endpoint appends a row of values to a specified dataset.
 **Description**:  
 Creates a new data stream using a connector and specifies configuration details.
 
-**Parameters**:
+**Parameters**
 
-| Property Name       | Type   | Required | Description                                    |
-|---------------------|--------|----------|------------------------------------------------|
-| transport           | Object | Yes      | Connector transport details, including type and version. |
-| configuration       | Array  | Yes      | List of key-value pairs defining stream configurations. |
-| account             | Object | Yes      | Account information (e.g., ID).              |
-| updateMethod        | String | Yes      | Update method, e.g., `APPEND`.               |
-| dataProvider        | Object | Yes      | Data provider details, including key.        |
-| dataSource          | Object | Yes      | Dataset details, including name and description. |
-| advancedScheduleJson| String | No       | Schedule details in JSON format.             |
+| Property Name        | Type   | Required | Description                                              |
+| -------------------- | ------ | -------- | -------------------------------------------------------- |
+| transport            | Object | Yes      | Connector transport details, including type and version. |
+| configuration        | Array  | Yes      | List of key-value pairs defining stream configurations.  |
+| account              | Object | Yes      | Account information (e.g., ID).                          |
+| updateMethod         | String | Yes      | Update method, e.g., `APPEND`.                           |
+| dataProvider         | Object | Yes      | Data provider details, including key.                    |
+| dataSource           | Object | Yes      | Dataset details, including name and description.         |
+| advancedScheduleJson | String | No       | Schedule details in JSON format.                         |
 
-**Example Request**:
+**Example Request: Stream (Connector) - Create**
 
 ```json
 {
@@ -305,6 +341,14 @@ Creates a new data stream using a connector and specifies configuration details.
 }
 ```
 
+**Response: Stream (Connector) - Create**
+
+```json
+{
+  "HTTP/1.1": "200 OK",
+  "body": {}
+}
+```
 
 ## Stream (Connector) - Get
 
@@ -314,13 +358,13 @@ Creates a new data stream using a connector and specifies configuration details.
 **Description**:  
 Retrieves configuration details for a specific data stream.
 
-**Parameters**:
+**Parameters**
 
-| Property Name | Type   | Required | Description                          |
-|---------------|--------|----------|--------------------------------------|
-| stream_id     | String | Yes      | Unique identifier of the stream.    |
+| Property Name | Type   | Required | Description                      |
+| ------------- | ------ | -------- | -------------------------------- |
+| stream_id     | String | Yes      | Unique identifier of the stream. |
 
-**Example Request**:
+**Example Request: Stream (Connector) - Get**
 
 ```json
 {
@@ -329,238 +373,238 @@ Retrieves configuration details for a specific data stream.
   "headers": {}
 }
 ```
-**Example Response**:
+
+**Response: Stream (Connector) - Get**
 
 ```json
 {
-    "id": 371,
-    "valid": true,
-    "invalidExecutionId": null,
-    "transport": {
-        "type": "CONNECTOR",
-        "description": "com.domo.connector.covid19",
-        "version": "0"
+  "id": 371,
+  "valid": true,
+  "invalidExecutionId": null,
+  "transport": {
+    "type": "CONNECTOR",
+    "description": "com.domo.connector.covid19",
+    "version": "0"
+  },
+  "updateMethod": "REPLACE",
+  "dataProvider": {
+    "id": 2834,
+    "key": "covid-19",
+    "name": "Covid-19",
+    "url": null,
+    "defaultConnectorId": null,
+    "defaultConnectorLabel": null,
+    "authenticationScheme": null,
+    "connectorValidatorPresent": false,
+    "resourceBundlePresent": false,
+    "moduleHandler": null,
+    "iconPicker": false,
+    "scope": "0",
+    "producer": "DOMO",
+    "version": "0",
+    "dateCreated": 1583529722000,
+    "dateUpdated": 1583521641000,
+    "visibility": "WITH_CONNECTOR",
+    "type": "STANDARD",
+    "authenticationSchemeConfiguration": []
+  },
+  "account": null,
+  "dataSource": {
+    "id": "dcad2f50-e65e-4259-a9e8-214a3d1e18a7",
+    "displayType": "covid-19",
+    "dataProviderType": "covid-19",
+    "type": "covid-19",
+    "name": "DOMO Covid Time Series Tracker Data",
+    "owner": {
+      "id": "1345408759",
+      "name": "Alexis Lorenz (DataMaven)",
+      "type": "USER",
+      "group": false
     },
-    "updateMethod": "REPLACE",
-    "dataProvider": {
-        "id": 2834,
-        "key": "covid-19",
-        "name": "Covid-19",
-        "url": null,
-        "defaultConnectorId": null,
-        "defaultConnectorLabel": null,
-        "authenticationScheme": null,
-        "connectorValidatorPresent": false,
-        "resourceBundlePresent": false,
-        "moduleHandler": null,
-        "iconPicker": false,
-        "scope": "0",
-        "producer": "DOMO",
-        "version": "0",
-        "dateCreated": 1583529722000,
-        "dateUpdated": 1583521641000,
-        "visibility": "WITH_CONNECTOR",
-        "type": "STANDARD",
-        "authenticationSchemeConfiguration": []
+    "status": "SUCCESS",
+    "created": 1594224795000,
+    "lastTouched": 1652481876000,
+    "lastUpdated": 1652481807436,
+    "nextUpdate": 1652483579534,
+    "rowCount": 283429,
+    "columnCount": 22,
+    "cardInfo": {
+      "cardCount": 30,
+      "cardViewCount": 0
     },
-    "account": null,
-    "dataSource": {
-        "id": "dcad2f50-e65e-4259-a9e8-214a3d1e18a7",
-        "displayType": "covid-19",
-        "dataProviderType": "covid-19",
-        "type": "covid-19",
-        "name": "DOMO Covid Time Series Tracker Data",
-        "owner": {
-            "id": "1345408759",
-            "name": "Alexis Lorenz (DataMaven)",
-            "type": "USER",
-            "group": false
-        },
-        "status": "SUCCESS",
-        "created": 1594224795000,
-        "lastTouched": 1652481876000,
-        "lastUpdated": 1652481807436,
-        "nextUpdate": 1652483579534,
-        "rowCount": 283429,
-        "columnCount": 22,
-        "cardInfo": {
-            "cardCount": 30,
-            "cardViewCount": 0
-        },
-        "properties": {
-            "formulas": {
-                "formulas": {
-                    "calculation_c8db9ded-314f-41fa-9352-2954139a1302": {
-                        "templateId": 422,
-                        "id": "calculation_c8db9ded-314f-41fa-9352-2954139a1302",
-                        "name": "Filter out Early Results",
-                        "formula": "(CASE  WHEN ((CURRENT_DATE = `date`) AND (HOUR(CURRENT_TIMESTAMP) >= 8)) THEN 'TOO EARLY' ELSE 'USE CURRENT' END )",
-                        "status": "VALID",
-                        "persistedOnDataSource": true,
-                        "isAggregatable": false,
-                        "bignumber": false,
-                        "columnPositions": [
-                            {
-                                "columnName": "`date`",
-                                "columnPosition": 29
-                            }
-                        ]
-                    },
-                    "calculation_af03accf-482c-46ce-bb73-eaa008e511d5": {
-                        "templateId": 429,
-                        "id": "calculation_af03accf-482c-46ce-bb73-eaa008e511d5",
-                        "name": "Recovered (Negative)",
-                        "formula": "(`recovered_total` * -1)",
-                        "status": "VALID",
-                        "dataType": "DOUBLE",
-                        "persistedOnDataSource": true,
-                        "isAggregatable": false,
-                        "bignumber": false,
-                        "columnPositions": [
-                            {
-                                "columnName": "`recovered_total`",
-                                "columnPosition": 1
-                            }
-                        ]
-                    }
-                }
-            }
-        },
-        "state": "SUCCESS",
-        "validConfiguration": true,
-        "validAccount": true,
-        "streamId": 371,
-        "transportType": "CONNECTOR",
-        "adc": false,
-        "adcExternal": false,
-        "cloudId": "domo",
-        "cloudName": "Domo",
-        "permissions": "READ_SHARE",
-        "hidden": false,
-        "tags": "[\"s_covid-19\",\"udt_MINUTE at undefined\",\"um_REPLACE\",\"covid-19\"]",
-        "scheduleActive": true
-    },
-    "schemaDefinition": {
-        "columns": [
-            {
-                "type": "DATE",
-                "name": "date",
-                "id": "date",
-                "visible": true,
-                "metadata": {
-                    "colLabel": "date",
-                    "colFormat": "",
-                    "isEncrypted": false
-                }
-            },
-            {
-                "type": "STRING",
-                "name": "ISO3",
-                "id": "ISO3",
-                "visible": true,
-                "metadata": {
-                    "colLabel": "ISO3",
-                    "colFormat": "",
-                    "isEncrypted": false
-                }
-            }
-        ]
-    },
-    "scheduleExpression": "0 13/30 * * * ?",
-    "scheduleStartDate": null,
-    "advancedScheduleJson": "{\"type\":\"MINUTE\",\"timezone\":\"UTC\",\"between\":null,\"interval\":30}",
-    "scheduleRetryExpression": null,
-    "scheduleRetryCount": 0,
-    "lastExecution": {
-        "streamId": 371,
-        "executionId": 32360,
-        "toe": "HJP31Q11Q3-MO40M-EIVQC",
-        "startedAt": 1652481782,
-        "endedAt": 1652481807,
-        "updateMethod": "REPLACE",
-        "index": true,
-        "retryCount": 0,
-        "retryExecution": null,
-        "containerManagerId": "cm-b9c94733-d3d6-4a64-be97-a4b6e33ad8bf",
-        "uploadId": 32345,
-        "indexRequestKey": 20220513224325.628,
-        "currentState": "SUCCESS",
-        "runType": "AUTOMATED",
-        "createdAt": 1652481782,
-        "modifiedAt": 1652481807,
-        "latestPhase": null,
-        "currentPhase": null,
-        "removed": false,
-        "rowsInserted": 283429,
-        "bytesInserted": 41562816,
-        "startedBy": null,
-        "cancelledBy": null,
-        "dataTag": null,
-        "peakMemoryUsedBytes": 198201936,
-        "peakMemoryCommittedBytes": 211288064,
-        "exportable": false,
-        "manualIndex": false,
-        "errors": []
-    },
-    "lastSuccessfulExecution": {
-        "streamId": 371,
-        "executionId": 32360,
-        "toe": "HJP31Q11Q3-MO40M-EIVQC",
-        "startedAt": 1652481782,
-        "endedAt": 1652481807,
-        "updateMethod": "REPLACE",
-        "index": true,
-        "retryCount": 0,
-        "retryExecution": null,
-        "containerManagerId": "cm-b9c94733-d3d6-4a64-be97-a4b6e33ad8bf",
-        "uploadId": 32345,
-        "indexRequestKey": 20220513224325.628,
-        "currentState": "SUCCESS",
-        "runType": "AUTOMATED",
-        "createdAt": 1652481782,
-        "modifiedAt": 1652481807,
-        "latestPhase": null,
-        "currentPhase": null,
-        "removed": false,
-        "rowsInserted": 283429,
-        "bytesInserted": 41562816,
-        "startedBy": null,
-        "cancelledBy": null,
-        "dataTag": null,
-        "peakMemoryUsedBytes": 198201936,
-        "peakMemoryCommittedBytes": 211288064,
-        "exportable": false,
-        "manualIndex": false,
-        "errors": []
-    },
-    "currentExecution": null,
-    "currentExecutionState": "SUCCESS",
-    "createdAt": 1594224796,
-    "createdBy": 1345408759,
-    "modifiedAt": 1652481875,
-    "modifiedBy": 1893952720,
-    "scheduleState": "ACTIVE",
-    "scheduleAssertion": false,
-    "inactiveScheduleCode": null,
-    "configuration": [
-        {
-            "streamId": 371,
-            "category": "METADATA",
-            "name": "retry.retryNumber",
-            "type": "string",
-            "value": "0"
-        },
-        {
-            "streamId": 371,
-            "category": "METADATA",
-            "name": "report",
-            "type": "string",
-            "value": "time_series_tracker_data"
+    "properties": {
+      "formulas": {
+        "formulas": {
+          "calculation_c8db9ded-314f-41fa-9352-2954139a1302": {
+            "templateId": 422,
+            "id": "calculation_c8db9ded-314f-41fa-9352-2954139a1302",
+            "name": "Filter out Early Results",
+            "formula": "(CASE  WHEN ((CURRENT_DATE = `date`) AND (HOUR(CURRENT_TIMESTAMP) >= 8)) THEN 'TOO EARLY' ELSE 'USE CURRENT' END )",
+            "status": "VALID",
+            "persistedOnDataSource": true,
+            "isAggregatable": false,
+            "bignumber": false,
+            "columnPositions": [
+              {
+                "columnName": "`date`",
+                "columnPosition": 29
+              }
+            ]
+          },
+          "calculation_af03accf-482c-46ce-bb73-eaa008e511d5": {
+            "templateId": 429,
+            "id": "calculation_af03accf-482c-46ce-bb73-eaa008e511d5",
+            "name": "Recovered (Negative)",
+            "formula": "(`recovered_total` * -1)",
+            "status": "VALID",
+            "dataType": "DOUBLE",
+            "persistedOnDataSource": true,
+            "isAggregatable": false,
+            "bignumber": false,
+            "columnPositions": [
+              {
+                "columnName": "`recovered_total`",
+                "columnPosition": 1
+              }
+            ]
+          }
         }
+      }
+    },
+    "state": "SUCCESS",
+    "validConfiguration": true,
+    "validAccount": true,
+    "streamId": 371,
+    "transportType": "CONNECTOR",
+    "adc": false,
+    "adcExternal": false,
+    "cloudId": "domo",
+    "cloudName": "Domo",
+    "permissions": "READ_SHARE",
+    "hidden": false,
+    "tags": "[\"s_covid-19\",\"udt_MINUTE at undefined\",\"um_REPLACE\",\"covid-19\"]",
+    "scheduleActive": true
+  },
+  "schemaDefinition": {
+    "columns": [
+      {
+        "type": "DATE",
+        "name": "date",
+        "id": "date",
+        "visible": true,
+        "metadata": {
+          "colLabel": "date",
+          "colFormat": "",
+          "isEncrypted": false
+        }
+      },
+      {
+        "type": "STRING",
+        "name": "ISO3",
+        "id": "ISO3",
+        "visible": true,
+        "metadata": {
+          "colLabel": "ISO3",
+          "colFormat": "",
+          "isEncrypted": false
+        }
+      }
     ]
+  },
+  "scheduleExpression": "0 13/30 * * * ?",
+  "scheduleStartDate": null,
+  "advancedScheduleJson": "{\"type\":\"MINUTE\",\"timezone\":\"UTC\",\"between\":null,\"interval\":30}",
+  "scheduleRetryExpression": null,
+  "scheduleRetryCount": 0,
+  "lastExecution": {
+    "streamId": 371,
+    "executionId": 32360,
+    "toe": "HJP31Q11Q3-MO40M-EIVQC",
+    "startedAt": 1652481782,
+    "endedAt": 1652481807,
+    "updateMethod": "REPLACE",
+    "index": true,
+    "retryCount": 0,
+    "retryExecution": null,
+    "containerManagerId": "cm-b9c94733-d3d6-4a64-be97-a4b6e33ad8bf",
+    "uploadId": 32345,
+    "indexRequestKey": 20220513224325.628,
+    "currentState": "SUCCESS",
+    "runType": "AUTOMATED",
+    "createdAt": 1652481782,
+    "modifiedAt": 1652481807,
+    "latestPhase": null,
+    "currentPhase": null,
+    "removed": false,
+    "rowsInserted": 283429,
+    "bytesInserted": 41562816,
+    "startedBy": null,
+    "cancelledBy": null,
+    "dataTag": null,
+    "peakMemoryUsedBytes": 198201936,
+    "peakMemoryCommittedBytes": 211288064,
+    "exportable": false,
+    "manualIndex": false,
+    "errors": []
+  },
+  "lastSuccessfulExecution": {
+    "streamId": 371,
+    "executionId": 32360,
+    "toe": "HJP31Q11Q3-MO40M-EIVQC",
+    "startedAt": 1652481782,
+    "endedAt": 1652481807,
+    "updateMethod": "REPLACE",
+    "index": true,
+    "retryCount": 0,
+    "retryExecution": null,
+    "containerManagerId": "cm-b9c94733-d3d6-4a64-be97-a4b6e33ad8bf",
+    "uploadId": 32345,
+    "indexRequestKey": 20220513224325.628,
+    "currentState": "SUCCESS",
+    "runType": "AUTOMATED",
+    "createdAt": 1652481782,
+    "modifiedAt": 1652481807,
+    "latestPhase": null,
+    "currentPhase": null,
+    "removed": false,
+    "rowsInserted": 283429,
+    "bytesInserted": 41562816,
+    "startedBy": null,
+    "cancelledBy": null,
+    "dataTag": null,
+    "peakMemoryUsedBytes": 198201936,
+    "peakMemoryCommittedBytes": 211288064,
+    "exportable": false,
+    "manualIndex": false,
+    "errors": []
+  },
+  "currentExecution": null,
+  "currentExecutionState": "SUCCESS",
+  "createdAt": 1594224796,
+  "createdBy": 1345408759,
+  "modifiedAt": 1652481875,
+  "modifiedBy": 1893952720,
+  "scheduleState": "ACTIVE",
+  "scheduleAssertion": false,
+  "inactiveScheduleCode": null,
+  "configuration": [
+    {
+      "streamId": 371,
+      "category": "METADATA",
+      "name": "retry.retryNumber",
+      "type": "string",
+      "value": "0"
+    },
+    {
+      "streamId": 371,
+      "category": "METADATA",
+      "name": "report",
+      "type": "string",
+      "value": "time_series_tracker_data"
+    }
+  ]
 }
 ```
-
 
 ## Stream (Connector) - Update
 
@@ -570,20 +614,20 @@ Retrieves configuration details for a specific data stream.
 **Description**:  
 Updates the configuration of an existing data stream.
 
-**Parameters**:
+**Parameters**
 
-| Property Name       | Type   | Required | Description                                    |
-|---------------------|--------|----------|------------------------------------------------|
-| stream_id           | String | Yes      | Unique identifier of the stream.              |
-| transport           | Object | Yes      | Connector transport details, including type and description. |
-| configuration       | Array  | Yes      | List of key-value pairs defining updated configurations. |
-| account             | Object | Yes      | Account information (e.g., ID).              |
-| updateMethod        | String | Yes      | Update method, e.g., `APPEND`.               |
-| dataProvider        | Object | Yes      | Data provider details, including key.        |
-| dataSource          | Object | Yes      | Dataset details, including name and description. |
-| advancedScheduleJson| String | No       | Schedule details in JSON format.             |
+| Property Name        | Type   | Required | Description                                                  |
+| -------------------- | ------ | -------- | ------------------------------------------------------------ |
+| stream_id            | String | Yes      | Unique identifier of the stream.                             |
+| transport            | Object | Yes      | Connector transport details, including type and description. |
+| configuration        | Array  | Yes      | List of key-value pairs defining updated configurations.     |
+| account              | Object | Yes      | Account information (e.g., ID).                              |
+| updateMethod         | String | Yes      | Update method, e.g., `APPEND`.                               |
+| dataProvider         | Object | Yes      | Data provider details, including key.                        |
+| dataSource           | Object | Yes      | Dataset details, including name and description.             |
+| advancedScheduleJson | String | No       | Schedule details in JSON format.                             |
 
-**Example Request**:
+**Example Request: Stream (Connector) - Update**
 
 ```json
 {
@@ -622,6 +666,15 @@ Updates the configuration of an existing data stream.
 }
 ```
 
+**Response: Stream (Connector) - Update**
+
+```json
+{
+  "HTTP/1.1": "200 OK",
+  "body": {}
+}
+```
+
 ## Stream Execution History
 
 **Method**: `GET`  
@@ -632,9 +685,9 @@ Retrieves the execution history for a specific data stream, including details ab
 
 **Parameters**:
 
-| Property Name | Type   | Required | Description                          |
-|---------------|--------|----------|--------------------------------------|
-| stream_id     | String | Yes      | Unique identifier of the stream.    |
+| Property Name | Type   | Required | Description                      |
+| ------------- | ------ | -------- | -------------------------------- |
+| stream_id     | String | Yes      | Unique identifier of the stream. |
 
 **Example Request**:
 
@@ -680,17 +733,17 @@ Retrieves the execution history for a specific data stream, including details ab
 **Method**: `POST`  
 **Endpoint**: `/api/data/v1/streams/:streamId/executions`
 
-### Description:
+### Description
+
 This endpoint queries a dataset's stream ID and executes the dataset stream.
 
-### Parameters:
+### Parameters (Execute Stream)
 
-| Property Name | Type   | Required | Description                                                             |
-| ------------- | ------ | -------- | ----------------------------------------------------------------------- |
-| streamId      | String | Yes      | The ID of the dataset stream to execute.                                |
-| action        | String | Yes      | The action to execute on the. "Manual", for example dataset stream.                            |
+| Property Name | Type   | Required | Description                              |
+| ------------- | ------ | -------- | ---------------------------------------- |
+| streamId      | String | Yes      | The ID of the dataset stream to execute. |
 
-### Example Request:
+#### Example Request (Execute Stream)
 
 ```json
 {
@@ -706,7 +759,7 @@ This endpoint queries a dataset's stream ID and executes the dataset stream.
 }
 ```
 
-### Response:
+#### Response (Execute Stream)
 
 ```json
 {
@@ -720,17 +773,18 @@ This endpoint queries a dataset's stream ID and executes the dataset stream.
 **Method**: `POST`  
 **Endpoint**: `/api/data/ui/v3/datasources/:datasetId/tags`
 
-### Description:
+### Description (Create Dataset Tag)
+
 This endpoint creates a tag for the specified dataset.
 
-### Parameters:
+**Parameters (Create Dataset Tag)**
 
-| Property Name | Type   | Required | Description                                                             |
-| ------------- | ------ | -------- | ----------------------------------------------------------------------- |
-| datasetId     | String | Yes      | The ID of the dataset to tag.                                           |
-| tag           | String | Yes      | The tag to assign to the dataset.                                       |
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| datasetId     | String | Yes      | The ID of the dataset to tag.     |
+| tag           | String | Yes      | The tag to assign to the dataset. |
 
-### Example Request:
+**Example Request (Create Dataset Tag)**
 
 ```json
 {
@@ -744,7 +798,7 @@ This endpoint creates a tag for the specified dataset.
 }
 ```
 
-### Response:
+**Response (Create Dataset Tag)**
 
 ```json
 {
@@ -758,17 +812,19 @@ This endpoint creates a tag for the specified dataset.
 **Method**: `POST`  
 **Endpoint**: `/api/data/v3/datasources/:datasetId/share`
 
-### Description:
+### Description (Share Dataset)
+
 This endpoint shares a dataset and grants access permissions to specified users.
 
-### Parameters:
-| Property Name  | Type   | Required | Description                                                                         |
-| --------------- | ------ | -------- | ----------------------------------------------------------------------------------- |
-| datasetId       | String | Yes      | The ID of the dataset to share.                                                     |
-| permissions     | Array  | Yes      | A list of owners to add to the dataset. Each owner is an object with id, type, and accessLevel. |
-| sendEmail       | Boolean| Yes      | A flag indicating whether to send an email.                                         |
+**Parameters (Share Dataset Endpoint)**
 
-### Example Request:
+| Property Name | Type    | Required | Description                                                                                     |
+| ------------- | ------- | -------- | ----------------------------------------------------------------------------------------------- |
+| datasetId     | String  | Yes      | The ID of the dataset to share.                                                                 |
+| permissions   | Array   | Yes      | A list of owners to add to the dataset. Each owner is an object with id, type, and accessLevel. |
+| sendEmail     | Boolean | Yes      | A flag indicating whether to send an email.                                                     |
+
+**Example Request (Share Dataset Endpoint)**
 
 ```json
 {
@@ -791,7 +847,7 @@ This endpoint shares a dataset and grants access permissions to specified users.
 }
 ```
 
-### Response:
+**Response (Share Dataset)**
 
 ```json
 {
@@ -806,17 +862,18 @@ This endpoint shares a dataset and grants access permissions to specified users.
 **Method**: `DELETE`  
 **Endpoint**: `/api/data/v3/datasources/:datasetId/USERS/:userId`
 
-### Description:
+### Description (Remove User)
+
 This endpoint removes a user from a dataset's permissions.
 
-### Parameters:
+**Parameters (Remove User)**
 
-| Property Name | Type   | Required | Description                                                             |
-| ------------- | ------ | -------- | ----------------------------------------------------------------------- |
-| datasetId     | String | Yes      | The ID of the dataset from which the user will be removed.            |
-| userId      | String | Yes      | The ID of the user to remove from the dataset's permissions.          |
+| Property Name | Type   | Required | Description                                                  |
+| ------------- | ------ | -------- | ------------------------------------------------------------ |
+| datasetId     | String | Yes      | The ID of the dataset from which the user will be removed.   |
+| userId        | String | Yes      | The ID of the user to remove from the dataset's permissions. |
 
-### Example Request:
+**Example Request (Remove User)**
 
 ```json
 {
@@ -825,11 +882,11 @@ This endpoint removes a user from a dataset's permissions.
   "headers": {
     "X-DOMO-Developer-Token": "",
     "Content-Type": "application/json"
-  },
+  }
 }
 ```
 
-### Response:
+**Response (Remove User)**
 
 ```json
 {
@@ -843,17 +900,18 @@ This endpoint removes a user from a dataset's permissions.
 **Method**: `DELETE`  
 **Endpoint**: `/api/data/v3/datasources/:datasetId/users`
 
-### Description:
+### Description (Remove Multiple Users)
+
 This endpoint removes multiple people from a dataset's permissions.
 
-### Parameters:
+**Parameters (Remove Multiple Users)**
 
-| Property Name | Type   | Required | Description                                                             |
-| ------------- | ------ | -------- | ----------------------------------------------------------------------- |
-| datasetId     | String | Yes      | The ID of the dataset from which the people will be removed.            |
-| body        | Array  | Yes      | An array of user objects, each containing `id` and `type` properties. |
+| Property Name | Type   | Required | Description                                                           |
+| ------------- | ------ | -------- | --------------------------------------------------------------------- |
+| datasetId     | String | Yes      | The ID of the dataset from which the people will be removed.          |
+| body          | Array  | Yes      | An array of user objects, each containing `id` and `type` properties. |
 
-### Example Request:
+**Example Request (Remove Multiple Users)**
 
 ```json
 {
@@ -863,15 +921,14 @@ This endpoint removes multiple people from a dataset's permissions.
     "X-DOMO-Developer-Token": "",
     "Content-Type": "application/json"
   },
-  "body": 
-    [
-      {"id": "userId1", "type": "USER"},
-      {"id": "userId2", "type": "USER"}
-    ]
+  "body": [
+    { "id": "userId1", "type": "USER" },
+    { "id": "userId2", "type": "USER" }
+  ]
 }
 ```
 
-### Response:
+**Response (Remove Multiple Users)**
 
 ```json
 {
@@ -890,13 +947,13 @@ This endpoint removes multiple people from a dataset's permissions.
 **Description**:  
 Generates an `uploadId` for appending or replacing data in the dataset. The `uploadId` is required for subsequent upload stages.
 
-**Parameters**:
+### Parameters: Upload CSV - APPEND or REPLACE
 
-| Property Name | Type   | Required | Description                         |
-|---------------|--------|----------|-------------------------------------|
-| dataset_id    | String | Yes      | Unique identifier of the dataset.  |
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset. |
 
-**Example Request**:
+**Example Request: Upload CSV - APPEND or REPLACE**
 
 ```json
 {
@@ -925,7 +982,7 @@ Generates an `uploadId` for appending or replacing data in the dataset. The `upl
 
 ---
 
-### Stage 2 - Upload CSV
+### Stage 2 - Upload CSV (Bulk Import)
 
 **Method**: `PUT`  
 **Endpoint**: `/api/data/v3/datasources/:dataset_id/uploads/:upload_id/parts/:part`
@@ -933,15 +990,15 @@ Generates an `uploadId` for appending or replacing data in the dataset. The `upl
 **Description**:  
 Uploads the CSV file data. The dataset is divided into parts for uploading multiple streams simultaneously.
 
-**Parameters**:
+### Parameters: Stage 2 - Upload CSV (Bulk Import)
 
 | Property Name | Type   | Required | Description                            |
-|---------------|--------|----------|----------------------------------------|
-| dataset_id    | String | Yes      | Unique identifier of the dataset.     |
-| upload_id     | String | Yes      | Upload ID generated in Stage 1.       |
-| part          | Number | Yes      | Indicates the part number of the data.|
+| ------------- | ------ | -------- | -------------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset.      |
+| upload_id     | String | Yes      | Upload ID generated in Stage 1.        |
+| part          | Number | Yes      | Indicates the part number of the data. |
 
-**Example Request**:
+**Example Request: Stage 2 - Upload CSV (Bulk Import)**
 
 ```json
 {
@@ -957,7 +1014,7 @@ Uploads the CSV file data. The dataset is divided into parts for uploading multi
 
 ---
 
-### Stage 3 - Commit and Index
+### Stage 3 - Commit and Index (Bulk Import)
 
 **Method**: `PUT`  
 **Endpoint**: `/api/data/v3/datasources/:dataset_id/uploads/:upload_id/commit`
@@ -965,21 +1022,21 @@ Uploads the CSV file data. The dataset is divided into parts for uploading multi
 **Description**:  
 Finalizes the data upload by committing the uploaded parts and indexing the dataset.
 
-**Parameters**:
+### Parameters: Stage 3 - Commit and Index (Bulk Import)
 
-| Property Name | Type   | Required | Description                            |
-|---------------|--------|----------|----------------------------------------|
-| dataset_id    | String | Yes      | Unique identifier of the dataset.     |
-| upload_id     | String | Yes      | Upload ID generated in Stage 1.       |
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset. |
+| upload_id     | String | Yes      | Upload ID generated in Stage 1.   |
 
 **Body Parameters**:
 
-| Property Name | Type   | Required | Description                                  |
-|---------------|--------|----------|----------------------------------------------|
-| action        | String | Yes      | Accepts `APPEND` or `REPLACE`.             |
-| index         | Boolean| Yes      | Indicates if indexing should be executed. |
+| Property Name | Type    | Required | Description                               |
+| ------------- | ------- | -------- | ----------------------------------------- |
+| action        | String  | Yes      | Accepts `APPEND` or `REPLACE`.            |
+| index         | Boolean | Yes      | Indicates if indexing should be executed. |
 
-**Example Request**:
+**Example Request: Stage 3 - Commit and Index (Bulk Import)**
 
 ```json
 {
@@ -1006,14 +1063,14 @@ Finalizes the data upload by committing the uploaded parts and indexing the data
 **Description**:  
 Initializes a data upload with partitioning and generates an `uploadId`. The `uploadId` is required for subsequent upload stages. Note that `restateDataTag` is largely deprecated and retained for backward compatibility.
 
-**Parameters**:
+### Parameters: Upload CSV - APPEND with Partitioning
 
-| Property Name       | Type   | Required | Description                                                          |
-|---------------------|--------|----------|----------------------------------------------------------------------|
-| dataset_id          | String | Yes      | Unique identifier of the dataset.                                   |
-| restateDataTag      | String | No       | Specifies a partition for UPDATE/REPLACE actions. Defaults to None. |
+| Property Name  | Type   | Required | Description                                                         |
+| -------------- | ------ | -------- | ------------------------------------------------------------------- |
+| dataset_id     | String | Yes      | Unique identifier of the dataset.                                   |
+| restateDataTag | String | No       | Specifies a partition for UPDATE/REPLACE actions. Defaults to None. |
 
-**Example Request**:
+**Example Request: Upload CSV - APPEND with Partitioning**
 
 ```json
 {
@@ -1048,15 +1105,15 @@ Initializes a data upload with partitioning and generates an `uploadId`. The `up
 **Description**:  
 Uploads data in CSV format. Multiple parts can be uploaded simultaneously for larger datasets.
 
-**Parameters**:
+**Parameters**
 
-| Property Name      | Type   | Required | Description                              |
-|--------------------|--------|----------|------------------------------------------|
-| dataset_id         | String | Yes      | Unique identifier of the dataset.       |
-| dataset_upload_id  | String | Yes      | Upload ID generated in Stage 1.         |
-| part               | Number | Yes      | Indicates the part number being uploaded.|
+| Property Name     | Type   | Required | Description                               |
+| ----------------- | ------ | -------- | ----------------------------------------- |
+| dataset_id        | String | Yes      | Unique identifier of the dataset.         |
+| dataset_upload_id | String | Yes      | Upload ID generated in Stage 1.           |
+| part              | Number | Yes      | Indicates the part number being uploaded. |
 
-**Example Request**:
+**Example**
 
 ```json
 {
@@ -1077,20 +1134,20 @@ Uploads data in CSV format. Multiple parts can be uploaded simultaneously for la
 **Method**: `PUT`  
 **Endpoint**: `/api/data/v3/datasources/{dataset_id}/uploads/{dataset_upload_id}/commit`
 
-**Description**:  
+**Description**
 Finalizes the data upload by committing all parts and optionally indexing the dataset for query access.
 
-**Parameters**:
+**Parameters**
 
-| Property Name       | Type    | Required | Description                                                            |
-|---------------------|---------|----------|------------------------------------------------------------------------|
-| dataset_id          | String  | Yes      | Unique identifier of the dataset.                                     |
-| dataset_upload_id   | String  | Yes      | Upload ID generated in Stage 1.                                       |
-| action              | String  | Yes      | Acceptable values: `APPEND`, `REPLACE`. Determines the update method. |
-| restateDataTag      | String  | No       | Specifies a partition tag for updating specific partitions.           |
-| index               | Boolean | Yes      | Indicates whether the data should be indexed.                         |
+| Property Name     | Type    | Required | Description                                                           |
+| ----------------- | ------- | -------- | --------------------------------------------------------------------- |
+| dataset_id        | String  | Yes      | Unique identifier of the dataset.                                     |
+| dataset_upload_id | String  | Yes      | Upload ID generated in Stage 1.                                       |
+| action            | String  | Yes      | Acceptable values: `APPEND`, `REPLACE`. Determines the update method. |
+| restateDataTag    | String  | No       | Specifies a partition tag for updating specific partitions.           |
+| index             | Boolean | Yes      | Indicates whether the data should be indexed.                         |
 
-**Example Request**:
+**Example**
 
 ```json
 {
@@ -1116,13 +1173,13 @@ Finalizes the data upload by committing all parts and optionally indexing the da
 **Description**:  
 Retrieves detailed information about all data versions associated with the dataset.
 
-**Parameters**:
+**Parameters**
 
-| Property Name | Type   | Required | Description                         |
-|---------------|--------|----------|-------------------------------------|
-| dataset_id    | String | Yes      | Unique identifier of the dataset.  |
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset. |
 
-**Example Request**:
+**Example Request: GET Data Versions**
 
 ```json
 {
@@ -1140,13 +1197,13 @@ Retrieves detailed information about all data versions associated with the datas
 **Description**:  
 Retrieves a list of partitions associated with the dataset. Does not include metadata such as row counts.
 
-**Parameters**:
+**Parameters**
 
-| Property Name | Type   | Required | Description                         |
-|---------------|--------|----------|-------------------------------------|
-| dataset_id    | String | Yes      | Unique identifier of the dataset.  |
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset. |
 
-**Example Request**:
+**Example Request: GET Partition List**
 
 ```json
 {
@@ -1156,11 +1213,10 @@ Retrieves a list of partitions associated with the dataset. Does not include met
 }
 ```
 
-**Notes**:  
-- To include row count metadata, use the `/partition/list` endpoint.  
+**Notes**:
+
+- To include row count metadata, use the `/partition/list` endpoint.
 - This endpoint does not differentiate between partitions marked for deletion and those not marked.
-
-
 
 ## Search Partition List
 
@@ -1170,16 +1226,16 @@ Retrieves a list of partitions associated with the dataset. Does not include met
 **Description**:  
 Searches for partitions associated with the dataset. Allows pagination, sorting, and filtering of results.
 
-**Parameters**:
+### Parameters: Search Partition List
 
-| Property Name      | Type   | Required | Description                         |
-|--------------------|--------|----------|-------------------------------------|
-| dataset_id         | String | Yes      | Unique identifier of the dataset.  |
-| paginationFields   | Array  | No       | Defines sorting and filtering.     |
-| limit              | Number | No       | Maximum number of results. Default: 100 |
-| offset             | Number | No       | Number of results to skip. Default: 0 |
+| Property Name    | Type   | Required | Description                             |
+| ---------------- | ------ | -------- | --------------------------------------- |
+| dataset_id       | String | Yes      | Unique identifier of the dataset.       |
+| paginationFields | Array  | No       | Defines sorting and filtering.          |
+| limit            | Number | No       | Maximum number of results. Default: 100 |
+| offset           | Number | No       | Number of results to skip. Default: 0   |
 
-**Example Request**:
+**Example Request: Search Partition List**
 
 ```json
 {
@@ -1213,16 +1269,16 @@ Searches for partitions associated with the dataset. Allows pagination, sorting,
 **Description**:  
 Retrieves a list of data versions for datasets processed with the MAGIC engine.
 
-**Parameters**:
+### Parameters: Data Version List from Magic
 
-| Property Name      | Type   | Required | Description                                     |
-|--------------------|--------|----------|-------------------------------------------------|
-| dataset_id         | String | Yes      | Unique identifier of the dataset.             |
-| engine             | String | No       | Defaults to `MAGIC`.                          |
-| limit              | Number | No       | Maximum number of results. Default: 500       |
-| offset             | Number | No       | Number of results to skip. Default: 0         |
+| Property Name | Type   | Required | Description                             |
+| ------------- | ------ | -------- | --------------------------------------- |
+| datasetId     | String | Yes      | The ID of the dataset.                  |
+| engine        | String | No       | Defaults to `MAGIC`.                    |
+| limit         | Number | No       | Maximum number of results. Default: 500 |
+| offset        | Number | No       | Number of results to skip. Default: 0   |
 
-**Example Request**:
+**Example Request: Data Version List from Magic**
 
 ```json
 {
@@ -1251,14 +1307,14 @@ Retrieves a list of data versions for datasets processed with the MAGIC engine.
 **Description**:  
 Marks the data version associated with a partition tag as deleted. This does not delete the partition tag itself or remove the association between the partition tag and the data version.
 
-**Parameters**:
+### Parameters: Delete Data Version
 
-| Property Name        | Type   | Required | Description                                   |
-|----------------------|--------|----------|-----------------------------------------------|
-| dataset_id           | String | Yes      | Unique identifier of the dataset.            |
-| dataset_partition_id | String | Yes      | Identifier of the dataset partition to delete.|
+| Property Name | Type   | Required | Description                      |
+| ------------- | ------ | -------- | -------------------------------- |
+| datasetId     | String | Yes      | The ID of the dataset.           |
+| versionId     | String | Yes      | The ID of the version to delete. |
 
-**Example Request**:
+**Example Request: Delete Data Version**
 
 ```json
 {
@@ -1268,10 +1324,10 @@ Marks the data version associated with a partition tag as deleted. This does not
 }
 ```
 
-**Notes**:  
+**Notes**:
+
 - Use this endpoint to mark data versions as deleted without removing the partition tag.
 - To only remove the partition tag, use the "Delete Partition Tag" endpoint.
-
 
 ## Delete Partition Tag
 
@@ -1281,14 +1337,14 @@ Marks the data version associated with a partition tag as deleted. This does not
 **Description**:  
 Removes the association of a partition tag with its dataset, ensuring it no longer appears in the partition list.
 
-**Parameters**:
+### Parameters: Delete Partition Tag
 
-| Property Name        | Type   | Required | Description                                   |
-|----------------------|--------|----------|-----------------------------------------------|
-| dataset_id           | String | Yes      | Unique identifier of the dataset.            |
-| dataset_partition_id | String | Yes      | Identifier of the dataset partition to remove.|
+| Property Name        | Type   | Required | Description                                    |
+| -------------------- | ------ | -------- | ---------------------------------------------- |
+| dataset_id           | String | Yes      | Unique identifier of the dataset.              |
+| dataset_partition_id | String | Yes      | Identifier of the dataset partition to remove. |
 
-**Example Request**:
+**Example Request: Delete Partition Tag**
 
 ```json
 {
@@ -1298,10 +1354,10 @@ Removes the association of a partition tag with its dataset, ensuring it no long
 }
 ```
 
-**Notes**:  
+**Notes**:
+
 - Removing the partition tag does not count against the 400-partition limit in Magic 2.0.
 - Partitions against deleted data versions will not appear in the partition list.
-
 
 ## Index Dataset
 
@@ -1311,14 +1367,14 @@ Removes the association of a partition tag with its dataset, ensuring it no long
 **Description**:  
 Indexes data versions for a dataset to make them queryable. If no `dataIds` are provided, all complete and unindexed versions are indexed.
 
-**Parameters**:
+### Parameters: Index Dataset
 
-| Property Name | Type  | Required | Description                                   |
-|---------------|-------|----------|-----------------------------------------------|
-| dataset_id    | String| Yes      | Unique identifier of the dataset.            |
-| dataIds       | Array | No       | List of data version IDs to index.           |
+| Property Name | Type   | Required | Description            |
+| ------------- | ------ | -------- | ---------------------- |
+| datasetId     | String | Yes      | The ID of the dataset. |
+| indexName     | String | Yes      | The name of the index. |
 
-**Example Request**:
+**Example Request: Index Dataset**
 
 ```json
 {
@@ -1333,8 +1389,9 @@ Indexes data versions for a dataset to make them queryable. If no `dataIds` are 
 }
 ```
 
-**Notes**:  
-- Sending an empty `dataIds` array will index all eligible data versions.  
+**Notes**:
+
+- Sending an empty `dataIds` array will index all eligible data versions.
 - Indexing is required for datasets to become accessible for querying.
 
 ## Create Dataset Copy
@@ -1345,15 +1402,15 @@ Indexes data versions for a dataset to make them queryable. If no `dataIds` are 
 **Description**:  
 Creates a new dataset by copying an existing schema and providing user-defined metadata.
 
-**Parameters**:
+**Parameters: Create Dataset Copy**
 
-| Property Name    | Type   | Required | Description                                 |
-|------------------|--------|----------|---------------------------------------------|
-| userDefinedType  | String | Yes      | Specifies the type of the dataset. Default: `api`. |
-| dataSourceName   | String | Yes      | Name of the new dataset.                   |
-| schema           | Object | Yes      | Defines the dataset schema, including column types and names.|
+| Property Name   | Type   | Required | Description                                                   |
+| --------------- | ------ | -------- | ------------------------------------------------------------- |
+| userDefinedType | String | Yes      | Specifies the type of the dataset. Default: `api`.            |
+| dataSourceName  | String | Yes      | Name of the new dataset.                                      |
+| schema          | Object | Yes      | Defines the dataset schema, including column types and names. |
 
-**Example Request**:
+**Example Request: Create Dataset Copy**
 
 ```json
 {
@@ -1389,14 +1446,14 @@ Creates a new dataset by copying an existing schema and providing user-defined m
 **Description**:  
 Retrieves the schema of a dataset, including details about columns, their types, and metadata.
 
-**Parameters**:
+**Parameters: Get Dataset Schema**
 
-| Property Name   | Type    | Required | Description                                    |
-|-----------------|---------|----------|------------------------------------------------|
-| dataset_id      | String  | Yes      | Unique identifier of the dataset.             |
-| includeHidden   | Boolean | No       | Specifies whether hidden columns are included. Default: `false`. |
+| Property Name | Type    | Required | Description                                                      |
+| ------------- | ------- | -------- | ---------------------------------------------------------------- |
+| dataset_id    | String  | Yes      | Unique identifier of the dataset.                                |
+| includeHidden | Boolean | No       | Specifies whether hidden columns are included. Default: `false`. |
 
-**Example Request**:
+**Example Request: Get Dataset Schema**
 
 ```json
 {
@@ -1439,7 +1496,6 @@ Retrieves the schema of a dataset, including details about columns, their types,
 }
 ```
 
-
 ## Alter Dataset Schema
 
 **Method**: `POST`  
@@ -1448,14 +1504,14 @@ Retrieves the schema of a dataset, including details about columns, their types,
 **Description**:  
 Modifies the schema of an existing dataset by adding or altering columns.
 
-**Parameters**:
+**Parameters: Alter Dataset Schema**
 
-| Property Name | Type   | Required | Description                        |
-|---------------|--------|----------|------------------------------------|
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
 | dataset_id    | String | Yes      | Unique identifier of the dataset. |
-| schema        | Object | Yes      | Updated schema definition.         |
+| schema        | Object | Yes      | Updated schema definition.        |
 
-**Example Request**:
+**Example Request: Alter Dataset Schema**
 
 ```json
 {
@@ -1504,14 +1560,14 @@ Modifies the schema of an existing dataset by adding or altering columns.
 **Description**:  
 Retrieves a list of cards associated with a dataset. Includes drill paths for cards if `drill` is set to `true`.
 
-**Parameters**:
+**Parameters: Get Cards for a Dataset ID**
 
-| Property Name | Type    | Required | Description                          |
-|---------------|---------|----------|--------------------------------------|
-| dataset_id    | String  | Yes      | Unique identifier of the dataset.   |
+| Property Name | Type    | Required | Description                                      |
+| ------------- | ------- | -------- | ------------------------------------------------ |
+| dataset_id    | String  | Yes      | Unique identifier of the dataset.                |
 | drill         | Boolean | No       | Whether to include drill paths. Default: `true`. |
 
-**Example Request**:
+**Example Request: Get Cards for a Dataset ID**
 
 ```json
 {
@@ -1536,7 +1592,7 @@ Retrieves a list of cards associated with a dataset. Includes drill paths for ca
       {
         "id": "587894148",
         "type": "USER",
-        "displayName": "Bryan Van Kampen"
+        "displayName": "Bryan Riff"
       }
     ],
     "access": true,
@@ -1553,7 +1609,7 @@ Retrieves a list of cards associated with a dataset. Includes drill paths for ca
       {
         "id": "1893952720",
         "type": "USER",
-        "displayName": "Jae Wilson"
+        "displayName": "Scott Wilson"
       }
     ],
     "access": true,
@@ -1562,27 +1618,69 @@ Retrieves a list of cards associated with a dataset. Includes drill paths for ca
 ]
 ```
 
-## Index Dataset
+## Index Dataset (Create)
 
 **Method**: `POST`  
-**Endpoint**: `/api/query/v1/datasources/{dataset_id}`
+**Endpoint**: `/api/data/v3/datasources/{dataset_id}/indexes`
 
 **Description**:  
-Indexes a dataset to make it available for querying. This process is required after schema changes or data updates.
+Indexes data versions for a dataset to make them queryable. If no `dataIds` are provided, all complete and unindexed versions are indexed.
 
-**Parameters**:
+### Parameters: Index Dataset (Create)
 
-| Property Name | Type   | Required | Description                        |
-|---------------|--------|----------|------------------------------------|
-| dataset_id    | String | Yes      | Unique identifier of the dataset. |
+| Property Name | Type   | Required | Description            |
+| ------------- | ------ | -------- | ---------------------- |
+| datasetId     | String | Yes      | The ID of the dataset. |
+| indexName     | String | Yes      | The name of the index. |
 
-**Example Request**:
+**Example Request: Index Dataset (Create)**
 
 ```json
 {
   "method": "POST",
-  "url": "https://{domo_instance}.domo.com/api/query/v1/datasources/{dataset_id}",
-  "headers": {}
+  "url": "https://{domo_instance}.domo.com/api/data/v3/datasources/{dataset_id}/indexes",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "dataIds": []
+  }
+}
+```
+
+**Notes**:
+
+- Sending an empty `dataIds` array will index all eligible data versions.
+- Indexing is required for datasets to become accessible for querying.
+
+## Index Dataset (Update)
+
+**Method**: `PUT`  
+**Endpoint**: `/api/data/v3/datasources/{dataset_id}/indexes/{index_id}`
+
+**Description**:  
+Updates the configuration of an existing index for a dataset.
+
+### Parameters: Index Dataset (Update)
+
+| Property Name | Type   | Required | Description            |
+| ------------- | ------ | -------- | ---------------------- |
+| datasetId     | String | Yes      | The ID of the dataset. |
+| indexId       | String | Yes      | The ID of the index.   |
+
+**Example Request: Index Dataset (Update)**
+
+```json
+{
+  "method": "PUT",
+  "url": "https://{domo_instance}.domo.com/api/data/v3/datasources/{dataset_id}/indexes/{index_id}",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "dataIds": [],
+    "reindex": true
+  }
 }
 ```
 
@@ -1594,14 +1692,14 @@ Indexes a dataset to make it available for querying. This process is required af
 **Description**:  
 Retrieves the status of a dataset indexing operation for the specified index ID.
 
-**Parameters**:
+### Parameters: Index Dataset Progress
 
-| Property Name | Type   | Required | Description                         |
-|---------------|--------|----------|-------------------------------------|
-| dataset_id    | String | Yes      | Unique identifier of the dataset.  |
-| index_id      | String | Yes      | Unique identifier of the index.    |
+| Property Name | Type   | Required | Description            |
+| ------------- | ------ | -------- | ---------------------- |
+| datasetId     | String | Yes      | The ID of the dataset. |
+| indexId       | String | Yes      | The ID of the index.   |
 
-**Example Request**:
+**Example Request: Index Dataset Progress**
 
 ```json
 {
@@ -1619,14 +1717,14 @@ Retrieves the status of a dataset indexing operation for the specified index ID.
 **Description**:  
 Updates the properties of a dataset, such as the data provider type.
 
-**Parameters**:
+### Parameters: Change Dataset Properties
 
-| Property Name    | Type   | Required | Description                         |
-|------------------|--------|----------|-------------------------------------|
-| dataset_id       | String | Yes      | Unique identifier of the dataset.  |
-| dataProviderType | String | Yes      | The type of the data provider.      |
+| Property Name | Type   | Required | Description               |
+| ------------- | ------ | -------- | ------------------------- |
+| datasetId     | String | Yes      | The ID of the dataset.    |
+| properties    | Object | Yes      | The properties to update. |
 
-**Example Request**:
+**Example Request: Change Dataset Properties**
 
 ```json
 {
@@ -1636,26 +1734,300 @@ Updates the properties of a dataset, such as the data provider type.
     "Content-Type": "application/json"
   },
   "body": {
-    "dataProviderType": "domo-jupyterdata"
+    "dataProviderType": "new_type"
   }
 }
 ```
 
-## Dataset Access List
+## Get Dataset Copy Status
+
+**Method**: `GET`  
+**Endpoint**: `/api/data/v2/datasources/{dataset_id}/copy/status`
+
+**Description**:  
+Retrieves the status of a dataset copy operation.
+
+**Parameters**
+
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset. |
+
+**Example Request: Get Dataset Copy Status**
+
+```json
+{
+  "method": "GET",
+  "url": "https://{domo_instance}.domo.com/api/data/v2/datasources/{dataset_id}/copy/status",
+  "headers": {}
+}
+```
+
+**Response**
+
+```json
+{
+  "status": "COMPLETED",
+  "message": "Dataset copy completed successfully.",
+  "datasetId": "new_dataset_id"
+}
+```
+
+## Get Dataset Copy Log
+
+**Method**: `GET`  
+**Endpoint**: `/api/data/v2/datasources/{dataset_id}/copy/log`
+
+**Description**:  
+Retrieves the log of a dataset copy operation, including details about the copied schema and data.
+
+**Parameters**
+
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset. |
+
+**Example Request: Get Dataset Copy Log**
+
+```json
+{
+  "method": "GET",
+  "url": "https://{domo_instance}.domo.com/api/data/v2/datasources/{dataset_id}/copy/log",
+  "headers": {}
+}
+```
+
+**Response**
+
+```json
+{
+  "log": ["Schema copied: column1, column2", "Data copied: 100 rows"]
+}
+```
+
+## Get Dataset Details
+
+**Method**: `GET`  
+**Endpoint**: `/api/data/v2/datasources/{dataset_id}`
+
+**Description**:  
+Retrieves detailed information about a specific dataset, including its schema, data source, and properties.
+
+**Parameters**
+
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset. |
+
+**Example Request: Get Dataset Details**
+
+```json
+{
+  "method": "GET",
+  "url": "https://{domo_instance}.domo.com/api/data/v2/datasources/{dataset_id}",
+  "headers": {}
+}
+```
+
+**Response**
+
+```json
+{
+  "id": "dataset_id",
+  "name": "Dataset Name",
+  "type": "api",
+  "owner": "owner_id",
+  "created": "2023-01-01T00:00:00Z",
+  "lastUpdated": "2023-01-02T00:00:00Z",
+  "rowCount": 100,
+  "columnCount": 2,
+  "properties": {
+    "dataProviderType": "api",
+    "description": "Dataset description"
+  },
+  "schema": {
+    "columns": [
+      {
+        "name": "column1",
+        "type": "STRING"
+      },
+      {
+        "name": "column2",
+        "type": "STRING"
+      }
+    ]
+  }
+}
+```
+
+## Get Dataset History
+
+**Method**: `GET`  
+**Endpoint**: `/api/data/v2/datasources/{dataset_id}/history`
+
+**Description**:  
+Retrieves the history of changes made to a dataset, including schema and data changes.
+
+**Parameters**
+
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset. |
+
+**Example Request: Get Dataset History**
+
+```json
+{
+  "method": "GET",
+  "url": "https://{domo_instance}.domo.com/api/data/v2/datasources/{dataset_id}/history",
+  "headers": {}
+}
+```
+
+**Response**
+
+```json
+{
+  "changes": [
+    {
+      "timestamp": "2023-01-01T00:00:00Z",
+      "action": "CREATE",
+      "user": "user_id",
+      "details": "Dataset created with 2 columns."
+    },
+    {
+      "timestamp": "2023-01-02T00:00:00Z",
+      "action": "UPDATE",
+      "user": "user_id",
+      "details": "Column 'column1' type changed from STRING to TEXT."
+    }
+  ]
+}
+```
+
+## Get Dataset Tags
+
+**Method**: `GET`  
+**Endpoint**: `/api/data/ui/v3/datasources/{dataset_id}/tags`
+
+**Description**:  
+Retrieves the tags associated with a dataset.
+
+**Parameters**
+
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset. |
+
+**Example Request: Get Dataset Tags**
+
+```json
+{
+  "method": "GET",
+  "url": "https://{domo_instance}.domo.com/api/data/ui/v3/datasources/{dataset_id}/tags",
+  "headers": {}
+}
+```
+
+**Response**
+
+```json
+{
+  "tags": ["tag1", "tag2"]
+}
+```
+
+## Add Dataset Tags
+
+**Method**: `POST`  
+**Endpoint**: `/api/data/ui/v3/datasources/{dataset_id}/tags`
+
+**Description**:  
+Adds tags to a dataset.
+
+**Parameters**
+
+| Property Name | Type   | Required | Description                         |
+| ------------- | ------ | -------- | ----------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset.   |
+| tags          | Array  | Yes      | List of tags to add to the dataset. |
+
+**Example Request: Add Dataset Tags**
+
+```json
+{
+  "method": "POST",
+  "url": "https://{domo_instance}.domo.com/api/data/ui/v3/datasources/{dataset_id}/tags",
+  "headers": {
+    "X-DOMO-Developer-Token": "",
+    "Content-Type": "application/json"
+  },
+  "body": ["tag1", "tag2"]
+}
+```
+
+**Response**
+
+```json
+{
+  "HTTP/1.1": "200 OK",
+  "body": {}
+}
+```
+
+## Remove Dataset Tags
+
+**Method**: `DELETE`  
+**Endpoint**: `/api/data/ui/v3/datasources/{dataset_id}/tags`
+
+**Description**:  
+Removes tags from a dataset.
+
+**Parameters**
+
+| Property Name | Type   | Required | Description                              |
+| ------------- | ------ | -------- | ---------------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset.        |
+| tags          | Array  | Yes      | List of tags to remove from the dataset. |
+
+**Example Request: Remove Dataset Tags**
+
+```json
+{
+  "method": "DELETE",
+  "url": "https://{domo_instance}.domo.com/api/data/ui/v3/datasources/{dataset_id}/tags",
+  "headers": {
+    "X-DOMO-Developer-Token": "",
+    "Content-Type": "application/json"
+  },
+  "body": ["tag1", "tag2"]
+}
+```
+
+**Response**
+
+```json
+{
+  "HTTP/1.1": "200 OK",
+  "body": {}
+}
+```
+
+## Get Dataset Permissions
 
 **Method**: `GET`  
 **Endpoint**: `/api/data/v3/datasources/{dataset_id}/permissions`
 
 **Description**:  
-Retrieves a list of users and groups with access to the dataset, along with their permissions.
+Retrieves the permissions of a dataset, including access levels for users and groups.
 
-**Parameters**:
+**Parameters**
 
-| Property Name | Type   | Required | Description                         |
-|---------------|--------|----------|-------------------------------------|
-| dataset_id    | String | Yes      | Unique identifier of the dataset.  |
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset. |
 
-**Example Request**:
+**Example Request: Get Dataset Permissions**
 
 ```json
 {
@@ -1665,49 +2037,412 @@ Retrieves a list of users and groups with access to the dataset, along with thei
 }
 ```
 
-**Example Response**:
+**Response**
 
 ```json
 {
-  "list": [
+  "permissions": [
     {
       "type": "USER",
-      "id": "966365811",
-      "accessLevel": "OWNER",
-      "name": "Scott Thompson"
+      "id": "user_id",
+      "accessLevel": "CO_OWNER"
     }
-  ],
-  "totalUserCount": 1,
-  "totalGroupCount": 0
+  ]
 }
 ```
 
-## Change Dataset Properties
+## Update Dataset Permissions
 
 **Method**: `PUT`  
-**Endpoint**: `/api/data/v3/datasources/{dataset_id}/properties`
+**Endpoint**: `/api/data/v3/datasources/{dataset_id}/permissions`
 
 **Description**:  
-Updates the properties of a dataset, such as the data provider type.
+Updates the permissions of a dataset, including adding or removing user and group access.
 
-**Parameters**:
+**Parameters**
 
-| Property Name    | Type   | Required | Description                         |
-|------------------|--------|----------|-------------------------------------|
-| dataset_id       | String | Yes      | Unique identifier of the dataset.  |
-| dataProviderType | String | Yes      | The type of the data provider.      |
+| Property Name | Type   | Required | Description                                   |
+| ------------- | ------ | -------- | --------------------------------------------- |
+| dataset_id    | String | Yes      | The ID of the dataset.                        |
+| permissions   | Array  | Yes      | A list of permissions to set for the dataset. |
 
-**Example Request**:
+**Example Request: Update Dataset Permissions**
 
 ```json
 {
   "method": "PUT",
-  "url": "https://{domo_instance}.domo.com/api/data/v3/datasources/{dataset_id}/properties",
+  "url": "https://{domo_instance}.domo.com/api/data/v3/datasources/{dataset_id}/permissions",
   "headers": {
     "Content-Type": "application/json"
   },
   "body": {
-    "dataProviderType": "domo-jupyterdata"
+    "permissions": [
+      {
+        "id": "userId1",
+        "type": "USER",
+        "accessLevel": "CO_OWNER"
+      }
+    ]
+  }
+}
+```
+
+**Response**
+
+```json
+{
+  "HTTP/1.1": "200 OK",
+  "body": {}
+}
+```
+
+## Get Dataset Owner
+
+**Method**: `GET`  
+**Endpoint**: `/api/data/v3/datasources/{dataset_id}/owner`
+
+**Description**:  
+Retrieves the owner of a dataset.
+
+**Parameters**
+
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset. |
+
+**Example Request: Get Dataset Owner**
+
+```json
+{
+  "method": "GET",
+  "url": "https://{domo_instance}.domo.com/api/data/v3/datasources/{dataset_id}/owner",
+  "headers": {}
+}
+```
+
+**Response**
+
+```json
+{
+  "owner": {
+    "id": "owner_id",
+    "name": "Owner Name",
+    "type": "USER",
+    "group": false
+  }
+}
+```
+
+## Update Dataset Owner
+
+**Method**: `PUT`  
+**Endpoint**: `/api/data/v3/datasources/{dataset_id}/owner`
+
+**Description**:  
+Updates the owner of a dataset.
+
+**Parameters**
+
+| Property Name | Type   | Required | Description                   |
+| ------------- | ------ | -------- | ----------------------------- |
+| dataset_id    | String | Yes      | The ID of the dataset.        |
+| owner         | Object | Yes      | The new owner of the dataset. |
+
+**Example Request: Update Dataset Owner**
+
+```json
+{
+  "method": "PUT",
+  "url": "https://{domo_instance}.domo.com/api/data/v3/datasources/{dataset_id}/owner",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "owner": {
+      "id": "new_owner_id",
+      "type": "USER"
+    }
+  }
+}
+```
+
+**Response**
+
+```json
+{
+  "HTTP/1.1": "200 OK",
+  "body": {}
+}
+```
+
+## Get Dataset Data
+
+**Method**: `GET`  
+**Endpoint**: `/api/data/v2/datasources/{dataset_id}/data`
+
+**Description**:  
+Retrieves the data from a dataset.
+
+**Parameters**
+
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset. |
+
+**Example Request: Get Dataset Data**
+
+```json
+{
+  "method": "GET",
+  "url": "https://{domo_instance}.domo.com/api/data/v2/datasources/{dataset_id}/data",
+  "headers": {}
+}
+```
+
+**Response**
+
+```json
+{
+  "columns": ["column1", "column2"],
+  "rows": [
+    ["value1", "value2"],
+    ["value3", "value4"]
+  ]
+}
+```
+
+## Update Dataset Data
+
+**Method**: `PUT`  
+**Endpoint**: `/api/data/v2/datasources/{dataset_id}/data`
+
+**Description**:  
+Updates the data in a dataset.
+
+**Parameters**
+
+| Property Name | Type   | Required | Description                   |
+| ------------- | ------ | -------- | ----------------------------- |
+| dataset_id    | String | Yes      | The ID of the dataset.        |
+| data          | Array  | Yes      | The new data for the dataset. |
+
+**Example Request: Update Dataset Data**
+
+```json
+{
+  "method": "PUT",
+  "url": "https://{domo_instance}.domo.com/api/data/v2/datasources/{dataset_id}/data",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "data": [
+      {
+        "column1": "new_value1",
+        "column2": "new_value2"
+      }
+    ]
+  }
+}
+```
+
+**Response**
+
+```json
+{
+  "HTTP/1.1": "200 OK",
+  "body": {}
+}
+```
+
+## Get Dataset Query
+
+**Method**: `GET`  
+**Endpoint**: `/api/data/v2/datasources/{dataset_id}/query`
+
+**Description**:  
+Retrieves the query of a dataset.
+
+**Parameters**
+
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset. |
+
+**Example Request: Get Dataset Query**
+
+```json
+{
+  "method": "GET",
+  "url": "https://{domo_instance}.domo.com/api/data/v2/datasources/{dataset_id}/query",
+  "headers": {}
+}
+```
+
+**Response**
+
+```json
+{
+  "query": "SELECT * FROM your_table"
+}
+```
+
+## Update Dataset Query
+
+**Method**: `PUT`  
+**Endpoint**: `/api/data/v2/datasources/{dataset_id}/query`
+
+**Description**:  
+Updates the query of a dataset.
+
+**Parameters**
+
+| Property Name | Type   | Required | Description                    |
+| ------------- | ------ | -------- | ------------------------------ |
+| dataset_id    | String | Yes      | The ID of the dataset.         |
+| query         | String | Yes      | The new query for the dataset. |
+
+**Example Request: Update Dataset Query**
+
+```json
+{
+  "method": "PUT",
+  "url": "https://{domo_instance}.domo.com/api/data/v2/datasources/{dataset_id}/query",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "query": "SELECT * FROM new_table"
+  }
+}
+```
+
+**Response**
+
+```json
+{
+  "HTTP/1.1": "200 OK",
+  "body": {}
+}
+```
+
+## Get Dataset SQL
+
+**Method**: `GET`  
+**Endpoint**: `/api/data/v2/datasources/{dataset_id}/sql`
+
+**Description**:  
+Retrieves the SQL of a dataset.
+
+**Parameters**
+
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset. |
+
+**Example Request: Get Dataset SQL**
+
+```json
+{
+  "method": "GET",
+  "url": "https://{domo_instance}.domo.com/api/data/v2/datasources/{dataset_id}/sql",
+  "headers": {}
+}
+```
+
+**Response**
+
+```json
+{
+  "sql": "SELECT * FROM your_table"
+}
+```
+
+## Update Dataset SQL
+
+**Method**: `PUT`  
+**Endpoint**: `/api/data/v2/datasources/{dataset_id}/sql`
+
+**Description**:  
+Updates the SQL of a dataset.
+
+**Parameters**
+
+| Property Name | Type   | Required | Description                  |
+| ------------- | ------ | -------- | ---------------------------- |
+| dataset_id    | String | Yes      | The ID of the dataset.       |
+| sql           | String | Yes      | The new SQL for the dataset. |
+
+**Example Request: Update Dataset SQL**
+
+```json
+{
+  "method": "PUT",
+  "url": "https://{domo_instance}.domo.com/api/data/v2/datasources/{dataset_id}/sql",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "sql": "SELECT * FROM new_table"
+  }
+}
+```
+
+**Response**
+
+```json
+{
+  "HTTP/1.1": "200 OK",
+  "body": {}
+}
+```
+
+## Get Dataset Dataflow
+
+**Method**: `GET`  
+**Endpoint**: `/api/data/v2/datasources/{dataset_id}/dataflow`
+
+**Description**:  
+Retrieves the dataflow associated with a dataset.
+
+**Parameters**
+
+| Property Name | Type   | Required | Description                       |
+| ------------- | ------ | -------- | --------------------------------- |
+| dataset_id    | String | Yes      | Unique identifier of the dataset. |
+
+**Example Request: Get Dataset Dataflow**
+
+```json
+{
+  "method": "GET",
+  "url": "https://{domo_instance}.domo.com/api/data/v2/datasources/{dataset_id}/dataflow",
+  "headers": {}
+}
+```
+
+**Response**
+
+```json
+{
+  "dataflow": {
+    "id": "dataflow_id",
+    "name": "Dataflow Name",
+    "type": "TRANSFORM",
+    "owner": "owner_id",
+    "created": "2023-01-01T00:00:00Z",
+    "lastUpdated": "2023-01-02T00:00:00Z",
+    "status": "SUCCESS",
+    "steps": [
+      {
+        "id": "step_id",
+        "name": "Step Name",
+        "type": "TRANSFORM",
+        "status": "SUCCESS",
+        "created": "2023-01-01T00:00:00Z",
+        "lastUpdated": "2023-01-02T00:00:00Z"
+      }
+    ]
   }
 }
 ```
