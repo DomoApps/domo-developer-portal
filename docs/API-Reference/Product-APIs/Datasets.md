@@ -4,28 +4,36 @@ The Domo Datasets API empowers developers to seamlessly manage, create, and upda
 
 ## Query with SQL
 
-**Method**: `POST`  
-**Endpoint**: `/api/query/v1/execute/:datasetId`
+**Description**: This endpoint executes an SQL query on the specified DataSet and returns the result in the form of a list of objects.
 
-This endpoint executes an SQL query on the specified DataSet and returns the result in the form of a list of objects.
+**HTTP Request**:
 
-**Parameters**
+```http
+POST /api/query/v1/execute/:datasetId
+```
+
+**Query Parameters**
 
 | Property Name | Type   | Required | Description                     |
 | ------------- | ------ | -------- | ------------------------------- |
 | datasetId     | String | Yes      | The ID of the DataSet to query. |
-| sql           | String | Yes      | The SQL statement to execute.   |
 
-**Example**
+**Body Parameters**
+
+| Property Name | Type   | Required | Description                   |
+| ------------- | ------ | -------- | ----------------------------- |
+| sql           | String | Yes      | The SQL statement to execute. |
+
+**Headers**:
+
+- `X-DOMO-Developer-Token`: `<developer token here>`
+- `Accept`: `application/json`
+- `Content-Type`: `application/json`
+
+**Request Body**:
 
 ```json
 {
-  "method": "POST",
-  "url": "https://{instance}.domo.com/api/query/v1/execute/{datasetId}",
-  "headers": {
-    "X-DOMO-Developer-Token": "",
-    "Content-Type": "application/json"
-  },
   "body": {
     "sql": "SELECT * FROM your_table WHERE column = 'value'"
   }
@@ -82,30 +90,31 @@ This endpoint executes an SQL query on the specified DataSet and returns the res
 - **403 Forbidden**: The client does not have permission to access the requested resource.
 - **409 Conflict**: The request could not be completed due to a conflict with the current state of the resource.
 - **416 Requested Range Not Satisfiable**: The range specified in the request is invalid or cannot be satisfied.
-- **500 Internal Server Error**: An unexpected error occurred on the server. Possible schemas for the error response include:
-  - `ErrorResponse`
-  - `OauthErrorResponse`
+- **500 Internal Server Error**: An unexpected error occurred on the server.
 
 ## Dataset Access List
 
-**Method**: `GET`  
-**Endpoint**: `/api/data/v3/datasources/{dataset_id}/permissions`
-
 **Description**:  
 Retrieves a list of users and groups with access to the dataset, along with their permissions.
+
+**HTTP Request**:
+
+```http
+GET /api/data/v3/datasources/:datasetId/permissions
+```
 
 **Parameters**
 
 | Property Name | Type   | Required | Description                       |
 | ------------- | ------ | -------- | --------------------------------- |
-| dataset_id    | String | Yes      | Unique identifier of the dataset. |
+| datasetId     | String | Yes      | Unique identifier of the dataset. |
 
 **Example**
 
 ```json
 {
   "method": "GET",
-  "url": "https://{domo_instance}.domo.com/api/data/v3/datasources/{dataset_id}/permissions",
+  "url": "https://{domo_instance}.domo.com/api/data/v3/datasources/{datasetId}/permissions",
   "headers": {}
 }
 ```
@@ -118,37 +127,44 @@ Retrieves a list of users and groups with access to the dataset, along with thei
   {
     "list": [
       {
-        "type": "USER",
+        "accessLevel": "CAN_VIEW",
         "id": "966365811",
-        "accessLevel": "OWNER",
-        "name": "Scott Thompson"
+        "name": "John Doe",
+        "type": "USER"
+      },
+      {
+        "accessLevel": "CAN_EDIT",
+        "id": "group-12345",
+        "name": "Editors Group",
+        "type": "GROUP"
       }
     ],
-    "totalUserCount": 1,
-    "totalGroupCount": 0
+    "totalGroupCount": 1,
+    "totalUserCount": 1
   }
   ```
 
 ## Revoke Dataset Access
 
 **Method**: `DELETE`  
-**Endpoint**: `/api/data/v3/datasources/:datasetId/permissions/USER/:userId`
+**Endpoint**: `/api/data/v3/datasources/{dataSourceId}/permissions/{type}/{id}`
 
-This endpoint revokes access to a specified DataSet for a given user.
+This endpoint revokes access to a specified datasource for a given entity.
 
 **Parameters**
 
-| Property Name | Type   | Required | Description                                  |
-| ------------- | ------ | -------- | -------------------------------------------- |
-| datasetId     | String | Yes      | The ID of the DataSet to revoke access from. |
-| userId        | String | Yes      | The ID of the user to revoke access for.     |
+| Property Name | Type   | Required | Description                                                                                                                                                                                          |
+| ------------- | ------ | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| dataSourceId  | String | Yes      | The ID of the datasource to revoke access from.                                                                                                                                                      |
+| type          | String | Yes      | The type of entity to revoke access for. Valid values are: `USER`, `GROUP`, `CARD`, `VIRTUAL_USER`, `APPROVAL`, `ENIGMA_FORM_INSTANCE`, `DATA_APP`, `DATA_APP_VIEW`, `WORKFLOW`, `REPORT_VIEW_PAGE`. |
+| id            | String | Yes      | The ID of the entity to revoke access for.                                                                                                                                                           |
 
 **Example**
 
 ```json
 {
   "method": "DELETE",
-  "url": "https://{instance}.domo.com/api/data/v3/datasources/{datasetId}/permissions/USER/{userId}",
+  "url": "https://{instance}.domo.com/api/data/v3/datasources/{dataSourceId}/permissions/{type}/{id}",
   "headers": {
     "X-DOMO-Developer-Token": "",
     "Content-Type": "application/json"
@@ -158,11 +174,15 @@ This endpoint revokes access to a specified DataSet for a given user.
 
 **Response**
 
-- **200 OK**: The request was successful, and the user's access was revoked.
+- **200 OK**: The request was successful, and the entity's access was revoked.
 
-- **403 Forbidden**: The client does not have permission to revoke access for the specified user.
+- **403 Forbidden**: The client does not have permission to revoke access for the specified entity.
 
 - **409 Conflict**: The request could not be completed due to a conflict with the current state of the resource.
+
+- **416 Requested Range Not Satisfiable**: The range specified in the request is invalid or cannot be satisfied.
+
+- **500 Internal Server Error**: An unexpected error occurred on the server.
 
 ## Get Metadata
 
@@ -173,12 +193,12 @@ This endpoint retrieves metadata for a specified DataSet, including the dataset'
 
 **Parameters**
 
-| Property Name  | Type   | Required | Description                                          |
-| -------------- | ------ | -------- | ---------------------------------------------------- |
-| datasetId      | String | Yes      | The ID of the DataSet to retrieve metadata for.      |
-| requestedParts | String | No       | A comma-separated list of metadata parts to include. |
+| Property Name | Type   | Required | Description                                                                                                                                                                                                                |
+| ------------- | ------ | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| datasetId     | String | Yes      | The ID of the dataset to retrieve metadata for.                                                                                                                                                                            |
+| part          | Array  | No       | A list of metadata parts to include. Valid values are: `core`, `permission`, `status`, `pdp`, `rowcolcount`, `certification`, `sharecount`, `alertcount`, `dataprovider`, `features`, `impactcounts`, `functions`, `cryo`. |
 
-**Example (Get Metadata)**
+**Example**
 
 ```json
 {
@@ -191,62 +211,48 @@ This endpoint retrieves metadata for a specified DataSet, including the dataset'
 }
 ```
 
-**Response (Get Metadata)**
+**Response**
 
 ```json
 {
-  "id": "dataset id",
-  "displayType": "webform",
-  "dataProviderType": "webform",
-  "type": "webform",
-  "name": "dataset name",
+  "id": "44c5d1b9-7a26-4369-bf0d-c575bfb168a6",
+  "displayType": "file-upload-new",
+  "dataProviderType": "file-upload-new",
+  "type": "file-upload-new",
+  "name": "mock_clients",
+  "description": "Mock data for testing",
   "owner": {
-    "id": "User id",
-    "name": "User name",
+    "id": "403368057",
+    "name": "Jonathan Tiritilli",
     "type": "USER",
     "group": false
   },
-  "status": "SUCCESS",
-  "created": 1231234124,
-  "lastTouched": 1231421312,
-  "lastUpdated": 12341234412,
-  "rowCount": 2,
-  "columnCount": 3,
+  "created": 1755706042000,
+  "lastTouched": 1755717169000,
+  "lastUpdated": 1755717169005,
   "cardInfo": {
-    "cardCount": 3,
+    "cardCount": 5,
     "cardViewCount": 0
-  },
-  "properties": {
-    "formulas": {
-      "formulas": {}
-    }
   },
   "state": "SUCCESS",
   "validConfiguration": true,
   "validAccount": true,
-  "streamId": 25222,
-  "transportType": "WEBFORM",
-  "adc": true,
-  "adcExternal": false,
-  "adcSource": "DIRECT",
-  "masked": false,
-  "currentUserFullAccess": true,
+  "streamId": 27286,
+  "transportType": "CONNECTOR",
   "cloudId": "domo",
   "cloudName": "Domo",
   "permissions": "READ_WRITE_DELETE_SHARE_ADMIN",
   "hidden": false,
   "scheduleActive": true,
-  "cardCount": 3,
+  "cardCount": 5,
   "cloudEngine": "domo"
 }
 ```
 
-## Append row to Dataset
+## Append Row to Dataset
 
 **Method**: `POST`  
 **Endpoint**: `/api/data/v3/datasources/:datasetId/uploads`
-
-### Description: Append row to Dataset
 
 This endpoint appends a row of values to a specified dataset.
 
@@ -256,25 +262,46 @@ This endpoint appends a row of values to a specified dataset.
 | ------------- | ------ | -------- | ---------------------------------------- |
 | datasetId     | String | Yes      | The ID of the DataSet to append rows to. |
 
-**Example Request: Append row to Dataset**
+**Example**
 
 ```json
 {
   "method": "POST",
-  "url": "https://{instance}.domo.com/api/data/v3/datasources/{datasetId}/data",
+  "url": "https://{instance}.domo.com/api/data/v3/datasources/{datasetId}/uploads",
   "headers": {
     "X-DOMO-Developer-Token": "",
     "Content-Type": "application/json"
   },
   "body": {
-    "data": [{ "column1": "value1", "column2": "value2" }]
+    "data": [
+      {
+        "client_id": 2,
+        "client_name": "Madelaine Tinsey",
+        "client_age": 70,
+        "client_email": "mtinsey1@mapy.cz",
+        "client_country": "Russia",
+        "client_gender": "Male",
+        "client_type": "External",
+        "client_company": "Nimbus Forge",
+        "client_rank": 3,
+        "client_last_active": "2025-08-20T19:12:46"
+      }
+    ]
   }
 }
 ```
 
-**Response: Append row to Dataset**
+**Response**
 
-- **200 OK**: The request was successful, and the rows were appended to the dataset.
+- **200 OK**: The request was successful, and the following response is returned:
+
+  ```json
+  {
+    "dataSourceId": "44c5d1b9-7a26-4369-bf0d-c575bfb168a6",
+    "uploadId": 4,
+    "requestedAsOf": 1757443346151
+  }
+  ```
 
 - **400 Bad Request**: The request was malformed or missing required parameters.
 
@@ -302,7 +329,7 @@ Creates a new data stream using a connector and specifies configuration details.
 | dataSource           | Object | Yes      | Dataset details, including name and description.         |
 | advancedScheduleJson | String | No       | Schedule details in JSON format.                         |
 
-**Example Request: Stream (Connector) - Create**
+**Example**
 
 ```json
 {
@@ -341,7 +368,7 @@ Creates a new data stream using a connector and specifies configuration details.
 }
 ```
 
-**Response: Stream (Connector) - Create**
+**Response**
 
 ```json
 {
@@ -362,19 +389,19 @@ Retrieves configuration details for a specific data stream.
 
 | Property Name | Type   | Required | Description                      |
 | ------------- | ------ | -------- | -------------------------------- |
-| stream_id     | String | Yes      | Unique identifier of the stream. |
+| streamId      | String | Yes      | Unique identifier of the stream. |
 
-**Example Request: Stream (Connector) - Get**
+**Example**
 
 ```json
 {
   "method": "GET",
-  "url": "https://{domo_instance}.domo.com/api/data/v1/streams/{stream_id}",
+  "url": "https://{domo_instance}.domo.com/api/data/v1/streams/{streamId}",
   "headers": {}
 }
 ```
 
-**Response: Stream (Connector) - Get**
+**Response**
 
 ```json
 {
@@ -627,7 +654,7 @@ Updates the configuration of an existing data stream.
 | dataSource           | Object | Yes      | Dataset details, including name and description.             |
 | advancedScheduleJson | String | No       | Schedule details in JSON format.                             |
 
-**Example Request: Stream (Connector) - Update**
+**Example**
 
 ```json
 {
@@ -666,7 +693,7 @@ Updates the configuration of an existing data stream.
 }
 ```
 
-**Response: Stream (Connector) - Update**
+**Response**
 
 ```json
 {
@@ -687,19 +714,19 @@ Retrieves the execution history for a specific data stream, including details ab
 
 | Property Name | Type   | Required | Description                      |
 | ------------- | ------ | -------- | -------------------------------- |
-| stream_id     | String | Yes      | Unique identifier of the stream. |
+| streamId      | String | Yes      | Unique identifier of the stream. |
 
-**Example Request**:
+**Request**:
 
 ```json
 {
   "method": "GET",
-  "url": "https://{domo_instance}.domo.com/api/data/v1/streams/{stream_id}/history/aggregate",
+  "url": "https://{domo_instance}.domo.com/api/data/v1/streams/{streamId}/history/aggregate",
   "headers": {}
 }
 ```
 
-**Example Response**:
+**Response**:
 
 ```json
 [
