@@ -68,7 +68,9 @@ Check out these resources that we regularly update and improve to help you make 
 
 Domo has a vibrant community that creates extraordinarily useful content. This content is not maintained or officially endorsed by Domo, but it is still valuable. Here are some notable resources:
 
+- **[Domo User Group Slack Community](https://domousergroup.carrd.co/)**: An active Slack community of Domo users sharing knowledge, tips, and best practices. Even some Domo employees, like Ben Schein, participate here.
 - **[Dashboard Dudes](https://www.dashboarddudes.com/)** by [John Le](https://www.linkedin.com/in/thejohnle/): Courses, faqs / tips, templates, and consulting.
 - **[DataCrew](https://datacrew.circle.so/home)** by [Jae Wilson](https://www.linkedin.com/in/jaewor/): Community space with resources. See his [YouTube Channel](https://www.youtube.com/channel/UCpnWmFCBWyqBMJlw6ZxNokQ) for many great videos.
 - **[Ellibot YouTube Channel](https://www.youtube.com/@ellibot)** by [Elliott Leonard](https://www.linkedin.com/in/elliott-leonard-salesforce/).
 - **[Mark on Domo YouTube Channel](https://www.youtube.com/@MarkOnDomo)** by [Mark Snodgrass](https://www.linkedin.com/in/mark-snodgrass-bab17968/).
+- **[Product APIs Postman Collection](https://www.postman.com/brycewc/workspace/domo-product-apis)** by [Bryce Cindrich](https://www.linkedin.com/in/bryce-cindrich/): A Postman collection with examples for many of Domo's API endpoints. Also check out his [GitHub](https://github.com/brycewc/domo-bookmarklets) for useful scripts using the Product APIs.
