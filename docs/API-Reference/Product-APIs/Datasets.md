@@ -1,6 +1,6 @@
 # Datasets API
 
-## Obtain a Stream Representation
+## Get a Stream Representation
 
 **Method:** `GET`  
 **Endpoint:** `/api/data/v1/streams/{streamId}`
@@ -18,24 +18,6 @@
 | Parameter | Type   | Required | Description                                                                                                                             |
 | --------- | ------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | fields    | string | No       | Comma-separated fields to include, with 'all' to include all fields. Default: `id,userId,name,displayName,type,dataProviderType,valid`. |
-
-**Response:**
-
-```json
-{
-  "id": 12345,
-  "userId": 67890,
-  "name": "Sample Stream",
-  "displayName": "Sample Stream Display",
-  "type": "exampleType",
-  "dataProviderType": "exampleProvider",
-  "valid": true
-}
-```
-
----
-
-## Example Usage for Stream Representation
 
 <!--
 type: tab
@@ -76,9 +58,23 @@ with httpx.Client() as client:
 
 <!-- type: tab-end -->
 
+**Response:**
+
+```json
+{
+  "id": 12345,
+  "userId": 67890,
+  "name": "Sample Stream",
+  "displayName": "Sample Stream Display",
+  "type": "exampleType",
+  "dataProviderType": "exampleProvider",
+  "valid": true
+}
+```
+
 ---
 
-## Obtain a DataSource Representation
+## Get a DataSource Representation
 
 **Method:** `GET`  
 **Endpoint:** `/api/data/v3/datasources/{dataSourceId}`
@@ -97,25 +93,6 @@ with httpx.Client() as client:
 | ----------------- | ------- | -------- | ------------------------------------------------------------------------------------------ |
 | part              | array   | No       | Specific parts of the DataSource to include. Options: `core`, `permission`, `status`, etc. |
 | includeAllDetails | boolean | No       | Whether to include all details. Default: `false`.                                          |
-
-**Response:**
-
-```json
-{
-  "id": "abc123",
-  "name": "Sample DataSource",
-  "type": "exampleType",
-  "status": "active",
-  "details": {
-    "rows": 1000,
-    "columns": 10
-  }
-}
-```
-
----
-
-## Example Usage for DataSource Representation
 
 <!--
 type: tab
@@ -155,3 +132,18 @@ with httpx.Client() as client:
 ```
 
 <!-- type: tab-end -->
+
+**Response:**
+
+```json
+{
+  "id": "abc123",
+  "name": "Sample DataSource",
+  "type": "exampleType",
+  "status": "active",
+  "details": {
+    "rows": 1000,
+    "columns": 10
+  }
+}
+```

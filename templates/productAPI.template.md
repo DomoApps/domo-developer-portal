@@ -51,16 +51,6 @@ _None_
 _None_
 {{/if}}
 
-**Response:**
-
-```json
-{{RESPONSE_EXAMPLE}}
-```
-
----
-
-## Example Usage
-
 <!--
 type: tab
 title: Javascript
@@ -68,9 +58,7 @@ title: Javascript
 
 ```javascript
 {
-  {
-    JAVASCRIPT_CODE_EXAMPLE;
-  }
+  JAVASCRIPT_CODE_EXAMPLE;
 }
 ```
 
@@ -80,9 +68,17 @@ title: Python
 -->
 
 ```python
-{{PYTHON_CODE_EXAMPLE}}
+{PYTHON_CODE_EXAMPLE}
 ```
 
 <!-- type: tab-end -->
+
+---
+
+**Response:**
+
+```json
+{{RESPONSE_EXAMPLE}}
+```
 
 ---
