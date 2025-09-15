@@ -1,0 +1,2726 @@
+openapi: 3.0.1
+info:
+  description: The Domo data REST API.
+  title: Domo data API
+  version: '${build_version}'
+servers:
+  - {}
+tags:
+  - description: Domo Dataflow APIs
+    name: Dataflows
+  - description: Domo Dataset APIs
+    name: Datasets
+  - description: Datasource related calls
+    name: Datasource Resource V3
+paths:
+  /api/data/v1/streams/{streamId}:
+    get:
+      description: Obtain a Stream representation specified by the supplied ID.
+      operationId: retrieve
+      parameters:
+        - description: The ID of the Stream.
+          in: path
+          name: streamId
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - description:
+            "Comma separated fields to include, with 'all' to include all\
+            \ fields."
+          in: query
+          name: fields
+          required: false
+          schema:
+            type: string
+            default: 'id,userId,name,displayName,type,dataProviderType,valid'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stream'
+          description: Stream A Stream.
+        '403':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Forbidden
+        '409':
+          description: Conflict
+        '416':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Requested range not satisfiable
+        '500':
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - $ref: '#/components/schemas/OauthErrorResponse'
+          description: Internal Server Error
+      security:
+        - domo-developer-token: []
+      summary: Obtain a Stream representation specified by the supplied ID.
+      tags:
+        - Datasets
+        - stream-resource
+  /api/data/v3/datasources/{dataSourceId}:
+    get:
+      description: Obtain a DataSource representation specified by the supplied ID.
+      operationId: getDataSource
+      parameters:
+        - description: The ID of the DataSource.
+          in: path
+          name: dataSourceId
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: part
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - core
+                - permission
+                - status
+                - pdp
+                - rowcolcount
+                - certification
+                - sharecount
+                - alertcount
+                - dataprovider
+                - features
+                - impactcounts
+                - functions
+                - cryo
+                - warnings
+                - pharos
+        - in: query
+          name: includeAllDetails
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSource'
+          description: A DataSource.
+        '403':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Forbidden
+        '409':
+          description: Conflict
+        '416':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Requested range not satisfiable
+        '500':
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - $ref: '#/components/schemas/OauthErrorResponse'
+          description: Internal Server Error
+      security:
+        - domo-developer-token: []
+      summary: Obtain a DataSource representation specified by the supplied ID.
+      tags:
+        - Dataflows
+        - Datasets
+        - Datasource Resource V3
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        accountId:
+          type: integer
+          format: int64
+          nullable: true
+        accountTemplateAuthorizationId:
+          type: integer
+          format: int64
+          nullable: true
+        accountTemplateId:
+          type: integer
+          format: int64
+          nullable: true
+        allowExternalUse:
+          type: boolean
+          nullable: true
+        configurations:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        configurationsList:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: string
+          nullable: true
+          writeOnly: true
+        createdAt:
+          type: integer
+          format: int64
+          nullable: true
+        createdBy:
+          type: integer
+          format: int64
+          nullable: true
+        credentialsSettingsList:
+          type: array
+          deprecated: true
+          items:
+            type: object
+            additionalProperties:
+              type: string
+              deprecated: true
+            deprecated: true
+          nullable: true
+          writeOnly: true
+        credentialsType:
+          type: string
+          nullable: true
+        dataProviderType:
+          type: string
+          nullable: true
+        displayName:
+          type: string
+          nullable: true
+        id:
+          type: integer
+          format: int64
+          nullable: true
+        modifiedAt:
+          type: integer
+          format: int64
+          nullable: true
+        modifiedBy:
+          type: integer
+          format: int64
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        secretId:
+          type: string
+          nullable: true
+        secretManagerAccountId:
+          type: integer
+          format: int64
+          nullable: true
+        type:
+          type: string
+          nullable: true
+        userId:
+          type: integer
+          format: int64
+          nullable: true
+        valid:
+          type: boolean
+          nullable: true
+    AccountTemplate:
+      type: object
+      properties:
+        allowExternalUse:
+          type: boolean
+          nullable: true
+        configurationAsList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Configuration'
+          nullable: true
+        configurations:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        configurationsList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Configuration'
+          nullable: true
+        createdAt:
+          type: integer
+          format: int64
+          nullable: true
+        createdBy:
+          type: integer
+          format: int64
+          nullable: true
+        credentialsType:
+          type: string
+          nullable: true
+        dataProviderType:
+          type: string
+          nullable: true
+        displayName:
+          type: string
+          nullable: true
+        enabled:
+          type: boolean
+          nullable: true
+        id:
+          type: integer
+          format: int64
+          nullable: true
+        modifiedAt:
+          type: integer
+          format: int64
+          nullable: true
+        modifiedBy:
+          type: integer
+          format: int64
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        origin:
+          type: string
+          enum:
+            - OAUTH_CONFIGURATION
+            - FEDERATED
+          nullable: true
+        secretId:
+          type: string
+          nullable: true
+        secretManagerAccountId:
+          type: integer
+          format: int64
+          nullable: true
+        serviceAccountId:
+          type: integer
+          format: int64
+          nullable: true
+        type:
+          type: string
+          nullable: true
+    AccountTemplate_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/AccountTemplate'
+      nullable: true
+    AccountTemplate_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/AccountTemplate'
+    Account_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/Account'
+      nullable: true
+    Account_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/Account'
+    ApplicationSchema:
+      type: object
+      properties:
+        allowZeroRows:
+          type: boolean
+          nullable: true
+        applicationSchemaTable:
+          $ref: '#/components/schemas/ApplicationSchemaTable_Nullable'
+        columnFuse:
+          $ref: '#/components/schemas/SchemaColumnFuse_Nullable'
+        dataControlDetails:
+          $ref: '#/components/schemas/DataControlSchemaDetails_Nullable'
+        dataSourceId:
+          type: string
+          nullable: true
+        deleteEndpoint:
+          type: string
+          nullable: true
+          writeOnly: true
+        distribution:
+          type: string
+          enum:
+            - global
+            - pool
+            - federated
+            - adrenaline_dataflow
+            - pushdown_dataflow
+            - change_data_capture
+            - direct_federated
+          nullable: true
+        fuse:
+          type: boolean
+          nullable: true
+        hasData:
+          type: boolean
+          nullable: true
+        indexEndpoint:
+          type: string
+          nullable: true
+          writeOnly: true
+        lastModified:
+          type: string
+          nullable: true
+        locale:
+          type: string
+          nullable: true
+        mergeStrategy:
+          type: string
+          enum:
+            - upsert
+            - ignoreDuplicates
+          nullable: true
+        model:
+          $ref: '#/components/schemas/SchemaModel_Nullable'
+        name:
+          type: string
+          nullable: true
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchemaObject'
+          nullable: true
+        progressEndpoint:
+          type: string
+          nullable: true
+          writeOnly: true
+        queryEndpoint:
+          type: string
+          nullable: true
+          writeOnly: true
+        rowFuse:
+          $ref: '#/components/schemas/SchemaRowFuse_Nullable'
+        select:
+          $ref: '#/components/schemas/Select_Nullable'
+        source:
+          type: string
+          nullable: true
+        tables:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchemaTable'
+          nullable: true
+        url:
+          type: string
+          nullable: true
+          writeOnly: true
+        version:
+          type: string
+          nullable: true
+        versionId:
+          type: string
+          nullable: true
+        view:
+          type: boolean
+          nullable: true
+        viewDialectSql:
+          type: string
+          nullable: true
+        viewTemplate:
+          $ref: '#/components/schemas/ViewTemplate_Nullable'
+        viewTemplateProblemConvertingFromSelect:
+          type: boolean
+          nullable: true
+        views:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchemaView'
+          nullable: true
+    ApplicationSchemaColumn:
+      type: object
+      properties:
+        actionType:
+          type: string
+          nullable: true
+        aggregated:
+          type: boolean
+          nullable: true
+        analytic:
+          type: boolean
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        id:
+          type: string
+          nullable: true
+        isDataControlled:
+          type: boolean
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        order:
+          type: integer
+          format: int32
+          nullable: true
+        overrideId:
+          type: string
+          nullable: true
+        referenceDataSourceId:
+          type: string
+          nullable: true
+        schemaMetadataTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchemaMetadataType'
+          nullable: true
+        sourceType:
+          type: string
+          nullable: true
+        tags:
+          type: array
+          items:
+            type: string
+          nullable: true
+          uniqueItems: true
+        type:
+          type: string
+          enum:
+            - STRING
+            - DECIMAL
+            - LONG
+            - DOUBLE
+            - DATE
+            - DATETIME
+          nullable: true
+        visible:
+          type: boolean
+          nullable: true
+    ApplicationSchemaTable:
+      type: object
+      properties:
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationSchemaColumn'
+          nullable: true
+        joinDataSourceIds:
+          type: array
+          items:
+            type: string
+          nullable: true
+        modeledColumns:
+          $ref: '#/components/schemas/ModeledColumnSet_Nullable'
+    ApplicationSchemaTable_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/ApplicationSchemaTable'
+      nullable: true
+    ApplicationSchemaTable_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/ApplicationSchemaTable'
+    ApplicationSchema_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/ApplicationSchema'
+      nullable: true
+    ApplicationSchema_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/ApplicationSchema'
+    Certification:
+      type: object
+      properties:
+        adminCertified:
+          type: boolean
+          nullable: true
+        approvalRequestId:
+          type: string
+          nullable: true
+        lastUpdated:
+          type: integer
+          format: int64
+          nullable: true
+        processName:
+          type: string
+          nullable: true
+        processType:
+          type: string
+          enum:
+            - UNKNOWN
+            - COMPANY
+            - DEPARTMENT
+          nullable: true
+        reason:
+          type: string
+          enum:
+            - MODIFIED
+            - TIME
+            - MANUAL
+            - UNKNOWN
+          nullable: true
+        state:
+          type: string
+          enum:
+            - REQUESTED
+            - PENDING
+            - CERTIFIED
+            - EXPIRED
+            - NOT_CERTIFIED
+            - UNKNOWN
+          nullable: true
+        userId:
+          type: string
+          nullable: true
+    Certification_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/Certification'
+      nullable: true
+    Certification_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/Certification'
+    CloudStorageLocation:
+      type: object
+      properties:
+        cloudId:
+          type: string
+          nullable: true
+        database:
+          type: string
+          nullable: true
+        schema:
+          type: string
+          nullable: true
+        tableName:
+          type: string
+          nullable: true
+    CloudStorageLocation_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/CloudStorageLocation'
+      nullable: true
+    CloudStorageLocation_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/CloudStorageLocation'
+    ColumnFuseDefinition:
+      type: object
+      properties:
+        columnFuse:
+          $ref: '#/components/schemas/ColumnFuseDefinition_Nullable'
+        leftDataSource:
+          type: string
+          nullable: true
+        predicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/FusePredicateDefinition'
+          nullable: true
+        rightDataSource:
+          type: string
+          nullable: true
+        type:
+          type: string
+          enum:
+            - inner
+            - left
+            - right
+          nullable: true
+    ColumnFuseDefinition_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/ColumnFuseDefinition'
+      nullable: true
+    ColumnFuseDefinition_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/ColumnFuseDefinition'
+    ColumnFusePredicate:
+      type: object
+      properties:
+        leftColumn:
+          type: string
+          nullable: true
+        rightColumn:
+          type: string
+          nullable: true
+        type:
+          type: string
+          enum:
+            - and
+          nullable: true
+    ColumnPosition:
+      type: object
+      properties:
+        columnName:
+          type: string
+          nullable: true
+        columnPosition:
+          type: integer
+          format: int32
+          nullable: true
+    ColumnViewMapping:
+      type: object
+      properties:
+        expr:
+          $ref: '#/components/schemas/Expression_Nullable'
+    Configuration:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        secret:
+          type: boolean
+          nullable: true
+        value:
+          type: string
+          nullable: true
+    DataControlSchemaDetails:
+      type: object
+      properties:
+        controlledColumns:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+      required:
+        - controlledColumns
+    DataControlSchemaDetails_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/DataControlSchemaDetails'
+      nullable: true
+    DataControlSchemaDetails_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/DataControlSchemaDetails'
+    DataProvider:
+      type: object
+      properties:
+        advancedUiConnectorId:
+          type: string
+          nullable: true
+        authenticationScheme:
+          type: string
+          nullable: true
+        authenticationSchemeConfiguration:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataProviderAuthSchemeConfig'
+          nullable: true
+        capabilities:
+          $ref: '#/components/schemas/DataProviderCapabilities_Nullable'
+        connectorValidatorPresent:
+          type: boolean
+          nullable: true
+        customerOAuthConfigurationDataProviderType:
+          type: string
+          nullable: true
+        dateCreated:
+          type: integer
+          format: int64
+          nullable: true
+        dateUpdated:
+          type: integer
+          format: int64
+          nullable: true
+        defaultConnectorId:
+          type: string
+          nullable: true
+        defaultConnectorLabel:
+          type: string
+          nullable: true
+        excludedFields:
+          type: boolean
+          nullable: true
+          writeOnly: true
+        iconPicker:
+          type: boolean
+          nullable: true
+        id:
+          type: integer
+          format: int64
+          nullable: true
+        internal:
+          type: boolean
+          nullable: true
+          writeOnly: true
+        key:
+          type: string
+          nullable: true
+        moduleHandler:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        producer:
+          type: string
+          nullable: true
+        resourceBundlePresent:
+          type: boolean
+          nullable: true
+        scope:
+          type: string
+          enum:
+            - GLOBAL
+            - LIMITED
+            - SYSTEM
+          nullable: true
+        translationMap:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        type:
+          type: string
+          enum:
+            - STANDARD
+            - STANDARD_OAUTH
+            - FEDERATED
+            - FEDERATED_OAUTH
+            - OAUTH_CONFIGURATION
+          nullable: true
+        unsafe:
+          type: boolean
+          nullable: true
+        url:
+          type: string
+          nullable: true
+        version:
+          type: string
+          nullable: true
+        visibility:
+          type: string
+          enum:
+            - ALWAYS
+            - WITH_CONNECTOR
+          nullable: true
+    DataProviderAuthSchemeConfig:
+      type: object
+      properties:
+        data:
+          type: string
+          nullable: true
+        defaultValue:
+          type: string
+          nullable: true
+        encrypted:
+          type: boolean
+          nullable: true
+        id:
+          type: integer
+          format: int64
+          nullable: true
+        isConfigField:
+          type: boolean
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        required:
+          type: boolean
+          nullable: true
+        restrictions:
+          type: string
+          nullable: true
+        sortOrder:
+          type: integer
+          format: int64
+          nullable: true
+        text:
+          type: string
+          nullable: true
+        tooltipText:
+          type: string
+          nullable: true
+        type:
+          type: string
+          nullable: true
+    DataProviderCapabilities:
+      type: object
+      properties:
+        readingDataSupported:
+          type: boolean
+          nullable: true
+        readingObjectsSupported:
+          type: boolean
+          nullable: true
+        readingSecretsSupported:
+          type: boolean
+          nullable: true
+        readingTablesSupported:
+          type: boolean
+          nullable: true
+        writingDataSupported:
+          type: boolean
+          nullable: true
+        writingObjectsSupported:
+          type: boolean
+          nullable: true
+        writingSecretsSupported:
+          type: boolean
+          nullable: true
+        writingTablesSupported:
+          type: boolean
+          nullable: true
+    DataProviderCapabilities_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/DataProviderCapabilities'
+      nullable: true
+    DataProviderCapabilities_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/DataProviderCapabilities'
+    DataProvider_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/DataProvider'
+      nullable: true
+    DataProvider_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/DataProvider'
+    DataSource:
+      type: object
+      properties:
+        accountId:
+          type: integer
+          format: int64
+          nullable: true
+        adc:
+          type: boolean
+          nullable: true
+        adcExternal:
+          type: boolean
+          nullable: true
+        adcSource:
+          type: string
+          enum:
+            - DIRECT
+            - INPUT
+            - EXTERNAL
+          nullable: true
+        alertCount:
+          type: integer
+          format: int32
+          nullable: true
+        cardCount:
+          type: integer
+          format: int32
+          nullable: true
+        cardInfo:
+          $ref: '#/components/schemas/DataSourceCardInfo_Nullable'
+        certification:
+          $ref: '#/components/schemas/Certification_Nullable'
+        cloudEngine:
+          type: string
+          nullable: true
+        cloudId:
+          type: string
+          nullable: true
+        cloudName:
+          type: string
+          nullable: true
+        cloudStorageLocation:
+          $ref: '#/components/schemas/CloudStorageLocation_Nullable'
+        columnCount:
+          type: integer
+          format: int32
+          nullable: true
+        created:
+          type: integer
+          format: int64
+          nullable: true
+        cryoStatus:
+          type: string
+          enum:
+            - VAULT
+            - ADRENALINE
+            - PROCESSING
+          nullable: true
+        currentUserFullAccess:
+          type: boolean
+          nullable: true
+        dataFlowCount:
+          type: integer
+          format: int32
+          nullable: true
+        dataLastUpdated:
+          type: integer
+          format: int64
+          nullable: true
+        dataProvider:
+          $ref: '#/components/schemas/DataProvider_Nullable'
+        dataProviderType:
+          type: string
+          nullable: true
+        dataSourceCount:
+          type: integer
+          format: int32
+          nullable: true
+        datasetCount:
+          type: integer
+          format: int32
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        displayType:
+          type: string
+          nullable: true
+        externalCloudSchema:
+          $ref: '#/components/schemas/ExternalCloudSchema_Nullable'
+        externalDataLastUpdated:
+          type: integer
+          format: int64
+          nullable: true
+        features:
+          type: object
+          additionalProperties:
+            type: boolean
+          nullable: true
+        hidden:
+          type: boolean
+          nullable: true
+        id:
+          type: string
+          nullable: true
+        impactAlertCount:
+          type: integer
+          format: int32
+          nullable: true
+        impactCardCount:
+          type: integer
+          format: int32
+          nullable: true
+        impactCountsComplete:
+          type: boolean
+          nullable: true
+        impactCountsUpdated:
+          type: integer
+          format: int64
+          nullable: true
+        impactDataFlowCount:
+          type: integer
+          format: int32
+          nullable: true
+        impactDataSourceCount:
+          type: integer
+          format: int32
+          nullable: true
+        inactiveScheduleCode:
+          type: integer
+          format: int32
+          nullable: true
+        lastTouched:
+          type: integer
+          format: int64
+          nullable: true
+        lastUpdated:
+          type: integer
+          format: int64
+          nullable: true
+        masked:
+          type: boolean
+          nullable: true
+        message:
+          type: string
+          nullable: true
+        messageCode:
+          type: integer
+          format: int32
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        nextUpdate:
+          type: integer
+          format: int64
+          nullable: true
+        onboardImportId:
+          type: integer
+          format: int64
+          nullable: true
+        owner:
+          $ref: '#/components/schemas/DataSourceOwner_Nullable'
+        permissions:
+          type: string
+          enum:
+            - NONE
+            - LIMITED_READ
+            - READ
+            - READ_WRITE
+            - READ_SHARE
+            - READ_WRITE_SHARE
+            - READ_WRITE_DELETE
+            - READ_WRITE_DELETE_SHARE
+            - READ_WRITE_DELETE_SHARE_ADMIN
+          nullable: true
+        pharos:
+          type: array
+          items:
+            $ref: '#/components/schemas/PharosStream'
+          nullable: true
+        phase:
+          type: string
+          nullable: true
+        properties:
+          $ref: '#/components/schemas/DataSourceProperties_Nullable'
+        rowCount:
+          type: integer
+          format: int64
+          nullable: true
+        scheduleActive:
+          type: boolean
+          nullable: true
+        schema:
+          $ref: '#/components/schemas/ApplicationSchema_Nullable'
+        state:
+          type: string
+          nullable: true
+        status:
+          type: string
+          deprecated: true
+          nullable: true
+        streamId:
+          type: integer
+          format: int64
+          nullable: true
+        tags:
+          type: string
+          nullable: true
+        tagsList:
+          type: array
+          items:
+            type: string
+          nullable: true
+        transportType:
+          type: string
+          enum:
+            - UNKNOWN
+            - API
+            - CONNECTOR
+            - EXCEL
+            - PLUGIN
+            - SFTP
+            - WEBFORM
+            - WORKBENCH
+            - FUSION
+            - DATAFLOW
+            - SMTP
+            - UPLOAD
+            - GLOBAL
+            - FEDERATED
+            - JSON
+            - VIEW
+            - CLOUD
+            - PUBLISH
+          nullable: true
+        type:
+          type: string
+          deprecated: true
+          nullable: true
+        updateFrequency:
+          type: integer
+          format: int64
+          nullable: true
+        userCount:
+          type: integer
+          format: int32
+          nullable: true
+        userDefinedType:
+          type: string
+          nullable: true
+        validAccount:
+          type: boolean
+          nullable: true
+        validConfiguration:
+          type: boolean
+          nullable: true
+    DataSourceCardInfo:
+      type: object
+      properties:
+        cardCount:
+          type: integer
+          format: int32
+          nullable: true
+        cardViewCount:
+          type: integer
+          format: int32
+          nullable: true
+    DataSourceCardInfo_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/DataSourceCardInfo'
+      nullable: true
+    DataSourceCardInfo_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/DataSourceCardInfo'
+    DataSourceOwner:
+      type: object
+      properties:
+        group:
+          type: boolean
+          nullable: true
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        type:
+          type: string
+          enum:
+            - UNKNOWN
+            - SYSTEM
+            - USER
+            - VIRTUAL_USER
+            - GROUP
+            - CUSTOMER
+            - DOMO_ROLE
+            - CUSTOMER_ROLE
+            - AUTHORITY
+            - CARD
+            - PAGE
+            - DATA_APP_VIEW
+            - REPORT_VIEW_PAGE
+            - REPORT_VIEW
+            - DOMOTALK
+            - BUZZ_CHANNEL
+            - BUZZ_INTEGRATION
+            - PROJECT
+            - PROJECT_TASK
+            - FILE
+            - DATA_SOURCE
+            - ACCOUNT
+            - ACCOUNT_TEMPLATE
+            - CREDENTIAL_REQUEST
+            - STREAM
+            - DATAFLOW
+            - DATAFLOW_RECIPE
+            - DATAFLOW_RECIPE_VERSION
+            - ADC_POLICY
+            - ADC_POLICY_GROUP
+            - APPROVAL
+            - APPROVAL_TEMPLATE
+            - CERTIFICATION
+            - ALERT
+            - CONTROL_GROUP
+            - FUSION
+            - BEAST_MODE
+            - DATA_DEFINITION
+            - STORY
+            - SS_SPEC
+            - SS_ACCESS_GROUP
+            - SS_SSO_GROUP
+            - DATA_SCIENCE_NOTEBOOK
+            - FILESHARE
+            - DATA_SCIENCE_PROJECT
+            - DATA_SCIENCE_MODEL
+            - VECTOR_INDEX
+            - FILE_SET
+            - MAGNUM_COLLECTION
+            - RYUU_APP
+            - RYUU_DESIGN
+            - ODYSSEY_WORKFLOW_MODEL
+            - ODYSSEY_WORKFLOW_DEPLOYMENT
+            - ODYSSEY_BUCKET
+            - PIPELINE_EXECUTOR_JOB
+            - REPOSITORY
+            - VERSION_DEPLOYMENT
+            - CODEENGINE_FUNCTION
+            - ENIGMA_FORM
+            - ENIGMA_FORM_INSTANCE
+            - HOPPER_QUEUE
+            - DATA_APP
+            - WORKBENCH_JOB
+            - WORKBENCH_GROUP
+            - WORKBENCH_CREDENTIAL
+            - CONFIG_APP_CONFIGURATION
+            - CONFIG_APP
+            - WORKSPACE
+          nullable: true
+    DataSourceOwner_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/DataSourceOwner'
+      nullable: true
+    DataSourceOwner_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/DataSourceOwner'
+    DataSourceProperties:
+      type: object
+      properties:
+        formulas:
+          $ref: '#/components/schemas/FormulaDefinitions_Nullable'
+        importId:
+          type: string
+          nullable: true
+        version:
+          type: string
+          nullable: true
+    DataSourceProperties_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/DataSourceProperties'
+      nullable: true
+    DataSourceProperties_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/DataSourceProperties'
+    Error:
+      type: object
+      properties:
+        category:
+          type: string
+          enum:
+            - CONNECTOR
+            - FRAMEWORK
+            - USER
+            - CONNECTOR_WARNING
+          nullable: true
+        code:
+          type: integer
+          format: int32
+          nullable: true
+        executionId:
+          type: integer
+          format: int64
+          nullable: true
+        id:
+          type: integer
+          format: int64
+          nullable: true
+        invalidatesExecution:
+          type: boolean
+          nullable: true
+        keepUpload:
+          type: boolean
+          nullable: true
+          writeOnly: true
+        message:
+          type: string
+          nullable: true
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        streamId:
+          type: integer
+          format: int64
+          nullable: true
+    ErrorResponse:
+      type: object
+      properties:
+        exception:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+        path:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        statusReason:
+          type: string
+          nullable: true
+        toe:
+          type: string
+          nullable: true
+        userId:
+          type: string
+          nullable: true
+    Expression:
+      type: object
+      discriminator:
+        propertyName: '@type'
+      properties:
+        '@type':
+          type: string
+        astnode:
+          $ref: '#/components/schemas/SimpleNode_Nullable'
+      required:
+        - '@type'
+    Expression_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/Expression'
+      nullable: true
+    ExternalCloudSchema:
+      type: object
+      properties:
+        catalog:
+          type: string
+          nullable: true
+        schema:
+          type: string
+          nullable: true
+        table:
+          type: string
+          nullable: true
+    ExternalCloudSchema_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/ExternalCloudSchema'
+      nullable: true
+    ExternalCloudSchema_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/ExternalCloudSchema'
+    FormulaDefinitions:
+      type: object
+      properties:
+        formulas:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/FormulaEntry'
+          nullable: true
+    FormulaDefinitions_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/FormulaDefinitions'
+      nullable: true
+    FormulaDefinitions_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/FormulaDefinitions'
+    FormulaEntry:
+      type: object
+      properties:
+        bignumber:
+          type: boolean
+          nullable: true
+        cacheWindow:
+          type: string
+          enum:
+            - none
+            - none_if_default
+            - hour
+            - hour_if_dynamic_input
+            - day
+            - day_if_dynamic_input
+            - non_dynamic
+          nullable: true
+        columnPositions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ColumnPosition'
+          nullable: true
+        dataType:
+          type: string
+          nullable: true
+        expression:
+          $ref: '#/components/schemas/Expression_Nullable'
+        formula:
+          type: string
+          nullable: true
+        formulaDependencies:
+          type: array
+          items:
+            type: string
+          nullable: true
+          uniqueItems: true
+        id:
+          type: string
+          nullable: true
+        isAggregatable:
+          type: boolean
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        nonAggregatedColumns:
+          type: array
+          items:
+            type: string
+          nullable: true
+          uniqueItems: true
+        persistedOnDataSource:
+          type: boolean
+          nullable: true
+        status:
+          type: string
+          nullable: true
+        templateId:
+          type: integer
+          format: int64
+          nullable: true
+        variable:
+          type: boolean
+          nullable: true
+    FusePredicateDefinition:
+      type: object
+      properties:
+        leftColumn:
+          type: string
+          nullable: true
+        rightColumn:
+          type: string
+          nullable: true
+    Limit:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int64
+          nullable: true
+        offset:
+          type: integer
+          format: int64
+          nullable: true
+    Limit_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/Limit'
+      nullable: true
+    Limit_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/Limit'
+    Link:
+      type: object
+      properties:
+        deprecation:
+          type: string
+        href:
+          type: string
+        hreflang:
+          type: string
+        name:
+          type: string
+        profile:
+          type: string
+        templated:
+          type: boolean
+        title:
+          type: string
+        type:
+          type: string
+    Links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/Link'
+    ModelObject:
+      type: object
+      discriminator:
+        propertyName: type
+      properties:
+        type:
+          type: string
+          enum:
+            - DATASET
+            - SELECT
+          nullable: true
+    ModelReference:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        object:
+          type: string
+          nullable: true
+    ModelRelationship:
+      type: object
+      properties:
+        alias:
+          type: string
+          nullable: true
+        cardinality:
+          type: string
+          enum:
+            - one_to_one
+            - many_to_one
+            - one_to_many
+            - many_to_many
+          nullable: true
+        joinType:
+          type: string
+          enum:
+            - INNER
+            - LEFT
+            - RIGHT
+          nullable: true
+        left:
+          type: string
+          nullable: true
+        leftKeys:
+          type: array
+          items:
+            $ref: '#/components/schemas/Expression'
+          nullable: true
+        primary:
+          type: boolean
+          nullable: true
+        right:
+          type: string
+          nullable: true
+        rightKeys:
+          type: array
+          items:
+            $ref: '#/components/schemas/Expression'
+          nullable: true
+    ModeledColumnSet:
+      type: object
+      properties:
+        columns:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/ApplicationSchemaColumn'
+          nullable: true
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelReference'
+          nullable: true
+    ModeledColumnSet_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/ModeledColumnSet'
+      nullable: true
+    ModeledColumnSet_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/ModeledColumnSet'
+    OauthErrorResponse:
+      type: object
+      properties:
+        cause:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+        refreshUrl:
+          type: string
+          nullable: true
+        toe:
+          type: string
+          nullable: true
+    OrderedExpression:
+      type: object
+      properties:
+        expression:
+          $ref: '#/components/schemas/Expression_Nullable'
+        order:
+          type: string
+          enum:
+            - ASCENDING
+            - DESCENDING
+          nullable: true
+    PharosStream:
+      type: object
+      properties:
+        commitNext:
+          type: integer
+          format: int64
+          nullable: true
+        delay:
+          type: integer
+          format: int32
+          nullable: true
+        period:
+          type: integer
+          format: int32
+          nullable: true
+        schemaId:
+          type: integer
+          format: int32
+          nullable: true
+        streamId:
+          type: integer
+          format: int32
+          nullable: true
+        timestamp:
+          type: integer
+          format: int32
+          nullable: true
+        token:
+          type: string
+          nullable: true
+    RowFuseDefinition:
+      type: object
+      properties:
+        dataSources:
+          type: array
+          items:
+            type: string
+          nullable: true
+    RowFuseDefinition_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/RowFuseDefinition'
+      nullable: true
+    RowFuseDefinition_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/RowFuseDefinition'
+    SchemaColumn:
+      type: object
+      properties:
+        aggregated:
+          type: boolean
+          nullable: true
+        analytic:
+          type: boolean
+          nullable: true
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        sourceType:
+          type: string
+          nullable: true
+        type:
+          type: string
+          enum:
+            - STRING
+            - DECIMAL
+            - LONG
+            - DOUBLE
+            - DATE
+            - DATETIME
+          nullable: true
+    SchemaColumnFormat:
+      type: object
+      properties:
+        abbreviate:
+          type: boolean
+          nullable: true
+        alignment:
+          type: string
+          nullable: true
+        alwaysShowDecimalPlaces:
+          type: boolean
+          nullable: true
+        commas:
+          type: boolean
+          nullable: true
+        currency:
+          type: string
+          nullable: true
+        dateFormat:
+          type: string
+          nullable: true
+        format:
+          type: string
+          nullable: true
+        percent:
+          type: boolean
+          nullable: true
+        percentMultiplied:
+          type: boolean
+          nullable: true
+        precision:
+          type: integer
+          format: int32
+          nullable: true
+        style:
+          type: string
+          nullable: true
+        tableColumn:
+          $ref: '#/components/schemas/SchemaTableColumnFormat_Nullable'
+        type:
+          type: string
+          nullable: true
+    SchemaColumnFormat_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/SchemaColumnFormat'
+      nullable: true
+    SchemaColumnFormat_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/SchemaColumnFormat'
+    SchemaColumnFuse:
+      type: object
+      properties:
+        childColumnFuse:
+          $ref: '#/components/schemas/SchemaColumnFuse_Nullable'
+        columnFuse:
+          $ref: '#/components/schemas/SchemaColumnFuse_Nullable'
+        dataSources:
+          type: array
+          items:
+            type: string
+          nullable: true
+        leftDataSource:
+          type: string
+          nullable: true
+        predicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/ColumnFusePredicate'
+          nullable: true
+        rightDataSource:
+          type: string
+          nullable: true
+        type:
+          type: string
+          enum:
+            - inner
+            - right
+            - left
+          nullable: true
+    SchemaColumnFuse_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/SchemaColumnFuse'
+      nullable: true
+    SchemaColumnFuse_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/SchemaColumnFuse'
+    SchemaMetadataType:
+      type: object
+      properties:
+        aiContext:
+          type: string
+          nullable: true
+        aiEnabled:
+          type: boolean
+          nullable: true
+        aiSynonyms:
+          type: array
+          items:
+            type: string
+          nullable: true
+        confidence:
+          type: string
+          enum:
+            - LOW
+            - MEDIUM
+            - HIGH
+            - BONAFIDE
+          nullable: true
+        date:
+          type: integer
+          format: int64
+          nullable: true
+        defaultAggregation:
+          type: string
+          enum:
+            - AVG
+            - COUNT
+            - COUNT_DISTINCT
+            - MAX
+            - MIN
+            - SUM
+            - NONE
+            - UNKNOWN
+          nullable: true
+        format:
+          $ref: '#/components/schemas/SchemaColumnFormat_Nullable'
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          nullable: true
+        sampleSize:
+          type: integer
+          format: int64
+          nullable: true
+        source:
+          type: string
+          enum:
+            - CONNECTOR
+            - ICE
+            - ML_PLATFORM
+            - USER
+          nullable: true
+        subType:
+          type: string
+          enum:
+            - NOT_SET
+            - DATE_OR_TIME
+            - DATE
+            - DAY_OF_MONTH
+            - DAY_OF_WEEK
+            - DURATION
+            - HOUR
+            - MINUTE
+            - MONTH
+            - MONTH_OF_YEAR
+            - QUARTER
+            - QUARTER_OF_YEAR
+            - TIME
+            - TIMESTAMP
+            - WEEK
+            - WEEK_OF_YEAR
+            - YEAR
+            - GEO
+            - CITY
+            - COUNTRY
+            - FIPS
+            - LAT_AND_LONG
+            - LATITUDE
+            - LONGITUDE
+            - REGION
+            - US_STATE
+            - ZIP_CODE
+            - NUMBER
+            - CURRENCY
+            - DECIMAL
+            - INTEGER
+            - PERCENTAGE
+            - RANK
+            - DECREASE_POSITIVE
+            - INCREASE_POSITIVE
+            - RATING
+            - TEXT
+            - CATEGORICAL
+            - DELIMITED
+            - URL
+            - IMAGE_URL
+            - LINK_URL
+            - BINARY
+            - BOOLEAN
+            - CATEGORY
+            - EMAIL
+            - GROUP
+            - ID
+            - IP
+            - OBJECT
+            - PHONE
+          nullable: true
+        subTypeString:
+          type: string
+          nullable: true
+        type:
+          type: string
+          enum:
+            - NOT_SET
+            - DATE_OR_TIME
+            - DATE
+            - DAY_OF_MONTH
+            - DAY_OF_WEEK
+            - DURATION
+            - HOUR
+            - MINUTE
+            - MONTH
+            - MONTH_OF_YEAR
+            - QUARTER
+            - QUARTER_OF_YEAR
+            - TIME
+            - TIMESTAMP
+            - WEEK
+            - WEEK_OF_YEAR
+            - YEAR
+            - GEO
+            - CITY
+            - COUNTRY
+            - FIPS
+            - LAT_AND_LONG
+            - LATITUDE
+            - LONGITUDE
+            - REGION
+            - US_STATE
+            - ZIP_CODE
+            - NUMBER
+            - CURRENCY
+            - DECIMAL
+            - INTEGER
+            - PERCENTAGE
+            - RANK
+            - DECREASE_POSITIVE
+            - INCREASE_POSITIVE
+            - RATING
+            - TEXT
+            - CATEGORICAL
+            - DELIMITED
+            - URL
+            - IMAGE_URL
+            - LINK_URL
+            - BINARY
+            - BOOLEAN
+            - CATEGORY
+            - EMAIL
+            - GROUP
+            - ID
+            - IP
+            - OBJECT
+            - PHONE
+          nullable: true
+    SchemaModel:
+      type: object
+      properties:
+        objects:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ModelObject'
+          nullable: true
+        relationships:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelRelationship'
+          nullable: true
+    SchemaModel_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/SchemaModel'
+      nullable: true
+    SchemaModel_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/SchemaModel'
+    SchemaObject:
+      type: object
+      properties:
+        column:
+          type: string
+          nullable: true
+        objectClass:
+          type: string
+          enum:
+            - Identity
+            - Image
+            - GeoCode
+            - Latitude
+            - Longitude
+            - Uri
+            - Encrypted
+            - MergeFilterGreater
+            - MergeFilterLesser
+            - RequiredPartitionFilter
+            - OptionalPartitionFilter
+          nullable: true
+        objectList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchemaObject'
+          nullable: true
+    SchemaRowFuse:
+      type: object
+      properties:
+        dataSources:
+          type: array
+          items:
+            type: string
+          nullable: true
+    SchemaRowFuse_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/SchemaRowFuse'
+      nullable: true
+    SchemaRowFuse_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/SchemaRowFuse'
+    SchemaTable:
+      type: object
+      properties:
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchemaColumn'
+          nullable: true
+    SchemaTableColumnFormat:
+      type: object
+      properties:
+        aggregation:
+          type: string
+          nullable: true
+        color:
+          type: string
+          nullable: true
+        dataCalculation:
+          type: string
+          enum:
+            - PERC_GRAND_TOTAL
+            - PERC_COLUMN_TOTAL
+            - PERC_COLUMN_SUBTOTAL
+            - PERC_ROW_TOTAL
+            - PERC_ROW_SUBTOTAL
+            - PERC_PARENT_ROW
+            - PERC_PARENT_COLUMN
+            - RUNNING_TOTAL
+            - RANK_SML_TO_LRG
+            - RANK_LRG_TO_SML
+          nullable: true
+        displayLabel:
+          type: string
+          nullable: true
+        displayPrefix:
+          type: string
+          nullable: true
+        displaySuffix:
+          type: string
+          nullable: true
+        displayType:
+          type: string
+          enum:
+            - text
+            - link
+            - image
+          nullable: true
+        hideSubtotal:
+          type: boolean
+          nullable: true
+        hideTotal:
+          type: boolean
+          nullable: true
+        hideTotalAggregationLabel:
+          type: boolean
+          nullable: true
+        percentOfTotal:
+          type: boolean
+          deprecated: true
+          nullable: true
+        subtotalAlignment:
+          type: string
+          enum:
+            - left
+            - right
+            - center
+            - Default
+          nullable: true
+        subtotalCalculation:
+          type: string
+          enum:
+            - PERC_GRAND_TOTAL
+            - PERC_COLUMN_TOTAL
+            - PERC_COLUMN_SUBTOTAL
+            - PERC_ROW_TOTAL
+            - PERC_ROW_SUBTOTAL
+            - PERC_PARENT_ROW
+            - PERC_PARENT_COLUMN
+            - RUNNING_TOTAL
+            - RANK_SML_TO_LRG
+            - RANK_LRG_TO_SML
+          nullable: true
+        subtotalStyle:
+          type: string
+          enum:
+            - BOLD
+            - ITALIC
+            - UNDERLINE
+            - BOLD_ITALIC
+            - PLAIN
+            - NONE
+            - LIGHT
+            - LIGHT_ITALIC
+            - MEDIUM
+            - MEDIUM_ITALIC
+          nullable: true
+        textColor:
+          type: string
+          nullable: true
+        totalAggregationLabel:
+          type: string
+          nullable: true
+        totalAlignment:
+          type: string
+          enum:
+            - left
+            - right
+            - center
+            - Default
+          nullable: true
+        totalStyle:
+          type: string
+          enum:
+            - BOLD
+            - ITALIC
+            - UNDERLINE
+            - BOLD_ITALIC
+            - PLAIN
+            - NONE
+            - LIGHT
+            - LIGHT_ITALIC
+            - MEDIUM
+            - MEDIUM_ITALIC
+          nullable: true
+        width:
+          type: integer
+          format: int32
+          nullable: true
+    SchemaTableColumnFormat_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/SchemaTableColumnFormat'
+      nullable: true
+    SchemaTableColumnFormat_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/SchemaTableColumnFormat'
+    SchemaView:
+      type: object
+      properties:
+        columnFuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchemaViewColumnFuse'
+          nullable: true
+        from:
+          type: string
+          nullable: true
+        groupBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/Expression'
+          nullable: true
+        having:
+          $ref: '#/components/schemas/Expression_Nullable'
+        limit:
+          $ref: '#/components/schemas/Limit_Nullable'
+        mapping:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ColumnViewMapping'
+          nullable: true
+        orderBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderedExpression'
+          nullable: true
+        where:
+          $ref: '#/components/schemas/Expression_Nullable'
+    SchemaViewColumnFuse:
+      type: object
+      properties:
+        datasource:
+          type: string
+          nullable: true
+        'on':
+          $ref: '#/components/schemas/Expression_Nullable'
+        type:
+          type: string
+          enum:
+            - inner
+            - right
+            - left
+          nullable: true
+    Select:
+      type: object
+      properties:
+        selectBody:
+          $ref: '#/components/schemas/SelectBody_Nullable'
+        withItemsList:
+          type: array
+          items:
+            $ref: '#/components/schemas/WithItem'
+          nullable: true
+          properties:
+            empty:
+              type: boolean
+            first:
+              $ref: '#/components/schemas/WithItem'
+            last:
+              $ref: '#/components/schemas/WithItem'
+    SelectBody:
+      type: object
+      discriminator:
+        propertyName: '@type'
+      properties:
+        '@type':
+          type: string
+      required:
+        - '@type'
+    SelectBody_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/SelectBody'
+      nullable: true
+    SelectBody_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/WithItem'
+    SelectItem:
+      type: object
+      discriminator:
+        propertyName: '@type'
+      properties:
+        '@type':
+          type: string
+        astnode:
+          $ref: '#/components/schemas/SimpleNode_Nullable'
+      required:
+        - '@type'
+    Select_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/Select'
+      nullable: true
+    Select_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/Select'
+    SimpleNode:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          nullable: true
+    SimpleNode_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/SimpleNode'
+      nullable: true
+    SimpleNode_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/SimpleNode'
+    Stream:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/Account_Nullable'
+        accountTemplate:
+          $ref: '#/components/schemas/AccountTemplate_Nullable'
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/StreamAccount'
+          nullable: true
+        advancedScheduleJson:
+          type: string
+          nullable: true
+        configuration:
+          type: array
+          items:
+            $ref: '#/components/schemas/StreamConfiguration'
+          nullable: true
+        createdAt:
+          type: integer
+          format: int64
+          nullable: true
+        createdBy:
+          type: integer
+          format: int64
+          nullable: true
+        currentExecution:
+          $ref: '#/components/schemas/StreamExecution_Nullable'
+        currentExecutionState:
+          type: string
+          enum:
+            - IDLE
+            - ACTIVE
+            - INVALID
+            - SUCCESS
+            - ERROR
+            - UNKNOWN
+            - WARNING
+          nullable: true
+        dataProvider:
+          $ref: '#/components/schemas/DataProvider_Nullable'
+        dataSource:
+          $ref: '#/components/schemas/DataSource'
+        id:
+          type: integer
+          format: int64
+          nullable: true
+        inactiveScheduleCode:
+          type: integer
+          format: int32
+          nullable: true
+        invalidExecutionId:
+          type: integer
+          format: int64
+          nullable: true
+        lastExecution:
+          $ref: '#/components/schemas/StreamExecution_Nullable'
+        lastSuccessfulExecution:
+          $ref: '#/components/schemas/StreamExecution_Nullable'
+        modifiedAt:
+          type: integer
+          format: int64
+          nullable: true
+        modifiedBy:
+          type: integer
+          format: int64
+          nullable: true
+        scheduleAssertion:
+          type: boolean
+          nullable: true
+        scheduleExpression:
+          type: string
+          nullable: true
+        scheduleRetryCount:
+          type: integer
+          format: int32
+          nullable: true
+        scheduleRetryExpression:
+          type: string
+          nullable: true
+        scheduleStartDate:
+          type: integer
+          format: int64
+          nullable: true
+        scheduleState:
+          type: string
+          enum:
+            - MANUAL
+            - ACTIVE
+            - INACTIVE
+          nullable: true
+        schemaDefinition:
+          $ref: '#/components/schemas/schema_Nullable'
+        transport:
+          $ref: '#/components/schemas/Transport_Nullable'
+        updateMethod:
+          type: string
+          enum:
+            - REPLACE
+            - APPEND
+            - UPSERT
+            - DELETE
+          nullable: true
+        valid:
+          type: boolean
+          nullable: true
+      required:
+        - dataSource
+    StreamAccount:
+      type: object
+      properties:
+        accountId:
+          type: integer
+          format: int64
+          nullable: true
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        streamId:
+          type: integer
+          format: int64
+          nullable: true
+    StreamConfiguration:
+      type: object
+      properties:
+        category:
+          type: string
+          enum:
+            - STREAM
+            - METADATA
+            - CONNECTOR_STATE
+            - CONNECTOR_RESULT
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        streamId:
+          type: integer
+          format: int64
+          nullable: true
+        type:
+          type: string
+          nullable: true
+        value:
+          type: string
+          nullable: true
+    StreamExecution:
+      type: object
+      properties:
+        bytesInserted:
+          type: integer
+          format: int64
+          nullable: true
+        cancelledBy:
+          type: string
+          nullable: true
+        containerManagerId:
+          type: string
+          nullable: true
+        createdAt:
+          type: integer
+          format: int64
+          nullable: true
+        currentPhase:
+          type: string
+          enum:
+            - INIT
+            - QUEUE
+            - IMPORT
+            - DATASTORE
+            - INDEX
+            - FINAL
+          nullable: true
+        currentState:
+          type: string
+          enum:
+            - IDLE
+            - ACTIVE
+            - INVALID
+            - SUCCESS
+            - ERROR
+            - UNKNOWN
+            - WARNING
+          nullable: true
+        dataTag:
+          type: string
+          deprecated: true
+          nullable: true
+        endedAt:
+          type: integer
+          format: int64
+          nullable: true
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+          nullable: true
+        executionId:
+          type: integer
+          format: int64
+          nullable: true
+        exportable:
+          type: boolean
+          nullable: true
+        index:
+          type: boolean
+          nullable: true
+        indexRequestKey:
+          type: number
+          nullable: true
+        latestPhase:
+          $ref: '#/components/schemas/StreamExecutionPhase_Nullable'
+        manualIndex:
+          type: boolean
+          nullable: true
+        modifiedAt:
+          type: integer
+          format: int64
+          nullable: true
+        peakMemoryCommittedBytes:
+          type: integer
+          format: int64
+          nullable: true
+        peakMemoryUsedBytes:
+          type: integer
+          format: int64
+          nullable: true
+        removed:
+          type: boolean
+          nullable: true
+        retryCount:
+          type: integer
+          format: int32
+          nullable: true
+        retryExecution:
+          $ref: '#/components/schemas/StreamExecution_Nullable'
+        rowsInserted:
+          type: integer
+          format: int64
+          nullable: true
+        runType:
+          type: string
+          enum:
+            - AUTOMATED
+            - MANUAL
+            - RETRY
+            - UNKNOWN
+            - REPLAY
+            - BATCH
+            - EXTENDED
+            - API
+          nullable: true
+        startedAt:
+          type: integer
+          format: int64
+          nullable: true
+        startedBy:
+          type: string
+          nullable: true
+        streamId:
+          type: integer
+          format: int64
+          nullable: true
+        toe:
+          type: string
+          nullable: true
+        updateMethod:
+          type: string
+          enum:
+            - REPLACE
+            - APPEND
+            - UPSERT
+            - DELETE
+          nullable: true
+        uploadId:
+          type: integer
+          format: int64
+          nullable: true
+    StreamExecutionPhase:
+      type: object
+      properties:
+        endedAt:
+          type: integer
+          format: int64
+          nullable: true
+        executionId:
+          type: integer
+          format: int64
+          nullable: true
+        phaseType:
+          type: string
+          enum:
+            - INIT
+            - QUEUE
+            - IMPORT
+            - DATASTORE
+            - INDEX
+            - FINAL
+          nullable: true
+        startedAt:
+          type: integer
+          format: int64
+          nullable: true
+        streamId:
+          type: integer
+          format: int64
+          nullable: true
+    StreamExecutionPhase_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/StreamExecutionPhase'
+      nullable: true
+    StreamExecutionPhase_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/StreamExecutionPhase'
+    StreamExecution_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/StreamExecution'
+      nullable: true
+    StreamExecution_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/StreamExecution'
+    Transport:
+      type: object
+      properties:
+        description:
+          type: string
+          nullable: true
+        type:
+          type: string
+          enum:
+            - UNKNOWN
+            - API
+            - CONNECTOR
+            - EXCEL
+            - PLUGIN
+            - SFTP
+            - WEBFORM
+            - WORKBENCH
+            - FUSION
+            - DATAFLOW
+            - SMTP
+            - UPLOAD
+            - GLOBAL
+            - FEDERATED
+            - JSON
+            - VIEW
+            - CLOUD
+            - PUBLISH
+          nullable: true
+        version:
+          type: string
+          nullable: true
+    Transport_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/Transport'
+      nullable: true
+    Transport_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/Transport'
+    ViewTemplate:
+      type: object
+      properties:
+        fromItemInfo:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ViewTemplateFromItemInfo'
+          nullable: true
+        select:
+          $ref: '#/components/schemas/Select_Nullable'
+        selectString:
+          type: string
+          nullable: true
+        version:
+          type: string
+          nullable: true
+    ViewTemplateColumnInfo:
+      type: object
+      properties:
+        aggregated:
+          type: boolean
+          nullable: true
+        formattedExpression:
+          type: string
+        type:
+          type: string
+          enum:
+            - STRING
+            - DECIMAL
+            - LONG
+            - DOUBLE
+            - DATE
+            - DATETIME
+          nullable: true
+      required:
+        - formattedExpression
+    ViewTemplateFromItemInfo:
+      type: object
+      properties:
+        columnInfo:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ViewTemplateColumnInfo'
+          nullable: true
+    ViewTemplate_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/ViewTemplate'
+      nullable: true
+    ViewTemplate_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/ViewTemplate'
+    WithItem:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/SelectBody'
+        - type: object
+          properties:
+            name:
+              type: string
+              nullable: true
+            recursive:
+              type: boolean
+              nullable: true
+            selectBody:
+              $ref: '#/components/schemas/SelectBody_Nullable'
+            v:
+              type: boolean
+              nullable: true
+            withItemList:
+              type: array
+              items:
+                $ref: '#/components/schemas/SelectItem'
+              nullable: true
+              properties:
+                empty:
+                  type: boolean
+                first:
+                  $ref: '#/components/schemas/SelectItem'
+                last:
+                  $ref: '#/components/schemas/SelectItem'
+    schema:
+      type: object
+      properties:
+        columnFuse:
+          $ref: '#/components/schemas/ColumnFuseDefinition_Nullable'
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchemaColumn'
+          nullable: true
+        distribution:
+          type: string
+          enum:
+            - global
+            - pool
+            - federated
+            - adrenaline_dataflow
+            - pushdown_dataflow
+            - change_data_capture
+            - direct_federated
+          nullable: true
+        objects:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: object
+          nullable: true
+        rowFuse:
+          $ref: '#/components/schemas/RowFuseDefinition_Nullable'
+        views:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchemaView'
+          nullable: true
+    schema_Nullable:
+      allOf:
+        - $ref: '#/components/schemas/schema'
+      nullable: true
+    schema_Polymorphic:
+      oneOf:
+        - $ref: '#/components/schemas/schema'
+  securitySchemes:
+    domo-developer-token:
+      in: header
+      name: X-DOMO-Developer-Token
+      type: apiKey
