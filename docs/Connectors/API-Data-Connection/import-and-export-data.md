@@ -90,6 +90,7 @@ Streams in Domo allow you to import data for multiple use cases:
  	<li>Updates to existing data on a frequent basis</li>
  	<li>Accelerating the time required to import large DataSets</li>
 </ul>
+
 ### Quickstart:
 ---
 Creating a stream to then upload data to a DataSet only requires these steps:
