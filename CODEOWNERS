@@ -1,0 +1,34 @@
+# See the following for reference: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners#example-of-a-codeowners-file
+# Order is important; the last matching pattern takes the most precedence.
+
+# Root Directory, Other
+* @NoahFinberg @jontiritilli # TODO: Update to reflect the correct team members
+
+# Docs Subdirectories
+/docs/API-Reference/ @NoahFinberg @jontiritilli # TODO: Update to reflect the correct team members
+
+/docs/Apps/ @jontiritilli @plumppig  # TODO: Update to reflect the correct team members
+
+/docs/Connectors/ @jontiritilli # TODO: Update to reflect the correct team members
+
+/docs/Data-Science/ @jontiritilli @shelby-mcneill-domo # TODO: Update to reflect the correct team members
+
+/docs/Domo-App-APIs/ @jontiritilli # TODO: Update to reflect the correct team members
+/docs/Domo-App-APIs/AppDB-API.md @plumppig @k4paul 
+
+/docs/Embedded-Analytics/ @jontiritilli # TODO: Update to reflect the correct team members
+
+/docs/GameNightPlannerApp/ @jontiritilli # TODO: Update to reflect the correct team members
+
+/docs/Getting-Started/ @jontiritilli # TODO: Update to reflect the correct team members
+
+/docs/Governance/ @jontiritilli # TODO: Update to reflect the correct team members
+
+/docs/Installation-Guides/ @jontiritilli @plumppig  # TODO: Update to reflect the correct team members
+
+/docs/Misc/ @NoahFinberg @jontiritilli # TODO: Update to reflect the correct team members
+
+/docs/Other-Resources/ @jontiritilli # TODO: Update to reflect the correct team members
+
+/docs/Partner-Developers/ @jontiritilli # TODO: Update to reflect the correct team members
+/docs/Partner-Developers/Guides @plumppig @k4paul 
