@@ -495,7 +495,7 @@
             },
             {
               "type": "item",
-              "title": "Managing, Editing, and Saving Your App in the Pro-Code Editor",
+              "title": "Manage Pro-Code Editor Apps",
               "uri": "/docs/Apps/App-Framework/Guides/manage-save-pro-code.md"
             },
             {
@@ -552,11 +552,6 @@
               "type": "item",
               "title": "How To Sync AppDB Only Once a Day",
               "uri": "/docs/Apps/App-Framework/Guides/workflow-appdb-sync.md"
-            },
-            {
-              "type": "item",
-              "title": "Manage Pro-Code Editor Apps",
-              "uri": "/docs/Apps/App-Framework/Guides/manage-save-pro-code.md"
             },
             {
               "type": "item",
