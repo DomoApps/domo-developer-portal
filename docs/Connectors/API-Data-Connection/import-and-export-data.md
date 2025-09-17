@@ -438,7 +438,7 @@ You will then need to use the `dataset_id` again in your request as seen below. 
 
 #### Sample Request
 
-[yourlang]See this sample request in [Java](https://github.com/domoinc/domo-java-sdk/blob/master/domo-java-sdk-all/src/test/java/com/domo/sdk/datasets/ImportDataExample.java), [Python](https://github.com/domoinc/domo-python-sdk/blob/master/examples/dataset.py).
+See this sample request in [Java](https://github.com/domoinc/domo-java-sdk/blob/master/domo-java-sdk-all/src/test/java/com/domo/sdk/datasets/ImportDataExample.java), [Python](https://github.com/domoinc/domo-python-sdk/blob/master/examples/dataset.py).
 
 ```HTTP
 GET https://api.domo.com/v1/datasets/317970a1-6a6e-4f70-8e09-44cf5f34cf44/data?includeHeader=true&fileName=Q4_Sales_Data.csv 
