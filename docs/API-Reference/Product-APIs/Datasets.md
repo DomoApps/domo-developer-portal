@@ -1,23 +1,17 @@
 # Datasets API
 
-## Get a Stream Representation
+## Get Partition List
 
 **Method:** `GET`  
-**Endpoint:** `/api/data/v1/streams/{streamId}`
+**Endpoint:** `/api/query/v1/datasources/{dataset_id}/partition`
 
-**Description:** Obtain a Stream representation specified by the supplied ID.
+**Description:** Retrieves a list of partitions associated with the dataset. Does not include metadata such as row counts.
 
 **Path Parameters:**
 
-| Parameter | Type    | Required | Description           |
-| --------- | ------- | -------- | --------------------- |
-| streamId  | integer | Yes      | The ID of the Stream. |
-
-**Query Parameters:**
-
-| Parameter | Type   | Required | Description                                                                                                                             |
-| --------- | ------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| fields    | string | No       | Comma-separated fields to include, with 'all' to include all fields. Default: `id,userId,name,displayName,type,dataProviderType,valid`. |
+| Parameter  | Type   | Required | Description                       |
+| ---------- | ------ | -------- | --------------------------------- |
+| dataset_id | string | Yes      | Unique identifier of the dataset. |
 
 <!--
 type: tab
@@ -25,13 +19,16 @@ title: Javascript
 -->
 
 ```javascript
-fetch('https://<domo-instance-here>/api/data/v1/streams/12345', {
-  method: 'GET',
-  headers: {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
+fetch(
+  'https://<domo-instance-here>/api/query/v1/datasources/abc123/partition',
+  {
+    method: 'GET',
+    headers: {
+      'X-DOMO-Developer-Token': '<your-token-here>',
+      'Content-Type': 'application/json',
+    },
   },
-})
+)
   .then((response) => response.json())
   .then((result) => console.log(result))
   .catch((error) => console.error(`Error: ${error}`));
@@ -49,7 +46,7 @@ headers = {
     'X-DOMO-Developer-Token': '<your-token-here>',
     'Content-Type': 'application/json',
 }
-url = 'https://<domo-instance-here>/api/data/v1/streams/12345'
+url = 'https://<domo-instance-here>/api/query/v1/datasources/abc123/partition'
 
 with httpx.Client() as client:
     response = client.get(url, headers=headers)
@@ -61,20 +58,100 @@ with httpx.Client() as client:
 **Response:**
 
 ```json
-{
-  "id": 12345,
-  "userId": 67890,
-  "name": "Sample Stream",
-  "displayName": "Sample Stream Display",
-  "type": "exampleType",
-  "dataProviderType": "exampleProvider",
-  "valid": true
-}
+[
+  {
+    "partitionId": "p1",
+    "status": "active"
+  },
+  {
+    "partitionId": "p2",
+    "status": "archived"
+  }
+]
 ```
 
 ---
 
-## Get a DataSource Representation
+## Search Partition List
+
+**Method:** `POST`  
+**Endpoint:** `/api/query/v1/datasources/{dataset_id}/partition/search`
+
+**Description:** Searches for partitions in a dataset using filter criteria. Returns a list of matching partitions and their metadata.
+
+**Path Parameters:**
+
+| Parameter  | Type   | Required | Description                       |
+| ---------- | ------ | -------- | --------------------------------- |
+| dataset_id | string | Yes      | Unique identifier of the dataset. |
+
+**Body Parameters:**
+
+| Parameter | Type   | Required | Description                               |
+| --------- | ------ | -------- | ----------------------------------------- |
+| filter    | object | Yes      | Filter criteria for searching partitions. |
+
+<!--
+type: tab
+title: Javascript
+-->
+
+```javascript
+fetch(
+  'https://<domo-instance-here>/api/query/v1/datasources/abc123/partition/search',
+  {
+    method: 'POST',
+    headers: {
+      'X-DOMO-Developer-Token': '<your-token-here>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ filter: { status: 'active' } }),
+  },
+)
+  .then((response) => response.json())
+  .then((result) => console.log(result))
+  .catch((error) => console.error(`Error: ${error}`));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+url = 'https://<domo-instance-here>/api/query/v1/datasources/abc123/partition/search'
+
+payload = {"filter": {"status": "active"}}
+
+with httpx.Client() as client:
+    response = client.post(url, headers=headers, json=payload)
+    print(response.json())
+```
+
+<!-- type: tab-end -->
+
+**Response:**
+
+```json
+[
+  {
+    "partitionId": "p1",
+    "status": "active",
+    "rowCount": 1000
+  },
+  {
+    "partitionId": "p2",
+    "status": "active",
+    "rowCount": 500
+  }
+]
+```
 
 **Method:** `GET`  
 **Endpoint:** `/api/data/v3/datasources/{dataSourceId}`
@@ -682,6 +759,113 @@ with httpx.Client() as client:
   "id": "stream123",
   "name": "Sample Stream",
   "status": "active"
+}
+```
+
+---
+
+## Stream (Connector) - Update
+
+**Method:** `PUT`  
+**Endpoint:** `/api/data/v1/streams/{stream_id}`
+
+**Description:** Updates the configuration of an existing data stream.
+
+**Path Parameters:**
+
+| Parameter | Type   | Required | Description                      |
+| --------- | ------ | -------- | -------------------------------- |
+| stream_id | string | Yes      | Unique identifier of the stream. |
+
+**Body Parameters:**
+
+| Parameter            | Type   | Required | Description                                              |
+| -------------------- | ------ | -------- | -------------------------------------------------------- |
+| transport            | object | Yes      | Connector transport details, including type and version. |
+| configuration        | array  | Yes      | List of key-value pairs defining updated configurations. |
+| account              | object | Yes      | Account information (e.g., ID).                          |
+| updateMethod         | string | Yes      | Update method, e.g., `APPEND`.                           |
+| dataProvider         | object | Yes      | Data provider details, including key.                    |
+| dataSource           | object | Yes      | Dataset details, including name and description.         |
+| advancedScheduleJson | string | No       | Schedule details in JSON format.                         |
+
+<!--
+type: tab
+title: Javascript
+-->
+
+```javascript
+fetch('https://<domo-instance-here>/api/data/v1/streams/stream123', {
+  method: 'PUT',
+  headers: {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    transport: {
+      type: 'CONNECTOR',
+      description: 'com.domo.connector.postgresql.partition',
+      version: '0',
+    },
+    configuration: [
+      {
+        name: 'fetch_size',
+        value: 'None',
+        type: 'string',
+        category: 'METADATA',
+      },
+    ],
+    account: { id: 1 },
+    updateMethod: 'APPEND',
+    dataProvider: { key: 'postgresql-partition' },
+    dataSource: { name: 'hello world', description: 'config works?' },
+    advancedScheduleJson: '{"type": "MANUAL", "timezone": "UTC"}',
+  }),
+})
+  .then((response) => response.json())
+  .then((result) => console.log(result))
+  .catch((error) => console.error(`Error: ${error}`));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+url = 'https://<domo-instance-here>/api/data/v1/streams/stream123'
+
+payload = {
+    "transport": {"type": "CONNECTOR", "description": "com.domo.connector.postgresql.partition", "version": "0"},
+    "configuration": [
+        {"name": "fetch_size", "value": "None", "type": "string", "category": "METADATA"}
+    ],
+    "account": {"id": 1},
+    "updateMethod": "APPEND",
+    "dataProvider": {"key": "postgresql-partition"},
+    "dataSource": {"name": "hello world", "description": "config works?"},
+    "advancedScheduleJson": '{"type": "MANUAL", "timezone": "UTC"}'
+}
+
+with httpx.Client() as client:
+    response = client.put(url, headers=headers, json=payload)
+    print(response.json())
+```
+
+<!-- type: tab-end -->
+
+**Response:**
+
+```json
+{
+  "id": "stream123",
+  "status": "updated"
 }
 ```
 
@@ -1329,12 +1513,13 @@ with httpx.Client() as client:
 
 ---
 
-## GET Data Versions
+## Get Data Versions
 
 **Method:** `GET`  
 **Endpoint:** `/api/data/v3/datasources/{dataset_id}/dataversions/details`
 
-**Description:** Retrieves detailed information about all data versions associated with the dataset.
+**Description:**  
+Retrieves detailed information about all data versions associated with the dataset.
 
 **Path Parameters:**
 
@@ -1403,12 +1588,13 @@ with httpx.Client() as client:
 
 ---
 
-## GET Partition List
+## Retrieve Partition List
 
 **Method:** `GET`  
 **Endpoint:** `/api/query/v1/datasources/{dataset_id}/partition`
 
-**Description:** Retrieves a list of partitions associated with the dataset. Does not include metadata such as row counts.
+**Description:**  
+Retrieves a list of partitions associated with the dataset. Does not include metadata such as row counts.
 
 **Path Parameters:**
 
@@ -1475,7 +1661,7 @@ with httpx.Client() as client:
 
 ---
 
-## GET Dataset Schema
+## Get Dataset Schema
 
 **Method:** `GET`  
 **Endpoint:** `/api/data/v3/datasources/{dataset_id}/schema`
@@ -1548,7 +1734,7 @@ with httpx.Client() as client:
 
 ---
 
-## GET Dataset Data
+## Get Dataset Data
 
 **Method:** `GET`  
 **Endpoint:** `/api/data/v3/datasources/{dataset_id}/data`
@@ -1625,9 +1811,9 @@ with httpx.Client() as client:
 
 ---
 
-## GET Dataset Data (CSV)
+## Get Dataset Data (CSV)
 
-**Method:** `GET`
+**Method:** `GET`  
 **Endpoint:** `/api/data/v3/datasources/{dataset_id}/data?format=csv`
 
 **Description:** Retrieves the data from a dataset in CSV format. Supports optional query parameters for pagination and filtering.
@@ -1698,3 +1884,154 @@ value4,value5,value6
 ```
 
 ---
+
+## Delete Partition Tag
+
+**Method:** `DELETE`  
+**Endpoint:** `/api/query/v1/datasources/{dataset_id}/partition/{dataset_partition_id}`
+
+**Description:** Removes the association of a partition tag with its dataset, ensuring it no longer appears in the partition list.
+
+**Path Parameters:**
+
+| Parameter            | Type   | Required | Description                                    |
+| -------------------- | ------ | -------- | ---------------------------------------------- |
+| dataset_id           | string | Yes      | Unique identifier of the dataset.              |
+| dataset_partition_id | string | Yes      | Identifier of the dataset partition to remove. |
+
+<!--
+type: tab
+title: Javascript
+-->
+
+```javascript
+fetch(
+  'https://<domo-instance-here>/api/query/v1/datasources/abc123/partition/partition456',
+  {
+    method: 'DELETE',
+    headers: {
+      'X-DOMO-Developer-Token': '<your-token-here>',
+      'Content-Type': 'application/json',
+    },
+  },
+)
+  .then((response) => {
+    if (response.ok) {
+      console.log('Partition tag deleted successfully');
+    } else {
+      console.error('Failed to delete partition tag');
+    }
+  })
+  .catch((error) => console.error(`Error: ${error}`));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+url = 'https://<domo-instance-here>/api/query/v1/datasources/abc123/partition/partition456'
+
+with httpx.Client() as client:
+    response = client.delete(url, headers=headers)
+    if response.status_code == 200:
+        print('Partition tag deleted successfully')
+    else:
+        print('Failed to delete partition tag')
+```
+
+<!-- type: tab-end -->
+
+**Response:**
+
+```json
+{
+  "HTTP/1.1": "200 OK",
+  "body": {}
+}
+
+---
+```
+
+## Delete Data Version
+
+**Method:** `DELETE`  
+**Endpoint:** `/api/query/v1/datasources/{dataset_id}/tag/{dataset_partition_id}/data`
+
+**Description:**  
+Marks the data version associated with a partition tag as deleted. This does not delete the partition tag itself or remove the association between the partition tag and the data version.
+
+**Path Parameters:**
+
+| Parameter            | Type   | Required | Description                                    |
+| -------------------- | ------ | -------- | ---------------------------------------------- |
+| dataset_id           | String | Yes      | Unique identifier of the dataset.              |
+| dataset_partition_id | String | Yes      | Identifier of the dataset partition to delete. |
+
+<!--
+type: tab
+title: Javascript
+-->
+
+```javascript
+fetch(
+  'https://<domo-instance-here>/api/query/v1/datasources/abc123/tag/partition456/data',
+  {
+    method: 'DELETE',
+    headers: {
+      'X-DOMO-Developer-Token': '<your-token-here>',
+      'Content-Type': 'application/json',
+    },
+  },
+)
+  .then((response) => {
+    if (response.ok) {
+      console.log('Data version deleted successfully');
+    } else {
+      console.error('Failed to delete data version');
+    }
+  })
+  .catch((error) => console.error(`Error: ${error}`));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import httpx
+
+headers = {
+    'X-DOMO-Developer-Token': '<your-token-here>',
+    'Content-Type': 'application/json',
+}
+url = 'https://<domo-instance-here>/api/query/v1/datasources/abc123/tag/partition456/data'
+
+with httpx.Client() as client:
+    response = client.delete(url, headers=headers)
+    if response.status_code == 200:
+        print('Data version deleted successfully')
+    else:
+        print('Failed to delete data version')
+```
+
+<!-- type: tab-end -->
+
+**Response:**
+
+```json
+{
+  "HTTP/1.1": "200 OK",
+  "body": {}
+}
+
+---
+```
