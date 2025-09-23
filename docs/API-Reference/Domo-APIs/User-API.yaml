@@ -5,7 +5,7 @@ info:
   title: User API
   version: '1.0'
   description: |-
-    User objects allow you to manage a user and the user’s attributes such as a department, phone number, employee number, email, and username. The API allows you to create, delete, retrieve a user or a list of users, and update user information.
+    User objects allow you to manage a user and the user’s attributes such as a department, phone number, employee number, email, and username. The API allows you to create, retrieve a user or a list of users, and update user information.
 
     ## The user object
 
@@ -218,26 +218,6 @@ paths:
                   email: leonhard.euler@domo.com
                   role: Admin
                   name: Leonhard Euler
-    delete:
-      summary: Delete a user
-      operationId: ''
-      responses:
-        '200':
-          description: Returns a 204 response code when successful or error based on whether the user ID being valid.
-      description: |-
-        Permanently deletes a user from your Domo instance.
-
-        <!-- theme: danger -->
-
-        > #### Warning
-        >
-        > This is destructive and cannot be reversed.
-
-        <!-- theme: info -->
-
-        > #### Heads up
-        >
-        > Domo won't allow deletion of users if they own Datasets or Dataflows. You'll need to transfer ownership of these assets before deletion. All other assets previously owned by the deleted user will be orphaned.
   /v1/users:
     post:
       summary: Create a user
