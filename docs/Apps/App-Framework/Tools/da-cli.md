@@ -1,0 +1,407 @@
+# DA CLI - Domo Apps Generator
+
+The DA CLI (Domo Apps CLI) is a powerful command-line tool for generating and managing Domo applications built with Vite and React. It provides a streamlined workflow for creating new apps, generating components, managing manifests, and more.
+
+## Overview
+
+The DA CLI (Domo Apps CLI) streamlines Domo app development with four main capabilities:
+
+- **App Creation** - Generate new Domo apps from templates
+- **Code Generation** - Create components, reducers, and other code structures
+- **Manifest Management** - Handle environment-specific configurations
+- **Template System** - Support for custom templates from NPM, GitHub, or local paths
+
+## Installation
+
+Install the DA CLI (Domo Apps CLI) globally to use it from anywhere:
+
+```bash
+# Using pnpm (recommended)
+pnpm add -g @domoinc/da
+
+# Using npm
+npm install -g @domoinc/da
+
+# Using yarn
+yarn global add @domoinc/da
+```
+
+**Package**: [@domoinc/da on npm](https://www.npmjs.com/package/@domoinc/da)
+
+Verify your installation:
+
+```bash
+da --version
+```
+
+## Quick Start
+
+Create your first Domo app in seconds:
+
+```bash
+da new my-awesome-app
+cd my-awesome-app
+pnpm start
+```
+
+## Commands
+
+### da new
+
+Creates a new Domo application from a template.
+
+**Syntax:**
+
+```bash
+da new <name> [options]
+```
+
+**Arguments:**
+
+- `name` - The name of your application (required)
+
+**Options:**
+
+- `--force, -f` - Overwrite existing directory
+- `--template, -t` - Specify a custom template (npm package, GitHub repo, or local path)
+
+**Examples:**
+
+```bash
+# Create a new app
+da new my-domo-app
+
+# Create with force overwrite
+da new my-domo-app --force
+
+# Use a custom template
+da new my-app --template @myorg/custom-template
+da new my-app --template github.com/user/repo
+da new my-app --template ./local-template
+```
+
+**What happens:**
+
+1. Validates the app name
+2. Checks for existing directory
+3. Prompts for package manager selection
+4. Downloads/clones the [@domoinc/vite-react-template](https://www.npmjs.com/package/@domoinc/vite-react-template) (or custom template)
+5. Updates package.json with your app name
+6. Initializes git repository
+7. Installs dependencies
+
+### da generate
+
+Generates code files from templates.
+
+**Syntax:**
+
+```bash
+da generate [template] [name]
+```
+
+**Available Templates:**
+
+#### Component Generator
+
+Creates a complete React component with associated files.
+
+```bash
+da generate component MyComponent
+# or
+da g component MyComponent
+```
+
+**Creates:**
+
+- `src/components/MyComponent/MyComponent.tsx` - Main component file
+- `src/components/MyComponent/MyComponent.module.scss` - Styles
+- `src/components/MyComponent/MyComponent.test.tsx` - Test file (optional)
+- `src/components/MyComponent/MyComponent.stories.tsx` - Storybook file (optional)
+
+#### Reducer Generator
+
+Creates a Redux slice with automatic imports.
+
+```bash
+da generate reducer myFeature
+# or
+da g reducer myFeature
+```
+
+**Creates:**
+
+- `src/reducers/myFeature/slice.ts` - Redux slice
+- Auto-imports into `src/reducers/index.ts`
+
+### da manifest
+
+Manages manifest overrides for different environments.
+
+**Syntax:**
+
+```bash
+da manifest [identifier] [description]
+```
+
+**Arguments:**
+
+- `identifier` - Key for the manifest override (e.g., `instance.prod`, `instance.dev`)
+- `description` - Description of the override
+
+**Examples:**
+
+```bash
+# Create a production override
+da manifest instance.prod "Production environment for instance.domo.com"
+
+# Create a development override
+da manifest instance.dev "Development environment for dev.domo.com"
+```
+
+### da apply-manifest
+
+Applies manifest overrides to your application.
+
+**Syntax:**
+
+```bash
+da apply-manifest [id]
+```
+
+**Arguments:**
+
+- `id` - The identifier of the override to apply
+
+**Examples:**
+
+```bash
+# Apply specific override
+da apply-manifest instance.prod
+
+# Interactive selection
+da apply-manifest
+```
+
+## Templates
+
+### Default Template
+
+The DA CLI uses the [@domoinc/vite-react-template](https://www.npmjs.com/package/@domoinc/vite-react-template) by default, which includes:
+
+- **Vite** for fast development and building
+- **React 18** with TypeScript support
+- **SCSS** for styling
+- **Jest** and **Testing Library** for testing
+- **Storybook** for component development
+- **ESLint** and **Prettier** for code quality
+- **Domo Toolkit** integration
+
+### Custom Templates
+
+You can use custom templates in several ways:
+
+#### NPM Package
+
+```bash
+da new my-app --template @myorg/custom-template
+```
+
+#### GitHub Repository
+
+```bash
+da new my-app --template github.com/user/repo
+da new my-app --template user/repo/subdirectory
+```
+
+#### Local Path
+
+```bash
+da new my-app --template ./local-template
+da new my-app --template ~/templates/my-template
+```
+
+### Template Structure
+
+Templates should follow this structure:
+
+```text
+template/
+├── package.json
+├── src/
+├── public/
+├── .gitignore
+└── ... (other files)
+```
+
+## Configuration
+
+### Environment Variables
+
+For local development, you can set a default template path:
+
+```bash
+# Create .env file
+echo "DA_TEMPLATE_PATH=~/my-templates/custom-template" > .env
+```
+
+**Note**: By default, the CLI uses [@domoinc/vite-react-template](https://www.npmjs.com/package/@domoinc/vite-react-template) when no custom template is specified.
+
+### Package Manager
+
+The CLI supports multiple package managers:
+
+- **pnpm** (recommended) - Fastest and most efficient
+- **npm** - Standard Node.js package manager
+- **yarn** - Alternative package manager
+
+## Troubleshooting
+
+### Common Issues
+
+#### Command Not Found
+
+If `da` command is not found after installation:
+
+```bash
+# Check installation
+npm list -g @domoinc/da
+
+# Check PATH
+npm config get prefix
+
+# Add to PATH (add to ~/.bashrc or ~/.zshrc)
+export PATH="$(npm config get prefix)/bin:$PATH"
+```
+
+#### Template Download Issues
+
+If template download fails:
+
+```bash
+# Check internet connection
+ping google.com
+
+# Verify git is installed
+git --version
+
+# Try manual clone
+git clone https://github.com/DomoApps/vite-react-template.git
+```
+
+#### Permission Errors
+
+On macOS/Linux, you may need elevated permissions:
+
+```bash
+# Use sudo
+sudo npm install -g @domoinc/da
+
+# Or configure npm for global installs without sudo
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+export PATH=~/.npm-global/bin:$PATH
+```
+
+#### Package Installation Fails
+
+If package installation fails in your new app:
+
+```bash
+# Navigate to your app directory
+cd my-app
+
+# Try different package managers
+pnpm install
+# or
+npm install
+# or
+yarn install
+```
+
+### Debug Mode
+
+Enable verbose logging for troubleshooting:
+
+```bash
+# Set debug environment variable
+DEBUG=da:* da new my-app
+```
+
+## Contributing
+
+### Development Setup
+
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd da
+```
+
+1. Install dependencies:
+
+```bash
+pnpm install
+```
+
+1. Link globally for testing:
+
+```bash
+npm link
+# or
+pnpm link --global
+```
+
+1. Test your changes:
+
+```bash
+da new test-app
+```
+
+### Project Structure
+
+```text
+da/
+├── src/
+│   ├── cli.js              # Main CLI entry point
+│   ├── plopHelper.js       # Plop action runner
+│   ├── create/             # App creation logic
+│   ├── generate/           # Code generation
+│   └── manifest/           # Manifest management
+├── index.js                # CLI entry point
+└── package.json
+```
+
+### Adding New Generators
+
+1. Create a new generator in `src/generate/plop.js`
+2. Add corresponding templates in `src/generate/templates/`
+3. Update the CLI help text
+
+### Publishing
+
+Only maintainers can publish new versions:
+
+```bash
+npm version patch  # or minor/major
+npm publish
+```
+
+## License
+
+MIT
+
+## Support
+
+For issues and questions:
+
+- **GitHub Issues**: [Create an issue](https://github.com/your-org/da/issues)
+- **Documentation**: [Full documentation](https://your-docs-site.com)
+- **Community**: [Domo Developer Forums](https://developer.domo.com/community)
+
+---
+
+**Maintained by**: Domo, Inc - Developer Innovations
+
+---
