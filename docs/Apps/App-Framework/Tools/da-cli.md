@@ -328,66 +328,6 @@ Enable verbose logging for troubleshooting:
 DEBUG=da:* da new my-app
 ```
 
-## Contributing
-
-### Development Setup
-
-1. Clone the repository:
-
-```bash
-git clone <repository-url>
-cd da
-```
-
-1. Install dependencies:
-
-```bash
-pnpm install
-```
-
-1. Link globally for testing:
-
-```bash
-npm link
-# or
-pnpm link --global
-```
-
-1. Test your changes:
-
-```bash
-da new test-app
-```
-
-### Project Structure
-
-```text
-da/
-├── src/
-│   ├── cli.js              # Main CLI entry point
-│   ├── plopHelper.js       # Plop action runner
-│   ├── create/             # App creation logic
-│   ├── generate/           # Code generation
-│   └── manifest/           # Manifest management
-├── index.js                # CLI entry point
-└── package.json
-```
-
-### Adding New Generators
-
-1. Create a new generator in `src/generate/plop.js`
-2. Add corresponding templates in `src/generate/templates/`
-3. Update the CLI help text
-
-### Publishing
-
-Only maintainers can publish new versions:
-
-```bash
-npm version patch  # or minor/major
-npm publish
-```
-
 ## License
 
 MIT
