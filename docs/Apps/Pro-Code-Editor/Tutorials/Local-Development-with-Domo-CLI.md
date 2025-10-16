@@ -132,7 +132,7 @@ The `manifest.json` is crucial for local development:
 1. **Create or find an image** (PNG) - it must be named `thumbnail.png` and it must be 300x300 pixels
 2. **Add it to your project folder** (e.g., `thumbnail.png`)
 
-**Need a quick thumbnail?** You can use this [sample thumbnail](../../../../assets/images/thumbnail.png) as a starting point.
+**Need a quick thumbnail?** You can use this [sample thumbnail](../../../../assets/images/thumbnail-procode.png) as a starting point.
 
 **Thumbnail requirements:**
 
