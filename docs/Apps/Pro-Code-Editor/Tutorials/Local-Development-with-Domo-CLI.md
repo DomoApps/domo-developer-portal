@@ -2,8 +2,6 @@
 
 ## Intro
 
----
-
 This comprehensive tutorial will guide you through setting up and optimizing your local development environment using the Domo CLI. You'll learn how to create, develop, debug, and deploy Domo apps efficiently with modern development workflows.
 
 ### What you'll learn
@@ -17,18 +15,14 @@ This comprehensive tutorial will guide you through setting up and optimizing you
 
 ## Prerequisites
 
----
-
 Before starting this tutorial, ensure you have:
 
 - **Node.js** installed (version 18 or higher) - This is required for running the Domo CLI and managing dependencies
-- [Domo CLI installed](../Tools/domo-CLI.md#installation)
+- [Domo CLI installed](../../App-Framework/Tools/domo-CLI.md#installation)
 - A Domo instance with appropriate permissions
 - A code editor (VS Code recommended)
 
 ## Step 1: Initial Setup and Authentication
-
----
 
 ### Install and Verify CLI
 
@@ -39,30 +33,29 @@ First, ensure you have the latest version of the Domo CLI:
 domo --version
 
 # Update to latest version (if using npm)
-npm update -g @domoinc/domo-cli
+npm update -g ryuu
 
-# Or using Homebrew
-brew upgrade domo-cli
 ```
+
+If you haven't installed the Domo CLI yet, you can install it by following the [Setup and Installation Guide](../../App-Framework/Tools/domo-CLI.md#installation).
 
 ### Authenticate to Your Instance
 
 ```bash
-# Interactive login (recommended for first time)
+# Interactive login
 domo login
 
 # Or with specific instance
 domo login -i your-instance.domo.com -u your-email@company.com
 
-# Skip upgrade check during login (optional)
-domo login --no-upgrade-check
+# Or with a developer access token
+domo token -i your-instance.domo.com -t your-developer-access-token*
+domo login -i your-instance.domo.com
 ```
 
-**Pro Tip**: The CLI will remember your credentials and instances for future use.
+\*Developer Access Tokens (Developer Tokens) are secure API keys assigned to a specific user in your Domo instance. You can get more information and obtain a developer access token by following the [Access Token Guide](https://domo-support.domo.com/s/article/360042934494?language=en_US).
 
 ## Step 2: Creating Your Development Project
-
----
 
 ### Initialize a New App
 
@@ -80,8 +73,8 @@ Your new project will have this structure:
 
 ```text
 my-awesome-app/
-├── manifest.json          # App configuration
-├── index.html            # Main HTML file
+├── manifest.json        # App configuration
+├── index.html           # Main HTML file
 ├── app.js               # Main JavaScript
 ├── app.css              # Styles
 ├── domo.js              # Domo SDK
@@ -97,9 +90,10 @@ The `manifest.json` is crucial for local development:
   "name": "My Awesome App",
   "version": "1.0.0",
   "size": {
-    "width": 800,
-    "height": 600
+    "width": 1,
+    "height": 1
   },
+  "fullpage": false,
   "mapping": [
     {
       "dataSetId": "your-dataset-id",
@@ -112,6 +106,7 @@ The `manifest.json` is crucial for local development:
       ]
     }
   ],
+  "collections": [],
   "id": "your-app-design-id",
   "proxyId": "your-remote-domo-card-id"
 }
@@ -119,8 +114,12 @@ The `manifest.json` is crucial for local development:
 
 **Key manifest properties for local development:**
 
-- `mapping`: Defines data connections
+- `id`: The ID of your app design in Domo
+  - This is automatically added to your manifest when you publish your app design
+  - This is used to link your app design to the published app design for future publishing
+  - This is used to identify your app design in the Domo API
 - `proxyId`: Enables API proxying for live data
+- `mapping`: Defines data connections
 - `size`: Sets app dimensions within Domo
 
 ### Adding a Thumbnail
@@ -140,25 +139,7 @@ The `manifest.json` is crucial for local development:
 - **Size**: 300x300 pixels
 - **Naming**: Must be exactly `thumbnail.png`
 
-## Step 3: Local Development Server
-
----
-
-### Starting the Development Server
-
-```bash
-# Basic development server
-domo dev
-
-# With specific user context
-domo dev -u specific-user@company.com
-
-# Expose to external network (for testing on mobile devices)
-domo dev -e
-
-# Use specific manifest file (for advanced users)
-domo dev -m manifest.dev.json
-```
+## Step 3: Running a Local Development Server
 
 ### Development Server Features
 
@@ -166,8 +147,7 @@ The `domo dev` command provides:
 
 - **Live Reload**: Automatically refreshes when files change
 - **App Sizing**: Renders in a frame matching your manifest dimensions
-- **Data Proxy**: Routes API calls to your Domo instance
-- **Live Reload**: Reloads when code changes are detected.
+- **Data Proxy**: Routes API calls to your proxy card in Domo instance using [ryuu-proxy](https://www.npmjs.com/package/@domoinc/ryuu-proxy)
 
 ### Development Workflow
 
@@ -175,64 +155,17 @@ The `domo dev` command provides:
 # 1. Start development server
 domo dev
 
-# 2. Open browser to http://localhost:8080
+# 2. Open browser to http://localhost:3000
 # 3. Make changes to your code
 # 4. See changes instantly in browser
 # 5. Test with real Domo data
 ```
 
-## Step 4: Advanced Development Configuration (Optional)
-
----
-
-### Environment-Specific Manifests
-
-For advanced users, you can create different manifest configurations:
-
-```bash
-# Create development manifest
-cp manifest.json manifest.dev.json
-
-# Use development manifest
-domo dev -m manifest.dev.json
-```
-
 ### Data Proxy Configuration (Advanced)
 
-For advanced API access, you can configure a proxy ID in your manifest:
+For querying data from Domo, we can configure the manifest to use a proxy card in Domo instance. This is done by adding the `proxyId` to the manifest. See instructions in the [manifest](../../App-Framework/Guides/manifest.md#getting-a-proxyid-advanced) guide.
 
-```json
-{
-  "proxyId": "your-proxy-id-here"
-}
-```
-
-**Note**: This is only needed for advanced features like AppDB, Files, Code Engine, and Workflows APIs.
-
-## Step 5: Basic Debugging
-
----
-
-### Browser Developer Tools
-
-Open your browser's developer tools (F12) to debug your app:
-
-```javascript
-// Check if your data is loading
-domo.datasets.get('myData').then((data) => {
-  console.log('Dataset loaded:', data);
-});
-```
-
-### Common Issues
-
-**Data not loading?** Check your manifest.json mapping section.
-
-**App not updating?** Make sure you saved your files and the dev server is running.
-
-## Step 6: Publishing Your App
-
----
+## Step 4: Publishing Your App Design
 
 ### Publishing Your App
 
@@ -240,29 +173,25 @@ domo.datasets.get('myData').then((data) => {
 # Publish to Domo
 domo publish
 
-# Publish and open in Asset Library
-domo publish -g
 ```
 
 ### Important: Version Management
 
-⚠️ **Critical**: When you publish your app, Domo will update the existing version. If you want to keep previous versions, you must increment the version number in your `manifest.json` before publishing.
+⚠️ **Critical**: When you publish your app, Domo will update the existing version if it already exists. If you want to keep previous versions, you **_must_** increment the version number in your `manifest.json` **_(not the package.json)_** before publishing.
 
 ```json
 {
   "version": "1.0.1",
-  "name": "My App v1.0.1"
+  "name": "My Awesome App"
 }
 ```
 
 **What happens:**
 
 - If you publish with the same version number → **Previous version is overwritten**
-- If you increment the version number → **Previous version is preserved**
+- If you increment the version number → **Previous version is preserved for rolling back**
 
-## Step 7: Testing Your App
-
----
+## Step 5: Testing Your App
 
 ### Basic Testing
 
@@ -272,17 +201,7 @@ Before publishing, make sure your app works:
 - [ ] Data connections work correctly
 - [ ] UI looks good and functions properly
 
-### Testing with Different Users
-
-```bash
-# Test with different user permissions
-domo dev -u admin@company.com
-domo dev -u user@company.com
-```
-
 ## Conclusion
-
----
 
 Congratulations! You've learned the essential workflow for local development with the Domo CLI:
 
