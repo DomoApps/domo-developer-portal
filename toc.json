@@ -465,6 +465,11 @@
               "type": "item",
               "title": "Toolkit",
               "uri": "/docs/Apps/App-Framework/Tools/toolkit.md"
+            },
+            {
+              "type": "item",
+              "title": "Domo CLI for Continuous Integration/Continuous Deployment (CI/CD)",
+              "uri": "/docs/Apps/App-Framework/Tools/domo-publish-CICD.md"
             }
           ]
         },
