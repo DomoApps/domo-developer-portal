@@ -257,19 +257,13 @@ Verify your app works correctly:
 
 Congratulations! You've learned the essential workflow for local development with the Domo CLI:
 
-✅ **Setup**: Install Node.js and Domo CLI
-
-✅ **Login**: Authenticate to your Domo instance
-
-✅ **Create**: Initialize a new app with `domo init`
-
-✅ **Build**: Develop your UI locally with `domo dev`
-
-✅ **Publish**: Deploy your app with `domo publish`
-
-✅ **Configure**: Set up data access with a proxy ID
-
-✅ **Iterate**: Continue developing with full data access
+- ✅ **Setup**: Install Node.js and Domo CLI
+- ✅ **Login**: Authenticate to your Domo instance
+- ✅ **Create**: Initialize a new app with `domo init`
+- ✅ **Build**: Develop your UI locally with `domo dev`
+- ✅ **Publish**: Deploy your app with `domo publish`
+- ✅ **Configure**: Set up data access with a proxy ID
+- ✅ **Iterate**: Continue developing with full data access
 
 ### Next Steps
 
