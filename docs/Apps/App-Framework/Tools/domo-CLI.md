@@ -332,11 +332,12 @@ domo proxy proxy.company.com 8080 -a
 domo proxy -r
 ```
 
-## Advanced Data Proxy for Developing Locally
+## Data Proxy for Developing Locally
 
 To enable proxying for advanced requests (like the AppDB, Files, Code Engine, and Workflows APIs), you must provide the ID of an app in your instance that the CLI can proxy to (e.g., impersonate a particular Card). Add this app ID to your manifest under the property `proxyId`. If the ID is valid, proxying advanced requests with `domo dev` will work automatically.
 
 All proxy IDs for your app can be found on the App Design page under the "Cards" tab.
+![Proxy ID Location](../../assets/images/proxyId_location.png)
 
 Proxy IDs tie apps to Cards. If you delete the Card from which you retrieved the ID, you will have to get a new one from another card created from your app design.
 
