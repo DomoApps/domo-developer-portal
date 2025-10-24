@@ -158,7 +158,7 @@ See our guide on [The Manifest File](./manifest.md) for more information.
 
 The `domo dev` command provides:
 
-- **Live Reload**: Automatically refreshes when files change
+- **Live Reload**: Browser automatically refreshes when files change
 - **App Sizing**: Renders in a frame matching your manifest dimensions
 - **Local Testing**: Build and test your UI before publishing
 
