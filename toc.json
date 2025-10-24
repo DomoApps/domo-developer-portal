@@ -474,6 +474,11 @@
           "items": [
             {
               "type": "item",
+              "title": "Local Development with Domo CLI",
+              "uri": "/docs/Apps/Pro-Code-Editor/Tutorials/Local-Development-with-Domo-CLI.md"
+            },
+            {
+              "type": "item",
               "title": "The Manifest File",
               "uri": "/docs/Apps/App-Framework/Guides/manifest.md"
             },
@@ -565,11 +570,6 @@
           "type": "group",
           "title": "Tutorials",
           "items": [
-            {
-              "type": "item",
-              "title": "Local Development with Domo CLI",
-              "uri": "/docs/Apps/Pro-Code-Editor/Tutorials/Local-Development-with-Domo-CLI.md"
-            },
             {
               "type": "item",
               "title": "Getting started with the Pro-Code Editor",

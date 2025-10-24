@@ -4,21 +4,23 @@
 
 This comprehensive tutorial will guide you through setting up and optimizing your local development environment using the Domo CLI. You'll learn how to create, develop, debug, and deploy Domo apps efficiently with modern development workflows.
 
+Once published to an instance, your app will be editable as a Pro-Code App. This local development workflow allows you to integrate your preferred AI tooling, IDE, and version control alongside Domo's built-in versioning capabilities.
+
 ### What you'll learn
 
 - Setting up a professional local development environment
 - Using the Domo Apps CLI to create a new app
-- Configuring data proxies for consuming live Domo data
-- Domo version control basics
-- Using `domo dev` for live development with hot reload
+- Building your app UI locally with live reload
 - Publishing your app to Domo
+- Configuring data proxies for consuming live Domo data
+- Iterating on your app with full data access
 
 ## Prerequisites
 
 Before starting this tutorial, ensure you have:
 
-- **Node.js** installed (version 18 or higher) - This is required for running the Domo CLI and managing dependencies
-- [Domo CLI installed](../../App-Framework/Tools/domo-CLI.md#installation)
+- **Node.js** installed (version 18 or higher) - This is required for running the Domo CLI and managing dependencies. Use [nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#install--update-script) to manage your Node.js version.
+- [Domo CLI installed](../Tools/domo-CLI.md#installation)
 - A Domo instance with appropriate permissions
 - A code editor (VS Code recommended)
 
@@ -37,7 +39,7 @@ npm update -g ryuu
 
 ```
 
-If you haven't installed the Domo CLI yet, you can install it by following the [Setup and Installation Guide](../../App-Framework/Tools/domo-CLI.md#installation).
+If you haven't installed the Domo CLI yet, you can install it by following the [Setup and Installation Guide](../Tools/domo-CLI.md#installation).
 
 ### Authenticate to Your Instance
 
@@ -106,7 +108,22 @@ The `manifest.json` is crucial for local development:
       ]
     }
   ],
-  "collections": [],
+  "collections": [
+    {
+      "name": "CommentsTable",
+      "schema": {
+        "columns": [
+          { "name": "user", "type": "STRING" },
+          { "name": "comment", "type": "STRING" }
+        ]
+      },
+      "syncEnabled": true,
+      "defaultPermission": ["READ", "WRITE", "READ_CONTENT", "CREATE_CONTENT"]
+    },
+    {
+      "name": "Users"
+    }
+  ],
   "id": "your-app-design-id",
   "proxyId": "your-remote-domo-card-id"
 }
@@ -122,6 +139,8 @@ The `manifest.json` is crucial for local development:
 - `mapping`: Defines data connections
 - `size`: Sets app dimensions within Domo
 
+See our guide on [The Manifest File](./manifest.md) for more information.
+
 ### Adding a Thumbnail
 
 📸 **Required**: You must add a thumbnail image to your app design before you can create cards from it.
@@ -133,13 +152,7 @@ The `manifest.json` is crucial for local development:
 
 **Need a quick thumbnail?** You can use this [sample thumbnail](../../../../assets/images/thumbnail-procode.png) as a starting point.
 
-**Thumbnail requirements:**
-
-- **Format**: PNG
-- **Size**: 300x300 pixels
-- **Naming**: Must be exactly `thumbnail.png`
-
-## Step 3: Running a Local Development Server
+## Step 3: Initial Local Development
 
 ### Development Server Features
 
@@ -147,7 +160,7 @@ The `domo dev` command provides:
 
 - **Live Reload**: Automatically refreshes when files change
 - **App Sizing**: Renders in a frame matching your manifest dimensions
-- **Data Proxy**: Routes API calls to your proxy card in Domo instance using [ryuu-proxy](https://www.npmjs.com/package/@domoinc/ryuu-proxy)
+- **Local Testing**: Build and test your UI before publishing
 
 ### Development Workflow
 
@@ -158,12 +171,9 @@ domo dev
 # 2. Open browser to http://localhost:3000
 # 3. Make changes to your code
 # 4. See changes instantly in browser
-# 5. Test with real Domo data
 ```
 
-### Data Proxy Configuration (Advanced)
-
-For querying data from Domo, we can configure the manifest to use a proxy card in Domo instance. This is done by adding the `proxyId` to the manifest. See instructions in the [manifest](../../App-Framework/Guides/manifest.md#getting-a-proxyid-advanced) guide.
+**Note**: At this stage, you can build your UI and basic functionality, but data queries won't work yet. You'll need to publish your app first to get a proxy ID for data access.
 
 ## Step 4: Publishing Your App Design
 
@@ -191,25 +201,69 @@ domo publish
 - If you publish with the same version number → **Previous version is overwritten**
 - If you increment the version number → **Previous version is preserved for rolling back**
 
-## Step 5: Testing Your App
+## Step 5: Configuring Data Access
 
-### Basic Testing
+Now that your app is published, you can set up data access for local development.
 
-Before publishing, make sure your app works:
+### Getting a Proxy ID
+
+To enable data queries during local development, you need to configure a proxy card:
+
+1. **Create a card** from your published app design in Domo
+2. **Wire up your datasets** to the card
+3. **Copy the card ID** from the URL (the string after `/kpis/details/`)
+4. **Add it to your manifest** as the `proxyId` field
+
+```json
+{
+  "id": "your-app-design-id",
+  "proxyId": "your-card-id-here"
+}
+```
+
+### How Data Proxying Works
+
+To keep things secure, local queries to Domo are proxied through a card in your Domo instance. Using the manifest's Design ID and Proxy ID, requests are passed to the card, and the card's response is returned to the local development server.
+
+This approach uses indirect access to your Domo instance's API, which is a security best practice and is required for using AppDB, Workflows, Code Engine, and other Domo services.
+
+See our guide on [The Manifest File](./manifest.md#getting-a-proxyid-advanced) for more information.
+
+## Step 6: Full Development Workflow
+
+With your proxy ID configured, you now have the complete development workflow:
+
+```bash
+# 1. Start development server
+domo dev
+
+# 2. Open browser to http://localhost:3000
+# 3. Make changes to your code
+# 4. See changes instantly in browser
+# 5. Test with real Domo data
+# 6. Publish updates with domo publish
+```
+
+### Testing Checklist
+
+Verify your app works correctly:
 
 - [ ] App loads without errors
-- [ ] Data connections work correctly
+- [ ] Data queries return expected results
 - [ ] UI looks good and functions properly
+- [ ] All features work as intended
 
 ## Conclusion
 
 Congratulations! You've learned the essential workflow for local development with the Domo CLI:
 
-✅ **Setup**: Install Node.js and Domo CLI  
-✅ **Login**: Authenticate to your Domo instance  
-✅ **Create**: Initialize a new app with `domo init`  
-✅ **Develop**: Use `domo dev` for live development  
+✅ **Setup**: Install Node.js and Domo CLI
+✅ **Login**: Authenticate to your Domo instance
+✅ **Create**: Initialize a new app with `domo init`
+✅ **Build**: Develop your UI locally with `domo dev`
 ✅ **Publish**: Deploy your app with `domo publish`
+✅ **Configure**: Set up data access with a proxy ID
+✅ **Iterate**: Continue developing with full data access
 
 ### Next Steps
 
