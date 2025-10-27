@@ -8,7 +8,7 @@ Start with one of the example prompts or add your own to see App Catalyst in act
 
 ![AC_Picture1.png](../../assets/images/AC_Picture1.png)
 
-> __Best Practices:__ If you start with a Domo Dataset, App Catalyst will use that data as a model when building the app and add the appropriate data App Framework APIs to your project.
+> **Best Practices:** If you start with a Domo Dataset, App Catalyst will use that data as a model when building the app and add the appropriate data App Framework APIs to your project.
 
 ![AC_Picture2.png](../../assets/images/AC_Picture2.png)
 
@@ -16,7 +16,7 @@ If you are returning to App Catalyst, your previous projects can be found in the
 
 ![AC_Picture3.png](../../assets/images/AC_Picture3.png)
 
-> __Best Practices:__ It is best to bump the version of your project if you plan to return to the project's history. App Catalyst will overwrite the first version (0.0.1).
+> **Best Practices:** It's best to bump the version of your project if you plan to return to the project's history. App Catalyst will overwrite the first version (0.0.1).
 
 ## Key Features
 
@@ -26,25 +26,28 @@ The core of the App Catalyst is its ability to turn your ideas into functional a
 
 ![AC_Picture4.png](../../assets/images/AC_Picture4.png)
 
-**• Describe Your Vision:** 
+**• Describe Your Vision:**
 Start by providing a text prompt describing the app you want to build. The more specific and detailed you are in your description, the more accurate the generated app will be to your requirements.
 
-You can start simple like 
-> "I want to track the Fat Bear's of Katmai National Park and Preserve. Track by weight, by votes, winners by year" 
+You can start simple like
 
-or add more description like 
-> "Measuring key Marketing metrics like return on investment (ROI), conversion rates, and customer lifetime value, businesses can gain actionable insights to personalize customer experiences, allocate marketing budgets more effectively, and achieve their business objectives. Web Analytics: Tracks website visitors, page views, bounce rates, and user behavior. Social Media Analytics: Monitors engagement, reach, and audience sentiment on social platforms. Email Marketing Analytics: Measures open rates, click-through rates, and conversions from email campaigns. CRM Systems: Provides customer data and interaction history. Advertising Platforms: Tracks ad performance, cost per click, and ad engagement." 
+> "I want to track the Fat Bears of Katmai National Park and Preserve. Track by weight, by votes, winners by year"
 
-To specifying exactness 
+or add more description like
+
+> "Measuring key Marketing metrics like return on investment (ROI), conversion rates, and customer lifetime value, businesses can gain actionable insights to personalize customer experiences, allocate marketing budgets more effectively, and achieve their business objectives. Web Analytics: Tracks website visitors, page views, bounce rates, and user behavior. Social Media Analytics: Monitors engagement, reach, and audience sentiment on social platforms. Email Marketing Analytics: Measures open rates, click-through rates, and conversions from email campaigns. CRM Systems: Provides customer data and interaction history. Advertising Platforms: Tracks ad performance, cost per click, and ad engagement."
+
+To specify exactness
+
 > "I'm a healthcare practice managing 500+ patients across 8 doctors. Build a HIPAA-compliant patient management system with appointment calendar, medical history timeline, and prescription tracking tables. Display upcoming appointments in daily/weekly views, patient visit history with searchable notes, and medication refill alerts. Include quick-action buttons for rescheduling appointments and sending SMS reminders. Filter by doctor, appointment type, or date range. Show key metrics like no-show rates and average visit duration in dashboard cards. Use clean, professional design with blue and white colors, optimized for desktop and tablet use by medical staff.".
 
-**• Live Generation & Editing:** 
+**• Live Generation & Editing:**
 Once you submit your prompt, the generator will process your request and build the application. You will see the complete code in a real-time, fully functional code editor. You can review, modify, and refine the code as needed.
 
 ![AC_Picture5.png](../../assets/images/AC_Picture5.png)
 ![AC_Picture6.png](../../assets/images/AC_Picture6.png)
 
-**• Instant Preview:** 
+**• Instant Preview:**
 As you make changes to the code, you can immediately preview the UI to see how your edits affect the final product, ensuring a tight feedback loop between coding and design.
 
 ## Saving Your App
@@ -53,7 +56,7 @@ Saving will copy your app to the Asset Library. The Asset Library contains all t
 
 ![AC_Picture7.png](../../assets/images/AC_Picture7.png)
 
-<https://domo-support.domo.com/s/article/4403442101143?language=en_US>
+[Domo Asset Library KB](https://domo-support.domo.com/s/article/4403442101143?language=en_US)
 
 ![AC_Picture8.png](../../assets/images/AC_Picture8.png)
 
@@ -104,21 +107,20 @@ App Catalyst abstracts this entire multi-step process into a simple, integrated 
 
 ## FAQ
 
-__Q:__ How does App Catalyst work?
+**Q:** How does App Catalyst work?
 
-__A:__ Starting with a natural language description of what you are looking for, App Catalyst will convert the request into a functional pro-code app (index.html, manifest.json, app.js, app.js, thumbnail.png)
+**A:** Starting with a natural language description of what you are looking for, App Catalyst will convert the request into a functional pro-code app (index.html, manifest.json, app.js, thumbnail.png)
 
-__Q:__ Can I make edits via the prompt to the project?
+**Q:** Can I make edits via the prompt to the project?
 
-__A:__ Currently no, each prompt will re-generate the project. We are working on streamlined editing to support minor edits.
+**A:** Currently no, each prompt will re-generate the project. We are working on streamlined editing to support minor edits.
 
-__Q:__ Do I have to use the pro-code editor?
+**Q:** Do I have to use the pro-code editor?
 
-__A:__ No, once your project is saved to the Asset Library, you can download the project and do traditional app development with your favorite tools. Domo's App Developer Framework
+**A:** No, once your project is saved to the Asset Library, you can download the project and do traditional app development with your favorite tools using Domo's App Developer Framework.
 
 ![AC_Picture12.png](../../assets/images/AC_Picture12.png)
 
-__Q:__ Do I need coding experience to take advantage of App Catalyst?
+**Q:** Do I need coding experience to take advantage of App Catalyst?
 
-__A:__ No, App Catalyst is specifically designed for beginners & business users with no prior coding experience. However, editing, data wiring, and additional functionality will need to be done by a developer who is familiar with Javascript. 
-
+**A:** No, App Catalyst is specifically designed for beginners and business users with no prior coding experience. However, editing, data wiring, and additional functionality will need to be done by a developer who is familiar with JavaScript.
