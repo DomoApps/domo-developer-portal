@@ -313,6 +313,11 @@
       "uri": "/docs/Apps/Overview.md"
     },
     {
+      "type": "item",
+      "title": "App Catalyst",
+      "uri": "/docs/Apps/App-Catalyst.md"
+    },
+    {
       "type": "group",
       "title": "App Framework",
       "items": [
