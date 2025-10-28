@@ -468,7 +468,7 @@
             },
             {
               "type": "item",
-              "title": "Domo CLI for Continuous Integration/Continuous Deployment (CI/CD)",
+              "title": "Domo Publish Action - CI/CD",
               "uri": "/docs/Apps/App-Framework/Tools/domo-publish-CICD.md"
             }
           ]
