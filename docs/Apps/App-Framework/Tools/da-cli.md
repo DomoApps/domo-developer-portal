@@ -230,7 +230,7 @@ template/
 ├── package.json
 ├── src/
 ├── public/
-├── .gitignore
+├── gitignore
 └── ... (other files)
 ```
 
@@ -244,8 +244,6 @@ For local development, you can set a default template path:
 # Create .env file
 echo "DA_TEMPLATE_PATH=~/my-templates/custom-template" > .env
 ```
-
-**Note**: By default, the CLI uses [@domoinc/vite-react-template](https://www.npmjs.com/package/@domoinc/vite-react-template) when no custom template is specified.
 
 ### Package Manager
 
@@ -296,11 +294,6 @@ On macOS/Linux, you may need elevated permissions:
 ```bash
 # Use sudo
 sudo npm install -g @domoinc/da
-
-# Or configure npm for global installs without sudo
-mkdir ~/.npm-global
-npm config set prefix '~/.npm-global'
-export PATH=~/.npm-global/bin:$PATH
 ```
 
 #### Package Installation Fails
@@ -328,17 +321,12 @@ Enable verbose logging for troubleshooting:
 DEBUG=da:* da new my-app
 ```
 
-## License
-
-MIT
-
 ## Support
 
 For issues and questions:
 
-- **GitHub Issues**: [Create an issue](https://github.com/your-org/da/issues)
-- **Documentation**: [Full documentation](https://your-docs-site.com)
-- **Community**: [Domo Developer Forums](https://developer.domo.com/community)
+- **GitHub Issues**: [Create an issue](https://github.com/DomoApps/da/issues)
+- **NPM**: [@domoinc/da on npm](https://www.npmjs.com/package/@domoinc/da)
 
 ---
 
