@@ -1,12 +1,10 @@
 # Domo Publish - GitHub Action
 
-**Reading time: ~1 minute**
-
 ## What is it?
 
 The [Domo Publish Action](https://github.com/marketplace/actions/domo-publish-action) is a GitHub Action that automatically deploys your Domo applications directly from your GitHub repository to your Domo instance. No manual steps, no command-line hasslesjust push your code and let CI/CD handle the rest.
 
-## Why you need it
+## Why you want to use it
 
 If you're manually running `domo publish` every time you make changes, you're wasting valuable development time. The Domo Publish Action eliminates repetitive deployment tasks by:
 
