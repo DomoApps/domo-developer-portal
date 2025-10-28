@@ -35,7 +35,7 @@ If you're manually running `domo publish` every time you make changes, you're wa
 
 ## Quick setup
 
-1. **Get your Domo credentials**: Admin -> API -> Personal Access Tokens
+1. **Get your Domo credentials**: Admin -> Authentication -> Personal Access Tokens
 2. **Add to GitHub Secrets**: Store as `DOMO_ACCESS_TOKEN` in your repository
 3. **Create workflow file**: Add to `.github/workflows/deploy.yml`
 4. **Push and relax**: Your app deploys automatically on merge
