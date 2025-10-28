@@ -1,4 +1,4 @@
-# Automate Your Domo App Deployments with GitHub Actions
+# Domo Publish - GitHub Action
 
 **Reading time: ~1 minute**
 
@@ -11,6 +11,7 @@ The [Domo Publish Action](https://github.com/marketplace/actions/domo-publish-ac
 If you're manually running `domo publish` every time you make changes, you're wasting valuable development time. The Domo Publish Action eliminates repetitive deployment tasks by:
 
 - **Automating the entire publish workflow** when code is merged
+- **Controlling access to production deployments** without giving every developer publish permissions. Use a dedicated CI/CD service account with properly scoped grants, so only approved code that passes your review process gets deployed
 - **Securing your credentials** with GitHub Secrets instead of local tokens
 - **Supporting multiple environments** (dev, staging, production)
 - **Providing instant feedback** with detailed deployment status in your PR checks
@@ -18,6 +19,7 @@ If you're manually running `domo publish` every time you make changes, you're wa
 ## How it accelerates development
 
 **Traditional workflow:**
+
 1. Make code changes
 2. Commit and push
 3. Manually run `domo login`
@@ -26,13 +28,14 @@ If you're manually running `domo publish` every time you make changes, you're wa
 6. Repeat for each environment
 
 **With Domo Publish Action:**
+
 1. Make code changes
 2. Push to GitHub
-3. ( Everything else happens automatically
+3. Everything else happens automatically
 
 ## Quick setup
 
-1. **Get your Domo credentials**: Admin � API � Personal Access Tokens
+1. **Get your Domo credentials**: Admin -> API -> Personal Access Tokens
 2. **Add to GitHub Secrets**: Store as `DOMO_ACCESS_TOKEN` in your repository
 3. **Create workflow file**: Add to `.github/workflows/deploy.yml`
 4. **Push and relax**: Your app deploys automatically on merge
@@ -50,10 +53,12 @@ jobs:
       - uses: DomoApps/domo-publish-action@v1
         with:
           domo-access-token: ${{ secrets.DOMO_ACCESS_TOKEN }}
+          build-command: npm run your-build-command
           domo-instance: your-instance.domo.com
+          working-directory: ./build
 ```
 
-**The result?** More time building features, less time clicking buttons. Your Domo apps deploy consistently, securely, and automatically with every merge.
+**The result?** More time building features, less time managing deployments, credentials, and permissions. Your Domo apps deploy consistently, securely, and automatically with every merge.
 
 ## Using with other CI/CD platforms
 
@@ -69,8 +74,11 @@ npm install -g ryuu
 domo token -i your-instance.domo.com -t $DOMO_ACCESS_TOKEN
 domo login -i your-instance.domo.com
 
+# Run Lint, Test, Build, etc.
+npm run your-build-command
+
 # Publish your app
-domo publish
+cd build && domo publish && cd ..
 ```
 
 **Example for GitLab CI:**
