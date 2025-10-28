@@ -327,9 +327,3 @@ For issues and questions:
 
 - **GitHub Issues**: [Create an issue](https://github.com/DomoApps/da/issues)
 - **NPM**: [@domoinc/da on npm](https://www.npmjs.com/package/@domoinc/da)
-
----
-
-**Maintained by**: Domo, Inc - Developer Innovations
-
----
