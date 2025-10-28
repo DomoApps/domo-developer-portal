@@ -1,3 +1,7 @@
+--- 
+stoplight-id: e947d87e17547
+---
+
 # ryuu.js
 
 > A powerful JavaScript SDK for building custom applications within the Domo platform
@@ -7,32 +11,6 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 
 ryuu.js (published as `ryuu.js`, developed as `domo.js`) is a comprehensive JavaScript library that enables developers to build interactive custom applications within the Domo platform. It provides seamless communication between your custom app and the Domo environment, supporting data fetching, real-time events, filters, variables, and cross-platform mobile integration.
-
----
-
-## Table of Contents
-
-- [Quick Start](#quick-start)
-- [Features](#features)
-- [Installation](#installation)
-- [Core Concepts](#core-concepts)
-- [API Reference](#api-reference)
-  - [HTTP Methods](#http-methods)
-  - [Event Listeners](#event-listeners)
-  - [Emitters](#emitters)
-  - [Navigation](#navigation)
-  - [Environment](#environment)
-  - [Utilities](#utilities)
-- [TypeScript Support](#typescript-support)
-- [Mobile Platform Support](#mobile-platform-support)
-- [Error Handling](#error-handling)
-- [Advanced Usage](#advanced-usage)
-- [Complete Example](#complete-example)
-- [Migration Guide](#migration-guide)
-- [Contributing](#contributing)
-- [License](#license)
-
----
 
 ## Quick Start
 
