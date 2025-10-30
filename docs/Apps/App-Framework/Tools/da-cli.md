@@ -1,5 +1,9 @@
 # DA CLI - Domo Apps Generator
 
+[![npm version](https://img.shields.io/npm/v/@domoinc/da.svg)](https://www.npmjs.com/package/@domoinc/da)
+[![License](https://img.shields.io/badge/license-SEE%20LICENSE-blue.svg)](./LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
+
 The DA CLI (Domo Apps CLI) is a powerful command-line tool for generating and managing Domo applications built with Vite and React. It provides a streamlined workflow for creating new apps, generating components, managing manifests, and more.
 
 ## Overview
