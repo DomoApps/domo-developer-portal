@@ -269,63 +269,6 @@ The CLI supports multiple package managers:
 
 ## Troubleshooting
 
-### Common Issues
-
-#### Command Not Found
-
-If `da` command is not found after installation:
-
-```bash
-# Check installation
-npm list -g @domoinc/da
-
-# Check PATH
-npm config get prefix
-
-# Add to PATH (add to ~/.bashrc or ~/.zshrc)
-export PATH="$(npm config get prefix)/bin:$PATH"
-```
-
-#### Template Download Issues
-
-If template download fails:
-
-```bash
-# Check internet connection
-ping google.com
-
-# Verify git is installed
-git --version
-
-# Try manual clone
-git clone https://github.com/DomoApps/vite-react-template.git
-```
-
-#### Permission Errors
-
-On macOS/Linux, you may need elevated permissions:
-
-```bash
-# Use sudo
-sudo npm install -g @domoinc/da
-```
-
-#### Package Installation Fails
-
-If package installation fails in your new app:
-
-```bash
-# Navigate to your app directory
-cd my-app
-
-# Try different package managers
-pnpm install
-# or
-npm install
-# or
-yarn install
-```
-
 ### Debug Mode
 
 Enable verbose logging for troubleshooting:
