@@ -448,6 +448,11 @@
           "items": [
             {
               "type": "item",
+              "title": "App Generator CLI",
+              "uri": "/docs/Apps/App-Framework/Tools/da-cli.md"
+            },
+            {
+              "type": "item",
               "title": "Domo Apps CLI",
               "uri": "/docs/Apps/App-Framework/Tools/domo-CLI.md"
             },
