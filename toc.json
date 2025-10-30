@@ -368,22 +368,6 @@
           "items": [
             {
               "type": "group",
-              "title": "Pro-Code Editor",
-              "items": [
-                {
-                  "type": "item",
-                  "title": "PDF Export",
-                  "uri": "/docs/Apps/Pro-Code-Editor/Tutorials/pdf-export.md"
-                },
-                {
-                  "type": "item",
-                  "title": "Stacked Bars",
-                  "uri": "/docs/Apps/Pro-Code-Editor/Tutorials/stacked-bars.md"
-                }
-              ]
-            },
-            {
-              "type": "group",
               "title": "App Framework",
               "items": [
                 {
@@ -486,6 +470,11 @@
               "type": "item",
               "title": "Toolkit",
               "uri": "/docs/Apps/App-Framework/Tools/toolkit.md"
+            },
+            {
+              "type": "item",
+              "title": "Domo Publish Action - CI/CD",
+              "uri": "/docs/Apps/App-Framework/Tools/domo-publish-CICD.md"
             }
           ]
         },
@@ -495,13 +484,8 @@
           "items": [
             {
               "type": "item",
-              "title": "Getting started with the Pro-Code Editor",
-              "uri": "/docs/Apps/App-Framework/Guides/getting-started-pro-code.md"
-            },
-            {
-              "type": "item",
-              "title": "Manage Pro-Code Editor Apps",
-              "uri": "/docs/Apps/App-Framework/Guides/manage-save-pro-code.md"
+              "title": "Local Development with Domo CLI",
+              "uri": "/docs/Apps/App-Framework/Guides/Local-Development-with-Domo-CLI.md"
             },
             {
               "type": "item",
@@ -590,6 +574,38 @@
     },
     {
       "type": "group",
+      "title": "Pro-Code Editor",
+      "items": [
+        {
+          "type": "group",
+          "title": "Tutorials",
+          "items": [
+            {
+              "type": "item",
+              "title": "Getting started with the Pro-Code Editor",
+              "uri": "/docs/Apps/App-Framework/Guides/getting-started-pro-code.md"
+            },
+            {
+              "type": "item",
+              "title": "Manage Pro-Code Editor Apps",
+              "uri": "/docs/Apps/App-Framework/Guides/manage-save-pro-code.md"
+            },
+            {
+              "type": "item",
+              "title": "PDF Export",
+              "uri": "/docs/Apps/Pro-Code-Editor/Tutorials/pdf-export.md"
+            },
+            {
+              "type": "item",
+              "title": "Stacked Bars",
+              "uri": "/docs/Apps/Pro-Code-Editor/Tutorials/stacked-bars.md"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "group",
       "title": "Domo Bricks",
       "items": [
         {
@@ -637,6 +653,7 @@
         }
       ]
     },
+
     {
       "type": "divider",
       "title": "Automate Actions"
