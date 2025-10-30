@@ -136,7 +136,7 @@ da g reducer myFeature
 
 ### da manifest
 
-Manages manifest overrides for different environments.
+Add a manifest override for additional deployment/proxy environments. If you need to deploy to multiple instances, or proxy to different cards for various testing environments, you can use this command to add a manifest override.
 
 **Syntax:**
 
@@ -159,9 +159,23 @@ da manifest instance.prod "Production environment for instance.domo.com"
 da manifest instance.dev "Development environment for dev.domo.com"
 ```
 
+Minimal override example (what you might store and apply):
+
+```json
+{
+  "<override-name>": {
+    "description": "description of the override",
+    "manifest": {
+      "id": "asset-id",
+      "proxyId": "proxy-id"
+    }
+  }
+}
+```
+
 ### da apply-manifest
 
-Applies manifest overrides to your application.
+Applies manifest overrides to your application. This will substitute properties from manifestOverride into your manifest.json file. Useful for deploying to multiple instances, or proxying to different cards for various testing environments.
 
 **Syntax:**
 
