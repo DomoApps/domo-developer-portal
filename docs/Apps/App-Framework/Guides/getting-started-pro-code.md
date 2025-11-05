@@ -8,7 +8,7 @@ The Pro-Code Editor in Domo allows you to create custom applications, enabling m
 
 To begin, navigate to the Pro-Code Editor in your Domo instance. You can locate it within the Asset Library by selecting **Pro-Code Apps**.
 
-![asset-library.png](../../../../assets/images/asset-library.png)
+![asset-library.png](../../../../assets/images/asset-library-tutorial.png)
 
 ### 2. Choose a Template
 
@@ -20,7 +20,7 @@ Select a template from the available options to get started with your app. These
 
 Give your app a descriptive name and set an initial version number. Establishing a version control strategy from the start will help keep track of updates and changes as your app evolves.
 
-\* *Be aware that when a version is released, that version is locked for viewing only. Each version’s code is distinct, so changes in one version won’t affect others. This allows you to maintain multiple iterations of your app without risking unintended changes across versions.*
+\* _Be aware that when a version is released, that version is locked for viewing only. Each version’s code is distinct, so changes in one version won’t affect others. This allows you to maintain multiple iterations of your app without risking unintended changes across versions._
 
 ![save-template.png](../../../../assets/images/save-template.png)
 
