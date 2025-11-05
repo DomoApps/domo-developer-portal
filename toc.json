@@ -582,14 +582,14 @@
       "title": "Pro-Code Editor",
       "items": [
         {
+          "type": "item",
+          "title": "Getting Started",
+          "uri": "/docs/Apps/App-Framework/Guides/getting-started-pro-code.md"
+        },
+        {
           "type": "group",
           "title": "Tutorials",
           "items": [
-            {
-              "type": "item",
-              "title": "Getting started with the Pro-Code Editor",
-              "uri": "/docs/Apps/App-Framework/Guides/getting-started-pro-code.md"
-            },
             {
               "type": "item",
               "title": "Manage Pro-Code Editor Apps",
