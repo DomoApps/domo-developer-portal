@@ -64,6 +64,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml
 
+      # Cross-repo change detection: Compare source YAML timestamps with destination markdown
+      # This is needed because we're syncing between two repos - git diff wouldn't detect these changes
       - name: Detect Changed YAML Files
         id: detect
         run: |
@@ -85,15 +87,27 @@ jobs:
             echo "No changes detected"
           fi
 
+      # Create directory with only changed files so action processes only those
+      - name: Prepare Changed Files for Processing
+        if: steps.check.outputs.has_changes == 'true'
+        run: |
+          mkdir -p ./changed-yaml-files
+          while IFS= read -r file; do
+            if [ -f "$file" ]; then
+              cp "$file" ./changed-yaml-files/
+              echo "Copied: $(basename "$file")"
+            fi
+          done < changed_files.txt
+
+      # Generate docs for ONLY the changed files
       - name: Generate Documentation
         if: steps.check.outputs.has_changes == 'true'
         uses: DomoApps/documentation-generator-action@main
         with:
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
-          yaml_input_path: 'source-repo/api-docs/public'
+          yaml_input_path: './changed-yaml-files'
           output_path: './temp-docs'
-          process_changed_only: 'true'
-          changed_files: ${{ steps.detect.outputs.changed_files }}
+          process_changed_only: 'false'  # Not needed - directory already contains only changed files
 
       - name: Sync to Destination
         if: steps.check.outputs.has_changes == 'true'
