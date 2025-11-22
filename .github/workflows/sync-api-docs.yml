@@ -95,9 +95,13 @@ jobs:
           echo "📋 Changed files from detect script:"
           cat changed_files.txt
           echo ""
-          echo "changed_files<<EOF" >> $GITHUB_OUTPUT
-          cat changed_files.txt
-          echo "EOF" >> $GITHUB_OUTPUT
+
+          # Store as multi-line output
+          {
+            echo "changed_files<<EOF"
+            cat changed_files.txt
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
 
       # Debug: Show what we're passing to action
       - name: Debug Changed Files
