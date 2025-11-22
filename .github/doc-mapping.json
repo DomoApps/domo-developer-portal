@@ -3,7 +3,9 @@
   "dest_base": "docs/API-Reference/Product-APIs",
   "file_mappings": {
     "AI-Services.yaml": "AI-Services.md",
-    "Filesets.yaml": "Filesets.md"
+    "Filesets.yaml": "Filesets.md",
+    "../../source-repo/api-docs/public/AI-Services.yaml": "AI-Services.md",
+    "../../source-repo/api-docs/public/Filesets.yaml": "Filesets.md"
   },
   "default_rule": {
     "pattern": "*.yaml",
