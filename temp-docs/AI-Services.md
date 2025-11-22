@@ -8,7 +8,7 @@
 
 ## Text Summarization
 
-**Method:** `POST`
+**Method:** `POST`  
 **Endpoint:** `/api/ai/v1/text/summarize`
 
 Generate a summary based on the given text input.
@@ -25,9 +25,8 @@ _None_
 
 Text Summarization AI Service Request.
 
-**Prompt Templates**
-
-A prompt template is a string that contains placeholders for parameters that will be replaced with parameter values before the prompt is submitted to the model. A default prompt template is set for each model configured for the Text Summarization AI Service. Individual requests can override the default template by including the `promptTemplate` parameter.
+**Prompt Templates**  
+A prompt template is a string that contains placeholders for parameters that will be replaced with parameter values before the prompt is submitted to the model.A default prompt template is set for each model configured for the Text Summarization AI Service. Individual requests can override the default template by including the `promptTemplate` parameter.
 
 **Prompt Template Parameters**
 
@@ -36,57 +35,57 @@ The following request parameters are automatically injected into the prompt temp
 - input
 - system
 
-Models with built-in support for system prompts and chat message history do not need to include *system* or *chatContext* in the prompt template. Additional parameters can be provided in the `parameters` map as key-value pairs.
+Models with built-in support for system prompts and chat message history do not need to include **system** or **chatContext** in the prompt template.Additional parameters can be provided in the `parameters` map as key-value pairs.
 
 **Prompt Template Examples**
 
 - "${input}"
-- "${system}\n${input}"
+- "${system}\\n${input}"
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `input` | string | ✓ Yes | Text information to be summarized. |
-| `sessionId` | string (uuid) | No | The AI session ID. If provided, this request will be associated with the specified AI Session. |
-| `promptTemplate` | [ParameterizedPromptTemplate](#schema-parameterizedprompttemplate) | No | A prompt template string that contains placeholders for parameters that will be replaced with parameter values before the prompt is submitted to the model. **Prompt Template Examples** - "${input}" - "${system}\n${input}" |
-| `parameters` | object | No | Custom parameters to inject into the prompt template if an associated placeholder is present. |
-| `model` | string | No | The ID of the model to use for Text Summarization. The specified model must be configured for the Text Summarization AI Service by an Admin. |
-| `modelConfiguration` | object | No | Additional model-specific configuration parameter key-value pairs. e.g. temperature, max_tokens, etc. |
-| `system` | string | No | The system message to use for the Text Summarization task. If not provided, the default system message will be used. If the model does not include built-in support for system prompts, this parameter may be included in the prompt template using the "${system}" placeholder. |
-| `chunkingConfiguration` | [ChunkingConfiguration](#schema-chunkingconfiguration) | No | A configuration for chunking of textual information. |
-| `outputStyle` | string | No | Determines the design, structuring and organization of the summarization output. Allowed values: `bulleted`, `numbered`, `paragraph`, `unknown` |
-| `outputWordLength` | [SizeBoundary](#schema-sizeboundary) | No |  |
-| `temperature` | number (double) | No | Controls randomness in the model's output. Lower values make output more deterministic. |
-| `maxTokens` | integer (int32) | No | The maximum number of tokens to generate in the response. |
+| Parameter               | Type                                    | Required | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+|-------------------------|-----------------------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `input`                 | string                                  | ✔ Yes    | Text information to be summarized.                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `sessionId`             | string (uuid)                           | No       | The AI session ID. If provided, this request will be associated with the specified AI Session.                                                                                                                                                                                                                                                                                                                                                                     |
+| `promptTemplate`        | [ParameterizedPromptTemplate](#schema-parameterizedprompttemplate) | No       | <p>  A prompt template string that contains placeholders for parameters that will be replaced with parameter values before the prompt  is submitted to the model.  </p>  <p>  **Prompt Template Examples**  <ul>      <li>\"${input}\"</li>      <li>\"${system}\\n${input}\"</li>  </ul>  </p>                                                                                                                                                                          |
+| `parameters`            | object                                  | No       | Custom parameters to inject into the prompt template if an associated placeholder is present.                                                                                                                                                                                                                                                                                                                                                                      |
+| `model`                 | string                                  | No       | The ID of the model to use for Text Summarization. The specified model must be configured for the Text                               Summarization                               AI Service by an Admin.                                                                                                                                                                                                                                                              |
+| `modelConfiguration`    | object                                  | No       | Additional model-specific configuration parameter key-value pairs. e.g. temperature, max_tokens, etc.                                                                                                                                                                                                                                                                                                                                                               |
+| `system`                | string                                  | No       | The system message to use for the Text Summarization task. If not provided, the default system message                               will be used. If                               the model does not include built-in support for system prompts, this parameter may be included in the prompt                               template using the \"${system}\" placeholder.                                                                                                              |
+| `chunkingConfiguration` | [ChunkingConfiguration](#schema-chunkingconfiguration)             | No       | A configuration for chunking of textual information.                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `outputStyle`           | string                                  | No       | Determines the design, structuring and organization of the summarization output. Allowed values: `bulleted`, `numbered`, `paragraph`, `unknown`                                                                                                                                                                                                                                                                                                                    |
+| `outputWordLength`      | [SizeBoundary](#schema-sizeboundary)    | No       |                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `temperature`           | number (double)                         | No       | Controls randomness in the model's output. Lower values make output more deterministic.                                                                                                                                                                                                                                                                                                                                                                            |
+| `maxTokens`             | integer (int32)                         | No       | The maximum number of tokens to generate in the response.                                                                                                                                                                                                                                                                                                                                                                                                          |
 
 <details>
 <summary><strong>ParameterizedPromptTemplate Object</strong></summary>
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `template` | string | No |  |
+| Parameter | Type   | Required | Description |
+|-----------|--------|----------|-------------|
+| `template` | string | No       |             |
 
 </details>
 
 <details>
 <summary><strong>ChunkingConfiguration Object</strong></summary>
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `maxChunkSize` | integer (int32) | No | This parameter prevents the chunks from exceeding a specific size. It is a limit on the number of words that each chunk can include. |
-| `chunkOverlap` | integer (int32) | No | Dictates the overlap between consecutive chunks. It is the count of common characters between two adjacent chunks. |
-| `separators` | array | No | It is a list of characters or Strings which can be used to start a new chunk when they appear in the original text. They are ordered from highest to lowest priority. Highest priority separator is used to split a new chunk first. If it is not present, we move to the next separator. |
-| `separatorType` | string | No | Type of separator being used. |
-| `disallowIntermediateChunks` | boolean | No | If set to true, only the original text will be chunked preventing further summarization of summaries if needed. |
+| Parameter                  | Type          | Required | Description                                                                                                                                                    |
+|----------------------------|---------------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `maxChunkSize`             | integer (int32) | No       | This parameter prevents the chunks from exceeding a specific size.      It is a limit on the number of words that each chunk can include.                     |
+| `chunkOverlap`             | integer (int32) | No       | Dictates the overlap between consecutive chunks.      It is the count of common characters between two adjacent chunks.                                        |
+| `separators`               | array         | No       | It is a list of characters or Strings which can be used to start a new chunk when they appear in the original text.      They are ordered from highest to lowest priority. Highest priority separator is used to split a new chunk first.      If it is not present, we move to the next separator. |
+| `separatorType`            | string        | No       | Type of separator being used.                                                                                                                                  |
+| `disallowIntermediateChunks` | boolean      | No       | If set to true, only the original text will be chunked preventing further summarization of      summaries if needed.                                          |
 
 </details>
 
 <details>
 <summary><strong>SizeBoundary Object</strong></summary>
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `min` | integer (int32) | No |  |
-| `max` | integer (int32) | No |  |
+| Parameter | Type          | Required | Description |
+|-----------|---------------|----------|-------------|
+| `min`     | integer (int32) | No       |             |
+| `max`     | integer (int32) | No       |             |
 
 </details>
 
@@ -98,10 +97,7 @@ title: JavaScript
 -->
 
 ```javascript
-// Generate a realistic fetch/axios example using the request body example
-// Use the actual endpoint path with any path parameters filled in
-// Include proper headers (Content-Type: application/json if body exists)
-fetch('/api/ai/v1/text/summarize', {
+fetch('https://api.example.com/api/ai/v1/text/summarize', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -109,7 +105,8 @@ fetch('/api/ai/v1/text/summarize', {
   body: JSON.stringify({
     input: "San Francisco, officially the City and County of San Francisco, is a commercial, financial, and cultural center in Northern California. With a population of 808,437 residents as of 2022, San Francisco is the fourth most populous city in the U.S. state of California. The city covers a land area of 46.9 square miles (121 square kilometers) at the end of the San Francisco Peninsula, making it the second-most densely populated large U.S. city after New York City and the fifth-most densely populated U.S. county, behind only four New York City boroughs. Among the 92 U.S. cities proper with over 250,000 residents, San Francisco is ranked first by per capita income and sixth by aggregate income as of 2022."
   })
-}).then(response => response.json())
+})
+.then(response => response.json())
 .then(data => console.log(data));
 ```
 
@@ -119,18 +116,15 @@ title: Python
 -->
 
 ```python
-# Generate a realistic requests example using the request body example
-# Use the actual endpoint path with any path parameters filled in
-# Include proper headers if needed
 import requests
+import json
 
-url = '/api/ai/v1/text/summarize'
+url = 'https://api.example.com/api/ai/v1/text/summarize'
 headers = {'Content-Type': 'application/json'}
 data = {
   "input": "San Francisco, officially the City and County of San Francisco, is a commercial, financial, and cultural center in Northern California. With a population of 808,437 residents as of 2022, San Francisco is the fourth most populous city in the U.S. state of California. The city covers a land area of 46.9 square miles (121 square kilometers) at the end of the San Francisco Peninsula, making it the second-most densely populated large U.S. city after New York City and the fifth-most densely populated U.S. county, behind only four New York City boroughs. Among the 92 U.S. cities proper with over 250,000 residents, San Francisco is ranked first by per capita income and sixth by aggregate income as of 2022."
 }
-
-response = requests.post(url, headers=headers, json=data)
+response = requests.post(url, headers=headers, data=json.dumps(data))
 print(response.json())
 ```
 
@@ -140,10 +134,7 @@ title: cURL
 -->
 
 ```bash
-# Generate a realistic cURL command
-# Use the actual endpoint path
-# Include -H headers and -d data as appropriate
-curl -X POST /api/ai/v1/text/summarize \
+curl -X POST https://api.example.com/api/ai/v1/text/summarize \
 -H "Content-Type: application/json" \
 -d '{
   "input": "San Francisco, officially the City and County of San Francisco, is a commercial, financial, and cultural center in Northern California. With a population of 808,437 residents as of 2022, San Francisco is the fourth most populous city in the U.S. state of California. The city covers a land area of 46.9 square miles (121 square kilometers) at the end of the San Francisco Peninsula, making it the second-most densely populated large U.S. city after New York City and the fifth-most densely populated U.S. county, behind only four New York City boroughs. Among the 92 U.S. cities proper with over 250,000 residents, San Francisco is ranked first by per capita income and sixth by aggregate income as of 2022."
@@ -168,8 +159,8 @@ curl -X POST /api/ai/v1/text/summarize \
 
 | Status Code | Description |
 |-------------|-------------|
-| `403` | Forbidden |
-| `409` | Conflict |
+| `403`       | Forbidden   |
+| `409`       | Conflict    |
 
 ---
 
@@ -190,7 +181,7 @@ _None_
 
 ### Request Body
 
-**Text-to-SQL AI Service Request.**
+Text-to-SQL AI Service Request.
 
 **Prompt Templates**
 
@@ -212,14 +203,14 @@ Models with built-in support for system prompts and chat message history do not 
 **Prompt Template Examples**
 
 - "${input}"
-- "${system}\\n${input}"
+- "${system}\n${input}"
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `input` | string | ✔ Yes | The input text. |
 | `sessionId` | string (uuid) | No | The AI session ID. If provided, this request will be associated with the specified AI Session. |
 | `dataSourceSchemas` | array | No | The data source schemas and metadata to be included in the Text-to-SQL task prompt to generate SQL. |
-| `promptTemplate` | [ParameterizedPromptTemplate](#schema-parameterizedprompttemplate) | No | A prompt template string that contains placeholders for parameters that will be replaced with parameter values before the prompt is submitted to the model. Prompt Template Examples - "${input}" - "${system}\\n${input}". |
+| `promptTemplate` | [ParameterizedPromptTemplate](#schema-parameterizedprompttemplate) | No | <p>  A prompt template string that contains placeholders for parameters that will be replaced with parameter values before the prompt  is submitted to the model.  </p>  <p>  <h3>Prompt Template Examples</h3>  <ul>      <li>"${input}"</li>      <li>"${system}\\n${input}"</li>  </ul> |
 | `parameters` | object | No | Custom parameters to inject into the prompt template if an associated placeholder is present. |
 | `model` | string | No | The ID of the model to use for Text-to-SQL. The specified model must be configured for the Text-to-SQL AI Service by an Admin. |
 | `modelConfiguration` | object | No | Additional model-specific configuration parameter key-value pairs. e.g. temperature, max_tokens, etc. |
@@ -249,10 +240,7 @@ title: JavaScript
 -->
 
 ```javascript
-// Generate a realistic fetch/axios example using the request body example
-// Use the actual endpoint path with any path parameters filled in
-// Include proper headers (Content-Type: application/json if body exists)
-fetch('https://yourapiurl.com/api/ai/v1/text/sql', {
+fetch('https://api.example.com/api/ai/v1/text/sql', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -272,8 +260,9 @@ fetch('https://yourapiurl.com/api/ai/v1/text/sql', {
       }
     ]
   })
-}).then(response => response.json())
-  .then(data => console.log(data));
+})
+.then(response => response.json())
+.then(data => console.log(data));
 ```
 
 <!--
@@ -282,31 +271,29 @@ title: Python
 -->
 
 ```python
-# Generate a realistic requests example using the request body example
-# Use the actual endpoint path with any path parameters filled in
-# Include proper headers if needed
 import requests
-import json
 
-url = 'https://yourapiurl.com/api/ai/v1/text/sql'
-headers = {'Content-Type': 'application/json'}
-payload = {
-  "input": "What are my total sales by region?",
-  "dataSourceSchemas": [
-    {
-      "dataSourceName": "Store Sales",
-      "columns": [
-        {"type": "STRING", "name": "product"},
-        {"type": "LONG", "name": "store"},
-        {"type": "LONG", "name": "amount"},
-        {"type": "DATETIME", "name": "timestamp'"},
-        {"type": "STRING", "name": "region"}
-      ]
-    }
-  ]
+url = 'https://api.example.com/api/ai/v1/text/sql'
+headers = {
+    'Content-Type': 'application/json'
+}
+data = {
+    "input": "What are my total sales by region?",
+    "dataSourceSchemas": [
+        {
+            "dataSourceName": "Store Sales",
+            "columns": [
+                {"type": "STRING", "name": "product"},
+                {"type": "LONG", "name": "store"},
+                {"type": "LONG", "name": "amount"},
+                {"type": "DATETIME", "name": "timestamp'"},
+                {"type": "STRING", "name": "region"}
+            ]
+        }
+    ]
 }
 
-response = requests.post(url, headers=headers, data=json.dumps(payload))
+response = requests.post(url, headers=headers, json=data)
 print(response.json())
 ```
 
@@ -316,11 +303,8 @@ title: cURL
 -->
 
 ```bash
-# Generate a realistic cURL command
-# Use the actual endpoint path
-# Include -H headers and -d data as appropriate
-curl -X POST https://yourapiurl.com/api/ai/v1/text/sql \
--H 'Content-Type: application/json' \
+curl -X POST https://api.example.com/api/ai/v1/text/sql \
+-H "Content-Type: application/json" \
 -d '{
   "input": "What are my total sales by region?",
   "dataSourceSchemas": [
@@ -354,9 +338,9 @@ curl -X POST https://yourapiurl.com/api/ai/v1/text/sql \
 
 **Response Fields:**
 
-- `prompt`: The generated prompt including the structured query and schema.
+- `prompt`: The generated prompt sent to the model.
 - `output`: The SQL query generated based on the input text.
-- `modelId`: The model ID used to generate the SQL query.
+- `modelId`: Identifier of the model used for generating the SQL query.
 
 ### Error Responses
 
@@ -370,7 +354,7 @@ curl -X POST https://yourapiurl.com/api/ai/v1/text/sql \
 
 ## Text Generation
 
-**Method:** `POST`
+**Method:** `POST`  
 **Endpoint:** `/api/ai/v1/text/generation`
 
 Generate text based on the given text input.
@@ -385,12 +369,14 @@ _None_
 
 ### Request Body
 
-**Text Generation AI Service Request.**
+Text Generation AI Service Request.
 
-**Prompt Templates**  
+**Prompt Templates**
+
 A prompt template is a string that contains placeholders for parameters that will be replaced with parameter values before the prompt is submitted to the model. A default prompt template is set for each model configured for the Text Generation AI Service. Individual requests can override the default template by including the `promptTemplate` parameter.
 
-**Prompt Template Parameters**  
+**Prompt Template Parameters**
+
 The following request parameters are automatically injected into the prompt template if the associated placeholder is present:
 
 - input
@@ -403,25 +389,25 @@ Models with built-in support for system prompts and chat message history do not 
 - "${input}"
 - "${system}\n${input}"
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `input` | string | ✓ Yes | The input text. |
-| `sessionId` | string (uuid) | No | The AI session ID. If provided, this request will be associated with the specified AI Session. |
-| `promptTemplate` | [ParameterizedPromptTemplate](#schema-parameterizedprompttemplate) | No | A prompt template string that contains placeholders for parameters that will be replaced with parameter values before the prompt is submitted to the model. **Prompt Template Examples**: - "${input}" - "${system}\n${input}" |
-| `parameters` | object | No | Custom parameters to inject into the prompt template if an associated placeholder is present. |
-| `model` | string | No | The ID of the model to use for Text Generation. The specified model must be configured for the Text Generation AI Service by an Admin. |
-| `modelConfiguration` | object | No | Additional model-specific configuration parameter key-value pairs. e.g. temperature, max_tokens, etc. |
-| `system` | string | No | The system message to use for the Text Generation task. If not provided, the default system message will be used. If the model does not include built-in support for system prompts, this parameter may be included in the prompt template using the "${system}" placeholder. |
-| `temperature` | number (double) | No | Controls randomness in the model's output. Lower values make output more deterministic. |
-| `maxTokens` | integer (int32) | No | The maximum number of tokens to generate in the response. |
-| `responseFormat` | string | No | Model response format specification for structured outputs. |
+| Parameter          | Type                  | Required | Description                                                                                                                                                             |
+|--------------------|-----------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `input`            | string                | ✔ Yes    | The input text.                                                                                                                                                         |
+| `sessionId`        | string (uuid)         | No       | The AI session ID. If provided, this request will be associated with the specified AI Session.                                                                         |
+| `promptTemplate`   | [ParameterizedPromptTemplate](#schema-parameterizedprompttemplate) | No       | A prompt template string that contains placeholders for parameters that will be replaced with parameter values before the prompt is submitted to the model.         |
+| `parameters`       | object                | No       | Custom parameters to inject into the prompt template if an associated placeholder is present.                                                                           |
+| `model`            | string                | No       | The ID of the model to use for Text Generation. The specified model must be configured for the Text Generation AI Service by an Admin.                                   |
+| `modelConfiguration` | object              | No       | Additional model-specific configuration parameter key-value pairs. e.g. temperature, max_tokens, etc.                                                                    |
+| `system`           | string                | No       | The system message to use for the Text Generation task. If not provided, the default system message will be used.                                                        |
+| `temperature`      | number (double)       | No       | Controls randomness in the model's output. Lower values make output more deterministic.                                                                                  |
+| `maxTokens`        | integer (int32)       | No       | The maximum number of tokens to generate in the response.                                                                                                               |
+| `responseFormat`   | string                | No       | Model response format specification for structured outputs.                                                                                                              |
 
 <details>
 <summary><strong>ParameterizedPromptTemplate Object</strong></summary>
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `template` | string | No |  |
+| Parameter | Type   | Required | Description |
+|-----------|--------|----------|-------------|
+| `template` | string | No       |             |
 
 </details>
 
@@ -433,20 +419,16 @@ title: JavaScript
 -->
 
 ```javascript
-// Generate a realistic fetch/axios example using the request body example
-// Use the actual endpoint path with any path parameters filled in
-// Include proper headers (Content-Type: application/json if body exists)
 fetch('https://api.example.com/api/ai/v1/text/generation', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    input: 'Why is the sky blue?'
+    input: "Why is the sky blue?"
   })
-})
-.then(response => response.json())
-.then(data => console.log(data));
+}).then(response => response.json())
+  .then(data => console.log(data));
 ```
 
 <!--
@@ -455,19 +437,15 @@ title: Python
 -->
 
 ```python
-# Generate a realistic requests example using the request body example
-# Use the actual endpoint path with any path parameters filled in
-# Include proper headers if needed
 import requests
 
-response = requests.post(
-    'https://api.example.com/api/ai/v1/text/generation',
-    headers={'Content-Type': 'application/json'},
-    json={
-        "input": "Why is the sky blue?"
-    }
-)
+url = "https://api.example.com/api/ai/v1/text/generation"
+headers = {"Content-Type": "application/json"}
+data = {
+    "input": "Why is the sky blue?"
+}
 
+response = requests.post(url, json=data, headers=headers)
 print(response.json())
 ```
 
@@ -477,12 +455,9 @@ title: cURL
 -->
 
 ```bash
-# Generate a realistic cURL command
-# Use the actual endpoint path
-# Include -H headers and -d data as appropriate
 curl -X POST https://api.example.com/api/ai/v1/text/generation \
-     -H "Content-Type: application/json" \
-     -d '{"input": "Why is the sky blue?"}'
+-H "Content-Type: application/json" \
+-d '{"input": "Why is the sky blue?"}'
 ```
 
 <!-- type: tab-end -->
@@ -499,16 +474,12 @@ curl -X POST https://api.example.com/api/ai/v1/text/generation \
 }
 ```
 
-- **prompt**: The original input string sent to the API.
-- **output**: The generated text output based on the input.
-- **modelId**: The identifier of the model used for generating the output.
-
 ### Error Responses
 
 | Status Code | Description |
 |-------------|-------------|
-| `403` | Forbidden |
-| `409` | Conflict |
+| `403`       | Forbidden   |
+| `409`       | Conflict    |
 
 ---
 
@@ -533,7 +504,7 @@ Text-to-Beast-Mode AI Service Request.
 
 **Prompt Templates**
 
-A prompt template is a string that contains placeholders for parameters that will be replaced with parameter values before the prompt is submitted to the model. A default prompt template is set for each model configured for the Text-to-Beast-Mode AI Service. Individual requests can override the default template by including the `promptTemplate` parameter.
+A prompt template is a string that contains placeholders for parameters that will be replaced with parameter values before the prompt is submitted to the model.A default prompt template is set for each model configured for the Text-to-Beast-Mode AI Service. Individual requests can override the default template by including the `promptTemplate` parameter.
 
 **Prompt Template Parameters**
 
@@ -541,24 +512,24 @@ The following request parameters are automatically injected into the prompt temp
 
 - input
 - system
-- dataSourceSchema  
+- dataSourceSchema
 
-Models with built-in support for system prompts and chat message history do not need to include *system* or *chatContext* in the prompt template. Additional parameters can be provided in the `parameters` map as key-value pairs.
+Models with built-in support for system prompts and chat message history do not need to include *system* or *chatContext* in the prompt template.Additional parameters can be provided in the `parameters` map as key-value pairs.
 
 **Prompt Template Examples**
 
 - "${input}"
-- "${system}\n${input}"
+- "${system}\\n${input}"
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `input` | string | ✔ Yes | The input text. |
+| `input` | string | ✓ Yes | The input text. |
 | `sessionId` | string (uuid) | No | The AI session ID. If provided, this request will be associated with the specified AI Session. |
 | `dataSourceSchema` | [AIDataSourceSchema](#schema-aidatasourceschema) | No | The schema and additional metadata for a Data Source. |
-| `promptTemplate` | [ParameterizedPromptTemplate](#schema-parameterizedprompttemplate) | No | A prompt template string that contains placeholders for parameters that will be replaced with parameter values before the prompt is submitted to the model. |
+| `promptTemplate` | [ParameterizedPromptTemplate](#schema-parameterizedprompttemplate) | No |  A prompt template string that contains placeholders for parameters that will be replaced with parameter values before the prompt is submitted to the model. **Prompt Template Examples** - "${input}" - "${system}\\n${input}" |
 | `parameters` | object | No | Custom parameters to inject into the prompt template if an associated placeholder is present. |
 | `model` | string | No | The ID of the model to use for Text-to-Beast-Mode. The specified model must be configured for the Text-to-Beast-Mode AI Service by an Admin. |
-| `modelConfiguration` | object | No | Additional model-specific configuration parameter key-value pairs. e.g., temperature, max_tokens, etc. |
+| `modelConfiguration` | object | No | Additional model-specific configuration parameter key-value pairs. e.g. temperature, max_tokens, etc. |
 | `system` | string | No | The system message to use for the Text-to-SQL task. If not provided, the default system will be used. If the model does not include built-in support for system prompts, this parameter may be included in the prompt template using the "${system}" placeholder. |
 | `temperature` | number (double) | No | Controls randomness in the model's output. Lower values make output more deterministic. |
 | `maxTokens` | integer (int32) | No | The maximum number of tokens to generate in the response. |
@@ -596,27 +567,27 @@ title: JavaScript
 // Generate a realistic fetch/axios example using the request body example
 // Use the actual endpoint path with any path parameters filled in
 // Include proper headers (Content-Type: application/json if body exists)
-fetch('https://api.example.com/api/ai/v1/text/beastmode', {
+fetch('https://yourapi.com/api/ai/v1/text/beastmode', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    input: "Count distinct products",
+    input: 'Count distinct products',
     dataSourceSchema: {
-      dataSourceName: "Store Sales",
+      dataSourceName: 'Store Sales',
       columns: [
-        { type: "STRING", name: "product" },
-        { type: "LONG", name: "store" },
-        { type: "LONG", name: "amount" },
-        { type: "DATETIME", name: "timestamp" },
-        { type: "STRING", name: "region" }
+        { type: 'STRING', name: 'product' },
+        { type: 'LONG', name: 'store' },
+        { type: 'LONG', name: 'amount' },
+        { type: 'DATETIME', name: 'timestamp' },
+        { type: 'STRING', name: 'region' }
       ]
     }
   })
 })
-.then(response => response.json())
-.then(data => console.log(data));
+  .then(response => response.json())
+  .then(data => console.log(data));
 ```
 
 <!--
@@ -631,20 +602,20 @@ title: Python
 import requests
 import json
 
-url = "https://api.example.com/api/ai/v1/text/beastmode"
+url = 'https://yourapi.com/api/ai/v1/text/beastmode'
 headers = {
-    "Content-Type": "application/json"
+    'Content-Type': 'application/json'
 }
 data = {
-    "input": "Count distinct products",
-    "dataSourceSchema": {
-        "dataSourceName": "Store Sales",
-        "columns": [
-            {"type": "STRING", "name": "product"},
-            {"type": "LONG", "name": "store"},
-            {"type": "LONG", "name": "amount"},
-            {"type": "DATETIME", "name": "timestamp"},
-            {"type": "STRING", "name": "region"}
+    'input': 'Count distinct products',
+    'dataSourceSchema': {
+        'dataSourceName': 'Store Sales',
+        'columns': [
+            {'type': 'STRING', 'name': 'product'},
+            {'type': 'LONG', 'name': 'store'},
+            {'type': 'LONG', 'name': 'amount'},
+            {'type': 'DATETIME', 'name': 'timestamp'},
+            {'type': 'STRING', 'name': 'region'}
         ]
     }
 }
@@ -662,18 +633,18 @@ title: cURL
 # Generate a realistic cURL command
 # Use the actual endpoint path
 # Include -H headers and -d data as appropriate
-curl -X POST https://api.example.com/api/ai/v1/text/beastmode \
+curl -X POST https://yourapi.com/api/ai/v1/text/beastmode \
 -H "Content-Type: application/json" \
 -d '{
   "input": "Count distinct products",
   "dataSourceSchema": {
     "dataSourceName": "Store Sales",
     "columns": [
-      { "type": "STRING", "name": "product" },
-      { "type": "LONG", "name": "store" },
-      { "type": "LONG", "name": "amount" },
-      { "type": "DATETIME", "name": "timestamp" },
-      { "type": "STRING", "name": "region" }
+      {"type": "STRING", "name": "product"},
+      {"type": "LONG", "name": "store"},
+      {"type": "LONG", "name": "amount"},
+      {"type": "DATETIME", "name": "timestamp"},
+      {"type": "STRING", "name": "region"}
     ]
   }
 }'
@@ -687,7 +658,7 @@ curl -X POST https://api.example.com/api/ai/v1/text/beastmode \
 
 ```json
 {
-  "prompt": "# MYSQL\n# {\"dataSourceName\":\"Store_Sales\",\"columns\":[{\"name\":\"product\",\"type\":\"STRING\"},{\"name\":\"store\",\"type\":\"LONG\"},{\"name\":\"amount\",\"type\":\"LONG\"},{\"name\":\"timestamp\",\"type\":\"DATETIME\"},{\"name\":\"region\",\"type\":\"STRING\"}]}\n# Generate a query to answer the following:\n# Count distinct products",
+  "prompt": "# MYSQL\n# {\"dataSourceName\":\"Store_Sales\",\"columns\":[{\"name\":\"product\",\"type\":\"STRING\"},{\"name\":\"store\",\"type\":\"LONG\"},{\"name\":\"amount\",\"type\":\"LONG\"},{\"name\":\"timestamp\",\"type\":\"DATETIME\"},{\"name\":\"region\",\"type\":\"STRING\"]}\n# Generate a query to answer the following:\n# Count distinct products",
   "output": "COUNT(DISTINCT `product`)",
   "modelId": "domo.domo_ai.domogpt-medium-v1.2:anthropic"
 }
@@ -721,27 +692,27 @@ _None_
 
 Request for making tool calls using AI.
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `input` | array | ✔ Yes | The list of input messages to be processed by the AI. |
-| `sessionId` | string (uuid) | No | The unique identifier for the AI session associated with this request. |
-| `system` | array | No | System-level messages or configurations to guide the AI's response. |
-| `model` | string | No | The identifier of the AI model to be used for generating a response. |
-| `modelConfiguration` | object | No | Specific parameters or settings that configure the AI model behavior. |
-| `temperature` | number (double) | No | A parameter for controlling the randomness of the model's output. |
-| `maxTokens` | integer (int32) | No | The maximum number of tokens to generate in the response. |
-| `tools` | array | No | The list of tools the model can call. |
-| `toolChoice` | [ToolChoice](#schema-toolchoice) | No |  |
-| `validateSchema` | boolean | No | A flag to determine whether to validate the AI response against the provided schema. |
+| Parameter            | Type             | Required | Description                                                          |
+|----------------------|------------------|----------|----------------------------------------------------------------------|
+| `input`              | array            | ✔ Yes    | The list of input messages to be processed by the AI.                |
+| `sessionId`          | string (uuid)    | No       | The unique identifier for the AI session associated with this request. |
+| `system`             | array            | No       | System-level messages or configurations to guide the AI's response.  |
+| `model`              | string           | No       | The identifier of the AI model to be used for generating a response. |
+| `modelConfiguration` | object           | No       | Specific parameters or settings that configure the AI model behavior. |
+| `temperature`        | number (double)  | No       | A parameter for controlling the randomness of the model's output.    |
+| `maxTokens`          | integer (int32)  | No       | The maximum number of tokens to generate in the response.            |
+| `tools`              | array            | No       | The list of tools the model can call.                                |
+| `toolChoice`         | [ToolChoice](#schema-toolchoice) | No |  |
+| `validateSchema`     | boolean          | No       | A flag to determine whether to validate the AI response against the provided schema. |
 
 <details>
 <summary><strong>ToolChoice Object</strong></summary>
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `type` | string | No |  |
-| `name` | string | No |  |
-| `allowParallelToolCalls` | boolean | No |  |
+| Parameter                | Type    | Required | Description |
+|--------------------------|---------|----------|-------------|
+| `type`                   | string  | No       |             |
+| `name`                   | string  | No       |             |
+| `allowParallelToolCalls` | boolean | No       |             |
 
 </details>
 
@@ -756,44 +727,42 @@ title: JavaScript
 // Generate a realistic fetch/axios example using the request body example
 // Use the actual endpoint path with any path parameters filled in
 // Include proper headers (Content-Type: application/json if body exists)
-fetch('/api/ai/v1/messages/tools', {
+fetch('https://api.example.com/api/ai/v1/messages/tools', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    "input": [
-      {
-        "role": "USER",
-        "content": [
-          {
-            "type": "TEXT",
-            "text": "Do you have any blue coats available?"
-          }
-        ]
+    input: [{
+      role: "USER",
+      content: [{
+        type: "TEXT",
+        text: "Do you have any blue coats available?"
+      }]
+    }],
+    tools: [{
+      name: "get_product_recommendations",
+      description: "Searches for products matching certain criteria in the database",
+      parameters: {
+        type: "object",
+        properties: {
+          categories: ["coats & jackets"],
+          colors: ["blue"],
+          keywords: ["coat"],
+          price_range: { min: 100, max: 200 },
+          limit: 5,
+          today: "2023-06-10T12:00:00Z",
+          id: "550e8400-e29b-41d4-a716-446655440000"
+        },
+        required: ["categories", "colors", "keywords", "price_range", "limit", "today", "id"],
+        additionalProperties: false
       }
-    ],
-    "tools": [
-      {
-        "name": "get_product_recommendations",
-        "description": "Searches for products matching certain criteria in the database",
-        "parameters": {
-          "categories": ["coats & jackets"],
-          "colors": ["blue"],
-          "keywords": ["coat"],
-          "price_range": {"min": 100, "max": 200},
-          "limit": 5,
-          "today": "2023-06-10T12:00:00Z",
-          "id": "550e8400-e29b-41d4-a716-446655440000"
-        }
-      }
-    ],
-    "toolChoice": {
-      "type": "AUTO"
+    }],
+    toolChoice: {
+      type: "AUTO"
     }
   })
-}).then(response => response.json())
-  .then(data => console.log(data));
+});
 ```
 
 <!--
@@ -806,43 +775,43 @@ title: Python
 # Use the actual endpoint path with any path parameters filled in
 # Include proper headers if needed
 import requests
+import json
 
-url = '/api/ai/v1/messages/tools'
-headers = {'Content-Type': 'application/json'}
-data = {
-  "input": [
-    {
-      "role": "USER",
-      "content": [
-        {
-          "type": "TEXT",
-          "text": "Do you have any blue coats available?"
-        }
-      ]
-    }
-  ],
-  "tools": [
-    {
-      "name": "get_product_recommendations",
-      "description": "Searches for products matching certain criteria in the database",
-      "parameters": {
-        "categories": ["coats & jackets"],
-        "colors": ["blue"],
-        "keywords": ["coat"],
-        "price_range": {"min": 100, "max": 200},
-        "limit": 5,
-        "today": "2023-06-10T12:00:00Z",
-        "id": "550e8400-e29b-41d4-a716-446655440000"
-      }
-    }
-  ],
-  "toolChoice": {
-    "type": "AUTO"
-  }
+url = "https://api.example.com/api/ai/v1/messages/tools"
+headers = {
+    "Content-Type": "application/json"
 }
-
-response = requests.post(url, json=data, headers=headers)
-print(response.json())
+data = {
+    "input": [{
+        "role": "USER",
+        "content": [{
+            "type": "TEXT",
+            "text": "Do you have any blue coats available?"
+        }]
+    }],
+    "tools": [{
+        "name": "get_product_recommendations",
+        "description": "Searches for products matching certain criteria in the database",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "categories": ["coats & jackets"],
+                "colors": ["blue"],
+                "keywords": ["coat"],
+                "price_range": {"min": 100, "max": 200},
+                "limit": 5,
+                "today": "2023-06-10T12:00:00Z",
+                "id": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "required": ["categories", "colors", "keywords", "price_range", "limit", "today", "id"],
+            "additionalProperties": False
+        }
+    }],
+    "toolChoice": {
+        "type": "AUTO"
+    }
+}
+response = requests.post(url, headers=headers, data=json.dumps(data))
 ```
 
 <!--
@@ -854,8 +823,8 @@ title: cURL
 # Generate a realistic cURL command
 # Use the actual endpoint path
 # Include -H headers and -d data as appropriate
-curl -X POST /api/ai/v1/messages/tools \
--H "Content-Type: application/json" \
+curl -X POST 'https://api.example.com/api/ai/v1/messages/tools' \
+-H 'Content-Type: application/json' \
 -d '{
   "input": [
     {
@@ -873,13 +842,18 @@ curl -X POST /api/ai/v1/messages/tools \
       "name": "get_product_recommendations",
       "description": "Searches for products matching certain criteria in the database",
       "parameters": {
-        "categories": ["coats & jackets"],
-        "colors": ["blue"],
-        "keywords": ["coat"],
-        "price_range": {"min": 100, "max": 200},
-        "limit": 5,
-        "today": "2023-06-10T12:00:00Z",
-        "id": "550e8400-e29b-41d4-a716-446655440000"
+        "type": "object",
+        "properties": {
+          "categories": ["coats & jackets"],
+          "colors": ["blue"],
+          "keywords": ["coat"],
+          "price_range": { "min": 100, "max": 200 },
+          "limit": 5,
+          "today": "2023-06-10T12:00:00Z",
+          "id": "550e8400-e29b-41d4-a716-446655440000"
+        },
+        "required": ["categories", "colors", "keywords", "price_range", "limit", "today", "id"],
+        "additionalProperties": false
       }
     }
   ],
@@ -962,16 +936,16 @@ _None_
 
 Request for interacting with the chat message AI service.
 
-| Parameter           | Type              | Required | Description                                                              |
-|---------------------|-------------------|----------|--------------------------------------------------------------------------|
-| `input`             | array             | ✓ Yes    | The list of input messages to be processed by the AI.                    |
-| `sessionId`         | string (uuid)     | No       | The unique identifier for the AI session associated with this request.   |
-| `system`            | array             | No       | System-level messages or configurations to guide the AI's response.      |
-| `model`             | string            | No       | The identifier of the AI model to be used for generating a response.     |
-| `modelConfiguration`| object            | No       | Specific parameters or settings that configure the AI model behavior.    |
-| `temperature`       | number (double)   | No       | A parameter for controlling the randomness of the model's output.        |
-| `maxTokens`         | integer (int32)   | No       | The maximum number of tokens to generate in the response.                |
-| `responseFormat`    | string            | No       | Model response format specification for structured outputs.              |
+| Parameter           | Type          | Required | Description                                                              |
+|---------------------|---------------|----------|--------------------------------------------------------------------------|
+| `input`             | array         | ✔ Yes    | The list of input messages to be processed by the AI.                    |
+| `sessionId`         | string (uuid) | No       | The unique identifier for the AI session associated with this request.   |
+| `system`            | array         | No       | System-level messages or configurations to guide the AI's response.      |
+| `model`             | string        | No       | The identifier of the AI model to be used for generating a response.     |
+| `modelConfiguration`| object        | No       | Specific parameters or settings that configure the AI model behavior.    |
+| `temperature`       | number (double)| No      | A parameter for controlling the randomness of the model's output.        |
+| `maxTokens`         | integer (int32)| No      | The maximum number of tokens to generate in the response.                |
+| `responseFormat`    | string        | No       | Model response format specification for structured outputs.              |
 
 ### Request Example
 
@@ -981,30 +955,31 @@ title: JavaScript
 -->
 
 ```javascript
-// Generate a realistic fetch/axios example using the request body example
-// Use the actual endpoint path with any path parameters filled in
-// Include proper headers (Content-Type: application/json if body exists)
-fetch('https://api.example.com/api/ai/v1/messages/chat', {
+const url = '/api/ai/v1/messages/chat';
+const data = {
+  input: [
+    {
+      role: 'USER',
+      content: [
+        {
+          type: 'TEXT',
+          text: 'Why is the sky blue?'
+        }
+      ]
+    }
+  ]
+};
+
+fetch(url, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
   },
-  body: JSON.stringify({
-    input: [
-      {
-        role: 'USER',
-        content: [
-          {
-            type: 'TEXT',
-            text: 'Why is the sky blue?'
-          }
-        ]
-      }
-    ]
-  })
+  body: JSON.stringify(data)
 })
   .then(response => response.json())
-  .then(data => console.log(data));
+  .then(responseData => console.log(responseData))
+  .catch(error => console.log('Error:', error));
 ```
 
 <!--
@@ -1013,29 +988,24 @@ title: Python
 -->
 
 ```python
-# Generate a realistic requests example using the request body example
-# Use the actual endpoint path with any path parameters filled in
-# Include proper headers if needed
 import requests
-import json
 
-url = 'https://api.example.com/api/ai/v1/messages/chat'
-headers = {'Content-Type': 'application/json'}
-body = {
-  "input": [
-    {
-      "role": "USER",
-      "content": [
+url = '/api/ai/v1/messages/chat'
+data = {
+    "input": [
         {
-          "type": "TEXT",
-          "text": "Why is the sky blue?"
+            "role": "USER",
+            "content": [
+                {
+                    "type": "TEXT",
+                    "text": "Why is the sky blue?"
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }
 
-response = requests.post(url, headers=headers, data=json.dumps(body))
+response = requests.post(url, json=data, headers={'Content-Type': 'application/json'})
 print(response.json())
 ```
 
@@ -1045,12 +1015,9 @@ title: cURL
 -->
 
 ```bash
-# Generate a realistic cURL command
-# Use the actual endpoint path
-# Include -H headers and -d data as appropriate
-curl -X POST https://api.example.com/api/ai/v1/messages/chat \
-     -H "Content-Type: application/json" \
-     -d '{
+curl -X POST '/api/ai/v1/messages/chat' \
+-H 'Content-Type: application/json' \
+-d '{
   "input": [
     {
       "role": "USER",
@@ -1087,6 +1054,13 @@ curl -X POST https://api.example.com/api/ai/v1/messages/chat \
 }
 ```
 
+- `content`: The AI-generated response content.
+- `modelId`: The identifier of the AI model used.
+- `isCustomerModel`: Indicates if a custom model was used.
+- `sessionId`: Unique session identifier.
+- `requestId`: Unique request identifier.
+- `stopReason`: The reason for stopping the response generation.
+
 ### Error Responses
 
 | Status Code | Description |
@@ -1101,7 +1075,7 @@ curl -X POST https://api.example.com/api/ai/v1/messages/chat \
 **Method:** `POST`  
 **Endpoint:** `/api/ai/v1/image/text`
 
-Extract text from an image. By default, all text detected in the image is included. The system and input prompt may be modified in order to describe, classify or extract specific information from the image.
+Extract text from an image. By default, all text detected in the image is included. The system and input prompt may be modified to describe, classify, or extract specific information from the image.
 
 ### Path Parameters
 
@@ -1117,19 +1091,17 @@ Image to Text AI Service Request.
 
 **Prompt Templates**
 
-A prompt template is a string that contains placeholders for parameters that will be replaced with parameter values before the prompt is submitted to the model. A default prompt template is set for each model configured for the Image to Text AI Service. Individual requests can override the default template by including the `promptTemplate` parameter.
+A prompt template is a string containing placeholders for parameters that are replaced with parameter values before submission to the model. A default prompt template is set for each model configured for the Image to Text AI Service. Individual requests can override the default template by including the `promptTemplate` parameter.
 
 **Prompt Template Parameters**
 
 The following request parameters are automatically injected into the prompt template if the associated placeholder is present:
-
 - input
 - system
 
 Models with built-in support for system prompts and chat message history do not need to include *system* or *chatContext* in the prompt template. Additional parameters can be provided in the `parameters` map as key-value pairs.
 
 **Prompt Template Examples**
-
 - "${input}"
 - "${system}\n${input}"
 
@@ -1139,9 +1111,9 @@ Models with built-in support for system prompts and chat message history do not 
 | `image` | [Image](#schema-image) | No | Image data and metadata. |
 | `sessionId` | string (uuid) | No | The AI session ID. If provided, this request will be associated with the specified AI Session. |
 | `model` | string | No | The ID of the model to use for Image to Text processing. The specified model must be configured for the Image to Text AI Service by an Admin. |
-| `system` | string | No | The system message to use for the Image to Text task. If not provided, the default system message will be used. If the model does not include built-in support for system prompts, this parameter may be included in the prompt template using the "${system}" placeholder. |
-| `modelConfiguration` | object | No | Additional model-specific configuration parameter key-value pairs. e.g. temperature, max_tokens, etc. |
-| `promptTemplate` | [ParameterizedPromptTemplate](#schema-parameterizedprompttemplate) | No |  A prompt template string that contains placeholders for parameters that will be replaced with parameter values before the prompt is submitted to the model. Prompt Template Examples: "${input}", "${system}\n${input}". |
+| `system` | string | No | The system message to use for the Image to Text task. If not provided, the default system message will be used. Models without built-in support for system prompts might include this parameter in the prompt template using the "${system}" placeholder. |
+| `modelConfiguration` | object | No | Additional model-specific configuration parameter key-value pairs (e.g., temperature, max_tokens, etc.). |
+| `promptTemplate` | [ParameterizedPromptTemplate](#schema-parameterizedprompttemplate) | No | A prompt template string containing placeholders for parameters that will be replaced before the prompt is submitted to the model. Prompt Template Examples include "${input}" and "${system}\n${input}". |
 | `parameters` | object | No | Custom parameters to inject into the prompt template if an associated placeholder is present. |
 | `maxTokens` | integer (int32) | No | The maximum number of tokens to generate in the response. |
 | `temperature` | number (double) | No | Controls randomness in the model's output. Lower values make output more deterministic. |
@@ -1152,9 +1124,9 @@ Models with built-in support for system prompts and chat message history do not 
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `data` | string | No | the base64 encoded image data |
-| `type` | string | No | the image type e.g. "base64" |
-| `mediaType` | string | No | the media type of the image e.g. "image/png" |
+| `data` | string | No | The base64 encoded image data. |
+| `type` | string | No | The image type, e.g., "base64". |
+| `mediaType` | string | No | The media type of the image, e.g., "image/png". |
 
 </details>
 
@@ -1163,7 +1135,7 @@ Models with built-in support for system prompts and chat message history do not 
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `template` | string | No |  |
+| `template` | string | No | The template string containing placeholders for prompt generation. |
 
 </details>
 
@@ -1181,17 +1153,30 @@ fetch('https://example.com/api/ai/v1/image/text', {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    input: "example-string",
-    image: {
-      data: "<base64 string>",
-      type: "base64",
-      mediaType: "image/png"
-    }
+    "input": "Analyze this image",
+    "image": {
+      "data": "<base64 string>",
+      "type": "base64",
+      "mediaType": "image/png"
+    },
+    "sessionId": "123e4567-e89b-12d3-a456-426614174000",
+    "model": "your-model-id",
+    "system": "system info",
+    "modelConfiguration": {
+      "temperature": 0.7,
+      "max_tokens": 100
+    },
+    "promptTemplate": "${system}\n${input}",
+    "parameters": {
+      "parameter1": "value1"
+    },
+    "maxTokens": 100,
+    "temperature": 0.7,
+    "responseFormat": "your-response-format"
   })
 })
 .then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.error('Error:', error));
+.then(data => console.log(data));
 ```
 
 <!--
@@ -1203,18 +1188,29 @@ title: Python
 import requests
 
 url = 'https://example.com/api/ai/v1/image/text'
-headers = {
-    'Content-Type': 'application/json'
-}
+headers = {'Content-Type': 'application/json'}
 data = {
-    "input": "example-string",
+    "input": "Analyze this image",
     "image": {
         "data": "<base64 string>",
         "type": "base64",
         "mediaType": "image/png"
-    }
+    },
+    "sessionId": "123e4567-e89b-12d3-a456-426614174000",
+    "model": "your-model-id",
+    "system": "system info",
+    "modelConfiguration": {
+        "temperature": 0.7,
+        "max_tokens": 100
+    },
+    "promptTemplate": "${system}\n${input}",
+    "parameters": {
+        "parameter1": "value1"
+    },
+    "maxTokens": 100,
+    "temperature": 0.7,
+    "responseFormat": "your-response-format"
 }
-
 response = requests.post(url, headers=headers, json=data)
 print(response.json())
 ```
@@ -1228,12 +1224,26 @@ title: cURL
 curl -X POST 'https://example.com/api/ai/v1/image/text' \
 -H 'Content-Type: application/json' \
 -d '{
-  "input": "example-string",
-  "image": {
-    "data": "<base64 string>",
-    "type": "base64",
-    "mediaType": "image/png"
-  }
+    "input": "Analyze this image",
+    "image": {
+        "data": "<base64 string>",
+        "type": "base64",
+        "mediaType": "image/png"
+    },
+    "sessionId": "123e4567-e89b-12d3-a456-426614174000",
+    "model": "your-model-id",
+    "system": "system info",
+    "modelConfiguration": {
+        "temperature": 0.7,
+        "max_tokens": 100
+    },
+    "promptTemplate": "${system}\n${input}",
+    "parameters": {
+        "parameter1": "value1"
+    },
+    "maxTokens": 100,
+    "temperature": 0.7,
+    "responseFormat": "your-response-format"
 }'
 ```
 
@@ -1251,16 +1261,34 @@ curl -X POST 'https://example.com/api/ai/v1/image/text' \
 }
 ```
 
-- **prompt**: The text prompt used for analyzing the image.
-- **output**: The extracted description of the image.
-- **model**: The model used for the Image to Text processing.
+- **prompt**: The question or prompt sent to the model.
+- **output**: The response generated by the model describing the image.
+- **model**: The specific model used for generating the output.
 
 ### Error Responses
 
 | Status Code | Description |
 |-------------|-------------|
-| `403` | Forbidden |
-| `409` | Conflict |
+| `403` | Forbidden: You do not have permission to access this resource. |
+| `409` | Conflict: The request could not be completed due to a conflict with the current state of the target resource. |
+
+**403 Forbidden Example**
+
+```json
+{
+  "error": "Forbidden",
+  "message": "You do not have permission to access this resource."
+}
+```
+
+**409 Conflict Example**
+
+```json
+{
+  "error": "Conflict",
+  "message": "The request could not be completed due to a conflict with the current state of the target resource."
+}
+```
 
 ---
 
@@ -1281,99 +1309,80 @@ _None_
 
 ### Request Body
 
-Text Embedding AI Service Request.
+**Text Embedding AI Service Request.**
 
-| Parameter           | Type             | Required | Description                                                                                                      |
-|---------------------|------------------|----------|------------------------------------------------------------------------------------------------------------------|
-| `input`             | array            | No       | The input text to embed.                                                                                         |
-| `model`             | string           | No       | The ID of the model to use for Text Embedding. The specified model must be configured for the Text Embedding AI Service by an Admin. |
-| `dimensions`        | integer (int32)  | No       | The number of dimensions for the embedding vector.                                                               |
-| `modelConfiguration`| object           | No       | Additional model-specific configuration parameter key-value pairs.                                               |
-| `requestId`         | string (uuid)    | No       | A unique identifier for the request, useful for tracking and logging.                                            |
+| Parameter           | Type            | Required | Description                                                                                                     |
+|---------------------|-----------------|----------|-----------------------------------------------------------------------------------------------------------------|
+| `input`             | array           | No       | The input text to embed.                                                                                        |
+| `model`             | string          | No       | The ID of the model to use for Text Embedding. The specified model must be configured for the Text Embedding AI Service by an Admin. |
+| `dimensions`        | integer (int32) | No       | The number of dimensions for the generated embeddings.                                                          |
+| `modelConfiguration`| object          | No       | Additional model-specific configuration parameter key-value pairs.                                              |
+| `requestId`         | string (uuid)   | No       | A unique identifier for the request, which can be used for tracking and logging purposes.                       |
 
 ### Request Example
 
-<!--
-type: tab
-title: JavaScript
--->
+<!-- type: tab title: JavaScript -->
 
 ```javascript
-// This example demonstrates sending a POST request to the text embeddings API
-function getTextEmbeddings() {
-  fetch('/api/ai/v1/embedding/text', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      "input": [
-        "This is a sample text for generating embeddings."
-      ],
-      "model": "example-model-id",
-      "dimensions": 128,
-      "modelConfiguration": {
-        "param1": "value1"
-      },
-      "requestId": "123e4567-e89b-12d3-a456-426614174000"
-    })
-  })
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
-}
+const payload = {
+  input: ["This is a sample text for generating embeddings."],
+  model: "specified-model-id",
+  dimensions: 512,
+  modelConfiguration: {"param1": "value1"},
+  requestId: "unique-request-id"
+};
 
-getTextEmbeddings();
+fetch('https://api.example.com/api/ai/v1/embedding/text', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(payload)
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
 ```
 
-<!--
-type: tab
-title: Python
--->
+<!-- type: tab-end -->
+
+<!-- type: tab title: Python -->
 
 ```python
-# This example demonstrates sending a POST request to the text embeddings API
 import requests
+import json
 
-url = 'https://example.com/api/ai/v1/embedding/text'
-headers = {'Content-Type': 'application/json'}
+url = 'https://api.example.com/api/ai/v1/embedding/text'
 payload = {
-    "input": [
-        "This is a sample text for generating embeddings."
-    ],
-    "model": "example-model-id",
-    "dimensions": 128,
-    "modelConfiguration": {
-        "param1": "value1"
-    },
-    "requestId": "123e4567-e89b-12d3-a456-426614174000"
+    "input": ["This is a sample text for generating embeddings."],
+    "model": "specified-model-id",
+    "dimensions": 512,
+    "modelConfiguration": {"param1": "value1"},
+    "requestId": "unique-request-id"
+}
+headers = {
+    'Content-Type': 'application/json'
 }
 
-response = requests.post(url, json=payload, headers=headers)
-
+response = requests.post(url, headers=headers, data=json.dumps(payload))
 print(response.json())
 ```
 
-<!--
-type: tab
-title: cURL
--->
+<!-- type: tab-end -->
+
+<!-- type: tab title: cURL -->
 
 ```bash
-# This example demonstrates sending a POST request to the text embeddings API
-curl -X POST https://example.com/api/ai/v1/embedding/text \
--H "Content-Type: application/json" \
--d '{
-  "input": [
-    "This is a sample text for generating embeddings."
-  ],
-  "model": "example-model-id",
-  "dimensions": 128,
-  "modelConfiguration": {
-    "param1": "value1"
-  },
-  "requestId": "123e4567-e89b-12d3-a456-426614174000"
-}'
+curl -X POST \
+  https://api.example.com/api/ai/v1/embedding/text \
+  -H 'Content-Type: application/json' \
+  -d '{
+        "input": ["This is a sample text for generating embeddings."],
+        "model": "specified-model-id",
+        "dimensions": 512,
+        "modelConfiguration": {"param1": "value1"},
+        "requestId": "unique-request-id"
+      }'
 ```
 
 <!-- type: tab-end -->
@@ -1397,12 +1406,15 @@ curl -X POST https://example.com/api/ai/v1/embedding/text \
 }
 ```
 
+- **embeddings**: An array of numerical values representing the generated text embeddings.
+- **modelId**: The identifier of the model used to generate the embeddings.
+
 ### Error Responses
 
-| Status Code | Description |
-|-------------|-------------|
-| `403`       | Forbidden   |
-| `409`       | Conflict    |
+| Status Code | Description                                                             |
+|-------------|-------------------------------------------------------------------------|
+| `403`       | Forbidden: The client does not have access rights to the content.       |
+| `409`       | Conflict: The request conflicts with the current state of the server.   |
 
 ---
 
@@ -1415,48 +1427,49 @@ Generate image embeddings based on the given image input.
 
 ### Path Parameters
 
-_None_
+- _None_
 
 ### Query Parameters
 
-_None_
+- _None_
 
 ### Request Body
 
-Image Embedding AI Service Request.
+Text Embedding AI Service Request.
 
-| Parameter            | Type            | Required | Description                                                                                                                               |
-|----------------------|-----------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| `input`              | array           | No       | The input images to embed.                                                                                                                |
-| `model`              | string          | No       | The ID of the model to use for Image Embedding. The specified model must be configured for the Image Embedding AI Service by an Admin.    |
-| `dimensions`         | integer (int32) | No       | The number of dimensions for the image embedding output.                                                                                  |
-| `modelConfiguration` | object          | No       | Additional model-specific configuration parameter key-value pairs.                                                                        |
-| `requestId`          | string (uuid)   | No       | A unique identifier for the request, used for tracing and logging.                                                                        |
+| Parameter            | Type              | Required | Description                                                                 |
+|----------------------|-------------------|----------|-----------------------------------------------------------------------------|
+| `input`              | array             | No       | The input images to embed.                                                  |
+| `model`              | string            | No       | The ID of the model to use for Image Embedding. The specified model must be configured for the Image Embedding AI Service by an Admin. |
+| `dimensions`         | integer (int32)   | No       | The number of dimensions for the generated embeddings.                      |
+| `modelConfiguration` | object            | No       | Additional model-specific configuration parameter key-value pairs. If available, provide detailed descriptions of each key. |
+| `requestId`          | string (uuid)     | No       | A unique identifier for tracking the request.                               |
 
 ### Request Example
 
-<!-- type: tab title: JavaScript -->
+<!-- type: tab -->
+<!-- title: JavaScript -->
 
 ```javascript
-fetch('https://yourapi.com/api/ai/v1/embedding/image', {
+const url = 'https://api.example.com/api/ai/v1/embedding/image';
+const data = {
+  input: [{
+    data: "<base64 string>",
+    type: "base64",
+    mediaType: "image/png"
+  }],
+  model: "example-string",
+  dimensions: 42,
+  modelConfiguration: {},
+  requestId: "ba2ccc17-cb81-4716-9e12-50f9da61e82e"
+};
+
+fetch(url, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
   },
-  body: JSON.stringify({
-    // Example input: replace with actual image data
-    input: ["example-image-data"],
-    // Specify the model ID to determine which model to use
-    model: "example-model-id",
-    // The dimensions determine the size of the embedding vector
-    dimensions: 128,
-    // Additional configuration parameters for the model
-    modelConfiguration: {
-      // Example configuration: specify key-value pairs as required
-    },
-    // Unique identifier for the request
-    requestId: "e8171777-6e97-459a-afb1-0d93dfd05bc5"
-  })
+  body: JSON.stringify(data)
 })
 .then(response => response.json())
 .then(data => console.log(data))
@@ -1465,56 +1478,49 @@ fetch('https://yourapi.com/api/ai/v1/embedding/image', {
 
 <!-- type: tab-end -->
 
-<!-- type: tab title: Python -->
+<!-- type: tab -->
+<!-- title: Python -->
 
 ```python
 import requests
-import json
 
-url = 'https://yourapi.com/api/ai/v1/embedding/image'
-headers = {
-    'Content-Type': 'application/json'
-}
+url = 'https://api.example.com/api/ai/v1/embedding/image'
 data = {
-    # Example input: replace with actual image data
-    "input": ["example-image-data"],
-    # Model ID to be used for embedding generation
-    "model": "example-model-id",
-    # Number of dimensions for the embedding vector
-    "dimensions": 128,
-    # Additional configuration parameters
-    "modelConfiguration": {
-        # Example configuration: add relevant parameters here
-    },
-    # Request ID for tracking the request
-    "requestId": "e8171777-6e97-459a-afb1-0d93dfd05bc5"
+  "input": [{
+    "data": "<base64 string>",
+    "type": "base64",
+    "mediaType": "image/png"
+  }],
+  "model": "example-string",
+  "dimensions": 42,
+  "modelConfiguration": {},
+  "requestId": "ba2ccc17-cb81-4716-9e12-50f9da61e82e"
 }
 
-response = requests.post(url, headers=headers, data=json.dumps(data))
+response = requests.post(url, json=data, headers={'Content-Type': 'application/json'})
+
 print(response.json())
 ```
 
 <!-- type: tab-end -->
 
-<!-- type: tab title: cURL -->
+<!-- type: tab -->
+<!-- title: cURL -->
 
 ```bash
-curl -X POST https://yourapi.com/api/ai/v1/embedding/image \
+curl -X POST https://api.example.com/api/ai/v1/embedding/image \
   -H "Content-Type: application/json" \
   -d '{
-    # Example input: replace with actual image data
-    "input": ["example-image-data"],
-    # Specify the model ID
-    "model": "example-model-id",
-    # Set dimensions for embedding
-    "dimensions": 128,
-    # Configuration for the model
-    "modelConfiguration": {
-      # Add configuration key-value pairs here
-    },
-    # Unique request ID
-    "requestId": "e8171777-6e97-459a-afb1-0d93dfd05bc5"
-}'
+    "input": [{
+      "data": "<base64 string>",
+      "type": "base64",
+      "mediaType": "image/png"
+    }],
+    "model": "example-string",
+    "dimensions": 42,
+    "modelConfiguration": {},
+    "requestId": "ba2ccc17-cb81-4716-9e12-50f9da61e82e"
+  }'
 ```
 
 <!-- type: tab-end -->
