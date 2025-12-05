@@ -1,282 +1,60 @@
-# FileSets API (BETA)
+# Documents API
 
-> **BETA:** This API is currently in BETA and is subject to change. Endpoints, request/response formats, and functionality may change without notice.
-
-This API reference documents the endpoints for managing FileSets and Files in Domo. These endpoints allow you to upload, download, query, and manage Files and FileSets programmatically.
-
----
-
-## Get File by Path
-
-**Method:** `GET`  
-**Endpoint:** `/api/files/v1/filesets/{filesetId}/path?path={filePath}`
-
-**Path Parameters:**
-
-- `filesetId` (String, required): The ID of the FileSet.
-
-**Query Parameters:**
-
-- `path` (String, required): The path to the File within the FileSet.
-
-<!--
-type: tab
-title: Javascript
--->
-
-```js
-fetch(
-  'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/path?path={filePath}',
-  {
-    method: 'GET',
-    headers: {
-      'X-DOMO-Developer-Token': '<your-token-here>',
-      'Content-Type': 'application/json',
-    },
-  },
-)
-  .then((response) => response.json())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(`Error: ${error}`));
-```
-
-<!--
-type: tab
-title: Python
--->
-
-```python
-import httpx
-
-headers = {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
-}
-url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/path?path={filePath}'
-
-with httpx.Client() as client:
-    response = client.get(url, headers=headers)
-    print(response.json())
-```
-
-<!-- type: tab-end -->
-
-**Response:**
-
-```json
-{
-  "id": "00000000-0000-0000-0000-000000000001",
-  "path": "rules.txt",
-  "name": "rules.txt",
-  "fileType": "TEXT",
-  "contentType": "text/plain",
-  "size": 12345,
-  "hash": "fakehash00000000000000000000000000000000000000000000000000000000000001",
-  "hashAlgorithm": "SHA_256_HEX",
-  "downloadUrl": null,
-  "created": "2025-01-01T00:00:00.000Z",
-  "createdBy": 111111111,
-  "connectorKey": null,
-  "indexStatus": null,
-  "indexReason": null
-}
-```
+> **Version:** 2.2.3160_master
+>
+> Domo Documents APIs
 
 ---
 
-## Get File by Id
-
-**Method:** `GET`  
-**Endpoint:** `/api/files/v1/filesets/{filesetId}/files/{fileId}`
-
-**Path Parameters:**
-
-- `filesetId` (String, required): The ID of the FileSet.
-- `fileId` (String, required): The ID of the file.
-
-<!--
-type: tab
-title: Javascript
--->
-
-```js
-fetch(
-  'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files/{fileId}',
-  {
-    method: 'GET',
-    headers: {
-      'X-DOMO-Developer-Token': '<your-token-here>',
-      'Content-Type': 'application/json',
-    },
-  },
-)
-  .then((response) => response.json())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(`Error: ${error}`));
-```
-
-<!--
-type: tab
-title: Python
--->
-
-```python
-import httpx
-
-headers = {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
-}
-url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files/{fileId}'
-
-with httpx.Client() as client:
-    response = client.get(url, headers=headers)
-    print(response.json())
-```
-
-<!-- type: tab-end -->
-
-**Response:**
-
-```json
-{
-  "id": "00000000-0000-0000-0000-000000000002",
-  "path": "rules.txt",
-  "name": "rules.txt",
-  "fileType": "TEXT",
-  "contentType": "text/plain",
-  "size": 12345,
-  "hash": "fakehash00000000000000000000000000000000000000000000000000000000000002",
-  "hashAlgorithm": "SHA_256_HEX",
-  "downloadUrl": "https://instance-name.domo.com/api/files/v1/filesets/00000000-0000-0000-0000-000000000010/files/00000000-0000-0000-0000-000000000002/download",
-  "created": "2025-01-01T00:00:00.000Z",
-  "createdBy": 111111111,
-  "connectorKey": null,
-  "indexStatus": null,
-  "indexReason": null
-}
-```
-
----
-
-## Download File by Id
-
-**Method:** `GET`  
-**Endpoint:** `/api/files/v1/filesets/{filesetId}/files/{fileId}/download`
-
-**Path Parameters:**
-
-- `filesetId` (String, required): The ID of the FileSet.
-- `fileId` (String, required): The ID of the file.
-
-<!--
-type: tab
-title: Javascript
--->
-
-```js
-fetch(
-  'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files/{fileId}/download',
-  {
-    method: 'GET',
-    headers: {
-      'X-DOMO-Developer-Token': '<your-token-here>',
-      'Content-Type': 'application/json',
-    },
-  },
-)
-  .then((response) => response.blob()) // Use .blob() for file downloads
-  .then((blob) => {
-    // Example: create a download link
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'filename.ext'; // Set desired file name
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    window.URL.revokeObjectURL(url);
-  })
-  .catch((error) => console.error(`Error: ${error}`));
-```
-
-<!--
-type: tab
-title: Python
--->
-
-```python
-import httpx
-
-headers = {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
-}
-url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files/{fileId}/download'
-
-with httpx.Client() as client:
-    response = client.get(url, headers=headers)
-    with open('filename.ext', 'wb') as f:
-        f.write(response.content)
-    print('File downloaded as filename.ext')
-```
-
-<!-- type: tab-end -->
-
-**Response:**
-
-- Returns the FileSet contents as a download (binary/text stream).
-
----
-
-## Query Files
+## Create a new FileSet
 
 **Method:** `POST`  
-**Endpoint:** `/api/files/v1/filesets/{filesetId}/query`
+**Endpoint:** `/api/files/v1/filesets`
 
-**Description:** Queries the Files and directories within a FileSet using a search query.
+Create a new FileSet to store files.
 
-**Path Parameters:**
+### Path Parameters
 
-| Parameter | Type   | Required | Description           |
-| --------- | ------ | -------- | --------------------- |
-| filesetId | String | Yes      | The ID of the FileSet |
+_None_
 
-**Request Body Parameters:**
+### Query Parameters
 
-| Parameter     | Type    | Required | Description                          |
-| ------------- | ------- | -------- | ------------------------------------ |
-| query         | String  | Yes      | Text to search for in Files          |
-| directoryPath | String  | No       | Limit search to a specific directory |
-| topK          | Integer | No       | Maximum number of results to return  |
+_None_
+
+### Request Body
+
+Represents a request to create a file set.
+
+| Parameter     | Type    | Required | Description                                                                 |
+|---------------|---------|----------|-----------------------------------------------------------------------------|
+| `name`        | string  | ✔ Yes    | The name for the file set.                                                  |
+| `description` | string  | No       | A description for the file set.                                             |
+| `connector`   | string  | No       | The connector that powers the file set. Allowed values: `DOMO`, `CONFLUENCE`, `GITHUB`, `GOOGLE_DRIVE`, `S3` |
+| `aiEnabled`   | boolean | No       | Indicates whether AI features are enabled for the file set.                 |
+
+### Request Example
 
 <!--
 type: tab
-title: Javascript
+title: JavaScript
 -->
 
-```js
-// Example: Search for text in documents, limited to 5 results
-fetch(`https://{instance}.domo.com/api/files/v1/filesets/${filesetId}/query`, {
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets', {
   method: 'POST',
   headers: {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    query: 'quarterly sales data', // Text to search for in files
-    directoryPath: 'reports/quarterly', // Optional: Limit search to specific directory
-    topK: 5, // Optional: Maximum number of results to return
-  }),
-})
-  .then((response) => response.json())
-  .then((result) => {
-    console.log(`Found ${result.matches.length} matching files:`);
-    result.matches.forEach((match) => {
-      console.log(`- ${match.node.name} (Score: ${match.score})`);
-    });
+    "name": "Policies (2025)",
+    "description": "Location for all new and updated policies for FY2025",
+    "aiEnabled": false,
+    "connector": "DOMO"
   })
-  .catch((error) => console.error(`Error: ${error}`));
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
 ```
 
 <!--
@@ -285,106 +63,616 @@ title: Python
 -->
 
 ```python
-import httpx
+import requests
 
+url = "https://<instance>.domo.com/api/files/v1/filesets"
 headers = {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json"
 }
-url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/query'
-data = {
-    'query': 'quarterly sales data',     # Text to search for in files
-    'directoryPath': 'reports/quarterly', # Optional: Limit search to specific directory
-    'topK': 5,                           # Optional: Maximum number of results to return
-}
+data = {'aiEnabled': False,
+ 'connector': 'DOMO',
+ 'description': 'Location for all new and updated policies for FY2025',
+ 'name': 'Policies (2025)'}
 
-with httpx.Client() as client:
-    response = client.post(url, headers=headers, json=data)
-    result = response.json()
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
+```
 
-    print(f"Found {len(result['matches'])} matching files:")
-    for match in result['matches']:
-        print(f"- {match['node']['name']} (Score: {match['score']})")
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X POST "https://<instance>.domo.com/api/files/v1/filesets" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "Policies (2025)",
+  "description": "Location for all new and updated policies for FY2025",
+  "aiEnabled": false,
+  "connector": "DOMO"
+}'
 ```
 
 <!-- type: tab-end -->
 
-**Response:**
+### Response
+
+**Status:** `201`
+
+```json
+{
+  "id": "e49f188e-be98-451d-ba0f-ada1157bb656",
+  "name": "Policies (2025)",
+  "description": "Location for all new and updated policies for FY2025",
+  "aiEnabled": false,
+  "indexStatus": null,
+  "connector": "DOMO",
+  "created": "2025-07-28T20:17:43.958479+00:00",
+  "createdBy": 27,
+  "updated": "2025-07-28T20:17:43.958479+00:00",
+  "updatedBy": 27,
+  "owner": "27",
+  "accountId": 0,
+  "connectorContext": null,
+  "permission": "OWNER",
+  "size": 0,
+  "fileCount": 0
+}
+```
+
+- **id**: Unique identifier for the file set.
+- **name**: Name of the file set, determined by the client.
+- **description**: Optional description of the file set, determined by the client.
+- **aiEnabled**: Flag indicating whether AI features are enabled for the file set.
+- **connector**: The connector used to power the file set, which defines how files are ingested.
+- **created**: Timestamp when the file set was created.
+- **createdBy**: ID of the user who created the file set.
+- **updated**: Timestamp when the file set was last updated.
+- **updatedBy**: ID of the user who last updated the file set.
+- **owner**: ID of the user who owns the file set, which is typically the creator until ownership is transferred.
+- **permission**: The permission level of the current user to the file set, which determines access rights.
+- **size**: The estimated total size of the files in the file set, in bytes.
+- **fileCount**: The estimated total number of files in the file set.
+
+### Error Responses
+
+| Status Code | Description     |
+|-------------|-----------------|
+| `400`       | Bad Request     |
+| `403`       | Forbidden       |
+| `409`       | Conflict        |
+| `413`       | Payload Too Large |
+
+---
+
+## Get a FileSet by ID
+
+**Method:** `GET`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}`
+
+Retrieve the details of a specific FileSet using its ID.
+
+### Path Parameters
+
+| Parameter  | Type   | Required | Description                         |
+|------------|--------|----------|-------------------------------------|
+| `fileSetId` | string | ✓ Yes    | The ID of the FileSet to retrieve. |
+
+### Query Parameters
+
+_None_
+
+### Request Body
+
+### Request Example
+
+<!--
+type: tab
+title: JavaScript
+-->
+
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+<!-- type: tab-end -->
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import requests
+
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}"
+headers = {
+    "Content-Type": "application/json"
+}
+response = requests.get(url, headers=headers)
+print(response.json())
+```
+
+<!-- type: tab-end -->
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X GET "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}" \
+  -H "Content-Type: application/json"
+```
+
+<!-- type: tab-end -->
+
+### Response
+
+**Status:** `200`
+
+```json
+{
+  "id": "e49f188e-be98-451d-ba0f-ada1157bb656",
+  "name": "Policies (2025)",
+  "description": "Location for all new and updated policies for FY2025",
+  "aiEnabled": false,
+  "indexStatus": null,
+  "connector": "DOMO",
+  "created": "2025-07-28T20:17:43.958479+00:00",
+  "createdBy": 27,
+  "updated": "2025-07-28T20:17:43.958479+00:00",
+  "updatedBy": 27,
+  "owner": "27",
+  "accountId": 0,
+  "connectorContext": null,
+  "permission": "OWNER",
+  "size": 0,
+  "fileCount": 0
+}
+```
+
+- **id**: Unique identifier for the file set.
+- **name**: Name of the file set, determined by the client.
+- **description**: Optional description of the file set, determined by the client.
+- **aiEnabled**: Flag indicating whether AI features are enabled for the file set.
+- **connector**: The connector used to power the file set, which defines how files are ingested.
+- **created**: Timestamp when the file set was created.
+- **createdBy**: ID of the user who created the file set.
+- **updated**: Timestamp when the file set was last updated.
+- **updatedBy**: ID of the user who last updated the file set.
+- **owner**: ID of the user who owns the file set, which is typically the creator until ownership is transferred.
+- **permission**: The permission level of the current user to the file set, which determines access rights.
+- **size**: The estimated total size of the files in the file set, in bytes.
+- **fileCount**: The estimated total number of files in the file set.
+
+### Error Responses
+
+| Status Code | Description          |
+|-------------|----------------------|
+| `400`       | Bad Request          |
+| `403`       | Forbidden            |
+| `409`       | Conflict             |
+| `413`       | Payload Too Large    |
+
+---
+
+## Update an existing FileSet
+
+**Method:** `POST`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}`
+
+**Update the details of an existing FileSet.** Only fields that are not null in the request will be updated.
+
+### Path Parameters
+
+| Parameter    | Type   | Required | Description                            |
+|--------------|--------|----------|----------------------------------------|
+| `fileSetId`  | string | ✓ Yes    | The ID of the FileSet to update.       |
+
+### Query Parameters
+
+_None_
+
+### Request Body
+
+Represents a request to update a file set. At least one of the fields must be provided to update the file set.
+
+| Parameter    | Type    | Required | Description                                                                                                                                     |
+|--------------|---------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`       | string  | No       | The name with which to update the file set's name. If not provided, the name will remain unchanged.                                             |
+| `description`| string  | No       | Optional description with which to update the file set's description. If not provided, the description will remain unchanged.                  |
+| `aiEnabled`  | boolean | No       | Optional flag to enable or disable AI features for the file set.                                                                                |
+
+### Request Example
+
+<!--
+type: tab
+title: JavaScript
+-->
+
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    "name": "Policies (FY25)",
+    "description": "Repository for new policies created ONLY in FY2025"
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import requests
+
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}"
+headers = {
+    "Content-Type": "application/json"
+}
+data = {'description': 'Repository for new policies created ONLY in FY2025',
+ 'name': 'Policies (FY25)'}
+
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
+```
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X POST "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Policies (FY25)","description": "Repository for new policies created ONLY in FY2025"}'
+```
+
+<!-- type: tab-end -->
+
+### Response
+
+**Status:** `200`
+
+```json
+{
+  "id": "e49f188e-be98-451d-ba0f-ada1157bb656",
+  "name": "Policies (FY25)",
+  "description": "Repository for new policies created ONLY in FY2025",
+  "aiEnabled": false,
+  "indexStatus": null,
+  "connector": "DOMO",
+  "created": "2025-07-28T20:17:43.958479Z",
+  "createdBy": 27,
+  "updated": "2025-07-28T20:17:43.958479Z",
+  "updatedBy": 27,
+  "owner": "27",
+  "accountId": 0,
+  "connectorContext": null,
+  "permission": "OWNER",
+  "size": 0,
+  "fileCount": 0
+}
+```
+
+- **id**: Unique identifier for the file set.
+- **name**: Name of the file set, determined by the client.
+- **description**: Optional description of the file set, determined by the client.
+- **aiEnabled**: Flag indicating whether AI features are enabled for the file set.
+- **connector**: The connector used to power the file set, which defines how files are ingested.
+- **created**: Timestamp when the file set was created.
+- **createdBy**: ID of the user who created the file set.
+- **updated**: Timestamp when the file set was last updated.
+- **updatedBy**: ID of the user who last updated the file set.
+- **owner**: ID of the user who owns the file set, which is typically the creator until ownership is transferred.
+- **permission**: The permission level of the current user to the file set, which determines access rights.
+- **size**: The estimated total size of the files in the file set, in bytes.
+- **fileCount**: The estimated total number of files in the file set.
+
+### Error Responses
+
+| Status Code | Description        |
+|-------------|--------------------|
+| `400`       | Bad Request        |
+| `403`       | Forbidden          |
+| `409`       | Conflict           |
+| `413`       | Payload Too Large  |
+
+---
+
+## Delete a FileSet by ID
+
+**Method:** `DELETE`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}`
+
+Delete a specific FileSet using its ID.
+
+### Path Parameters
+
+| Parameter   | Type   | Required | Description                       |
+|-------------|--------|----------|-----------------------------------|
+| `fileSetId` | string | ✔ Yes    | The ID of the FileSet to delete. |
+
+### Query Parameters
+
+_None_
+
+### Request Body
+
+
+_None_
+
+### Request Example
+
+<!--
+type: tab
+title: JavaScript
+-->
+
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}', {
+  method: 'DELETE',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import requests
+
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}"
+headers = {
+    "Content-Type": "application/json"
+}
+
+response = requests.delete(url, headers=headers)
+print(response.json())
+```
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X DELETE "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}" \
+  -H "Content-Type: application/json" 
+```
+
+<!-- type: tab-end -->
+
+### Response
+
+**Status:** `204`
+
+```json
+{}
+```
+
+
+### Error Responses
+
+| Status Code | Description          |
+|-------------|----------------------|
+| `400`       | Bad Request          |
+| `403`       | Forbidden            |
+| `409`       | Conflict             |
+| `413`       | Payload Too Large    |
+
+---
+
+## Query FileSet for File Contents
+
+**Method:** `POST`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/query`
+
+Query a specific FileSet for file contents related to the query criteria.
+
+### Path Parameters
+
+| Parameter    | Type   | Required | Description                       |
+|--------------|--------|----------|-----------------------------------|
+| `fileSetId`  | string | ✔ Yes    | The ID of the FileSet to query.   |
+
+### Query Parameters
+
+_None_
+
+### Request Body
+
+Used to query a file set for the top K results based on the provided query.
+
+| Parameter          | Type           | Required | Description                                                             |
+|--------------------|----------------|----------|-------------------------------------------------------------------------|
+| `query`            | string         | ✔ Yes    | The query string to match against file contents within the file set.    |
+| `topK`             | integer (int32)| No       | The number of top results to return based on the query match. Defaults to 1. |
+| `pathPrefixFilter` | string         | No       | An optional prefix filter for the file paths to narrow down the search results. |
+
+### Request Example
+
+<!--
+type: tab
+title: JavaScript
+-->
+
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/query', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    "query": "benefit",
+    "pathPrefixFilter": "sample/directory/path",
+    "topK": 2
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+<!--
+type: tab-end
+-->
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import requests
+
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/query"
+headers = {
+    "Content-Type": "application/json"
+}
+data = {'pathPrefixFilter': 'sample/directory/path', 'query': 'benefit', 'topK': 2}
+
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
+```
+
+<!--
+type: tab-end
+-->
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X POST "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/query" \
+  -H "Content-Type: application/json" \
+  -d '{"query": "benefit", "pathPrefixFilter": "sample/directory/path", "topK": 2}'
+```
+
+<!--
+type: tab-end
+-->
+
+### Response
+
+**Status:** `200`
 
 ```json
 {
   "matches": [
     {
-      "id": "00000000-0000-0000-0000-000000000003",
-      "node": {
-        "id": "00000000-0000-0000-0000-000000000003",
-        "path": "reports/quarterly/Q2-2024-sales.pdf",
-        "name": "Q2-2024-sales.pdf",
-        "fileType": "FILE",
-        "contentType": "application/pdf",
-        "size": 12345,
-        "created": 1718826000000,
+      "content": {
+        "text": "# Paid Time Off (PTO) Policy\n\n## Overview\nOur PTO policy is designed to provide...(924 characters omitted for brevity)",
         "type": "TEXT"
       },
-      "score": 0.89
+      "metadata": {
+        "fileId": "7150e608-c3a9-4b40-ac2d-eb182cc98c6f",
+        "path": "sample/directory/path/PaidTimeOffPolicy.pdf"
+      },
+      "score": 0.41046342
     },
     {
-      "id": "00000000-0000-0000-0000-000000000004",
-      "node": {
-        "id": "00000000-0000-0000-0000-000000000004",
-        "path": "reports/quarterly/Q1-2024-sales.pdf",
-        "name": "Q1-2024-sales.pdf",
-        "fileType": "FILE",
-        "contentType": "application/pdf",
-        "size": 10245,
-        "created": 1712066400000,
-        "type": "TEXT"
+      "content": {
+        "uri": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgA...(4777 characters omitted for brevity)",
+        "type": "IMAGE"
       },
-      "score": 0.76
+      "metadata": {
+        "fileId": "7150e608-c3a9-4b40-ac2d-eb182cc98c6f",
+        "path": "sample/directory/path/PaidTimeOffPolicy.pdf"
+      },
+      "score": 0.43281752
     }
   ]
 }
 ```
 
+- **matches**: A list of matching content found relating to files within the file set.
+
+### Error Responses
+
+| Status Code | Description          |
+|-------------|----------------------|
+| `400`       | Bad Request          |
+| `403`       | Forbidden            |
+| `409`       | Conflict             |
+| `413`       | Payload Too Large    |
+
 ---
 
-## Upload File
+## Update FileSet Owner
 
 **Method:** `POST`  
-**Endpoint:** `/api/files/v1/filesets/{filesetId}/files`
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/ownership`
 
-**Path Parameters:**
+Update the owner of a specific FileSet.
 
-- `filesetId` (String, required): The ID of the FileSet.
+### Path Parameters
+
+| Parameter    | Type   | Required | Description                                       |
+|--------------|--------|----------|---------------------------------------------------|
+| `fileSetId` | string | ✔ Yes    | The ID of the FileSet for which to update the owner. |
+
+### Query Parameters
+
+_None_
+
+### Request Body
+
+Represents a request to transfer ownership of a file set.
+
+Other users may be granted ownership level permissions, but only one user may be the sole owner of a file set.
+
+| Parameter | Type            | Required | Description                                      |
+|-----------|-----------------|----------|--------------------------------------------------|
+| `userId`  | integer (int64) | ✔ Yes    | The ID of the user that will assume ownership.   |
+
+### Request Example
 
 <!--
 type: tab
-title: Javascript
+title: JavaScript
 -->
 
-```js
-// Prepare the file and metadata for upload
-const formdata = new FormData();
-formdata.append('file', fileInput.files[0], 'rules.txt');
-formdata.append('createFileRequest', JSON.stringify({ directoryPath: '' }));
-
-const requestOptions = {
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/ownership', {
   method: 'POST',
   headers: {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    // Note: Do not set Content-Type header; browser will set it automatically for FormData
+    'Content-Type': 'application/json'
   },
-  body: formdata,
-  redirect: 'follow',
-};
-
-fetch(
-  'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files',
-  requestOptions,
-)
-  .then((response) => response.json())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(`Error: ${error}`));
+  body: JSON.stringify({
+    "userId": 109
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
 ```
 
 <!--
@@ -393,152 +681,258 @@ title: Python
 -->
 
 ```python
-import httpx
+import requests
 
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/ownership"
 headers = {
-    'X-DOMO-Developer-Token': '<your-token-here>',
+    "Content-Type": "application/json"
 }
-url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files'
+data = {'userId': 109}
 
-with open('rules.txt', 'rb') as file_obj:
-    files = {
-        'file': ('rules.txt', file_obj, 'text/plain'),
-        'createFileRequest': (None, '{"directoryPath": ""}', 'application/json'),
-    }
-    with httpx.Client() as client:
-        response = client.post(url, headers=headers, files=files)
-        print(response.json())
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
+```
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X POST "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/ownership" \
+  -H "Content-Type: application/json" \
+  -d '{"userId": 109}'
 ```
 
 <!-- type: tab-end -->
 
-**Response:**
+### Response
+
+**Status:** `200`
 
 ```json
 {
-  "id": "00000000-0000-0000-0000-000000000004",
-  "path": "fab-rules.txt",
-  "name": "fab-rules.txt",
-  "fileType": "TEXT",
-  "contentType": "text/plain",
-  "size": 12345,
-  "created": "2025-01-01T00:00:00.000Z",
-  "createdBy": 111111111
+  "fileSetId": "e49f188e-be98-451d-ba0f-ada1157bb656",
+  "fileSetAccess": [
+    {
+      "entityId": 109,
+      "entityType": "USER",
+      "permission": "OWNER"
+    },
+    {
+      "entityId": 27,
+      "entityType": "USER",
+      "permission": "OWNER"
+    }
+  ]
 }
 ```
 
+- **fileSetId**: The associated file set id.
+- **fileSetAccess**: The access permissions for the file set.
+
+### Error Responses
+
+| Status Code | Description        |
+|-------------|--------------------|
+| `400`       | Bad Request        |
+| `403`       | Forbidden          |
+| `409`       | Conflict           |
+| `413`       | Payload Too Large  |
+
 ---
 
-## Search Files in FileSet
+## Create a new File or Directory
 
 **Method:** `POST`  
-**Endpoint:** `/api/files/v1/filesets/{filesetId}/files/search`
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/files`
 
-**Description:** Lists Files and directories within a FileSet, optionally filtered by directory path or other criteria.
+Create a new File or Directory within a specified FileSet. If a file already exists at the specified path, it will attempt to overwrite it if the client has permission. If a Directory already exists at the specified path, it will return that Directory.
 
-**Path Parameters:**
+### Path Parameters
 
-| Parameter | Type   | Required | Description           |
-| --------- | ------ | -------- | --------------------- |
-| filesetId | String | Yes      | The ID of the FileSet |
+| Parameter   | Type   | Required | Description                                        |
+|-------------|--------|----------|----------------------------------------------------|
+| `fileSetId` | string | ✔ Yes    | The ID of the FileSet in which to create the File. |
 
-**Query Parameters:**
+### Query Parameters
 
-| Parameter         | Type    | Required | Default | Description                                           |
-| ----------------- | ------- | -------- | ------- | ----------------------------------------------------- |
-| directoryPath     | String  | No       | null    | Filter Files by specific directory path               |
-| immediateChildren | Boolean | No       | false   | If true, returns only immediate children of directory |
-| limit             | Integer | No       | 100     | Maximum number of results                             |
-| next              | String  | No       | null    | Pagination token for fetching next set of results     |
+_None_
 
-**Request Body Parameters:**
+### Request Body
 
-| Parameter   | Type  | Required | Description                                              |
-| ----------- | ----- | -------- | -------------------------------------------------------- |
-| fieldSort   | Array | No       | Sort options for results. Array of FieldSort Objects.    |
-| filters     | Array | No       | Filter criteria for the search. Array of Filter Objects. |
-| dateFilters | Array | No       | Date-based filter criteria. Array of DateFilter Objects. |
+Represents a request to upload a file or create a directory.
 
-**FieldSort Object Properties:**
+| Parameter      | Type           | Required | Description                                                                                                         |
+|----------------|----------------|----------|---------------------------------------------------------------------------------------------------------------------|
+| `file`         | string (binary)| No       | The file to be uploaded. Leave null if creating a directory.                                                         |
+| `directoryPath`| string         | No       | The directory path of the uploaded file, or the path of the created directory if no file is provided. Defaults to an empty string, i.e., the root directory, if not specified. Note: An empty string is not valid when intentionally creating a directory. Examples and further explanation may be required for clarity. |
 
-| Property | Type   | Description                     |
-| -------- | ------ | ------------------------------- |
-| field    | String | Field name to sort by           |
-| order    | String | Sort direction: 'ASC' or 'DESC' |
-
-**DateFilter Object Properties:**
-
-| Property | Type    | Description                                  |
-| -------- | ------- | -------------------------------------------- |
-| field    | String  | Field name for date filter (e.g., 'created') |
-| start    | String  | Start timestamp as ISO string                |
-| end      | String  | End timestamp as ISO string                  |
-| not      | Boolean | If true, inverts the date filter match       |
-
-> **Note:** The Filter, FieldSort, and DateFilter objects have the same structure as in the Search FileSets endpoint.
+### Request Example
 
 <!--
 type: tab
-title: Javascript
+title: JavaScript
 -->
 
-```js
-// Example 1: List all files in FileSet
-fetch(
-  `https://{instance}.domo.com/api/files/v1/filesets/${filesetId}/files/search`,
-  {
-    method: 'POST',
-    headers: {
-      'X-DOMO-Developer-Token': '<your-token-here>',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({}),
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
   },
-)
-  .then((response) => response.json())
-  .then((result) => console.log(result.files))
-  .catch((error) => console.error(`Error: ${error}`));
+  body: JSON.stringify({
+    "file": "<base64_encoded_binary_data>",
+    "directoryPath": "sample/directory/path"
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
 
-// Example 2: Advanced search with directory path and filters
-fetch(
-  `https://{instance}.domo.com/api/files/v1/filesets/${filesetId}/files/search?directoryPath=reports&limit=20`,
-  {
-    method: 'POST',
-    headers: {
-      'X-DOMO-Developer-Token': '<your-token-here>',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      // Sort by file name in ascending order
-      fieldSort: [
-        {
-          field: 'name',
-          order: 'ASC',
-        },
-      ],
-      // Filter files by name
-      filters: [
-        {
-          field: 'name',
-          value: ['.pdf'],
-          operator: 'LIKE',
-          not: false,
-        },
-      ],
-      // Filter files created in past 30 days
-      dateFilters: [
-        {
-          field: 'created',
-          start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days ago as ISO string
-          end: new Date().toISOString(), // Current time as ISO string
-        },
-      ],
-    }),
+<!--
+type: tab-end
+-->
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import requests
+import base64
+
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files"
+headers = {
+    "Content-Type": "application/json"
+}
+
+# Read file content and encode it to base64
+with open("path/to/file", "rb") as file:
+    encoded_file = base64.b64encode(file.read()).decode('utf-8')
+
+data = {
+    "file": encoded_file,
+    "directoryPath": "sample/directory/path"
+}
+
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
+```
+
+<!--
+type: tab-end
+-->
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X POST "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "file": "<base64_encoded_binary_data>",
+    "directoryPath": "sample/directory/path"
+}'
+```
+
+<!--
+type: tab-end
+-->
+
+### Response
+
+**Status:** `200`
+
+```json
+{
+  "id": "22e1514a-354b-470f-bc32-c354812738f2",
+  "path": "sample/directory/path",
+  "name": "path",
+  "size": null,
+  "created": "2025-07-28T21:49:34.503181+00:00",
+  "createdBy": 27,
+  "fileType": "DIRECTORY"
+}
+```
+
+- **id**: string
+- **path**: string
+- **name**: string
+- **size**: integer
+- **created**: string
+- **createdBy**: integer
+- **fileType**: string
+
+### Error Responses
+
+| Status Code | Description                                                                                          |
+|-------------|------------------------------------------------------------------------------------------------------|
+| `400`       | Bad Request                                                                                          |
+| `403`       | Forbidden                                                                                            |
+| `409`       | Conflict: File already exists at the specified path and client does not have overwrite permissions.  |
+| `413`       | Payload Too Large                                                                                    |
+
+---
+
+## List Files and Directories for a FileSet
+
+**Method:** `POST`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/files/search`
+
+Retrieve a paginated list of Files within a specific FileSet based on search criteria.
+
+### Path Parameters
+
+| Parameter   | Type   | Required | Description                                  |
+|-------------|--------|----------|----------------------------------------------|
+| `fileSetId` | string | ✓ Yes    | The ID of the FileSet to search within.      |
+
+### Query Parameters
+
+| Parameter          | Type           | Required | Description                                                                |
+|--------------------|----------------|----------|----------------------------------------------------------------------------|
+| `directoryPath`    | string         | No       | The path to the directory within the FileSet, if applicable.               |
+| `immediateChildren`| boolean        | No       | Whether to list only immediate children of the specified directory. (Default: `False`) |
+| `limit`            | integer (int32)| No       | The maximum number of Files to return. (Default: `100`)                    |
+| `next`             | string         | No       | The pagination token for the next set of results.                          |
+
+### Request Body
+
+Request object for searching with specific filters and sorting options.
+
+| Parameter   | Type   | Required | Description                                           |
+|-------------|--------|----------|-------------------------------------------------------|
+| `fieldSort` | array  | No       | A list of field sort criteria to apply to the search. |
+| `filters`   | array  | No       | A list of filters to apply to the search.             |
+| `dateFilters`| array | No       | A list of date filters to apply to the search.        |
+
+### Request Example
+
+<!--
+type: tab
+title: JavaScript
+-->
+
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/search?directoryPath=some/path&immediateChildren=false&limit=50&next=eyJjb250...continues', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
   },
-)
-  .then((response) => response.json())
-  .then((result) => console.log(result.files))
-  .catch((error) => console.error(`Error: ${error}`));
+  body: JSON.stringify({
+    'fieldSort': [{'field': 'created', 'order': 'ASC'}],
+    'filters': [{'field': 'name', 'value': ['paid'], 'not': false, 'operator': 'LIKE'}],
+    'dateFilters': [{'field': 'created', 'start': new Date('2025-05-12T23:30:00Z'), 'not': false, 'end': null}]
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
 ```
 
 <!--
@@ -547,135 +941,128 @@ title: Python
 -->
 
 ```python
-import httpx
-import time
+import requests
+from datetime import datetime, timezone
 
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/search?directoryPath=some/path&immediateChildren=false&limit=50&next=eyJjb250...continues"
 headers = {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json"
 }
-
-# Example 1: List all files in FileSet
-url = f'https://{{instance}}.domo.com/api/files/v1/filesets/{filesetId}/files/search'
-data = {}
-
-with httpx.Client() as client:
-    response = client.post(url, headers=headers, json=data)
-    print(response.json())
-
-# Example 2: Advanced search with directory path and filters
-url = f'https://{{instance}}.domo.com/api/files/v1/filesets/{filesetId}/files/search?directoryPath=reports&limit=20'
-from datetime import datetime, timedelta
-
-current_time = datetime.now()
-thirty_days_ago = current_time - timedelta(days=30)
-
 data = {
-    # Sort by file name in ascending order
-    "fieldSort": [
-        {
-            "field": "name",
-            "order": "ASC"
-        }
-    ],
-    # Filter files by name
-    "filters": [
-        {
-            "field": "name",
-            "value": [".pdf"],
-            "operator": "LIKE",
-            "not": False
-        }
-    ],
-    # Filter files created in past 30 days
-    "dateFilters": [
-        {
-            "field": "created",
-            "start": thirty_days_ago.isoformat(),  # ISO format string
-            "end": current_time.isoformat()        # ISO format string
-        }
-    ]
+    'fieldSort': [{'field': 'created', 'order': 'ASC'}],
+    'filters': [{'field': 'name', 'value': ['paid'], 'not': False, 'operator': 'LIKE'}],
+    'dateFilters': [{'field': 'created', 'start': datetime(2025, 5, 12, 23, 30, tzinfo=timezone.utc), 'not': False, 'end': None}]
 }
 
-with httpx.Client() as client:
-    response = client.post(url, headers=headers, json=data)
-    print(response.json())
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
+```
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X POST "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/search?directoryPath=some/path&immediateChildren=false&limit=50&next=eyJjb250...continues" \
+  -H "Content-Type: application/json" \
+  -d '{"fieldSort": [{"field": "created", "order": "ASC"}], "filters": [{"field": "name", "value": ["paid"], "not": false, "operator": "LIKE"}], "dateFilters": [{"field": "created", "start": "2025-05-12T23:30:00Z", "not": false, "end": null}]}'
 ```
 
 <!-- type: tab-end -->
 
-**Response:**
+### Response
+
+**Status:** `200`
 
 ```json
 {
   "files": [
     {
-      "id": "00000000-0000-0000-0000-000000000001",
-      "path": "reports/quarterly-report.pdf",
-      "name": "quarterly-report.pdf",
-      "fileType": "FILE",
+      "id": "7150e608-c3a9-4b40-ac2d-eb182cc98c6f",
+      "path": "sample/directory/path/PaidTimeOffPolicy.pdf",
+      "name": "PaidTimeOffPolicy.pdf",
+      "fileType": "DOCUMENT",
       "contentType": "application/pdf",
-      "size": 234567,
-      "hash": "hash123456789abcdef",
+      "size": 69502,
+      "hash": "ce0da94c741125c597cf3d54a3202cebdc16d7fe1074698219f724654595221c",
       "hashAlgorithm": "SHA_256_HEX",
-      "downloadUrl": "https://instance.domo.com/api/files/v1/filesets/00000000-0000-0000-0000-000000000010/files/00000000-0000-0000-0000-000000000001/download",
-      "created": "2024-06-15T00:00:00.000Z",
-      "createdBy": 111111111
-    },
-    {
-      "id": "00000000-0000-0000-0000-000000000002",
-      "path": "reports/annual-report.pdf",
-      "name": "annual-report.pdf",
-      "fileType": "FILE",
-      "contentType": "application/pdf",
-      "size": 456789,
-      "hash": "hash987654321fedcba",
-      "hashAlgorithm": "SHA_256_HEX",
-      "downloadUrl": "https://instance.domo.com/api/files/v1/filesets/00000000-0000-0000-0000-000000000010/files/00000000-0000-0000-0000-000000000002/download",
-      "created": "2024-06-10T00:00:00.000Z",
-      "createdBy": 111111111
+      "downloadUrl": "",
+      "created": "2025-07-28T21:47:39.814456Z",
+      "createdBy": 27,
+      "connectorKey": null,
+      "indexStatus": null,
+      "indexReason": null
     }
   ],
   "pageContext": {
-    "next": "eyJpZCI6IjEyMzQ1Njc4OTAifQ=="
+    "next": "eyJpZCI6ImJiZjU3MDVkLWU1ZjQtNGRkMy1hMTUyLTgzNzdhNTYwYzY0YiIsInBhdGgiOiJzYW1wbGUvZGlyZWN0b3J5L3BhdGgiLCJuYW1lIjoicGF0aCIsInNpemUiOm51bGwsImNyZWF0ZWQiOiIyMDI1LTA3LTI5VDE4OjA3OjI2Ljc2MzE5M1oifQ=="
   }
 }
 ```
 
+- **files**: The list of files in the current page.
+- **pageContext**: The context for pagination.
+
+### Error Responses
+
+| Status Code | Description       |
+|-------------|-------------------|
+| `400`       | Bad Request       |
+| `403`       | Forbidden         |
+| `409`       | Conflict          |
+| `413`       | Payload Too Large |
+
 ---
 
-## Delete Files by Path
+## Reindex Files within a FileSet
 
-**Method:** `DELETE`  
-**Endpoint:** `/api/files/v1/filesets/{filesetId}/path?path={filePath}`
+**Method:** `POST`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/files/reindex`
 
-**Path Parameters:**
+Initiate another indexing attempt for specific files within a FileSet.
 
-- `filesetId` (String, required): The ID of the FileSet.
+### Path Parameters
 
-**Query Parameters:**
+| Parameter    | Type   | Required | Description                                    |
+|--------------|--------|----------|------------------------------------------------|
+| `fileSetId`  | string | ✓ Yes    | The ID of the FileSet to reindex files within. |
 
-- `path` (String, required): The path to the File within the FileSet.
+### Query Parameters
+
+_None_
+
+### Request Body
+
+Request object for another indexing attempt for specific files within a file set.
+
+| Parameter | Type  | Required | Description                         |
+|-----------|-------|----------|-------------------------------------|
+| `fileIds` | array | ✓ Yes    | The IDs of the files to be reindexed. |
+
+### Request Example
 
 <!--
 type: tab
-title: Javascript
+title: JavaScript
 -->
 
-```js
-fetch(
-  'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/path?path=rules.txt',
-  {
-    method: 'DELETE',
-    headers: {
-      'X-DOMO-Developer-Token': '<your-token-here>',
-      'Content-Type': 'application/json',
-    },
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/reindex', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
   },
-)
-  .then((response) => response.json())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(`Error: ${error}`));
+  body: JSON.stringify({
+    "fileIds": [
+      "7150e608-c3a9-4b40-ac2d-eb182cc98c6f",
+      "22e1514a-354b-470f-bc32-c354812738f2"
+    ]
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
 ```
 
 <!--
@@ -684,61 +1071,214 @@ title: Python
 -->
 
 ```python
-import httpx
+import requests
 
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/reindex"
 headers = {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json"
 }
-url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/path?path=rules.txt'
+data = {'fileIds': ['7150e608-c3a9-4b40-ac2d-eb182cc98c6f',
+             '22e1514a-354b-470f-bc32-c354812738f2']}
 
-with httpx.Client() as client:
-    response = client.delete(url, headers=headers)
-    print(response.json())
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
+```
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X POST "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/reindex" \
+  -H "Content-Type: application/json" \
+  -d '{"fileIds": ["7150e608-c3a9-4b40-ac2d-eb182cc98c6f", "22e1514a-354b-470f-bc32-c354812738f2"]}'
 ```
 
 <!-- type: tab-end -->
 
-**Response:**
+### Response
+
+**Status:** `202`
 
 ```json
 {
-  "status": "success",
-  "message": "File deleted successfully."
+  "retriedFilesCount": 2
 }
 ```
 
+- **retriedFilesCount**: The number of files that were retried for reindexing.
+
+### Error Responses
+
+| Status Code | Description     |
+|-------------|-----------------|
+| `400`       | Bad Request     |
+| `403`       | Forbidden       |
+| `409`       | Conflict        |
+| `413`       | Payload Too Large |
+
 ---
 
-## Delete File by Id
+## Initiate a split file upload.
 
-**Method:** `DELETE`  
-**Endpoint:** `/api/files/v1/filesets/{filesetId}/files/{fileId}`
+**Method:** `POST`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/files/multipart`
 
-**Path Parameters:**
+Initiates a split file upload process for creating a new file within a FileSet.
 
-- `filesetId` (String, required): The ID of the FileSet.
-- `fileId` (String, required): The ID of the File.
+### Path Parameters
+
+| Parameter   | Type   | Required | Description                                               |
+|-------------|--------|----------|-----------------------------------------------------------|
+| `fileSetId` | string | ✔ Yes    | The ID of the FileSet in which to create the File.       |
+
+### Query Parameters
+
+_None_
+
+### Request Body
+
+Represents a request to initiate a split file upload.
+
+| Parameter | Type   | Required | Description                                                                |
+|-----------|--------|----------|----------------------------------------------------------------------------|
+| `path`    | string | No       | The full path destination for the file once the upload is finalized. |
+
+### Request Example
+
+<!-- type: tab title: JavaScript -->
+
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/multipart', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    "path": "example/path/to/resource"
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+<!-- type: tab title: Python -->
+
+```python
+import requests
+
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/multipart"
+headers = {
+    "Content-Type": "application/json"
+}
+data = {'path': 'example/path/to/resource'}
+
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
+```
+
+<!-- type: tab title: cURL -->
+
+```bash
+curl -X POST "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/multipart" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "path": "example/path/to/resource"
+}'
+```
+
+<!-- type: tab-end -->
+
+### Response
+
+**Status:** `202`
+
+```json
+{
+  "file": {
+    "id": "df5fd883-e5cb-4cbb-a158-0e9ff1d37097",
+    "path": "sample/directory/path/PaidTimeOffPolicy.pdf",
+    "name": "PaidTimeOffPolicy.pdf",
+    "fileType": "OTHER",
+    "contentType": null,
+    "size": null,
+    "hash": null,
+    "hashAlgorithm": "SHA_256_HEX",
+    "downloadUrl": null,
+    "created": "2025-08-25T16:05:56.676114Z",
+    "createdBy": 27,
+    "connectorKey": null,
+    "indexStatus": null,
+    "indexReason": null
+  },
+  "status": "CREATED"
+}
+```
+
+- **file**: The file object containing the metadata known so far for the file to be uploaded.
+- **status**: The status of the upload process.
+
+### Error Responses
+
+| Status Code | Description                                                                    |
+|-------------|--------------------------------------------------------------------------------|
+| `400`       | Bad Request                                                                    |
+| `403`       | Forbidden                                                                      |
+| `409`       | Conflict: File already exists at the specified path.                           |
+| `413`       | Payload Too Large                                                              |
+| `422`       | Unprocessable Entity: Request for the split file could not be fulfilled.       |
+
+---
+
+## Submit a part of a file for upload.
+
+**Method:** `POST`
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/files/multipart/{fileId}/part/{partNumber}`
+
+Allows submitting a file in stages to create a new file within a FileSet.
+
+### Path Parameters
+
+| Parameter    | Type           | Required | Description                                                 |
+|--------------|----------------|----------|-------------------------------------------------------------|
+| `fileSetId`  | string         | ✔ Yes    | The ID of the FileSet in which to the file is being uploaded. |
+| `fileId`     | string         | ✔ Yes    | The ID of the file being uploaded in parts.                  |
+| `partNumber` | integer (int64)| ✔ Yes    | The part number of this file segment. Must be non-negative.  |
+
+### Query Parameters
+
+_None_
+
+### Request Body
+
+Represents a request to upload a part of a file in a split file upload operation.
+
+| Parameter | Type            | Required | Description                                                  |
+|-----------|-----------------|----------|--------------------------------------------------------------|
+| `part`    | string (binary) | No       | The full path destination for the file once the upload is complete. |
+
+### Request Example
 
 <!--
 type: tab
-title: Javascript
+title: JavaScript
 -->
 
-```js
-fetch(
-  'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files/{fileId}',
-  {
-    method: 'DELETE',
-    headers: {
-      'X-DOMO-Developer-Token': '<your-token-here>',
-      'Content-Type': 'application/json',
-    },
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/multipart/{fileId}/part/{partNumber}', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
   },
-)
-  .then((response) => response.json())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(`Error: ${error}`));
+  body: JSON.stringify({
+      "part": (binary data of the file)
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
 ```
 
 <!--
@@ -747,141 +1287,584 @@ title: Python
 -->
 
 ```python
-import httpx
+import requests
 
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/multipart/{fileId}/part/{partNumber}"
 headers = {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json"
 }
-url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}/files/{fileId}'
+data = '{\n    "part": (binary data of the file)\n}\n'
 
-with httpx.Client() as client:
-    response = client.delete(url, headers=headers)
-    print(response.json())
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
+```
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X POST "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/multipart/{fileId}/part/{partNumber}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "part": (binary data of the file)
+}'
 ```
 
 <!-- type: tab-end -->
 
-**Response:**
+### Response
+
+**Status:** `202`
 
 ```json
 {
-  "status": "success",
-  "message": "File deleted successfully."
+    "file": {
+        "id": "df5fd883-e5cb-4cbb-a158-0e9ff1d37097",
+        "path": "sample/directory/path/PaidTimeOffPolicy.pdf",
+        "name": "PaidTimeOffPolicy.pdf",
+        "fileType": "DOCUMENT",
+        "contentType": "application/pdf",
+        "size": 69502,
+        "hash": null,
+        "hashAlgorithm": "SHA_256_HEX",
+        "downloadUrl": null,
+        "created": "2025-08-25T16:05:56.676114Z",
+        "createdBy": 27,
+        "connectorKey": null,
+        "indexStatus": null,
+        "indexReason": null
+    },
+    "status": "PROCESSING"
 }
 ```
 
+- **file**: The file object containing the metadata known so far for the file to be uploaded.
+- **status**: The status of the upload process.
+
+### Error Responses
+
+| Status Code | Description                                                                                     |
+|-------------|-------------------------------------------------------------------------------------------------|
+| `400`       | Split file upload part did not match previous data segments.                                    |
+| `403`       | Forbidden                                                                                       |
+| `404`       | An "initiate split file" request was not performed prior to this request for the given file ID or has already been finalized or aborted. |
+| `409`       | Conflict                                                                                        |
+| `413`       | Payload Too Large                                                                               |
+| `422`       | Unprocessable Entity: Request for the split file could not be fulfilled.                        |
+
 ---
 
-## Search FileSets
+## Finalize a split file upload.
+
+**Method:** `POST`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/files/multipart/{fileId}/finalize`
+
+Declares that all parts of a split file upload have been submitted and the file can be assembled.
+
+### Path Parameters
+
+| Parameter  | Type   | Required | Description                                                   |
+|------------|--------|----------|---------------------------------------------------------------|
+| `fileSetId`| string | ✓ Yes    | The ID of the FileSet in which the file has been uploaded.    |
+| `fileId`   | string | ✓ Yes    | The ID of the file whose parts have been uploaded.            |
+
+### Query Parameters
+
+_None_
+
+### Request Body
+
+### Request Example
+
+<!--
+type: tab
+title: JavaScript
+-->
+
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/multipart/{fileId}/finalize', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(N/A)
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+<!-- type: tab-end -->
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import requests
+
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/multipart/{fileId}/finalize"
+headers = {
+    "Content-Type": "application/json"
+}
+data = {}
+
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
+```
+
+<!-- type: tab-end -->
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X POST "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/multipart/{fileId}/finalize" \
+  -H "Content-Type: application/json" \
+  -d 'N/A'
+```
+
+<!-- type: tab-end -->
+
+### Response
+
+**Status:** `201`
+
+```json
+{
+    "file": {
+        "id": "df5fd883-e5cb-4cbb-a158-0e9ff1d37097",
+        "path": "sample/directory/path/PaidTimeOffPolicy.pdf",
+        "name": "PaidTimeOffPolicy.pdf",
+        "fileType": "DOCUMENT",
+        "contentType": "application/pdf",
+        "size": 69502,
+        "hash": "ce0da94c741125c597cf3d54a3202cebdc16d7fe1074698219f724654595221c",
+        "hashAlgorithm": "SHA_256_HEX",
+        "downloadUrl": "",
+        "created": "datetime.datetime(2025, 8, 25, 16, 5, 56, 676114, tzinfo=datetime.timezone.utc)",
+        "createdBy": 27,
+        "connectorKey": null,
+        "indexStatus": null,
+        "indexReason": null
+    },
+    "status": "SUCCESS"
+}
+```
+
+- **file**: The file object containing the metadata known so far for the file to be uploaded.
+- **status**: The status of the upload process.
+
+### Error Responses
+
+| Status Code | Description |
+|-------------|-------------|
+| `400` | Bad Request |
+| `403` | Forbidden |
+| `404` | An "initiate split file" request was not performed prior to this request for the given file ID and/or has not been uploaded any parts, or has already been finalized/aborted. |
+| `409` | Conflict: File already exists at the declared path. |
+| `413` | Payload Too Large |
+| `422` | Unprocessable Entity: Request for the split file could not be fulfilled. |
+
+---
+
+## Abort a split file upload.
+
+**Method:** `POST`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/files/multipart/{fileId}/abort`
+
+Aborts an ongoing split file upload process, discarding all uploaded parts.
+
+### Path Parameters
+
+| Parameter   | Type   | Required | Description                                                    |
+|-------------|--------|----------|----------------------------------------------------------------|
+| `fileSetId` | string | ✓ Yes    | The ID of the FileSet in which the file was being uploaded.   |
+| `fileId`    | string | ✓ Yes    | The ID of the file whose upload is to be aborted.             |
+
+### Query Parameters
+
+_None_
+
+### Request Body
+
+### Request Example
+
+<!--
+type: tab
+title: JavaScript
+-->
+
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/multipart/{fileId}/abort', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import requests
+
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/multipart/{fileId}/abort"
+headers = {
+    "Content-Type": "application/json"
+}
+
+response = requests.post(url, headers=headers, json={})
+print(response.json())
+```
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X POST "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/multipart/{fileId}/abort" \
+  -H "Content-Type: application/json"
+```
+
+<!-- type: tab-end -->
+
+### Response
+
+**Status:** `200`
+
+```json
+{
+  "file": {
+    "id": "df5fd883-e5cb-4cbb-a158-0e9ff1d37097",
+    "path": "sample/directory/path/PaidTimeOffPolicy.pdf",
+    "name": "PaidTimeOffPolicy.pdf",
+    "fileType": "DOCUMENT",
+    "contentType": "application/pdf",
+    "size": 69502,
+    "hash": null,
+    "hashAlgorithm": "SHA_256_HEX",
+    "downloadUrl": null,
+    "created": "2025-08-25T16:05:56.676114Z",
+    "createdBy": 27,
+    "connectorKey": null,
+    "indexStatus": null,
+    "indexReason": null
+  },
+  "status": "FAILED"
+}
+```
+
+- **file**: The file object containing the metadata known so far for the file to be uploaded.
+- **status**: The status of the upload process.
+
+### Error Responses
+
+| Status Code | Description                                                                                      |
+|-------------|--------------------------------------------------------------------------------------------------|
+| `400`       | Bad Request                                                                                      |
+| `403`       | Forbidden                                                                                        |
+| `404`       | An "initiate split file" request was not performed prior to this request for the given file ID or has already been finalized or aborted. |
+| `409`       | Conflict                                                                                         |
+| `413`       | Payload Too Large                                                                                |
+
+---
+
+## Get FileSet Access Permissions
+
+**Method:** `GET`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/access`
+
+Retrieve the access permissions for a specific FileSet.
+
+### Path Parameters
+
+| Parameter    | Type   | Required | Description                                                |
+|--------------|--------|----------|------------------------------------------------------------|
+| `fileSetId`  | string | ✔ Yes    | The ID of the FileSet for which to retrieve access information. |
+
+### Query Parameters
+
+_None_
+
+### Request Body
+
+### Request Example
+
+<!--
+type: tab
+title: JavaScript
+-->
+
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/access', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import requests
+
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/access"
+headers = {
+    "Content-Type": "application/json"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())
+```
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X GET "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/access" \
+  -H "Content-Type: application/json"
+```
+
+<!-- type: tab-end -->
+
+### Response
+
+**Status:** `200`
+
+```json
+{
+  "fileSetId": "e49f188e-be98-451d-ba0f-ada1157bb656",
+  "fileSetAccess": [
+    {
+      "entityId": 27,
+      "entityType": "USER",
+      "permission": "OWNER"
+    }
+  ]
+}
+```
+
+- **fileSetId**: The associated file set id.
+- **fileSetAccess**: The access permissions for the file set.
+
+### Error Responses
+
+| Status Code | Description          |
+|-------------|----------------------|
+| `400`       | Bad Request          |
+| `403`       | Forbidden            |
+| `409`       | Conflict             |
+| `413`       | Payload Too Large    |
+
+---
+
+## Update FileSet Access Permissions
+
+**Method:** `POST`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/access`
+
+Update the relevant access permissions for a specific FileSet.
+
+### Path Parameters
+
+| Parameter   | Type   | Required | Description                                                       |
+|-------------|--------|----------|-------------------------------------------------------------------|
+| `fileSetId` | string | ✓ Yes    | The ID of the FileSet for which to update access permissions.     |
+
+### Query Parameters
+
+_None_
+
+### Request Body
+
+Request object for updating access permissions to a file set.
+
+Only the permissions that are explicitly set in the request will be updated.
+
+| Parameter        | Type  | Required | Description                                          |
+|------------------|-------|----------|------------------------------------------------------|
+| `fileSetAccess`  | array | ✓ Yes    | The access permissions for the file set.             |
+
+### Request Example
+
+<!--
+type: tab
+title: JavaScript
+-->
+
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/access', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    "fileSetAccess": [
+      {
+        "entityId": 42,
+        "entityType": "GROUP",
+        "permission": "EDIT"
+      }
+    ]
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import requests
+
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/access"
+headers = {
+    "Content-Type": "application/json"
+}
+data = {'fileSetAccess': [{'entityId': 42,
+                    'entityType': 'GROUP',
+                    'permission': 'EDIT'}]}
+
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
+```
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X POST "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/access" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "fileSetAccess": [
+    {
+      "entityId": 42,
+      "entityType": "GROUP",
+      "permission": "EDIT"
+    }
+  ]
+}'
+```
+
+<!-- type: tab-end -->
+
+### Response
+
+**Status:** `200`
+
+```json
+{
+  "fileSetId": "e49f188e-be98-451d-ba0f-ada1157bb656",
+  "fileSetAccess": [
+    {
+      "entityId": 42,
+      "entityType": "GROUP",
+      "permission": "EDIT"
+    },
+    {
+      "entityId": 27,
+      "entityType": "USER",
+      "permission": "OWNER"
+    }
+  ]
+}
+```
+
+- **fileSetId**: The associated file set id.
+- **fileSetAccess**: The access permissions for the file set.
+
+### Error Responses
+
+| Status Code | Description        |
+|-------------|--------------------|
+| `400`       | Bad Request        |
+| `403`       | Forbidden          |
+| `409`       | Conflict           |
+| `413`       | Payload Too Large  |
+
+---
+
+## List FileSets
 
 **Method:** `POST`  
 **Endpoint:** `/api/files/v1/filesets/search`
 
-**Description:** Searches for FileSets in your Domo instance using filters and criteria.
+Retrieve a paginated list of FileSets based on search criteria.
 
-**Query Parameters:**
+### Path Parameters
 
-| Parameter | Type    | Required | Default | Description                         |
-| --------- | ------- | -------- | ------- | ----------------------------------- |
-| limit     | Integer | No       | 100     | Maximum number of results to return |
-| offset    | Integer | No       | 0       | Pagination offset                   |
+_None_
 
-**Request Body Parameters:**
+### Query Parameters
 
-| Parameter   | Type  | Required | Description                                              |
-| ----------- | ----- | -------- | -------------------------------------------------------- |
-| fieldSort   | Array | No       | Sort options for results. Array of FieldSort Objects.    |
-| filters     | Array | No       | Filter criteria for the search. Array of Filter Objects. |
-| dateFilters | Array | No       | Date-based filter criteria. Array of DateFilter Objects. |
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `limit` | integer (int32) | No | The maximum number of FileSets to return. (Default: `100`.) |
+| `offset` | integer (int32) | No | The offset for pagination. (Default: `0`.) |
 
-**Filter Object Properties:**
+### Request Body
 
-| Property | Type    | Description                                                                                                                   |
-| -------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| field    | String  | Field name to filter on (e.g., 'name', 'description')                                                                         |
-| value    | Array   | Values to match against                                                                                                       |
-| not      | Boolean | If true, inverts the filter match                                                                                             |
-| operator | String  | Operation type: 'EQUALS', 'GREATER_THAN', 'LESS_THAN', 'LESS_THAN_OR_EQUAL', 'GREATER_THAN_OR_EQUAL', 'IN', 'IS_NULL', 'LIKE' |
+Request object for searching with specific filters and sorting options.
 
-**FieldSort Object Properties:**
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `fieldSort` | array | No | A list of field sort criteria to apply to the search. |
+| `filters` | array | No | A list of filters to apply to the search. |
+| `dateFilters` | array | No | A list of date filters to apply to the search. |
 
-| Property | Type   | Description                     |
-| -------- | ------ | ------------------------------- |
-| field    | String | Field name to sort by           |
-| order    | String | Sort direction: 'ASC' or 'DESC' |
-
-**DateFilter Object Properties:**
-
-| Property | Type    | Description                                  |
-| -------- | ------- | -------------------------------------------- |
-| field    | String  | Field name for date filter (e.g., 'created') |
-| start    | String  | Start timestamp as ISO string                |
-| end      | String  | End timestamp as ISO string                  |
-| not      | Boolean | If true, inverts the date filter match       |
-
-> **Note:** To list all FileSets, send an empty object as the body. To filter, provide filter parameters in the body.
+### Request Example
 
 <!--
 type: tab
-title: Javascript
+title: JavaScript
 -->
 
-```js
-// Example 1: List all FileSets (empty search)
-fetch(
-  'https://{instance}.domo.com/api/files/v1/filesets/search?limit=50&offset=0',
-  {
-    method: 'POST',
-    headers: {
-      'X-DOMO-Developer-Token': '<your-token-here>',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({}),
-  },
-)
-  .then((response) => response.json())
-  .then((result) => console.log(result.fileSets))
-  .catch((error) => console.error(`Error: ${error}`));
-
-// Example 2: Advanced search with filters and sorting
-fetch('https://{instance}.domo.com/api/files/v1/filesets/search', {
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/search', {
   method: 'POST',
   headers: {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    // Sort by name in ascending order
-    fieldSort: [
-      {
-        field: 'name',
-        order: 'ASC',
-      },
-    ],
-    // Filter FileSet by name containing "Marketing"
-    filters: [
-      {
-        field: 'name',
-        value: ['Marketing'],
-        operator: 'LIKE',
-        not: false,
-      },
-    ],
-    // Filter FileSet created between two dates
-    dateFilters: [
-      {
-        field: 'created',
-        start: new Date('2024-06-01').toISOString(), // June 1, 2024 as ISO string
-        end: new Date('2024-06-30').toISOString(), // June 30, 2024 as ISO string
-      },
-    ],
-  }),
+    'fieldSort': [{'field': 'name', 'order': 'ASC'}],
+    'filters': [{'field': 'owner', 'value': [27], 'not': false, 'operator': 'EQUALS'}],
+    'dateFilters': [{'field': 'created', 'start': '2025-05-12T23:30:00Z', 'not': false, 'end': null}]
+  })
 })
-  .then((response) => response.json())
-  .then((result) => console.log(result.fileSets))
-  .catch((error) => console.error(`Error: ${error}`));
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
 ```
+
+<!-- type: tab-end -->
 
 <!--
 type: tab
@@ -889,375 +1872,261 @@ title: Python
 -->
 
 ```python
-import httpx
+import requests
 
+url = "https://<instance>.domo.com/api/files/v1/filesets/search"
 headers = {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json"
 }
-
-# Example 1: List all FileSets (empty search)
-url = 'https://{instance}.domo.com/api/files/v1/filesets/search?limit=50&offset=0'
-data = {}
-
-with httpx.Client() as client:
-    response = client.post(url, headers=headers, json=data)
-    print(response.json())
-
-# Example 2: Advanced search with filters and sorting
-url = 'https://{instance}.domo.com/api/files/v1/filesets/search'
 data = {
-    # Sort by name in ascending order
-    "fieldSort": [
-        {
-            "field": "name",
-            "order": "ASC"
-        }
-    ],
-    # Filter FileSet by name containing "Marketing"
-    "filters": [
-        {
-            "field": "name",
-            "value": ["Marketing"],
-            "operator": "LIKE",
-            "not": False
-        }
-    ],
-    # Filter FileSet created between two dates
-    "dateFilters": [
-        {
-            "field": "created",
-            "start": "2024-06-01T00:00:00Z",  # June 1, 2024 as ISO string
-            "end": "2024-06-30T23:59:59Z"     # June 30, 2024 as ISO string
-        }
-    ]
+    'fieldSort': [{'field': 'name', 'order': 'ASC'}],
+    'filters': [{'field': 'owner', 'value': [27], 'not': False, 'operator': 'EQUALS'}],
+    'dateFilters': [{'field': 'created', 'start': '2025-05-12T23:30:00Z', 'not': False, 'end': None}]
 }
 
-with httpx.Client() as client:
-    response = client.post(url, headers=headers, json=data)
-    print(response.json())
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
 ```
 
 <!-- type: tab-end -->
 
-**Response:**
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X POST "https://<instance>.domo.com/api/files/v1/filesets/search" \
+  -H "Content-Type: application/json" \
+  -d '{"fieldSort": [{"field": "name", "order": "ASC"}], "filters": [{"field": "owner", "value": [27], "not": false, "operator": "EQUALS"}], "dateFilters": [{"field": "created", "start": "2025-05-12T23:30:00Z", "not": false, "end": null}]}'
+```
+
+<!-- type: tab-end -->
+
+### Response
+
+**Status:** `200`
 
 ```json
 {
   "fileSets": [
     {
-      "id": "00000000-0000-0000-0000-000000000010",
-      "name": "Marketing Assets",
-      "description": "Contains marketing assets for campaigns",
-      "created": "2024-06-15T00:00:00.000Z",
-      "createdBy": 111111111,
-      "updated": "2024-06-20T00:00:00.000Z",
-      "updatedBy": 111111111,
-      "owner": "111111111",
+      "id": "e49f188e-be98-451d-ba0f-ada1157bb656",
+      "name": "Policies (2025)",
+      "description": "Location for all new and updated policies for FY2025",
+      "aiEnabled": false,
+      "indexStatus": null,
+      "connector": "DOMO",
+      "created": "2025-07-28T20:17:43Z",
+      "createdBy": 27,
+      "updated": "2025-07-28T20:17:43Z",
+      "updatedBy": 27,
+      "owner": "27",
+      "accountId": 0,
+      "connectorContext": null,
       "permission": "OWNER",
-      "fileCount": 25
-    },
-    {
-      "id": "00000000-0000-0000-0000-000000000011",
-      "name": "Marketing Reports",
-      "description": "Marketing analysis and reports",
-      "created": "2024-06-10T00:00:00.000Z",
-      "createdBy": 111111111,
-      "updated": "2024-06-18T00:00:00.000Z",
-      "updatedBy": 111111111,
-      "owner": "111111111",
-      "permission": "OWNER",
-      "fileCount": 12
+      "size": 0,
+      "fileCount": 0
     }
   ],
   "pageContext": {
-    "offset": 0,
-    "limit": 50,
-    "total": 2
+    "count": 1,
+    "totalCount": 1,
+    "offset": 0
   }
 }
-
-with httpx.Client() as client:
-    response = client.post(url, headers=headers, json=data)
-    print(response.json())
 ```
 
-<!-- type: tab-end -->
+- **fileSets**: The list of FileSets in the current page.
+- **pageContext**: The context for pagination.
 
-**Response:**
+### Error Responses
 
-```json
-{
-  "id": "6fbf49f2-b1eb-4dd9-b1ea-4a477480965b",
-  "name": "Unstructured",
-  "description": "",
-  "aiEnabled": true,
-  "indexStatus": null,
-  "batchType": "INCREMENTAL",
-  "connector": "DOMO",
-  "created": "2025-04-19T22:52:23.470150Z",
-  "createdBy": 403368057,
-  "updated": "2025-06-17T20:14:13.298781Z",
-  "updatedBy": 403368057,
-  "owner": "403368057",
-  "accountId": 0,
-  "connectorContext": null,
-  "permission": "OWNER",
-  "size": 730812,
-  "fileCount": 2
-}
-```
+| Status Code | Description |
+|-------------|-------------|
+| `400` | Bad Request. |
+| `403` | Forbidden. |
+| `409` | Conflict. |
+| `413` | Payload Too Large. |
 
 ---
 
-## Create FileSet
+## Get FileSet Statistics
 
-**Method:** `POST`  
-**Endpoint:** `/api/files/v1/filesets`
+**Method:** `GET`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/stats`
 
-**Request Body Parameters:**
+Retrieve statistics for a specific FileSet.
 
-| Parameter        | Type    | Required | Description                                                            |
-| ---------------- | ------- | -------- | ---------------------------------------------------------------------- |
-| name             | String  | Yes      | The name of the FileSet                                                |
-| accountId        | Integer | No       | The account ID to associate (nullable)                                 |
-| connectorContext | Object  | No       | Connector context for the FileSet (nullable). ConnectorContext Object. |
-| description      | String  | No       | Description for the FileSet                                            |
+### Path Parameters
 
-**ConnectorContext Object Properties:**
+| Parameter   | Type   | Required | Description                                               |
+|-------------|--------|----------|-----------------------------------------------------------|
+| `fileSetId` | string | ✔ Yes    | The ID of the FileSet for which to retrieve statistics.   |
 
-| Property     | Type   | Required | Description                                |
-| ------------ | ------ | -------- | ------------------------------------------ |
-| connector    | String | Yes      | The connector key                          |
-| relativePath | String | No       | Relative path for the connector (nullable) |
+### Query Parameters
 
-<!--
-type: tab
-title: Javascript
+_None_
+
+### Request Body
+
+_No request body is required for this operation._
+
+### Request Example
+
+<!-- type: tab
+title: JavaScript
 -->
 
-```js
-fetch('https://{instance}.domo.com/api/files/v1/filesets', {
-  method: 'POST',
-  headers: {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    name: 'Sample FileSet',
-    description: 'A sample FileSet for demonstration purposes.',
-    // accountId: 12345, // Optional
-    // connectorContext: { connector: 'S3', relativePath: 'bucket/path' }, // Optional
-  }),
-})
-  .then((response) => response.json())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(`Error: ${error}`));
-```
-
-<!--
-type: tab
-title: Python
--->
-
-```python
-import httpx
-
-headers = {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
-}
-url = 'https://{instance}.domo.com/api/files/v1/filesets'
-data = {
-    "name": "Sample FileSet",
-    "description": "A sample FileSet for demonstration purposes.",
-    # "accountId": 12345, # Optional
-    # "connectorContext": {"connector": "S3", "relativePath": "bucket/path"}, # Optional
-}
-
-with httpx.Client() as client:
-    response = client.post(url, headers=headers, json=data)
-    print(response.json())
-```
-
-<!-- type: tab-end -->
-
-**Response:**
-
-```json
-{
-  "id": "00000000-0000-0000-0000-000000000012",
-  "name": "Sample FileSet",
-  "description": "A sample FileSet for demonstration purposes.",
-  "created": "2025-01-01T00:00:00.000Z",
-  "createdBy": 111111111
-}
-```
-
----
-
-## Get FileSet by Id
-
-**Method:** `GET`
-**Endpoint:** `/api/files/v1/filesets/{filesetId}`
-
-**Path Parameters:**
-
-- `filesetId` (String, required): The ID of the FileSet.
-
-<!--
-type: tab
-title: Javascript
--->
-
-```js
-fetch('https://{instance}.domo.com/api/files/v1/filesets/{filesetId}', {
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/stats', {
   method: 'GET',
   headers: {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
-  },
+    'Content-Type': 'application/json'
+  }
 })
-  .then((response) => response.json())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(`Error: ${error}`));
-```
-
-<!--
-type: tab
-title: Python
--->
-
-```python
-import httpx
-
-headers = {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
-}
-url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}'
-
-with httpx.Client() as client:
-    response = client.get(url, headers=headers)
-    print(response.json())
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
 ```
 
 <!-- type: tab-end -->
 
-**Response:**
-
-```json
-{
-  "id": "00000000-0000-0000-0000-000000000013",
-  "name": "Sample FileSet",
-  "description": "A sample FileSet for demonstration purposes.",
-  "created": "2025-01-01T00:00:00.000Z",
-  "createdBy": 111111111
-}
-```
-
-## Update FileSet by Id
-
-**Method:** `POST`  
-**Endpoint:** `/api/files/v1/filesets/{filesetId}`
-
-**Path Parameters:**
-
-- `filesetId` (String, required): The ID of the FileSet.
-
-**Request Body Parameters:**
-
-| Parameter   | Type   | Required | Description                     |
-| ----------- | ------ | -------- | ------------------------------- |
-| name        | String | No       | The new name for the FileSet    |
-| description | String | No       | The new description for FileSet |
-
-<!--
-type: tab
-title: Javascript
--->
-
-```js
-fetch('https://{instance}.domo.com/api/files/v1/filesets/{filesetId}', {
-  method: 'POST',
-  headers: {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    name: 'Updated FileSet Name', // Optional: New name for the FileSet
-    description: 'Updated description.', // Optional: New description
-  }),
-})
-  .then((response) => response.json())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(`Error: ${error}`));
-```
-
-<!--
-type: tab
+<!-- type: tab
 title: Python
 -->
 
 ```python
-import httpx
+import requests
 
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/stats"
 headers = {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
-}
-url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}'
-data = {
-    "name": "Updated FileSet Name",  # Optional: New name for the FileSet
-    "description": "Updated description."  # Optional: New description
+    "Content-Type": "application/json"
 }
 
-with httpx.Client() as client:
-    response = client.post(url, headers=headers, json=data)
+try:
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
     print(response.json())
+except requests.exceptions.HTTPError as err:
+    print(f"HTTP error occurred: {err}")
+except Exception as err:
+    print(f"An error occurred: {err}")
 ```
 
 <!-- type: tab-end -->
 
-**Response:**
+<!-- type: tab
+title: cURL
+-->
+
+```bash
+curl -X GET "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/stats" \
+  -H "Content-Type: application/json"
+```
+
+<!-- type: tab-end -->
+
+### Response
+
+**Status:** `200`
 
 ```json
 {
-  "id": "00000000-0000-0000-0000-000000000014",
-  "name": "Sample FileSet",
+  "id": "123456789",
+  "name": "Example FileSet",
   "description": "A sample FileSet for demonstration purposes.",
-  "created": "2025-01-01T00:00:00.000Z",
-  "createdBy": 111111111
+  "aiEnabled": true,
+  "connector": "ExampleConnector",
+  "created": "2023-01-15T12:00:00Z",
+  "createdBy": "user-1234",
+  "updated": "2023-10-05T12:00:00Z",
+  "updatedBy": "user-5678",
+  "owner": "user-1234",
+  "permission": "read-write",
+  "size": 20485760,
+  "fileCount": 623,
+  "imageFileTypeCount": 113,
+  "audioFileTypeCount": 17,
+  "videoFileTypeCount": 4,
+  "textFileTypeCount": 422,
+  "documentFileTypeCount": 98,
+  "otherFileTypeCount": 9,
+  "notIndexedCount": 0,
+  "indexQueuedCount": 0,
+  "indexInProgressCount": 19,
+  "indexCompleteCount": 623,
+  "indexFailedCount": 0,
+  "indexSkippedCount": 21
 }
 ```
+
+- **id**: Unique identifier for the file set.
+- **name**: Name of the file set, determined by the client.
+- **description**: Optional description of the file set, determined by the client.
+- **aiEnabled**: Flag indicating whether AI features are enabled for the file set.
+- **connector**: The connector used to power the file set, which defines how files are ingested.
+- **created**: Timestamp when the file set was created.
+- **createdBy**: ID of the user who created the file set.
+- **updated**: Timestamp when the file set was last updated.
+- **updatedBy**: ID of the user who last updated the file set.
+- **owner**: ID of the user who owns the file set, which is typically the creator until ownership is transferred.
+- **permission**: The permission level of the current user to the file set, which determines access rights.
+- **size**: The estimated total size of the files in the file set, in bytes.
+- **fileCount**: The estimated total number of files in the file set.
+
+### Error Responses
+
+- **400 Bad Request**: The server could not understand the request due to invalid syntax.
+- **403 Forbidden**: The client does not have access rights to the content.
+- **409 Conflict**: The request could not be completed due to a conflict with the current state of the resource.
+- **413 Payload Too Large**: The request is larger than the server is willing or able to process.
 
 ---
 
-## Delete FileSet by Id
+## Get File or Directory by Path
 
-**Method:** `DELETE`  
-**Endpoint:** `/api/files/v1/filesets/{filesetId}`
+**Method:** `GET`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/path`
 
-**Path Parameters:**
+Retrieve a File or Directory within a FileSet using its path.
 
-- `filesetId` (String, required): The ID of the FileSet.
+### Path Parameters
+
+| Parameter   | Type   | Required | Description                  |
+|-------------|--------|----------|------------------------------|
+| `fileSetId` | string | ✔ Yes    | The ID of the FileSet.       |
+
+### Query Parameters
+
+| Parameter | Type   | Required | Description                                      |
+|-----------|--------|----------|--------------------------------------------------|
+| `path`    | string | ✔ Yes    | The path to the File or Directory within the FileSet. |
+
+### Request Body
+
+
+_None_
+
+
+
+### Request Example
 
 <!--
 type: tab
-title: Javascript
+title: JavaScript
 -->
 
-```js
-fetch('https://{instance}.domo.com/api/files/v1/filesets/{filesetId}', {
-  method: 'DELETE',
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/path', {
+  method: 'GET',
   headers: {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
-  },
+    'Content-Type': 'application/json'
+  }
 })
-  .then((response) => response.json())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(`Error: ${error}`));
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
 ```
 
 <!--
@@ -1266,26 +2135,642 @@ title: Python
 -->
 
 ```python
-import httpx
+import requests
 
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/path"
 headers = {
-    'X-DOMO-Developer-Token': '<your-token-here>',
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json"
 }
-url = 'https://{instance}.domo.com/api/files/v1/filesets/{filesetId}'
 
-with httpx.Client() as client:
-    response = client.delete(url, headers=headers)
-    print(response.json())
+response = requests.get(url, headers=headers)
+print(response.json())
+```
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X GET "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/path" \
+  -H "Content-Type: application/json"
 ```
 
 <!-- type: tab-end -->
 
-**Response:**
+### Response
+
+**Status:** `200`
 
 ```json
 {
-  "status": "success",
-  "message": "FileSet deleted successfully."
+  "id": "7150e608-c3a9-4b40-ac2d-eb182cc98c6f",
+  "path": "sample/directory/path/PaidTimeOffPolicy.pdf",
+  "name": "PaidTimeOffPolicy.pdf",
+  "fileType": "DOCUMENT",
+  "contentType": "application/pdf",
+  "size": 69502,
+  "hash": "ce0da94c741125c597cf3d54a3202cebdc16d7fe1074698219f724654595221c",
+  "hashAlgorithm": "SHA_256_HEX",
+  "downloadUrl": "",
+  "created": "2025-07-28T21:47:39.814456+00:00",
+  "createdBy": 27,
+  "connectorKey": null,
+  "indexStatus": null,
+  "indexReason": null
 }
 ```
+
+### Error Responses
+
+| Status Code | Description        |
+|-------------|--------------------|
+| `400`       | Bad Request        |
+| `403`       | Forbidden          |
+| `409`       | Conflict           |
+| `413`       | Payload Too Large  |
+
+---
+
+## Delete File or Directory by Path
+
+**Method:** `DELETE`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/path`
+
+Delete a specific File or Directory within a FileSet using its path.
+
+### Path Parameters
+
+- **Parameter:** `fileSetId`  
+  **Type:** string  
+  **Required:** ✔ Yes  
+  **Description:** The ID of the FileSet containing the File.
+
+### Query Parameters
+
+- **Parameter:** `path`  
+  **Type:** string  
+  **Required:** ✔ Yes  
+  **Description:** The path to the File or Directory to delete. If a Directory is specified, it and its children will be deleted.
+
+### Request Body
+
+_None_
+
+### Request Example
+
+<!--
+type: tab
+title: JavaScript
+-->
+
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/path', {
+  method: 'DELETE',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => response.ok ? console.log('Delete successful') : console.error('Delete failed'))
+.catch(error => console.error('Error:', error));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import requests
+
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/path"
+headers = {
+    "Content-Type": "application/json"
+}
+
+response = requests.delete(url, headers=headers)
+if response.status_code == 204:
+    print('Delete successful')
+else:
+    print('Delete failed')
+```
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X DELETE "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/path" \
+  -H "Content-Type: application/json"
+```
+
+<!-- type: tab-end -->
+
+### Response
+
+**Status:** `204`
+
+```json
+{}
+```
+
+### Error Responses
+
+- **Status Code:** `400`  
+  **Description:** Bad Request.
+
+- **Status Code:** `403`  
+  **Description:** Forbidden.
+
+- **Status Code:** `409`  
+  **Description:** Conflict.
+
+- **Status Code:** `413`  
+  **Description:** Payload Too Large.
+
+---
+
+## Download a File by Path
+
+**Method:** `GET`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/path/download`
+
+Download the contents of a specific File within a FileSet using its path. This will redirect to the file's download URL.
+
+### Path Parameters
+
+| Parameter   | Type   | Required | Description                               |
+|-------------|--------|----------|-------------------------------------------|
+| `fileSetId` | string | ✓ Yes    | The ID of the FileSet containing the File.|
+
+### Query Parameters
+
+| Parameter | Type   | Required | Description                                           |
+|-----------|--------|----------|-------------------------------------------------------|
+| `path`    | string | ✓ Yes    | The path of the File to download within the FileSet.  |
+
+### Request Body
+
+_None_
+
+### Request Example
+
+<!-- type: tab title: JavaScript -->
+
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/path/download?path=example/path/to/resource', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+<!-- type: tab title: Python -->
+
+```python
+import requests
+
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/path/download"
+headers = {
+    "Content-Type": "application/json"
+}
+
+response = requests.get(url, headers=headers, params={"path": "example/path/to/resource"})
+print(response.json())
+```
+
+<!-- type: tab title: cURL -->
+
+```bash
+curl -X GET "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/path/download?path=example/path/to/resource" \
+  -H "Content-Type: application/json"
+```
+
+<!-- type: tab-end -->
+
+### Response
+
+**Status:** `200`
+
+```json
+{}
+```
+
+### Error Responses
+
+| Status Code | Description         |
+|-------------|---------------------|
+| `400`       | Bad Request         |
+| `403`       | Forbidden           |
+| `409`       | Conflict            |
+| `413`       | Payload Too Large   |
+
+---
+
+## Get a File or Directory by ID
+
+**Method:** `GET`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/files/{fileId}`
+
+Retrieve a specific File or Directory within a FileSet using its ID.
+
+### Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `fileSetId` | string | ✓ Yes | The ID of the FileSet containing the File or Directory. |
+| `fileId` | string | ✓ Yes | The ID of the File or Directory to retrieve. |
+
+### Query Parameters
+
+_None_
+
+### Request Body
+
+_None_
+
+### Request Example
+
+<!--
+type: tab
+title: JavaScript
+-->
+
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/{fileId}', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import requests
+
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/{fileId}"
+headers = {
+    "Content-Type": "application/json"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())
+```
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X GET "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/{fileId}" \
+  -H "Content-Type: application/json"
+```
+
+<!-- type: tab-end -->
+
+### Response
+
+**Status:** `200`
+
+```json
+{
+  "id": "7150e608-c3a9-4b40-ac2d-eb182cc98c6f",
+  "path": "sample/directory/path/PaidTimeOffPolicy.pdf",
+  "name": "PaidTimeOffPolicy.pdf",
+  "fileType": "DOCUMENT",
+  "contentType": "application/pdf",
+  "size": 69502,
+  "hash": "ce0da94c741125c597cf3d54a3202cebdc16d7fe1074698219f724654595221c",
+  "hashAlgorithm": "SHA_256_HEX",
+  "downloadUrl": "",
+  "created": "2025-07-28T21:47:39.814456+00:00",
+  "createdBy": 27,
+  "connectorKey": null,
+  "indexStatus": null,
+  "indexReason": null
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|-------------|-------------|
+| `400` | Bad Request |
+| `403` | Forbidden |
+| `409` | Conflict |
+| `413` | Payload Too Large |
+
+---
+
+## Delete a File or Directory by ID
+
+**Method:** `DELETE`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/files/{fileId}`
+
+**Delete a specific File or Directory within a FileSet using its ID.**
+
+### Path Parameters
+
+| Parameter   | Type   | Required | Description                                                                 |
+|-------------|--------|----------|-----------------------------------------------------------------------------|
+| `fileSetId` | string | ✓ Yes    | The ID of the FileSet containing the File.                                  |
+| `fileId`    | string | ✓ Yes    | The ID of the File or Directory to delete. If a Directory is specified, it and its children will be deleted. |
+
+### Query Parameters
+
+_None_
+
+### Request Body
+
+### Request Example
+
+<!--
+type: tab
+title: JavaScript
+-->
+
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/{fileId}', {
+  method: 'DELETE',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import requests
+
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/{fileId}"
+headers = {
+    "Content-Type": "application/json"
+}
+
+response = requests.delete(url, headers=headers)
+print(response.json())
+```
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X DELETE "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/{fileId}" \
+  -H "Content-Type: application/json"
+```
+
+<!-- type: tab-end -->
+
+### Response
+
+**Status:** `204`
+
+```json
+{}
+```
+
+### Error Responses
+
+| Status Code | Description     |
+|-------------|-----------------|
+| `400`       | Bad Request     |
+| `403`       | Forbidden       |
+| `409`       | Conflict        |
+| `413`       | Payload Too Large |
+
+---
+
+## Download a File by ID
+
+**Method:** `GET`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/files/{fileId}/download`
+
+Download the contents of a specific file within a FileSet using its ID. This will redirect to the file's download URL.
+
+### Path Parameters
+
+| Parameter  | Type   | Required | Description                                  |
+|------------|--------|----------|----------------------------------------------|
+| `fileSetId` | string | ✓ Yes    | The ID of the FileSet containing the file.   |
+| `fileId`    | string | ✓ Yes    | The ID of the file to download.              |
+
+### Query Parameters
+
+_None_
+
+### Request Body
+
+_None_
+
+### Request Example
+
+<!--
+type: tab
+title: JavaScript
+-->
+
+```javascript
+fetch('https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/{fileId}/download', {
+  method: 'GET'
+})
+.then(response => {
+  if (response.ok) {
+    return response.blob();
+  }
+  throw new Error('File download failed');
+})
+.then(blob => {
+  // Handle the file download
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'filename';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+})
+.catch(error => console.error('Error:', error));
+```
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import requests
+
+url = "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/{fileId}/download"
+
+response = requests.get(url)
+if response.ok:
+    with open('filename', 'wb') as file:
+        file.write(response.content)
+else:
+    print('File download failed')
+```
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -O "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/{fileId}/download"
+# Note: The -O flag is used to write output to a local file with the same name.
+```
+
+<!-- type: tab-end -->
+
+### Response
+
+**Status:** `200`
+
+The response will be a binary file, not JSON. The downloaded file content will be returned for you to save or process.
+
+### Error Responses
+
+| Status Code | Description                            |
+|-------------|----------------------------------------|
+| `302`       | Redirection to another URL for download. |
+| `400`       | Bad Request                            |
+| `403`       | Forbidden                              |
+| `409`       | Conflict                               |
+| `413`       | Payload Too Large                      |
+
+---
+
+## Get File Content by ID
+
+**Method:** `GET`  
+**Endpoint:** `/api/files/v1/filesets/{fileSetId}/files/{fileId}/content`
+
+Retrieve the content of a specific File within a FileSet using its ID. This endpoint requires a valid download token for authorization, which is generally obtained via a download endpoint and redirected here automatically.
+
+### Path Parameters
+
+| Parameter  | Type   | Required | Description                                   |
+|------------|--------|----------|-----------------------------------------------|
+| `fileSetId`| string | ✔ Yes    | The ID of the FileSet containing the File.    |
+| `fileId`   | string | ✔ Yes    | The ID of the File to retrieve.               |
+
+### Query Parameters
+
+| Parameter | Type   | Required | Description                            |
+|-----------|--------|----------|----------------------------------------|
+| `token`   | string | ✔ Yes    | The download token for authorization.  |
+
+### Request Body
+
+_Request body is not required for this endpoint._
+
+_None_
+
+### Request Example
+
+<!--
+type: tab
+title: JavaScript
+-->
+
+```javascript
+const fileSetId = 'yourFileSetId';
+const fileId = 'yourFileId';
+const token = 'yourToken';
+
+fetch(`https://<instance>.domo.com/api/files/v1/filesets/${fileSetId}/files/${fileId}/content?token=${token}`, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+```
+
+<!-- type: tab-end -->
+
+<!--
+type: tab
+title: Python
+-->
+
+```python
+import requests
+
+file_set_id = 'yourFileSetId'
+file_id = 'yourFileId'
+token = 'yourToken'
+
+url = f"https://<instance>.domo.com/api/files/v1/filesets/{file_set_id}/files/{file_id}/content"
+params = {"token": token}
+headers = {
+    "Content-Type": "application/json"
+}
+
+response = requests.get(url, headers=headers, params=params)
+print(response.json())
+```
+
+<!-- type: tab-end -->
+
+<!--
+type: tab
+title: cURL
+-->
+
+```bash
+curl -X GET "https://<instance>.domo.com/api/files/v1/filesets/{fileSetId}/files/{fileId}/content?token=yourToken" \
+  -H "Content-Type: application/json"
+```
+
+<!-- type: tab-end -->
+
+### Response
+
+**Status:** `200`
+
+```json
+{
+  "fileName": "example.txt",
+  "content": "SGVsbG8gd29ybGQh"
+}
+```
+
+The response returns the file content in a base64 encoded string along with the file name.
+
+### Error Responses
+
+| Status Code | Description       |
+|-------------|-------------------|
+| `400`       | Bad Request       |
+| `403`       | Forbidden         |
+| `409`       | Conflict          |
+| `413`       | Payload Too Large |
+
+---
+
