@@ -4,20 +4,20 @@
 2. Fill in the required fields:
    - **Advanced Form Name**
    - **Advanced Form Description**
-4. Click **Save** to open the revision page.
+3. Click **Save** to open the revision page.
 
 ---
 
 ## Creating an Advanced Form Revision
 
-To update a form a user can either create a new form using the default template, duplicate an existing form, or rollback a previously published form.
+To update a form, a user can either create a new form using the default template, duplicate an existing form, or rollback a previously published form.
 
 ### Default Revision
 
 1. Click **Create New Revision**.
 2. Enter the new version number (Semantic Versioning).
 3. (Optional) Add a version description.
-6. Click **Save**.
+4. Click **Save**.
 
 ### Duplicate Revision
 

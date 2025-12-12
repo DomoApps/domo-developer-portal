@@ -2,68 +2,80 @@
 
 ### Navigation
 
-- **Designer**
-- **Preview**
-- **Themes**
-- **Logic**
-- **JSON Editor**
+The Advanced Form Editor provides five main tabs for building and managing your forms:
+
+- **Designer** — Build and configure form components using a drag-and-drop interface.
+- **Preview** — Test your form across different devices and orientations.
+- **Themes** — Customize visual styling including colors, fonts, and layout.
+- **Logic** — Add conditional rules and actions to create dynamic forms.
+- **JSON Editor** — View and edit the raw form schema directly.
 
 ### Navigation Controls
 
-#### Universal
+#### Universal Controls
 
-- **Get Link**, to share the submission link with a user.
-- **Dataset Button**, to view the response dataset for a form.
-- **Save Button**
-- **Exit Button**
+Available across all tabs:
+
+- **Get Link** — Share the submission link with users.
+- **Dataset Button** — View the response dataset for the form.
+- **Save Button** — Save your changes.
+- **Exit Button** — Return to the forms list.
 
 
-#### Designer
+#### Designer Tab
 
-Users can edit their form's components.
+The Designer tab is where you build your form by adding and configuring components.
 
-- **Undo/Redo**
-- **Property Editor**
+- **Undo/Redo Buttons** — Reverse or reapply recent changes.
+- **Property Editor** — Customize selected component properties such as labels, validation rules, default values, and visibility conditions.
 
-#### Preview
+#### Preview Tab
 
-Users can preview their form.
+The Preview tab lets you test how your form appears to users.
 
-- **Device Type Button**
-- **Portrait Orientation Button**
-- **Invisible Elements Button**
+- **Device Type Button** — Switch between desktop, tablet, and mobile views.
+- **Portrait Orientation Button** — Toggle between portrait and landscape orientations.
+- **Invisible Elements Button** — Show or hide elements that are conditionally hidden.
 
-#### Themes
+#### Themes Tab
 
-Users can customize the look and layout of their form.
+The Themes tab allows you to customize the visual appearance of your form.
 
-- **Undo/Redo Buttons**
-- **Default Button**
-- **Import/Export Buttons**
-- **Theme Editor**
+- **Undo/Redo Buttons** — Reverse or reapply recent theme changes.
+- **Default Button** — Reset to the default theme.
+- **Import/Export Buttons** — Import or export custom theme configurations.
+- **Theme Editor** — Modify colors, fonts, spacing, and other visual properties.
 
-#### Logic
+#### Logic Tab
 
-Users can choose from a variety of actions to perform on components within their form.
+The Logic tab enables you to create conditional rules and actions to make your form dynamic.
 
-- **All Questions**
-- **All Action Types**
-- **Manual Entry**
+- **All Questions** — Filter logic rules by specific questions.
+- **All Action Types** — Filter by action type (show/hide, enable/disable, set value, etc.).
+- **Manual Entry** — Create custom logic expressions.
 
-#### JSON Editor
+#### JSON Editor Tab
 
-Users can see and edit the schema of their form here.
+The JSON Editor provides direct access to the form's underlying schema for advanced users.
 
-- **Import/Export Button**
-- **Copy Button**
+- **Import/Export Button** — Import or export the form schema as JSON.
+- **Copy Button** — Copy the entire schema to your clipboard.
 
 ### Toolbox
 
-Using the left panel a user can choose from a list of components to add to their form. Alternatively you can also, **Add Question**, click **Single-Line Input** (default question type) to choose from components.
+The left panel displays available components that you can add to your form. Drag components from the toolbox onto your form canvas.
+
+Alternatively, click **Add Question**, then select **Single-Line Input** (the default question type) to choose from available components.
 
 ### Property Editor
 
-Using the property editor a user can customize each of their components.
+The Property Editor appears on the right side when you select a component. Use it to customize component properties including:
+
+- Labels and descriptions
+- Validation rules
+- Default values
+- Visibility and logic conditions
+- Data bindings and Domo integrations
 
 
 
