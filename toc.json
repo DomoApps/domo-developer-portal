@@ -243,6 +243,11 @@
         },
         {
           "type": "item",
+          "title": "FileSets API YAML TEST",
+          "uri": "docs/API-Reference/Product-APIs/Filesets.yaml"
+        },
+        {
+          "type": "item",
           "title": "Groups API",
           "uri": "/docs/API-Reference/Product-APIs/Groups.md"
         },
