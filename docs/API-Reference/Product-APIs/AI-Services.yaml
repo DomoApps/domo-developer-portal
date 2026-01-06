@@ -32,6 +32,30 @@ paths:
                 input:
                   type: string
                   description: Text information to be summarized.
+                sessionId:
+                  type: string
+                  format: uuid
+                  description: The AI session ID.
+                model:
+                  type: string
+                  description: The ID of the model to use for Text Summarization.
+                system:
+                  type: string
+                  description: The system message to use for the Text Summarization task.
+                outputWordLength:
+                  type: object
+                  properties:
+                    min:
+                      type: integer
+                    max:
+                      type: integer
+                  description: Defines a size boundary to limit the length of the output summary.
+                temperature:
+                  type: number
+                  description: Controls randomness in the model's output.
+                maxTokens:
+                  type: integer
+                  description: The maximum number of tokens to generate in the response.
               required:
                 - input
               x-examples:
