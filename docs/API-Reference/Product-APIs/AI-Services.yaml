@@ -2986,3 +2986,5 @@ components:
       type: apiKey
       name: X-DOMO-Developer-Token
       in: header
+security:
+  - domo-developer-token: []
