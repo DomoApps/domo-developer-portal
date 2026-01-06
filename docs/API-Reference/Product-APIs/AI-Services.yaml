@@ -4,7 +4,11 @@ info:
   description: 'Domo AI Service APIs'
   version: '2.2.3225_master'
 servers:
-  - url: https://<subdomain>.domo.com
+  - url: https://{subdomain}.domo.com
+    variables:
+      subdomain:
+        default: your-instance
+        description: Your Domo instance subdomain
 tags:
   - name: AI Services - Embedding
     description: Domo AI Service Embedding APIs
