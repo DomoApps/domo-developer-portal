@@ -36,35 +36,11 @@ paths:
               Basic:
                 description: Basic Text Summarization request.
                 value:
-                  input:
-                    "San Francisco, officially the City and County of San Francisco,\
-                    \ is a commercial, financial, and cultural center in Northern\
-                    \ California. With a population of 808,437 residents as of 2022,\
-                    \ San Francisco is the fourth most populous city in the U.S. state\
-                    \ of California. The city covers a land area of 46.9 square miles\
-                    \ (121 square kilometers) at the end of the San Francisco Peninsula,\
-                    \ making it the second-most densely populated large U.S. city\
-                    \ after New York City and the fifth-most densely populated U.S.\
-                    \ county, behind only four New York City boroughs. Among the 92\
-                    \ U.S. cities proper with over 250,000 residents, San Francisco\
-                    \ is ranked first by per capita income and sixth by aggregate\
-                    \ income as of 2022."
+                  input: 'San Francisco, officially the City and County of San Francisco, is a commercial, financial, and cultural center in Northern California. With a population of 808,437 residents as of 2022, San Francisco is the fourth most populous city in the U.S. state of California. The city covers a land area of 46.9 square miles (121 square kilometers) at the end of the San Francisco Peninsula, making it the second-most densely populated large U.S. city after New York City and the fifth-most densely populated U.S. county, behind only four New York City boroughs. Among the 92 U.S. cities proper with over 250,000 residents, San Francisco is ranked first by per capita income and sixth by aggregate income as of 2022.'
               Custom Response Length:
                 description: Text Summarization request with custom response length.
                 value:
-                  input:
-                    "San Francisco, officially the City and County of San Francisco,\
-                    \ is a commercial, financial, and cultural center in Northern\
-                    \ California. With a population of 808,437 residents as of 2022,\
-                    \ San Francisco is the fourth most populous city in the U.S. state\
-                    \ of California. The city covers a land area of 46.9 square miles\
-                    \ (121 square kilometers) at the end of the San Francisco Peninsula,\
-                    \ making it the second-most densely populated large U.S. city\
-                    \ after New York City and the fifth-most densely populated U.S.\
-                    \ county, behind only four New York City boroughs. Among the 92\
-                    \ U.S. cities proper with over 250,000 residents, San Francisco\
-                    \ is ranked first by per capita income and sixth by aggregate\
-                    \ income as of 2022."
+                  input: 'San Francisco, officially the City and County of San Francisco, is a commercial, financial, and cultural center in Northern California. With a population of 808,437 residents as of 2022, San Francisco is the fourth most populous city in the U.S. state of California. The city covers a land area of 46.9 square miles (121 square kilometers) at the end of the San Francisco Peninsula, making it the second-most densely populated large U.S. city after New York City and the fifth-most densely populated U.S. county, behind only four New York City boroughs. Among the 92 U.S. cities proper with over 250,000 residents, San Francisco is ranked first by per capita income and sixth by aggregate income as of 2022.'
                   outputWordLength:
                     min: 5
                     max: 10
@@ -79,9 +55,7 @@ paths:
               schema:
                 type: string
         '200':
-          description:
-            TextAIResponse A <code>TextAIResponse</code> containing the
-            generated summary.
+          description: TextAIResponse A <code>TextAIResponse</code> containing the generated summary.
           content:
             application/json:
               schema:
@@ -90,23 +64,22 @@ paths:
                 Text Summarization Response:
                   description: Text Summarization Response
                   value:
-                    prompt:
-                      "Write a 5 to 10 words summary of the following text.\
-                      \ ```...``` CONCISE SUMMARY:"
-                    output:
-                      "Vibrant, densely populated commercial and cultural hub\
-                      \ in Northern California."
+                    prompt: 'Write a 5 to 10 words summary of the following text. ```...``` CONCISE SUMMARY:'
+                    output: 'Vibrant, densely populated commercial and cultural hub in Northern California.'
                     modelId: domo.domo_ai.domogpt-summarize-v1:anthropic
       security:
         - domo-developer-token: []
+      parameters:
+        outputWordLength:
+          description: "Specifies the desired word length for the summary, with the expected value formatted as an object containing 'min' and 'max' properties (e.g., {'min': 50, 'max': 150})."
+        reasoningConfig:
+          description: Configures the reasoning strategies for text analysis, allowing optional adjustments to influence summarization logic (e.g., depth, specificity).
   /api/ai/v1/text/sql:
     post:
       tags:
         - AI Services - Text
       summary: Text-to-SQL
-      description:
-        Generate a SQL query based on the given text input and data source
-        schema.
+      description: Generate a SQL query based on the given text input and data source schema.
       operationId: textToSQL
       requestBody:
         description: Text to SQL AI Service request.
@@ -161,9 +134,7 @@ paths:
               schema:
                 type: string
         '200':
-          description:
-            TextAIResponse A <code>TextAIResponse</code> containing the
-            generated SQL query.
+          description: TextAIResponse A <code>TextAIResponse</code> containing the generated SQL query.
           content:
             application/json:
               schema:
@@ -177,9 +148,7 @@ paths:
                       [{"dataSourceName":"Store_Sales","columns":[{"name":"product","type":"STRING"},{"name":"store","type":"LONG"},{"name":"amount","type":"LONG"},{"name":"timestamp","type":"DATETIME"},{"name":"region","type":"STRING"}]}]
                       # Generate a query to answer the following:
                       # What are my total sales by region?
-                    output:
-                      "SELECT region, SUM(amount) AS total_sales FROM `Store\
-                      \ Sales` GROUP BY region"
+                    output: 'SELECT region, SUM(amount) AS total_sales FROM `Store Sales` GROUP BY region'
                     modelId: domo.domo_ai.domogpt-medium-v1.2:anthropic
         '400':
           description: Invalid property in request
@@ -189,6 +158,9 @@ paths:
                 $ref: '#/components/schemas/TextAIResponse'
       security:
         - domo-developer-token: []
+      parameters:
+        reasoningConfig:
+          description: Specifies configuration settings for reasoning mode, allowing customized logic for SQL query generation, with an object containing key-value pairs.
   /api/ai/v1/text/generation:
     post:
       tags:
@@ -231,9 +203,7 @@ paths:
               schema:
                 type: string
         '200':
-          description:
-            TextAIResponse A <code>TextAIResponse</code> containing the
-            generated text.
+          description: TextAIResponse A <code>TextAIResponse</code> containing the generated text.
           content:
             application/json:
               schema:
@@ -247,14 +217,15 @@ paths:
                     modelId: domo.domo_ai.domogpt-small-v1:anthropic
       security:
         - domo-developer-token: []
+      parameters:
+        reasoningConfig:
+          description: Configures the reasoning strategy for text generation, accepting an object with specific reasoning preferences to customize the output.
   /api/ai/v1/text/beastmode:
     post:
       tags:
         - AI Services - Text
       summary: Text-to-BeastMode
-      description:
-        Generate a Beast Mode calculation based on the given text input
-        and data source schema.
+      description: Generate a Beast Mode calculation based on the given text input and data source schema.
       operationId: textToBeastMode
       requestBody:
         description: Text to Beast Mode AI Service request.
@@ -309,9 +280,7 @@ paths:
               schema:
                 type: string
         '200':
-          description:
-            TextAIResponse A <code>TextAIResponse</code> containing the
-            generated Beast Mode calculation.
+          description: TextAIResponse A <code>TextAIResponse</code> containing the generated Beast Mode calculation.
           content:
             application/json:
               schema:
@@ -329,6 +298,9 @@ paths:
                     modelId: domo.domo_ai.domogpt-medium-v1.2:anthropic
       security:
         - domo-developer-token: []
+      parameters:
+        reasoningConfig:
+          description: Configures the reasoning methodology for the text transformation process; expected to be a JSON object with structure-specific keys dictating reasoning parameters.
   /api/ai/v1/messages/tools:
     post:
       tags:
@@ -352,9 +324,7 @@ paths:
                           text: Do you have any blue coats available?
                   tools:
                     - name: get_product_recommendations
-                      description:
-                        Searches for products matching certain criteria in
-                        the database
+                      description: Searches for products matching certain criteria in the database
                       parameters:
                         type: object
                         properties:
@@ -371,9 +341,7 @@ paths:
                                 - skirts & dresses
                                 - shoes
                           colors:
-                            description:
-                              "colors that could be a match, empty array\
-                              \ if N/A"
+                            description: 'colors that could be a match, empty array if N/A'
                             type: array
                             items:
                               type: string
@@ -390,9 +358,7 @@ paths:
                                 - gold
                                 - silver
                           keywords:
-                            description:
-                              keywords that should be present in the item
-                              title or description
+                            description: keywords that should be present in the item title or description
                             type: array
                             items:
                               type: string
@@ -411,9 +377,7 @@ paths:
                             additionalProperties: false
                           limit:
                             type: integer
-                            description:
-                              "The maximum number of products to return,\
-                              \ use 5 by default if nothing is specified by the user"
+                            description: 'The maximum number of products to return, use 5 by default if nothing is specified by the user'
                             const: 100
                           today:
                             type: string
@@ -450,9 +414,7 @@ paths:
                           - product_id
                         additionalProperties: false
                     - name: add_to_cart
-                      description:
-                        Add items to cart when the user has confirmed their
-                        interest.
+                      description: Add items to cart when the user has confirmed their interest.
                       parameters:
                         type: object
                         properties:
@@ -466,9 +428,7 @@ paths:
                                   description: ID of the product to add to the cart
                                 quantity:
                                   type: integer
-                                  description:
-                                    Quantity of the product to add to the
-                                    cart
+                                  description: Quantity of the product to add to the cart
                               required:
                                 - product_id
                                 - quantity
@@ -489,9 +449,7 @@ paths:
                     - role: ASSISTANT
                       content:
                         - type: TEXT
-                          text:
-                            Certainly! I'd be happy to help you find a blue coat.
-                            I'll use the product recommendation tool to search for that.
+                          text: Certainly! I'd be happy to help you find a blue coat. I'll use the product recommendation tool to search for that.
                         - type: TOOL_USE_REQUEST
                           toolInput:
                             categories:
@@ -517,9 +475,7 @@ paths:
                           toolCallId: toolu_bdrk_01DZtT8tKDafT5P5Du9AuRAL
                   tools:
                     - name: get_product_recommendations
-                      description:
-                        Searches for products matching certain criteria in
-                        the database
+                      description: Searches for products matching certain criteria in the database
                       parameters:
                         type: object
                         properties:
@@ -536,9 +492,7 @@ paths:
                                 - skirts & dresses
                                 - shoes
                           colors:
-                            description:
-                              "colors that could be a match, empty array\
-                              \ if N/A"
+                            description: 'colors that could be a match, empty array if N/A'
                             type: array
                             items:
                               type: string
@@ -555,9 +509,7 @@ paths:
                                 - gold
                                 - silver
                           keywords:
-                            description:
-                              keywords that should be present in the item
-                              title or description
+                            description: keywords that should be present in the item title or description
                             type: array
                             items:
                               type: string
@@ -576,9 +528,7 @@ paths:
                             additionalProperties: false
                           limit:
                             type: integer
-                            description:
-                              "The maximum number of products to return,\
-                              \ use 5 by default if nothing is specified by the user"
+                            description: 'The maximum number of products to return, use 5 by default if nothing is specified by the user'
                             const: 100
                           today:
                             type: string
@@ -615,9 +565,7 @@ paths:
                           - product_id
                         additionalProperties: false
                     - name: add_to_cart
-                      description:
-                        Add items to cart when the user has confirmed their
-                        interest.
+                      description: Add items to cart when the user has confirmed their interest.
                       parameters:
                         type: object
                         properties:
@@ -631,9 +579,7 @@ paths:
                                   description: ID of the product to add to the cart
                                 quantity:
                                   type: integer
-                                  description:
-                                    Quantity of the product to add to the
-                                    cart
+                                  description: Quantity of the product to add to the cart
                               required:
                                 - product_id
                                 - quantity
@@ -665,9 +611,7 @@ paths:
                   value:
                     content:
                       - type: TEXT
-                        text:
-                          Certainly! I'd be happy to help you find a blue coat.
-                          I'll use the product recommendation tool to search for that.
+                        text: Certainly! I'd be happy to help you find a blue coat. I'll use the product recommendation tool to search for that.
                       - type: TOOL_USE_REQUEST
                         toolInput:
                           categories:
@@ -694,11 +638,7 @@ paths:
                   value:
                     content:
                       - type: TEXT
-                        text:
-                          "Great! I've found a product that matches your request.\
-                          \ The system has recommended a \"Wool Blue Coat\" for you.\
-                          \ Would you like more details about this coat, or would you\
-                          \ prefer to see more options?"
+                        text: 'Great! I''ve found a product that matches your request. The system has recommended a "Wool Blue Coat" for you. Would you like more details about this coat, or would you prefer to see more options?'
                     modelId: domo.domo_ai.domogpt-medium-v1.2:anthropic
                     isCustomerModel: false
                     sessionId: 9c8bf9c4-ef26-4726-818d-a9f57c2a5c46
@@ -706,6 +646,11 @@ paths:
                     stopReason: END_TURN
       security:
         - domo-developer-token: []
+      parameters:
+        toolChoice:
+          description: Specifies the tool to be utilized from a set of available options, defined by the property's value structure within the object.
+        reasoningConfig:
+          description: Specifies configuration settings for the reasoning process, allowing customization via key-value pairs to adjust parameters such as depth, scope, and complexity.
   /api/ai/v1/messages/chat:
     post:
       tags:
@@ -749,9 +694,7 @@ paths:
                   value:
                     content:
                       - type: TEXT
-                        text:
-                          The sky appears blue due to a phenomenon called Rayleigh
-                          scattering.
+                        text: The sky appears blue due to a phenomenon called Rayleigh scattering.
                     modelId: domo.domo_ai.domogpt-medium-v1.2:anthropic
                     isCustomerModel: false
                     sessionId: e1f6a485-7fb6-4f71-b41c-37d6cb5f6bd3
@@ -759,6 +702,9 @@ paths:
                     stopReason: END_TURN
       security:
         - domo-developer-token: []
+      parameters:
+        reasoningConfig:
+          description: Specifies the configuration settings for reasoning within chat, accepting values as an object to customize parameters such as model behavior and output format.
   /api/ai/v1/image/text:
     post:
       tags:
@@ -783,22 +729,16 @@ paths:
                     type: base64
                     mediaType: image/png
               Full Request:
-                description:
-                  "Complete Image-to-Text Request with optional parameters\
-                  \ for configuring model, prompt, maxTokens and temperature."
+                description: 'Complete Image-to-Text Request with optional parameters for configuring model, prompt, maxTokens and temperature.'
                 value:
-                  input:
-                    "Please describe this image in detail, focusing on the main\
-                    \ subject and background elements."
+                  input: 'Please describe this image in detail, focusing on the main subject and background elements.'
                   image:
                     data: <base64 string>
                     type: base64
                     mediaType: image/jpeg
                   sessionId: <session_id>
                   model: domo.domo_ai.domogpt-medium-v1.2:anthropic
-                  system:
-                    "You are a professional image analyst. Provide detailed,\
-                    \ accurate descriptions of images."
+                  system: 'You are a professional image analyst. Provide detailed, accurate descriptions of images.'
                   maxTokens: 500
                   temperature: 0.7
         required: true
@@ -812,9 +752,7 @@ paths:
               schema:
                 type: string
         '200':
-          description:
-            TextAIResponse A <code>TextAIResponse</code> containing the
-            extracted or analyzed text from the image.
+          description: TextAIResponse A <code>TextAIResponse</code> containing the extracted or analyzed text from the image.
           content:
             application/json:
               schema:
@@ -824,21 +762,19 @@ paths:
                   description: Image to Text Response
                   value:
                     prompt: What do you see in this image?
-                    output:
-                      This image shows a small red square on a white background.
-                      The square appears to be a simple geometric shape with clean
-                      edges.
+                    output: This image shows a small red square on a white background. The square appears to be a simple geometric shape with clean edges.
                     model: domo.domo_ai.domogpt-medium-v1.2:anthropic
       security:
         - domo-developer-token: []
+      parameters:
+        reasoningConfig:
+          description: Specifies configuration options for the reasoning process applied to the image-to-text conversion, allowing for customized output based on user preferences.
   /api/ai/v1/extract:
     post:
       tags:
         - AI Services - Messages
       summary: Data Extraction
-      description:
-        Extract structured data from unstructured text according to a provided
-        JSON schema.
+      description: Extract structured data from unstructured text according to a provided JSON schema.
       operationId: messagesExtractData
       requestBody:
         content:
@@ -847,15 +783,11 @@ paths:
               $ref: '#/components/schemas/ExtractDataMessagesRequest'
             examples:
               Basic Contact Extraction:
-                description:
-                  Extract contact information from text using Messages
-                  API.
+                description: Extract contact information from text using Messages API.
                 value:
                   input:
                     - type: TEXT
-                      text:
-                        "Contact: Sarah Johnson, email sarah.j@company.com, phone\
-                        \ (555) 123-4567"
+                      text: 'Contact: Sarah Johnson, email sarah.j@company.com, phone (555) 123-4567'
                   outputStructure:
                     name:
                       type: string
@@ -867,9 +799,7 @@ paths:
                       type: string
                       description: Phone number
               Resume Extraction:
-                description:
-                  Extract structured data from a resume with nested fields
-                  using Messages API.
+                description: Extract structured data from a resume with nested fields using Messages API.
                 value:
                   input:
                     - type: TEXT
@@ -964,6 +894,9 @@ paths:
                     requestId: 613f0d20-661a-48c4-a495-60cae524e8f6
       security:
         - domo-developer-token: []
+      parameters:
+        reasoningConfig:
+          description: Configures the logic and parameters for the extraction process, accepting a JSON object to customize reasoning strategies and methods.
   /api/ai/v1/embedding/text:
     post:
       tags:
@@ -1000,9 +933,7 @@ paths:
               schema:
                 type: string
         '200':
-          description:
-            EmbeddingAIResponse A <code>EmbeddingAIResponse</code> containing
-            the generated text embeddings.
+          description: EmbeddingAIResponse A <code>EmbeddingAIResponse</code> containing the generated text embeddings.
           content:
             application/json:
               schema:
@@ -1020,6 +951,11 @@ paths:
                     modelId: domo.domo_ai.domo-embed-text-multilingual-v1:cohere
       security:
         - domo-developer-token: []
+      parameters:
+        dimensions:
+          description: Specifies the number of dimensions for the text embedding, with higher values potentially enhancing specificity but requiring more computational resources.
+        requestId:
+          description: An optional unique identifier for tracking the embedding request, expected as a UUID string in the query.
   /api/ai/v1/embedding/image:
     post:
       tags:
@@ -1060,9 +996,7 @@ paths:
               schema:
                 type: string
         '200':
-          description:
-            EmbeddingAIResponse A <code>EmbeddingAIResponse</code> containing
-            the generated image embeddings.
+          description: EmbeddingAIResponse A <code>EmbeddingAIResponse</code> containing the generated image embeddings.
           content:
             application/json:
               schema:
@@ -1080,14 +1014,17 @@ paths:
                     modelId: domo.domo_ai.domo-embed-text-multilingual-v1:cohere
       security:
         - domo-developer-token: []
+      parameters:
+        dimensions:
+          description: Specifies the number of dimensions for the generated image embeddings, allowing an integer input to define vector size for model output.
+        requestId:
+          description: An optional unique request identifier to track and correlate image embedding requests, expected to be a valid UUID format.
   /api/ai/v1/classification:
     post:
       tags:
         - AI Services - Messages
       summary: Text Classification
-      description:
-        Classify text into one or more predefined categories using LLM
-        structured outputs.
+      description: Classify text into one or more predefined categories using LLM structured outputs.
       operationId: messagesClassification
       requestBody:
         content:
@@ -1096,21 +1033,14 @@ paths:
               $ref: '#/components/schemas/ClassificationMessagesRequest'
             examples:
               Support Ticket Priority (Single-Label):
-                description:
-                  Classify support ticket by priority level using single-label
-                  classification.
+                description: Classify support ticket by priority level using single-label classification.
                 value:
                   input:
                     - type: text
-                      text:
-                        "URGENT: Our production dashboard is down and we can't access\
-                        \ any of our KPI data. This is affecting our entire sales team\
-                        \ and we need this resolved immediately!"
+                      text: "URGENT: Our production dashboard is down and we can't access any of our KPI data. This is affecting our entire sales team and we need this resolved immediately!"
                   labels:
                     - label: critical
-                      description:
-                        System outage or data loss affecting multiple users
-                        or business operations
+                      description: System outage or data loss affecting multiple users or business operations
                     - label: high
                       description: Significant functionality issue affecting user productivity
                     - label: medium
@@ -1123,11 +1053,7 @@ paths:
                 value:
                   input:
                     - type: text
-                      text:
-                        "The new filtering feature is great, but it would be even\
-                        \ better if we could save filter presets and share them with\
-                        \ our team. Also, the export functionality could use some performance\
-                        \ improvements when dealing with large datasets."
+                      text: 'The new filtering feature is great, but it would be even better if we could save filter presets and share them with our team. Also, the export functionality could use some performance improvements when dealing with large datasets.'
                   labels:
                     - label: feature_request
                       description: Request for new functionality or capabilities
@@ -1136,9 +1062,7 @@ paths:
                     - label: bug_report
                       description: Report of incorrect behavior or errors
                     - label: performance
-                      description:
-                        "Feedback about speed, responsiveness, or resource\
-                        \ usage"
+                      description: 'Feedback about speed, responsiveness, or resource usage'
                     - label: usability
                       description: Feedback about user experience or ease of use
                   classificationType: MULTI_LABEL
@@ -1147,15 +1071,10 @@ paths:
                 value:
                   input:
                     - type: text
-                      text:
-                        "URGENT: Our production dashboard is down and we can't access\
-                        \ any of our KPI data. This is affecting our entire sales team\
-                        \ and we need this resolved immediately!"
+                      text: "URGENT: Our production dashboard is down and we can't access any of our KPI data. This is affecting our entire sales team and we need this resolved immediately!"
                   labels:
                     - label: critical
-                      description:
-                        System outage or data loss affecting multiple users
-                        or business operations
+                      description: System outage or data loss affecting multiple users or business operations
                     - label: high
                       description: Significant functionality issue affecting user productivity
                     - label: medium
@@ -1193,6 +1112,9 @@ paths:
                     requestId: f9e8d7c6-b5a4-3210-fedc-ba9876543210
       security:
         - domo-developer-token: []
+      parameters:
+        reasoningConfig:
+          description: Specifies the configuration settings for the reasoning process applied during text classification, expecting a JSON object detailing parameters such as model complexity and inference time.
 components:
   schemas:
     ChunkingConfiguration:
@@ -1324,9 +1246,7 @@ components:
         sessionId:
           type: string
           format: uuid
-          description:
-            "The AI session ID. If provided, this request will be associated\
-            \ with the specified AI Session."
+          description: 'The AI session ID. If provided, this request will be associated with the specified AI Session.'
         promptTemplate:
           $ref: '#/components/schemas/ParameterizedPromptTemplate'
           description: |-
@@ -1336,9 +1256,7 @@ components:
           type: object
           additionalProperties:
             type: string
-          description:
-            Custom parameters to inject into the prompt template if an
-            associated placeholder is present.
+          description: Custom parameters to inject into the prompt template if an associated placeholder is present.
         model:
           type: string
           description: |-
@@ -1348,9 +1266,7 @@ components:
         modelConfiguration:
           type: object
           additionalProperties: {}
-          description:
-            "Additional model-specific configuration parameter key-value\
-            \ pairs. e.g. temperature, max_tokens, etc."
+          description: 'Additional model-specific configuration parameter key-value pairs. e.g. temperature, max_tokens, etc.'
         system:
           type: string
           description: |-
@@ -1360,14 +1276,10 @@ components:
                                           template using the "${system}" placeholder.
         chunkingConfiguration:
           $ref: '#/components/schemas/ChunkingConfiguration'
-          description:
-            Configuration for dividing long text into smaller parts or
-            chunks.
+          description: Configuration for dividing long text into smaller parts or chunks.
         outputStyle:
           type: string
-          description:
-            "Determines the design, structuring and organization of the\
-            \ summarization output."
+          description: 'Determines the design, structuring and organization of the summarization output.'
           enum:
             - bulleted
             - numbered
@@ -1375,15 +1287,11 @@ components:
             - unknown
         outputWordLength:
           $ref: '#/components/schemas/SizeBoundary'
-          description:
-            "Defines a size boundary to limit the length of the output\
-            \ summary, based on number of words."
+          description: 'Defines a size boundary to limit the length of the output summary, based on number of words.'
         temperature:
           type: number
           format: double
-          description:
-            Controls randomness in the model's output. Lower values make
-            output more deterministic.
+          description: Controls randomness in the model's output. Lower values make output more deterministic.
         maxTokens:
           type: integer
           format: int32
@@ -1393,14 +1301,6 @@ components:
           description: Configuration for reasoning behavior and effort level.
       required:
         - input
-      x-examples:
-        Basic:
-          input: 'San Francisco, officially the City and County of San Francisco, is a commercial, financial, and cultural center in Northern California. With a population of 808,437 residents as of 2022, San Francisco is the fourth most populous city in the U.S. state of California. The city covers a land area of 46.9 square miles (121 square kilometers) at the end of the San Francisco Peninsula, making it the second-most densely populated large U.S. city after New York City and the fifth-most densely populated U.S. county, behind only four New York City boroughs. Among the 92 U.S. cities proper with over 250,000 residents, San Francisco is ranked first by per capita income and sixth by aggregate income as of 2022.'
-        Custom Response Length:
-          input: 'San Francisco, officially the City and County of San Francisco, is a commercial, financial, and cultural center in Northern California. With a population of 808,437 residents as of 2022, San Francisco is the fourth most populous city in the U.S. state of California. The city covers a land area of 46.9 square miles (121 square kilometers) at the end of the San Francisco Peninsula, making it the second-most densely populated large U.S. city after New York City and the fifth-most densely populated U.S. county, behind only four New York City boroughs. Among the 92 U.S. cities proper with over 250,000 residents, San Francisco is ranked first by per capita income and sixth by aggregate income as of 2022.'
-          outputWordLength:
-            min: 5
-            max: 10
     Choice:
       type: object
       description: A choice generated by a text AI model.
@@ -1580,14 +1480,10 @@ components:
         sessionId:
           type: string
           format: uuid
-          description:
-            "The AI session ID. If provided, this request will be associated\
-            \ with the specified AI Session."
+          description: 'The AI session ID. If provided, this request will be associated with the specified AI Session.'
         dataSourceSchemas:
           type: array
-          description:
-            The data source schemas and metadata to be included in the
-            Text-to-SQL task prompt to generate SQL.
+          description: The data source schemas and metadata to be included in the Text-to-SQL task prompt to generate SQL.
           items:
             $ref: '#/components/schemas/AIDataSourceSchema'
         promptTemplate:
@@ -1599,9 +1495,7 @@ components:
           type: object
           additionalProperties:
             type: string
-          description:
-            Custom parameters to inject into the prompt template if an
-            associated placeholder is present.
+          description: Custom parameters to inject into the prompt template if an associated placeholder is present.
         model:
           type: string
           description: |-
@@ -1610,24 +1504,16 @@ components:
         modelConfiguration:
           type: object
           additionalProperties: {}
-          description:
-            "Additional model-specific configuration parameter key-value\
-            \ pairs. e.g. temperature, max_tokens, etc."
+          description: 'Additional model-specific configuration parameter key-value pairs. e.g. temperature, max_tokens, etc.'
         dialect:
           type: string
-          description:
-            The SQL dialect to use in the Text-to-SQL task prompt. Defaults
-            to MYSQL.
+          description: The SQL dialect to use in the Text-to-SQL task prompt. Defaults to MYSQL.
         commentToken:
           type: string
-          description:
-            The comment token to use in the Text-to-SQL task prompt. Defaults
-            to "#".
+          description: The comment token to use in the Text-to-SQL task prompt. Defaults to "#".
         escapeChar:
           type: string
-          description:
-            The escape character to use in the Text-to-SQL task prompt.
-            Defaults to "`".
+          description: The escape character to use in the Text-to-SQL task prompt. Defaults to "`".
         system:
           type: string
           description: |-
@@ -1636,14 +1522,10 @@ components:
                  template using the "${system}" placeholder.
         domoSupported:
           type: boolean
-          description:
-            Whether the generated SQL should be compatible with Domo's
-            query engine. Defaults to true.
+          description: Whether the generated SQL should be compatible with Domo's query engine. Defaults to true.
         sqlRequestOptions:
           type: array
-          description:
-            Optional SQL request options to control the behavior of the
-            Text-to-SQL AI Service.
+          description: Optional SQL request options to control the behavior of the Text-to-SQL AI Service.
           items:
             type: string
             enum:
@@ -1661,9 +1543,7 @@ components:
         temperature:
           type: number
           format: double
-          description:
-            Controls randomness in the model's output. Lower values make
-            output more deterministic.
+          description: Controls randomness in the model's output. Lower values make output more deterministic.
           maximum: 2
           minimum: 0
         maxTokens:
@@ -1675,38 +1555,6 @@ components:
           description: Configuration for reasoning behavior and effort level.
       required:
         - input
-      x-examples:
-        Basic:
-          input: What are my total sales by region?
-          dataSourceSchemas:
-            - dataSourceName: Store Sales
-              columns:
-                - type: STRING
-                  name: product
-                - type: LONG
-                  name: store
-                - type: LONG
-                  name: amount
-                - type: DATETIME
-                  name: timestamp'
-                - type: STRING
-                  name: region
-        Non-default model:
-          input: What are my total sales by region?
-          model: 9f35cc70-47f0-46da-a3e9-92a76c574e41
-          dataSourceSchemas:
-            - dataSourceName: Store Sales
-              columns:
-                - type: STRING
-                  name: product
-                - type: LONG
-                  name: store
-                - type: LONG
-                  name: amount
-                - type: DATETIME
-                  name: timestamp'
-                - type: STRING
-                  name: region
     ArrayFunctionParameter:
       allOf:
         - $ref: '#/components/schemas/FunctionParameterObject'
@@ -2086,9 +1934,7 @@ components:
         sessionId:
           type: string
           format: uuid
-          description:
-            "The AI session ID. If provided, this request will be associated\
-            \ with the specified AI Session."
+          description: 'The AI session ID. If provided, this request will be associated with the specified AI Session.'
         promptTemplate:
           $ref: '#/components/schemas/ParameterizedPromptTemplate'
           description: |-
@@ -2098,9 +1944,7 @@ components:
           type: object
           additionalProperties:
             type: string
-          description:
-            Custom parameters to inject into the prompt template if an
-            associated placeholder is present.
+          description: Custom parameters to inject into the prompt template if an associated placeholder is present.
         model:
           type: string
           description: |-
@@ -2109,9 +1953,7 @@ components:
         modelConfiguration:
           type: object
           additionalProperties: {}
-          description:
-            "Additional model-specific configuration parameter key-value\
-            \ pairs. e.g. temperature, max_tokens, etc."
+          description: 'Additional model-specific configuration parameter key-value pairs. e.g. temperature, max_tokens, etc.'
         system:
           type: string
           description: |-
@@ -2121,9 +1963,7 @@ components:
         temperature:
           type: number
           format: double
-          description:
-            Controls randomness in the model's output. Lower values make
-            output more deterministic.
+          description: Controls randomness in the model's output. Lower values make output more deterministic.
         maxTokens:
           type: integer
           format: int32
@@ -2137,18 +1977,6 @@ components:
           description: Configuration for reasoning behavior and effort level.
       required:
         - input
-      x-examples:
-        Basic:
-          input: Why is the sky blue?
-        Non-default Model:
-          input: Why is the sky blue?
-          model: domo.domo_ai.domogpt-small-v1:anthropic
-        Prompt Template:
-          input: Why is the sky blue?
-          promptTemplate:
-            template: 'Respond to the following in ${language}: ${input}'
-          parameters:
-            language: Japanese
     TextToBeastModeRequest:
       type: object
       description: |-
@@ -2193,9 +2021,7 @@ components:
         sessionId:
           type: string
           format: uuid
-          description:
-            "The AI session ID. If provided, this request will be associated\
-            \ with the specified AI Session."
+          description: 'The AI session ID. If provided, this request will be associated with the specified AI Session.'
         dataSourceSchema:
           $ref: '#/components/schemas/AIDataSourceSchema'
           description: |-
@@ -2210,9 +2036,7 @@ components:
           type: object
           additionalProperties:
             type: string
-          description:
-            Custom parameters to inject into the prompt template if an
-            associated placeholder is present.
+          description: Custom parameters to inject into the prompt template if an associated placeholder is present.
         model:
           type: string
           description: |-
@@ -2222,9 +2046,7 @@ components:
         modelConfiguration:
           type: object
           additionalProperties: {}
-          description:
-            "Additional model-specific configuration parameter key-value\
-            \ pairs. e.g. temperature, max_tokens, etc."
+          description: 'Additional model-specific configuration parameter key-value pairs. e.g. temperature, max_tokens, etc.'
         system:
           type: string
           description: |-
@@ -2234,9 +2056,7 @@ components:
         temperature:
           type: number
           format: double
-          description:
-            Controls randomness in the model's output. Lower values make
-            output more deterministic.
+          description: Controls randomness in the model's output. Lower values make output more deterministic.
         maxTokens:
           type: integer
           format: int32
@@ -2249,38 +2069,6 @@ components:
           description: Configuration for reasoning behavior and effort level.
       required:
         - input
-      x-examples:
-        Basic:
-          input: Count distinct products
-          dataSourceSchema:
-            dataSourceName: Store Sales
-            columns:
-              - type: STRING
-                name: product
-              - type: LONG
-                name: store
-              - type: LONG
-                name: amount
-              - type: DATETIME
-                name: timestamp
-              - type: STRING
-                name: region
-        Non-default model:
-          input: Count distinct products
-          model: 9f35cc70-47f0-46da-a3e9-92a76c574e41
-          dataSourceSchema:
-            dataSourceName: Store Sales
-            columns:
-              - type: STRING
-                name: product
-              - type: LONG
-                name: store
-              - type: LONG
-                name: amount
-              - type: DATETIME
-                name: timestamp
-              - type: STRING
-                name: region
     Document:
       type: object
       description: Document data and metadata.
@@ -2401,9 +2189,7 @@ components:
         sessionId:
           type: string
           format: uuid
-          description:
-            The unique identifier for the AI session associated with this
-            request.
+          description: The unique identifier for the AI session associated with this request.
         system:
           type: array
           description: System-level messages or configurations to guide the AI's response.
@@ -2411,15 +2197,11 @@ components:
             $ref: '#/components/schemas/TextMessageContent'
         model:
           type: string
-          description:
-            The identifier of the AI model to be used for generating a
-            response.
+          description: The identifier of the AI model to be used for generating a response.
         modelConfiguration:
           type: object
           additionalProperties: {}
-          description:
-            Specific parameters or settings that configure the AI model
-            behavior.
+          description: Specific parameters or settings that configure the AI model behavior.
         temperature:
           type: number
           format: double
@@ -2438,48 +2220,12 @@ components:
           description: How the model should use the provided tools.
         validateSchema:
           type: boolean
-          description:
-            A flag to determine whether to validate the AI response against
-            the provided schema.
+          description: A flag to determine whether to validate the AI response against the provided schema.
         reasoningConfig:
           $ref: '#/components/schemas/ReasoningConfig'
           description: Configuration for reasoning behavior and effort level.
       required:
         - input
-      x-examples:
-        Initial Tool Call:
-          input:
-            - role: USER
-              content:
-                - type: TEXT
-                  text: Do you have any blue coats available?
-          tools:
-            - name: get_product_recommendations
-              description: Searches for products matching certain criteria in the database
-              parameters:
-                type: object
-                properties:
-                  categories:
-                    description: categories that could be a match
-                    type: array
-                    items:
-                      type: string
-                      enum:
-                        - coats & jackets
-                        - accessories
-                  colors:
-                    description: colors that could be a match, empty array if N/A
-                    type: array
-                    items:
-                      type: string
-                      enum:
-                        - blue
-                        - red
-                required:
-                  - categories
-                  - colors
-          toolChoice:
-            type: AUTO
     ToolChoice:
       type: object
       properties:
@@ -2521,9 +2267,7 @@ components:
           properties:
             toolCallId:
               type: string
-              description:
-                unique identifier for the tool call this result corresponds
-                to
+              description: unique identifier for the tool call this result corresponds to
       description: Tool use result message content.
       required:
         - toolCallId
@@ -2575,9 +2319,7 @@ components:
         sessionId:
           type: string
           format: uuid
-          description:
-            The unique identifier for the AI session associated with this
-            request.
+          description: The unique identifier for the AI session associated with this request.
         system:
           type: array
           description: System-level messages or configurations to guide the AI's response.
@@ -2585,15 +2327,11 @@ components:
             $ref: '#/components/schemas/TextMessageContent'
         model:
           type: string
-          description:
-            The identifier of the AI model to be used for generating a
-            response.
+          description: The identifier of the AI model to be used for generating a response.
         modelConfiguration:
           type: object
           additionalProperties: {}
-          description:
-            Specific parameters or settings that configure the AI model
-            behavior.
+          description: Specific parameters or settings that configure the AI model behavior.
         temperature:
           type: number
           format: double
@@ -2611,13 +2349,6 @@ components:
           description: Configuration for reasoning behavior and effort level.
       required:
         - input
-      x-examples:
-        Basic:
-          input:
-            - role: USER
-              content:
-                - type: TEXT
-                  text: Why is the sky blue?
     ImageToTextRequest:
       type: object
       description: |-
@@ -2664,9 +2395,7 @@ components:
         sessionId:
           type: string
           format: uuid
-          description:
-            "The AI session ID. If provided, this request will be associated\
-            \ with the specified AI Session."
+          description: 'The AI session ID. If provided, this request will be associated with the specified AI Session.'
         model:
           type: string
           description: |-
@@ -2681,9 +2410,7 @@ components:
         modelConfiguration:
           type: object
           additionalProperties: {}
-          description:
-            "Additional model-specific configuration parameter key-value\
-            \ pairs. e.g. temperature, max_tokens, etc."
+          description: 'Additional model-specific configuration parameter key-value pairs. e.g. temperature, max_tokens, etc.'
         promptTemplate:
           $ref: '#/components/schemas/ParameterizedPromptTemplate'
           description: |-
@@ -2693,9 +2420,7 @@ components:
           type: object
           additionalProperties:
             type: string
-          description:
-            Custom parameters to inject into the prompt template if an
-            associated placeholder is present.
+          description: Custom parameters to inject into the prompt template if an associated placeholder is present.
         maxTokens:
           type: integer
           format: int32
@@ -2703,9 +2428,7 @@ components:
         temperature:
           type: number
           format: double
-          description:
-            Controls randomness in the model's output. Lower values make
-            output more deterministic.
+          description: Controls randomness in the model's output. Lower values make output more deterministic.
         responseFormat:
           description: Model response format specification for structured outputs.
           oneOf:
@@ -2715,23 +2438,6 @@ components:
           description: Configuration for reasoning behavior and effort level.
       required:
         - input
-      x-examples:
-        Basic Request:
-          image:
-            data: <base64 string>
-            type: base64
-            mediaType: image/png
-        Full Request:
-          input: 'Please describe this image in detail, focusing on the main subject and background elements.'
-          image:
-            data: <base64 string>
-            type: base64
-            mediaType: image/jpeg
-          sessionId: <session_id>
-          model: domo.domo_ai.domogpt-medium-v1.2:anthropic
-          system: 'You are a professional image analyst. Provide detailed, accurate descriptions of images.'
-          maxTokens: 500
-          temperature: 0.7
     ExtractDataMessagesRequest:
       type: object
       description: |-
@@ -2742,9 +2448,7 @@ components:
       properties:
         input:
           type: array
-          description:
-            "The input message content to extract data from (text, images,\
-            \ documents, etc.)"
+          description: 'The input message content to extract data from (text, images, documents, etc.)'
           items:
             oneOf:
               - $ref: '#/components/schemas/DocumentMessageContent'
@@ -2765,17 +2469,13 @@ components:
               - $ref: '#/components/schemas/NumberFunctionParameter'
               - $ref: '#/components/schemas/ObjectFunctionParameter'
               - $ref: '#/components/schemas/StringFunctionParameter'
-          description:
-            Map of field names to their FunctionParameter definitions.
-            All fields are treated as required.
+          description: Map of field names to their FunctionParameter definitions. All fields are treated as required.
         instructions:
           type: string
           description: Optional instructions for extraction behavior
         model:
           type: string
-          description:
-            "The ID of the model to use (optional, uses default if not\
-            \ specified)"
+          description: 'The ID of the model to use (optional, uses default if not specified)'
         modelConfiguration:
           type: object
           additionalProperties: {}
@@ -2790,35 +2490,6 @@ components:
       required:
         - input
         - outputStructure
-      x-examples:
-        Basic Contact Extraction:
-          input:
-            - type: TEXT
-              text: 'Contact: Sarah Johnson, email sarah.j@company.com, phone (555) 123-4567'
-          outputStructure:
-            name:
-              type: string
-              description: Full name
-            email:
-              type: string
-              description: Email address
-            phone:
-              type: string
-              description: Phone number
-        Resume Extraction:
-          input:
-            - type: TEXT
-              text: "John Smith\nSenior Software Engineer\nEmail: john.smith@email.com | Phone: (555) 123-4567\n\nExperience:\nTech Corp (2020-Present) - Led microservices architecture\n\nEducation: B.S. Computer Science, UC Berkeley, 2016\nSkills: Java, Python, AWS"
-          outputStructure:
-            name:
-              type: string
-              description: Full name
-            title:
-              type: string
-              description: Job title
-            email:
-              type: string
-              description: Email address
     ExtractDataResponse:
       type: object
       description: |-
@@ -2868,20 +2539,10 @@ components:
         modelConfiguration:
           type: object
           additionalProperties: {}
-          description:
-            Additional model-specific configuration parameter key-value
-            pairs.
+          description: Additional model-specific configuration parameter key-value pairs.
         requestId:
           type: string
           format: uuid
-      x-examples:
-        Basic Request:
-          input:
-            - This is a sample text for generating embeddings.
-        Specific Model Request:
-          input:
-            - This is a sample text for generating embeddings.
-          model: domo.domo_ai.domo-embed-text-multilingual-v1:cohere
     EmbeddingAIResponse:
       type: object
       properties:
@@ -2919,29 +2580,13 @@ components:
         modelConfiguration:
           type: object
           additionalProperties: {}
-          description:
-            Additional model-specific configuration parameter key-value
-            pairs.
+          description: Additional model-specific configuration parameter key-value pairs.
         requestId:
           type: string
           format: uuid
-      x-examples:
-        Basic Request:
-          image:
-            data: <base64 string>
-            type: base64
-            mediaType: image/png
-        Specific Model Request:
-          image:
-            data: <base64 string>
-            type: base64
-            mediaType: image/png
-          model: domo.domo_ai.domo-embed-text-multilingual-v1:cohere
     ClassificationLabel:
       type: object
-      description:
-        Represents a classification label with an optional description
-        to guide the LLM.
+      description: Represents a classification label with an optional description to guide the LLM.
       properties:
         label:
           type: string
@@ -2949,9 +2594,7 @@ components:
           minLength: 1
         description:
           type: string
-          description:
-            Optional description to help the LLM understand when to use
-            this label (max 500 characters).
+          description: Optional description to help the LLM understand when to use this label (max 500 characters).
       required:
         - label
     ClassificationMessagesRequest:
@@ -2965,9 +2608,7 @@ components:
       properties:
         input:
           type: array
-          description:
-            "The input message content to classify (text, images, documents,\
-            \ etc.)"
+          description: 'The input message content to classify (text, images, documents, etc.)'
           items:
             oneOf:
               - $ref: '#/components/schemas/DocumentMessageContent'
@@ -2978,9 +2619,7 @@ components:
               - $ref: '#/components/schemas/ToolUseResultMessageContent'
         labels:
           type: array
-          description:
-            The list of possible classification labels with optional descriptions
-            (2-50 labels required)
+          description: The list of possible classification labels with optional descriptions (2-50 labels required)
           items:
             $ref: '#/components/schemas/ClassificationLabel'
         classificationType:
@@ -2994,9 +2633,7 @@ components:
           description: Optional instructions for classification behavior
         model:
           type: string
-          description:
-            "The ID of the model to use (optional, uses default if not\
-            \ specified)"
+          description: 'The ID of the model to use (optional, uses default if not specified)'
         modelConfiguration:
           type: object
           additionalProperties: {}
@@ -3012,33 +2649,6 @@ components:
         - classificationType
         - input
         - labels
-      x-examples:
-        Support Ticket Priority (Single-Label):
-          input:
-            - type: text
-              text: "URGENT: Our production dashboard is down and we can't access any of our KPI data. This is affecting our entire sales team and we need this resolved immediately!"
-          labels:
-            - label: critical
-              description: System outage or data loss affecting multiple users or business operations
-            - label: high
-              description: Significant functionality issue affecting user productivity
-            - label: medium
-              description: Feature not working as expected but workarounds available
-            - label: low
-              description: 'Minor issue, cosmetic bug, or feature request'
-          classificationType: SINGLE_LABEL
-        Product Feedback (Multi-Label):
-          input:
-            - type: text
-              text: 'The new filtering feature is great, but it would be even better if we could save filter presets and share them with our team. Also, the export functionality could use some performance improvements when dealing with large datasets.'
-          labels:
-            - label: feature_request
-              description: Request for new functionality or capabilities
-            - label: enhancement
-              description: Suggestion to improve existing functionality
-            - label: performance
-              description: 'Feedback about speed, responsiveness, or resource usage'
-          classificationType: MULTI_LABEL
     ClassificationResponse:
       type: object
       description: |-
@@ -3079,6 +2689,3 @@ components:
       type: apiKey
       name: X-DOMO-Developer-Token
       in: header
-
-security:
-  - domo-developer-token: []
