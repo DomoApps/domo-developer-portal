@@ -1,14 +1,10 @@
 openapi: 3.1.0
 info:
   title: 'AI Services'
-  description: 'Domo AI Service APIs'
+  description: 'The AI Services API provides tools for text summarization, SQL generation, creative text generation, and image-to-text capabilities. It also supports advanced functions like chat messaging, tool integrations, and embedding generation.'
   version: '2.2.3225_master'
 servers:
   - url: https://{subdomain}.domo.com
-    variables:
-      subdomain:
-        default: your-instance
-        description: Your Domo instance subdomain
 tags:
   - name: AI Services - Embedding
     description: Domo AI Service Embedding APIs
@@ -71,9 +67,9 @@ paths:
         - domo-developer-token: []
       parameters:
         outputWordLength:
-          description: "Specifies the desired word length for the summary, with the expected value formatted as an object containing 'min' and 'max' properties (e.g., {'min': 50, 'max': 150})."
+          description: Specifies the desired target word length for the summarized text, allowing customization of summary size.
         reasoningConfig:
-          description: Configures the reasoning strategies for text analysis, allowing optional adjustments to influence summarization logic (e.g., depth, specificity).
+          description: Configures the reasoning depth and strategy for the text summarization process, with expected values being key-value pairs that specify different reasoning aspects.
   /api/ai/v1/text/sql:
     post:
       tags:
@@ -160,7 +156,7 @@ paths:
         - domo-developer-token: []
       parameters:
         reasoningConfig:
-          description: Specifies configuration settings for reasoning mode, allowing customized logic for SQL query generation, with an object containing key-value pairs.
+          description: The reasoningConfig parameter specifies optional configurations for adjusting the reasoning process of the text-to-SQL translation, such as logic mode or verbosity, using a structured JSON object.
   /api/ai/v1/text/generation:
     post:
       tags:
@@ -219,7 +215,7 @@ paths:
         - domo-developer-token: []
       parameters:
         reasoningConfig:
-          description: Configures the reasoning strategy for text generation, accepting an object with specific reasoning preferences to customize the output.
+          description: Specifies configuration options for the AI's reasoning process, accepting an object with predefined key-value pairs to tailor text generation behavior.
   /api/ai/v1/text/beastmode:
     post:
       tags:
@@ -300,7 +296,7 @@ paths:
         - domo-developer-token: []
       parameters:
         reasoningConfig:
-          description: Configures the reasoning methodology for the text transformation process; expected to be a JSON object with structure-specific keys dictating reasoning parameters.
+          description: Configures the reasoning capabilities of the text processing with customizable settings, passed as a key-value pair object.
   /api/ai/v1/messages/tools:
     post:
       tags:
@@ -648,9 +644,9 @@ paths:
         - domo-developer-token: []
       parameters:
         toolChoice:
-          description: Specifies the tool to be utilized from a set of available options, defined by the property's value structure within the object.
+          description: Specifies the tool configuration for the API call, with expected values being structured as JSON objects representing tool parameters.
         reasoningConfig:
-          description: Specifies configuration settings for the reasoning process, allowing customization via key-value pairs to adjust parameters such as depth, scope, and complexity.
+          description: Specifies the configuration settings for the reasoning process, allowing customization of parameters such as logic depth, inference accuracy, and processing speed.
   /api/ai/v1/messages/chat:
     post:
       tags:
@@ -704,7 +700,7 @@ paths:
         - domo-developer-token: []
       parameters:
         reasoningConfig:
-          description: Specifies the configuration settings for reasoning within chat, accepting values as an object to customize parameters such as model behavior and output format.
+          description: Specifies the configuration settings for the reasoning process, allowing customizable parameters within the reasoning engine.
   /api/ai/v1/image/text:
     post:
       tags:
@@ -768,7 +764,7 @@ paths:
         - domo-developer-token: []
       parameters:
         reasoningConfig:
-          description: Specifies configuration options for the reasoning process applied to the image-to-text conversion, allowing for customized output based on user preferences.
+          description: Configures the reasoning settings for image analysis with customizable options specified as a JSON object.
   /api/ai/v1/extract:
     post:
       tags:
@@ -896,7 +892,7 @@ paths:
         - domo-developer-token: []
       parameters:
         reasoningConfig:
-          description: Configures the logic and parameters for the extraction process, accepting a JSON object to customize reasoning strategies and methods.
+          description: Specifies the reasoning configuration options, allowing for detailed control over the data extraction process (accepts key-value pairs defining extraction logic parameters).
   /api/ai/v1/embedding/text:
     post:
       tags:
@@ -953,9 +949,9 @@ paths:
         - domo-developer-token: []
       parameters:
         dimensions:
-          description: Specifies the number of dimensions for the text embedding, with higher values potentially enhancing specificity but requiring more computational resources.
+          description: Specifies the number of dimensions for the text embedding, where valid values are positive integers, enhancing the output's specificity and detail.
         requestId:
-          description: An optional unique identifier for tracking the embedding request, expected as a UUID string in the query.
+          description: An optional unique identifier for the request, formatted as a UUID, used for tracking and managing requests.
   /api/ai/v1/embedding/image:
     post:
       tags:
@@ -1016,9 +1012,9 @@ paths:
         - domo-developer-token: []
       parameters:
         dimensions:
-          description: Specifies the number of dimensions for the generated image embeddings, allowing an integer input to define vector size for model output.
+          description: Specifies the number of dimensions for the generated image embeddings, allowing for a custom integer value or use of the default setting.
         requestId:
-          description: An optional unique request identifier to track and correlate image embedding requests, expected to be a valid UUID format.
+          description: Optional unique identifier for tracking and correlating the request, expected to be a valid UUID string.
   /api/ai/v1/classification:
     post:
       tags:
@@ -1114,7 +1110,7 @@ paths:
         - domo-developer-token: []
       parameters:
         reasoningConfig:
-          description: Specifies the configuration settings for the reasoning process applied during text classification, expecting a JSON object detailing parameters such as model complexity and inference time.
+          description: Specifies custom reasoning configuration for the classifier, accepting a JSON object detailing algorithm preferences and thresholds.
 components:
   schemas:
     ChunkingConfiguration:
@@ -1184,6 +1180,7 @@ components:
       properties:
         template:
           type: string
+          description: Defines the structured text framework used for generating dynamic prompts by integrating variable data.
     ReasoningConfig:
       type: object
       properties:
@@ -1194,15 +1191,20 @@ components:
             - LOW
             - MEDIUM
             - HIGH
+          description: Specifies the computational intensity and resources allocated for the reasoning process in AI Services, influencing the depth and complexity of problem-solving capabilities.
+      description: Configuration settings for AI reasoning that dictate parameters for logical inference and decision-making processes.
     SizeBoundary:
       type: object
       properties:
         min:
           type: integer
           format: int32
+          description: Defines the minimum allowable size or dimension for the entity being configured.
         max:
           type: integer
           format: int32
+          description: Specifies the maximum permissible size or dimension for the entity being configured.
+      description: Defines the permitted size constraints for input data to ensure compatibility with AI processing services.
     TextSummarizationRequest:
       type: object
       description: |-
@@ -1314,15 +1316,20 @@ components:
         inputTokens:
           type: integer
           format: int64
+          description: Represents the number of tokens present in the input data sent to the model for processing.
         outputTokens:
           type: integer
           format: int64
+          description: Indicates the number of tokens generated by the model as part of its output.
         totalTokens:
           type: integer
           format: int64
+          description: Calculates the combined total of input and output tokens processed in a single transaction.
         reasoningTokens:
           type: integer
           format: int64
+          description: Counts the tokens specifically used for reasoning tasks within the model's processing.
+      description: Represents usage metrics and data consumption details for a specific AI model provider within the AI Services platform.
     TextAIResponse:
       type: object
       description: Response from a text AI Service.
@@ -1586,6 +1593,7 @@ components:
       required:
         - description
         - type
+      description: Defines a structured parameter for an array-based function within the AI Services API, detailing its elements and associated constraints.
     BooleanFunctionParameter:
       allOf:
         - $ref: '#/components/schemas/FunctionParameterObject'
@@ -1605,6 +1613,7 @@ components:
       required:
         - description
         - type
+      description: Defines a parameter for function calls, indicating a true or false value to dictate branching logic in AI service operations.
     FunctionParameterObject:
       type: object
       properties:
@@ -1622,13 +1631,17 @@ components:
             - oneOf
             - allOf
             - anyOf
-        const: {}
+          description: Specifies the data type of the parameter, determining what kind of value it can hold, such as a string, integer, or boolean.
+        const:
+          description: Defines a fixed value for the parameter, indicating that its value is restricted to a single constant throughout the execution.
         enum:
           type: array
           items: {}
           uniqueItems: true
+          description: Represents a list of allowable values for the parameter, thus constraining it to accept only one of the predefined options.
       required:
         - type
+      description: Defines the parameters required for executing AI service functions, detailing input restrictions, types, and optional default values.
     IntegerFunctionParameter:
       allOf:
         - $ref: '#/components/schemas/FunctionParameterObject'
@@ -1665,6 +1678,7 @@ components:
       required:
         - description
         - type
+      description: Defines an integer parameter required for configuring the input of a machine learning function within the AI Services API.
     JsonResponseFormat:
       allOf:
         - $ref: '#/components/schemas/ResponseFormat'
@@ -1724,6 +1738,7 @@ components:
       required:
         - description
         - type
+      description: Defines parameters for applying logical operators in API requests, enabling customized logical evaluations.
     NullFunctionParameter:
       allOf:
         - $ref: '#/components/schemas/FunctionParameterObject'
@@ -1736,6 +1751,7 @@ components:
       required:
         - description
         - type
+      description: Represents a function parameter that accepts a null value, indicating optionality or default behavior in AI service operations.
     NumberFunctionParameter:
       allOf:
         - $ref: '#/components/schemas/FunctionParameterObject'
@@ -1772,6 +1788,7 @@ components:
       required:
         - description
         - type
+      description: Represents the parameters for a function that applies numeric operations within AI services.
     ObjectFunctionParameter:
       type: object
       properties:
