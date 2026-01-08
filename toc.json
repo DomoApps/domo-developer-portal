@@ -168,6 +168,11 @@
         },
         {
           "type": "item",
+          "title": "AI Services API YAML",
+          "uri": "/docs/API-Reference/Product-APIs/AI-Services.yaml"
+        },
+        {
+          "type": "item",
           "title": "Alerts API",
           "uri": "/docs/API-Reference/Product-APIs/Alerts.md"
         },
