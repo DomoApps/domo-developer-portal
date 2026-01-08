@@ -239,7 +239,12 @@
         {
           "type": "item",
           "title": "FileSets API (BETA)",
-          "uri": "docs/API-Reference/Product-APIs/Filesets.md"
+          "uri": "/docs/API-Reference/Product-APIs/Filesets.md"
+        },
+        {
+          "type": "item",
+          "title": "FileSets API YAML (BETA)",
+          "uri": "/docs/API-Reference/Product-APIs/Filesets-API.yaml"
         },
         {
           "type": "item",
