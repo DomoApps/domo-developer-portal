@@ -1,14 +1,14 @@
 openapi: 3.1.0
 info:
   title: "AI Services"
-  description: "The Domo AI Service APIs provide a suite of powerful AI-driven tools for text summarization, text-to-SQL conversion, content generation, and more, designed to enhance and support various data processing applications."
-  version: "2.2.3240_master"
+  description: "Domo AI Service APIs"
+  version: "2.2.3355_master"
 servers:
-- url: https://{subdomain}.domo.com
+- url: "https://{subdomain}.domo.com"
   variables:
     subdomain:
-      default: your-instance
-      description: Your subdomain
+      description: The Domo instance subdomain.
+      default: subdomain
 tags:
 - name: AI Services - Embedding
   description: Domo AI Service Embedding APIs
@@ -55,7 +55,7 @@ paths:
               schema:
                 type: string
         "200":
-          description: TextAIResponse A <code>TextAIResponse</code> containing the generated summary.
+          description: TextAIResponse The generated summary and model token usage information.
           content:
             application/json:
               schema:
@@ -71,9 +71,9 @@ paths:
       - domo-developer-token: []
       parameters:
         outputWordLength:
-          description: Specifies the desired range of words in the summarized text, defined by a JSON object with 'min' and 'max' keys indicating the minimum and maximum word count, respectively.
+          description: ''
         reasoningConfig:
-          description: Specifies the configuration for reasoning applied during text summarization, accepting key-value pairs to control logical processing aspects.
+          description: ''
   /api/ai/v1/text/sql:
     post:
       tags:
@@ -134,7 +134,7 @@ paths:
               schema:
                 type: string
         "200":
-          description: TextAIResponse A <code>TextAIResponse</code> containing the generated SQL query.
+          description: TextAIResponse The generated SQL query and model token usage information.
           content:
             application/json:
               schema:
@@ -160,7 +160,7 @@ paths:
       - domo-developer-token: []
       parameters:
         reasoningConfig:
-          description: Configures the reasoning mode of the text-to-SQL conversion, with optional object properties to specify the level of detail and complexity.
+          description: ''
   /api/ai/v1/text/generation:
     post:
       tags:
@@ -203,7 +203,7 @@ paths:
               schema:
                 type: string
         "200":
-          description: TextAIResponse A <code>TextAIResponse</code> containing the generated text.
+          description: TextAIResponse The generated text and model token usage information.
           content:
             application/json:
               schema:
@@ -219,7 +219,7 @@ paths:
       - domo-developer-token: []
       parameters:
         reasoningConfig:
-          description: The reasoningConfig parameter specifies the configuration for the reasoning process during text generation, with the expectation of a JSON object containing applicable reasoning attributes.
+          description: ''
   /api/ai/v1/text/beastmode:
     post:
       tags:
@@ -280,7 +280,7 @@ paths:
               schema:
                 type: string
         "200":
-          description: TextAIResponse A <code>TextAIResponse</code> containing the generated Beast Mode calculation.
+          description: TextAIResponse The generated calculation and model token usage information.
           content:
             application/json:
               schema:
@@ -300,7 +300,122 @@ paths:
       - domo-developer-token: []
       parameters:
         reasoningConfig:
-          description: Configures the reasoning parameters for text processing in BeastMode, accepting a JSON object to adjust logic configuration settings.
+          description: ''
+  /api/ai/v1/targeted-sentiment:
+    post:
+      tags:
+      - AI Services - Messages
+      summary: Targeted Sentiment Analysis - Beta
+      description: Analyze sentiment for specific topics.
+      operationId: messagesTargetedSentimentAnalysis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SentimentAnalysisMessagesRequest"
+            examples:
+              Product Review - Multiple Topics:
+                description: Analyze sentiment for specific topics.
+                value:
+                  input:
+                  - type: TEXT
+                    text: "The product quality is excellent and works perfectly. However, the shipping took longer than expected and customer service was slow to respond. Pricing is fair for what you get."
+                  topics:
+                  - topic: product_quality
+                    description: Quality and features of the product
+                  - topic: shipping
+                    description: Shipping speed and delivery experience
+                  - topic: customer_service
+                    description: Customer support experience
+                  - topic: pricing
+                    description: Price and value for money
+        required: true
+      responses:
+        "409":
+          description: Conflict
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: Successful targeted sentiment analysis response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TargetedSentimentResponse"
+              examples:
+                Targeted Sentiment Analysis Response:
+                  description: Targeted Sentiment Analysis Response
+                  value:
+                    type: TARGETED
+                    topicSentiments:
+                      shipping: negative
+                      product_quality: positive
+                      customer_service: negative
+                      pricing: positive
+                    model: domo.domo_ai.domogpt-medium-v2.1:anthropic
+                    isCustomerModel: false
+                    sessionId: 34c1b391-1302-4149-89ad-dd5c9a009e89
+                    requestId: d81674e9-984d-4ca3-b943-acf1fdbc95b4
+                    modelProviderUsage:
+      security:
+      - domo-developer-token: []
+      parameters:
+        reasoningConfig:
+          description: ''
+  /api/ai/v1/sentiment:
+    post:
+      tags:
+      - AI Services - Messages
+      summary: Sentiment Analysis - Beta
+      description: "Analyze the overall sentiment of text (positive, negative, neutral, or not applicable)."
+      operationId: messagesSentimentAnalysis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SentimentAnalysisMessagesRequest"
+            examples:
+              Product Review Sentiment:
+                description: Analyze overall sentiment of a text.
+                value:
+                  input:
+                  - type: TEXT
+                    text: This product is absolutely amazing! The quality exceeded my expectations and the customer service was outstanding. I'm very happy with my purchase.
+        required: true
+      responses:
+        "409":
+          description: Conflict
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: Successful sentiment analysis response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimpleSentimentResponse"
+              examples:
+                Sentiment Analysis Response:
+                  description: Sentiment Analysis Response
+                  value:
+                    type: DEFAULT
+                    sentiment: positive
+                    model: domo.domo_ai.domogpt-medium-v2.1:anthropic
+                    isCustomerModel: false
+                    sessionId: 34c1b391-1302-4149-89ad-dd5c9a009e89
+                    requestId: 5e2d7a6b-af27-4cf2-9fe8-70cfb90d72c2
+                    modelProviderUsage:
+      security:
+      - domo-developer-token: []
+      parameters:
+        reasoningConfig:
+          description: ''
   /api/ai/v1/messages/tools:
     post:
       tags:
@@ -648,9 +763,9 @@ paths:
       - domo-developer-token: []
       parameters:
         toolChoice:
-          description: Specifies the tool options to be called with the request, as a structured object, allowing for customized tool interactions.
+          description: ''
         reasoningConfig:
-          description: Configures the reasoning settings for the tool call with an object containing specific options and thresholds.
+          description: ''
   /api/ai/v1/messages/chat:
     post:
       tags:
@@ -704,7 +819,7 @@ paths:
       - domo-developer-token: []
       parameters:
         reasoningConfig:
-          description: Configures the reasoning settings for the chat AI, accepting an object with parameters to tailor the AI's decision-making and response behavior.
+          description: ''
   /api/ai/v1/image/text:
     post:
       tags:
@@ -768,12 +883,12 @@ paths:
       - domo-developer-token: []
       parameters:
         reasoningConfig:
-          description: Specifies the configuration settings for the reasoning engine to be applied while converting images to text, accepting a JSON object with parameters that adjust processing behavior.
+          description: ''
   /api/ai/v1/extract:
     post:
       tags:
       - AI Services - Messages
-      summary: Data Extraction
+      summary: Data Extraction - Beta
       description: Extract structured data from unstructured text according to a provided JSON schema.
       operationId: messagesExtractData
       requestBody:
@@ -896,7 +1011,7 @@ paths:
       - domo-developer-token: []
       parameters:
         reasoningConfig:
-          description: Configures the reasoning parameters for data extraction, allowing customization of logic processing settings; expected input is a JSON object outlining specific reasoning rules.
+          description: ''
   /api/ai/v1/embedding/text:
     post:
       tags:
@@ -933,7 +1048,7 @@ paths:
               schema:
                 type: string
         "200":
-          description: EmbeddingAIResponse A <code>EmbeddingAIResponse</code> containing the generated text embeddings.
+          description: EmbeddingAIResponse The generated embeddings and model token usage information.
           content:
             application/json:
               schema:
@@ -953,9 +1068,9 @@ paths:
       - domo-developer-token: []
       parameters:
         dimensions:
-          description: Specifies the number of dimensions for the generated text embeddings, allowing for customization of embedding size.
+          description: ''
         requestId:
-          description: Specifies an optional unique identifier for tracking and correlating requests, expected to be a UUID string.
+          description: ''
   /api/ai/v1/embedding/image:
     post:
       tags:
@@ -996,7 +1111,7 @@ paths:
               schema:
                 type: string
         "200":
-          description: EmbeddingAIResponse A <code>EmbeddingAIResponse</code> containing the generated image embeddings.
+          description: EmbeddingAIResponse The generated embeddings and model token usage information.
           content:
             application/json:
               schema:
@@ -1016,14 +1131,14 @@ paths:
       - domo-developer-token: []
       parameters:
         dimensions:
-          description: Specifies the dimensionality of the resulting image embeddings, allowing flexible embedding size customization based on model capabilities and requirements.
+          description: ''
         requestId:
-          description: An optional unique identifier for tracking the specific request, expected in UUID format.
+          description: ''
   /api/ai/v1/classification:
     post:
       tags:
       - AI Services - Messages
-      summary: Text Classification
+      summary: Classification - Beta
       description: Classify text into one or more predefined categories using LLM structured outputs.
       operationId: messagesClassification
       requestBody:
@@ -1114,7 +1229,7 @@ paths:
       - domo-developer-token: []
       parameters:
         reasoningConfig:
-          description: Configures reasoning options for text classification, with expected key-value pairs specifying different logic settings to apply during processing.
+          description: ''
 components:
   schemas:
     ChunkingConfiguration:
@@ -1184,7 +1299,6 @@ components:
       properties:
         template:
           type: string
-          description: Defines a customizable string with placeholders that are dynamically replaced with input values to generate a final prompt for AI processing.
     ReasoningConfig:
       type: object
       properties:
@@ -1195,20 +1309,17 @@ components:
           - LOW
           - MEDIUM
           - HIGH
-          description: Specifies the computational resources allocated for processing complex reasoning tasks, affecting the responsiveness and quality of AI inference.
-      description: Defines configuration parameters for AI reasoning processes, focusing on depth, complexity, and execution settings.
+      description: ''
     SizeBoundary:
       type: object
       properties:
         min:
           type: integer
           format: int32
-          description: Defines the minimum allowable value for a particular size parameter within the AI Services application.
         max:
           type: integer
           format: int32
-          description: Specifies the maximum permissible value for a given size parameter within the AI Services application.
-      description: Defines the constraints on size parameters for AI model inputs, including minimum and maximum value limits.
+      description: ''
     TextSummarizationRequest:
       type: object
       description: |-
@@ -1320,20 +1431,16 @@ components:
         inputTokens:
           type: integer
           format: int64
-          description: The number of tokens provided as input to the model during a request.
         outputTokens:
           type: integer
           format: int64
-          description: The number of tokens generated by the model in response to a request.
         totalTokens:
           type: integer
           format: int64
-          description: The cumulative count of input and output tokens processed or generated in a single request.
         reasoningTokens:
           type: integer
           format: int64
-          description: The number of tokens utilized in the model's reasoning or internal processing to generate a response.
-      description: Represents usage metrics for model providers, detailing resource consumption and performance indicators.
+      description: ''
     TextAIResponse:
       type: object
       description: Response from a text AI Service.
@@ -1597,7 +1704,7 @@ components:
       required:
       - description
       - type
-      description: Defines a set of parameters for configuring array-based functions, detailing input properties and constraints.
+      description: ''
     BooleanFunctionParameter:
       allOf:
       - $ref: "#/components/schemas/FunctionParameterObject"
@@ -1617,7 +1724,7 @@ components:
       required:
       - description
       - type
-      description: Defines a boolean parameter for configuring AI service functions, indicating optional or conditional feature toggling during execution.
+      description: ''
     FunctionParameterObject:
       type: object
       properties:
@@ -1635,17 +1742,14 @@ components:
           - oneOf
           - allOf
           - anyOf
-          description: Specifies the data type of the parameter, such as string, integer, or boolean, determining the kind of values that are expected.
-        const:
-          description: Defines a constant value that the parameter must always equal, enforcing uniformity and specific constraints in usage.
+        const: {}
         enum:
           type: array
           items: {}
           uniqueItems: true
-          description: Lists a set of predefined permissible values for the parameter, allowing only these values to be used to ensure consistency and limit variability.
       required:
       - type
-      description: Defines the parameters required for a function call within the AI Services API, encompassing input types and validation constraints.
+      description: ''
     IntegerFunctionParameter:
       allOf:
       - $ref: "#/components/schemas/FunctionParameterObject"
@@ -1682,7 +1786,7 @@ components:
       required:
       - description
       - type
-      description: Defines a parameter for integer-based functions within the AI Services API, specifying value constraints and usage context for precise function execution.
+      description: ''
     JsonResponseFormat:
       allOf:
       - $ref: "#/components/schemas/ResponseFormat"
@@ -1742,7 +1846,7 @@ components:
       required:
       - description
       - type
-      description: A parameter schema defining attributes for logical operator functions, facilitating the expression of compound logical conditions in AI-driven processes.
+      description: ''
     NullFunctionParameter:
       allOf:
       - $ref: "#/components/schemas/FunctionParameterObject"
@@ -1755,7 +1859,7 @@ components:
       required:
       - description
       - type
-      description: Defines a function parameter that is explicitly set to null, indicating an absence of value or a deliberate placeholder in the AI Services API.
+      description: ''
     NumberFunctionParameter:
       allOf:
       - $ref: "#/components/schemas/FunctionParameterObject"
@@ -1792,7 +1896,7 @@ components:
       required:
       - description
       - type
-      description: Defines a parameter for numerical input in AI services, specifying valid range, default value, and associated constraints.
+      description: ''
     ObjectFunctionParameter:
       type: object
       properties:
@@ -2115,15 +2219,6 @@ components:
             $ref: "#/components/schemas/Document"
             description: the document data and metadata
       description: Document-based message content.
-    FunctionBlueprint:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        parameters:
-          $ref: "#/components/schemas/ObjectFunctionParameter"
     Image:
       type: object
       description: Image data and metadata.
@@ -2146,30 +2241,17 @@ components:
             $ref: "#/components/schemas/Image"
             description: the image data and metadata
       description: Image-based message content.
-    Message:
-      type: object
-      description: An individual message in a Messages API request or response.
-      properties:
-        content:
-          type: array
-          description: the list of content items that make up this message
-          items:
-            oneOf:
-            - $ref: "#/components/schemas/DocumentMessageContent"
-            - $ref: "#/components/schemas/ImageMessageContent"
-            - $ref: "#/components/schemas/ReasoningMessageContent"
-            - $ref: "#/components/schemas/TextMessageContent"
-            - $ref: "#/components/schemas/ToolUseRequestMessageContent"
-            - $ref: "#/components/schemas/ToolUseResultMessageContent"
-        role:
-          type: string
-          description: the role of the message sender
-          enum:
-          - USER
-          - ASSISTANT
     MessageContent:
+      description: Base interface for multi-modal message content
       discriminator:
         propertyName: type
+      oneOf:
+      - $ref: "#/components/schemas/TextMessageContent"
+      - $ref: "#/components/schemas/ImageMessageContent"
+      - $ref: "#/components/schemas/DocumentMessageContent"
+      - $ref: "#/components/schemas/ToolUseRequestMessageContent"
+      - $ref: "#/components/schemas/ToolUseResultMessageContent"
+      - $ref: "#/components/schemas/ReasoningMessageContent"
       properties:
         type:
           type: string
@@ -2189,6 +2271,70 @@ components:
       description: |-
         Reasoning (thinking) message content.
          Contains the model's internal reasoning process when extended thinking is enabled.
+    SentimentAnalysisMessagesRequest:
+      type: object
+      description: |-
+        Request for sentiment analysis using the Messages API.
+
+         <p>Supports two modes:</p>
+         <ul>
+           <li><b>Simple sentiment</b>: When topics is null/empty, analyzes overall sentiment</li>
+           <li><b>Targeted sentiment</b>: When topics provided, analyzes sentiment for each topic</li>
+         </ul>
+
+         <p>Validation happens primarily in AIValidator, not in this constructor.</p>
+      properties:
+        input:
+          type: array
+          description: "The input message content to analyze (text, images, documents, etc.)"
+          items:
+            $ref: "#/components/schemas/MessageContent"
+        topics:
+          type: array
+          description: "Optional list of topics for targeted sentiment analysis. When provided, sentiment is analyzed for each topic individually. When omitted or empty, overall sentiment of the content is analyzed. Topic names must start with a letter and contain only letters, numbers, and underscores (e.g., 'customer_service', 'productQuality')."
+          items:
+            $ref: "#/components/schemas/SentimentTopic"
+          maxLength: 50
+        instructions:
+          type: string
+          description: Optional instructions for sentiment analysis behavior
+        model:
+          type: string
+          description: "The ID of the model to use (optional, uses default if not specified)"
+        modelConfiguration:
+          type: object
+          additionalProperties: {}
+          description: "Additional model parameters (temperature, max_tokens, etc.)"
+        sessionId:
+          type: string
+          format: uuid
+          description: AI session ID for associating with existing session
+        reasoningConfig:
+          $ref: "#/components/schemas/ReasoningConfig"
+          description: Configuration for reasoning behavior
+        simpleSentiment:
+          type: boolean
+          description: Returns true if this is a simple sentiment request (no topics).
+        targetedSentiment:
+          type: boolean
+          description: Returns true if this is a targeted sentiment request (has topics).
+      required:
+      - input
+    SentimentTopic:
+      type: object
+      properties:
+        topic:
+          type: string
+          description: "The topic name to analyze sentiment for. Must start with a letter and contain only letters, numbers, and underscores."
+          maxLength: 100
+          minLength: 1
+          pattern: "^[a-zA-Z][a-zA-Z0-9_]*$"
+        description:
+          type: string
+          description: Optional description providing context about the topic to help the model identify it in the content
+          maxLength: 500
+      required:
+      - topic
     TextMessageContent:
       allOf:
       - $ref: "#/components/schemas/MessageContent"
@@ -2198,6 +2344,145 @@ components:
             type: string
             description: the text content of the message
       description: Text-based message content.
+    ToolUseRequestMessageContent:
+      allOf:
+      - $ref: "#/components/schemas/MessageContent"
+      - type: object
+        properties:
+          toolInput:
+            type: object
+            additionalProperties: {}
+            description: the input parameters for the tool
+          name:
+            type: string
+            description: the name of the tool to execute
+          toolCallId:
+            type: string
+            description: unique identifier for this tool call
+      description: Tool use request message content.
+      required:
+      - name
+      - toolCallId
+      - toolInput
+    ToolUseResultMessageContent:
+      allOf:
+      - $ref: "#/components/schemas/MessageContent"
+      - type: object
+        properties:
+          toolCallId:
+            type: string
+            description: unique identifier for the tool call this result corresponds to
+      - type: object
+        properties:
+          toolCallId:
+            type: string
+            description: unique identifier for the tool call this result corresponds to
+          content:
+            type: array
+            description: the result content from the tool execution
+            items:
+              description: Base interface for multi-modal message content
+      description: Tool use result message content.
+      required:
+      - toolCallId
+    TargetedSentimentResponse:
+      type: object
+      description: Response for targeted sentiment analysis containing sentiment per topic.
+      properties:
+        topicSentiments:
+          type: object
+          additionalProperties:
+            type: string
+            enum:
+            - positive
+            - negative
+            - neutral
+            - not_applicable
+          description: Map of topic to sentiment (includes NOT_APPLICABLE for unmentioned topics)
+        model:
+          type: string
+          description: The ID of the model used
+        isCustomerModel:
+          type: boolean
+          description: Whether the model is a customer model
+        sessionId:
+          type: string
+          format: uuid
+          description: The AI session ID
+        requestId:
+          type: string
+          format: uuid
+          description: The request ID
+        modelProviderUsage:
+          $ref: "#/components/schemas/ModelProviderUsage"
+          description: Token usage information
+    SimpleSentimentResponse:
+      type: object
+      description: Response for simple sentiment analysis containing overall sentiment.
+      properties:
+        sentiment:
+          type: string
+          description: "The overall sentiment (POSITIVE, NEGATIVE, NEUTRAL, or NOT_APPLICABLE)"
+          enum:
+          - positive
+          - negative
+          - neutral
+          - not_applicable
+        model:
+          type: string
+          description: The ID of the model used
+        isCustomerModel:
+          type: boolean
+          description: Whether the model is a customer model
+        sessionId:
+          type: string
+          format: uuid
+          description: The AI session ID
+        requestId:
+          type: string
+          format: uuid
+          description: The request ID
+        modelProviderUsage:
+          $ref: "#/components/schemas/ModelProviderUsage"
+          description: Token usage information
+    FunctionBlueprint:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        parameters:
+          $ref: "#/components/schemas/ObjectFunctionParameter"
+    Message:
+      type: object
+      description: An individual message in a Messages API request or response.
+      properties:
+        content:
+          type: array
+          description: the list of content items that make up this message
+          items:
+            description: Base interface for multi-modal message content
+            discriminator:
+              propertyName: type
+            oneOf:
+            - $ref: "#/components/schemas/TextMessageContent"
+            - $ref: "#/components/schemas/ImageMessageContent"
+            - $ref: "#/components/schemas/DocumentMessageContent"
+            - $ref: "#/components/schemas/ToolUseRequestMessageContent"
+            - $ref: "#/components/schemas/ToolUseResultMessageContent"
+            - $ref: "#/components/schemas/ReasoningMessageContent"
+            properties:
+              type:
+                type: string
+            required:
+            - type
+        role:
+          type: string
+          description: the role of the message sender
+          enum:
+          - USER
+          - ASSISTANT
     ToolCallRequest:
       type: object
       description: Request for making tool calls using AI.
@@ -2261,37 +2546,6 @@ components:
           type: string
         allowParallelToolCalls:
           type: boolean
-    ToolUseRequestMessageContent:
-      allOf:
-      - $ref: "#/components/schemas/MessageContent"
-      - type: object
-        properties:
-          toolInput:
-            type: object
-            additionalProperties: {}
-            description: the input parameters for the tool
-          name:
-            type: string
-            description: the name of the tool to execute
-          toolCallId:
-            type: string
-            description: unique identifier for this tool call
-      description: Tool use request message content.
-      required:
-      - name
-      - toolCallId
-      - toolInput
-    ToolUseResultMessageContent:
-      allOf:
-      - $ref: "#/components/schemas/MessageContent"
-      - type: object
-        properties:
-          toolCallId:
-            type: string
-            description: unique identifier for the tool call this result corresponds to
-      description: Tool use result message content.
-      required:
-      - toolCallId
     MessagesAIResponse:
       type: object
       description: Response from a Messages API.
@@ -2300,13 +2554,7 @@ components:
           type: array
           description: The list of content generated by the model.
           items:
-            oneOf:
-            - $ref: "#/components/schemas/DocumentMessageContent"
-            - $ref: "#/components/schemas/ImageMessageContent"
-            - $ref: "#/components/schemas/ReasoningMessageContent"
-            - $ref: "#/components/schemas/TextMessageContent"
-            - $ref: "#/components/schemas/ToolUseRequestMessageContent"
-            - $ref: "#/components/schemas/ToolUseResultMessageContent"
+            $ref: "#/components/schemas/MessageContent"
         modelId:
           type: string
           description: The id of the model used to generate the response.
@@ -2471,13 +2719,7 @@ components:
           type: array
           description: "The input message content to extract data from (text, images, documents, etc.)"
           items:
-            oneOf:
-            - $ref: "#/components/schemas/DocumentMessageContent"
-            - $ref: "#/components/schemas/ImageMessageContent"
-            - $ref: "#/components/schemas/ReasoningMessageContent"
-            - $ref: "#/components/schemas/TextMessageContent"
-            - $ref: "#/components/schemas/ToolUseRequestMessageContent"
-            - $ref: "#/components/schemas/ToolUseResultMessageContent"
+            $ref: "#/components/schemas/MessageContent"
         outputStructure:
           type: object
           additionalProperties:
@@ -2631,13 +2873,7 @@ components:
           type: array
           description: "The input message content to classify (text, images, documents, etc.)"
           items:
-            oneOf:
-            - $ref: "#/components/schemas/DocumentMessageContent"
-            - $ref: "#/components/schemas/ImageMessageContent"
-            - $ref: "#/components/schemas/ReasoningMessageContent"
-            - $ref: "#/components/schemas/TextMessageContent"
-            - $ref: "#/components/schemas/ToolUseRequestMessageContent"
-            - $ref: "#/components/schemas/ToolUseResultMessageContent"
+            $ref: "#/components/schemas/MessageContent"
         labels:
           type: array
           description: The list of possible classification labels with optional descriptions (2-50 labels required)
